@@ -1,0 +1,7 @@
+do{
+
+str named: "part";
+
+out "Hello, World!";
+
+}end;
