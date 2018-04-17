@@ -110,8 +110,15 @@ void sts::readline(string prg[],int big) {
 				a += 2;
 
 				if (svar_name != "") {
+					if (l[a] == '"') {
+						a++;
+						while (l[a] != '"') {
+							svar_cont += l[a];
+							a++;
+						}
+					}
 
-					svars[var_num] += svar_name;
+					svars[var_num] += svar_name+":"+svar_cont;
 					cout << svars[var_num] << endl;
 					var_num++;
 				}
