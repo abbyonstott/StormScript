@@ -2,6 +2,6 @@ do{
 
 str named: "part";
 
-out "Hello, World!";
+out named;
 
 }end;

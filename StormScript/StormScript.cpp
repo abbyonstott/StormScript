@@ -13,6 +13,8 @@ class sts
 	int lineon;
 	unsigned int sizeoff = 0;
 	void error(int num);
+	string svar_name = "";
+	string svar_cont = "";
 public:
 	string line;
 	void out(string str);
@@ -82,6 +84,7 @@ void sts::readline(string prg[],int big) {
 			if ((l[y] == 'o') && (l[y + 1] == 'u') && (l[y + 2] == 't')) {
 				int z = y + 4;
 				string str="";
+				string strvarnm = "";
 
 				while (l[z] != ';') {
 					if (l[z] == '"') {
@@ -92,15 +95,43 @@ void sts::readline(string prg[],int big) {
 						}
 						z++;
 					}
+					
 					else {
-						error(0);
+						while (l[z] != ';') {
+							strvarnm += l[z];
+							z++;
+						}
+
+						for (int x = 0; x < sizeof(svars); x++) {
+							string svar = svars[x];
+							string svarname = "";
+							string svarval = "";
+							int a = 0;
+
+							while (svar[a] != ':') {
+								svarname += svar[a];
+								a++;
+							}
+							a++;
+							while (svar[a] != ';') {
+								svarval += svar[a];
+								a++;
+							}
+							if (svarname == strvarnm) {
+								str = svarval;
+								break;
+							}
+							else {
+								error(0);
+							}
+						}
 					}
 				}
 				out(str);
 			}
 			else if ((l[y] == 's') && (l[y + 1] == 't') && (l[y + 2] == 'r')) {
-				string svar_name = "";
-				string svar_cont = "";
+				svar_cont = "";
+				svar_name = "";
 				int a = y + 4;
 				
 				while (l[a] != ':') {
@@ -132,7 +163,7 @@ void sts::readline(string prg[],int big) {
 
 void sts::error(int num) {
 	if (num == 0) {
-		cout << "Error: You must use quotations on an out statement!" << endl;
+		cout << "Error: Variable Undefined" << endl;
 	}
 	else if (num == 1) {
 		cout << "Error: string variable must have name" << endl;
@@ -149,5 +180,6 @@ int main()
 {	
 	sts script;
 	script.read();
+	system("sleep .1");
 	return 0;
 } 
