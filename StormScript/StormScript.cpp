@@ -182,6 +182,7 @@ int main()
 {	
 	sts script;
 	script.read();
-	system("sleep .1");
+	cout << "Press any key to exit...";
+	getchar();
 	return 0;
 } 
