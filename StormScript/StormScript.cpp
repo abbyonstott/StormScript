@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include <string>
 #include <fstream>
 #include <vector>
@@ -15,6 +14,7 @@ class sts
 	void error(int num);
 	string svar_name = "";
 	string svar_cont = "";
+	int var_num = 0;
 public:
 	string line;
 	void out(string str);
@@ -75,12 +75,12 @@ void sts::read() {
 
 void sts::readline(string prg[],int big) {
 	std::vector<string> svars(big + 1);
-	int var_num = 0;
 
 	for (int x = 0; x <= big; x++) 
 	{
 		string l = prg[x];
-		for (int y = 0; y <= size(l); y++) {
+		string svarval;
+		for (int y = 0; y < size(l); y++) {
 			if ((l[y] == 'o') && (l[y + 1] == 'u') && (l[y + 2] == 't')) {
 				int z = y + 4;
 				string str="";
@@ -94,63 +94,65 @@ void sts::readline(string prg[],int big) {
 							z++;
 						}
 						z++;
+						out(str);
 					}
 					
 					else {
-						while (l[z] != ';') {
-							strvarnm += l[z];
-							z++;
+						int n = y + 4;
+
+						while (l[n] != ';') {
+							strvarnm += l[n];
+							n++;
 						}
 
-						for (int x = 0; x < sizeof(svars); x++) {
-							string svar = svars[x];
-							string svarname = "";
-							string svarval = "";
+						string svarname;
+						int b = 0;
+						while (svarname != strvarnm) {
+
+							string svar = svars[b];
+							svarname = "";
+							svarval = "";
 							int a = 0;
 
 							while (svar[a] != ':') {
 								svarname += svar[a];
 								a++;
 							}
+
 							a++;
-							while (svar[a] != ';') {
+
+							while (svar[a] != '"') {
 								svarval += svar[a];
 								a++;
 							}
-							if (svarname == strvarnm) {
-								str = svarval;
-								break;
-							}
-							else {
-								error(0);
-							}
+							b++;
 						}
+						str = svarval;
+						out(str);
+						break;
 					}
 				}
-				out(str);
 			}
 			else if ((l[y] == 's') && (l[y + 1] == 't') && (l[y + 2] == 'r')) {
 				svar_cont = "";
 				svar_name = "";
 				int a = y + 4;
-				
 				while (l[a] != ':') {
 					svar_name += l[a];
 					a++;
 				}
 				a += 2;
-
 				if (svar_name != "") {
 					if (l[a] == '"') {
 						a++;
-						while (l[a] != '"') {
+						while (l[a] != '"'){
 							svar_cont += l[a];
 							a++;
 						}
+						svar_cont += l[a];
 					}
-
+					svars.resize(var_num+1);
 					svars[var_num] += svar_name+":"+svar_cont;
-					cout << svars[var_num] << endl;
 					var_num++;
 				}
 				else {

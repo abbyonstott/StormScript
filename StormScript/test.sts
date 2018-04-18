@@ -1,7 +1,12 @@
 do{
 
-str named: "part";
+str ex1: "hi4";
+str ex2: "hi2";
+str ex3: "hi3";
 
-out named;
+out ex1;
+out ex2;
+out ex3;
+out "hi4";
 
 }end;
