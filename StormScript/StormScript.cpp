@@ -159,6 +159,9 @@ void sts::readline(string prg[],int big) {
 					error(1);
 				}
 			}
+			else if ((l[y] == 'i') && (l[y + 1] == 'n') && (l[y + 2] == 't')) {
+				cout << "cool, a new feature!" << endl;
+			}
 		}
 	}
 }
@@ -169,6 +172,9 @@ void sts::error(int num) {
 	}
 	else if (num == 1) {
 		cout << "Error: string variable must have name" << endl;
+	}
+	else if (num == 2) {
+		cout << "Error: integer variable must have name" << endl;
 	}
 
 	exit(0);

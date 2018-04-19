@@ -1,12 +1,12 @@
 do{
 
 	str ex1: "hi4";
-	str ex2: "hi2";
-	str ex3: "hi3";
+	str ex2: "hi3";
+	str ex3: "hi2";
 
 	out ex1;
 	out ex2;
 	out ex3;
-	out "hi4";
+	out "hi1";
 
 }end;
