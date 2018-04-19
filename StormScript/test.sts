@@ -1,12 +1,9 @@
 do{
 
-	str ex1: "hi4";
-	str ex2: "hi3";
-	str ex3: "hi2";
+	str y: "Hello, World";
+	int x: 5;
 
-	out ex1;
-	out ex2;
-	out ex3;
-	out "hi1";
+	out l;
+	out y;
 
 }end;
