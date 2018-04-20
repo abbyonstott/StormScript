@@ -18,8 +18,20 @@ StormScript files have the extension `.sts`
 
 ## Commands
 
+`do`: initial function
+
+`end`: end current scope
+
 `int name: 0`: int creates an integer variable
 
 `str name: "text"`: creates a string variable
 
-`out`: prints out
+`out var`: prints out
+
+## Hello World Program
+
+```
+do{
+  out "Hello, World";
+}end;
+```
