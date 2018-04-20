@@ -3,7 +3,7 @@ do{
 	str y: "Hello, World";
 	int x: 5;
 
-	out l;
+	out x;
 	out y;
 
 }end;

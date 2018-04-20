@@ -12,7 +12,8 @@ class sts
 {
 	int lineon;
 	unsigned int sizeoff = 0;
-	void error(int num, string issue);
+	void out(string str);
+	void readline(string prg[], int big);
 	string svar_name = ""; //name of string
 	string ivar_name = ""; //name of integer
 	string svar_cont = ""; //contents of string
@@ -21,15 +22,14 @@ class sts
 	int var_num = 0; //number of variables
 public:
 	string line;
-	void out(string str);
-	void readline(string prg[], int big);
-	void read();
+	void error(int num, string issue);	
+	void read(string filename);
 };
 
-void sts::read() {
+void sts::read(string filename) {
 	std::ifstream file;
 	string contents;
-	file.open("test.sts", std::ifstream::in);
+	file.open(filename, std::ifstream::in);
 	char c = file.get();
 
 	while (file.good())
@@ -244,7 +244,7 @@ void sts::readline(string prg[],int big) {
 	}
 }
 
-void sts::error(int num, string issue = "") {
+void sts::error(int num, string issue) {
 	if (num == 0) {
 		cout << "Error: No variable named \"" << issue << "\"." << endl;
 	}
@@ -256,6 +256,9 @@ void sts::error(int num, string issue = "") {
 	}
 	else if (num == 3) {
 		cout << "Error: integer \"" << issue << "\" must be a number" << endl;
+	}	
+	else if (num == 4) {
+		cout << "Error: No input files" << endl;
 	}
 	cout << "Press any key to exit...";
 	getchar();
@@ -266,10 +269,17 @@ void sts::out(string str) {
 	cout << str << endl;
 }
 
-int main()
+int main(int argc, char *argv[])
 {	
 	sts script;
-	script.read();
+
+	if (argc!=1) {
+		script.read(argv[1]);
+	}
+	else {
+		script.error(4,"");
+	}
+
 	cout << "Press any key to exit...";
 	getchar();
 	return 0;
