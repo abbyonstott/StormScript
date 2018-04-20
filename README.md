@@ -1,37 +1,25 @@
-## Welcome to GitHub Pages
+# General
 
-You can use the [editor on GitHub](https://github.com/Storm246/StormScript/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## About
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+StormScript is an interpreted, object-oriented, free programming language. 
 
-### Markdown
+StormScript is programmed in C++ and is simple to use.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Basics
 
-```markdown
-Syntax highlighted code block
+StormScript was made on the idea that it is possible to have a strong, object-oriented programming language that has short, easy to remember syntax.
 
-# Header 1
-## Header 2
-### Header 3
+# The Language
 
-- Bulleted
-- List
+## Files
 
-1. Numbered
-2. List
+StormScript files have the extension `.sts`
 
-**Bold** and _Italic_ and `Code` text
+## Commands
 
-[Link](url) and ![Image](src)
-```
+`int name: 0`: int creates an integer variable
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+`str name: "text"`: creates a string variable
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Storm246/StormScript/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+`out`: prints out
