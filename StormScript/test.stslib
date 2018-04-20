@@ -1,0 +1,2 @@
+str test.x: "I'm an external function!";
+int test.y: 0;

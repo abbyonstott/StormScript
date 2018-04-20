@@ -23,5 +23,11 @@
     <None Include="test.sts">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="test.stslib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stsclasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

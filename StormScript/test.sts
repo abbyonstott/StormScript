@@ -1,9 +1,8 @@
+lib test;
+
 do{
 
-	str y: "Hello, World";
-	int x: 5;
-
-	out x;
-	out y;
+	out test.x;
+	out test.y;
 
 }end;

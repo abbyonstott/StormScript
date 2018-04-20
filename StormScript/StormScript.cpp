@@ -3,33 +3,28 @@
 #include <fstream>
 #include <vector>
 #include <cctype>
+#include <cstdlib>
+#include "stsclasses.h"
+
+#if defined(__linux__) // any linux distribution
+#define PLATFORM "linux"
+#elif defined(_WIN32) // any windows system
+#define PLATFORM "windows"
+#else
+#define PLATFORM "other"
+#endif
+
 
 using std::string;
 using std::cout;
 using std::endl;
 
-class sts 
-{
-	int lineon;
-	unsigned int sizeoff = 0;
-	void out(string str);
-	void readline(string prg[], int big);
-	string svar_name = ""; //name of string
-	string ivar_name = ""; //name of integer
-	string svar_cont = ""; //contents of string
-	int ivar_cont; //contents of integer
-	string sivar_cont; //contents of ivar as string
-	int var_num = 0; //number of variables
-public:
-	string line;
-	void error(int num, string issue);	
-	void read(string filename);
-};
+//sts Functions
 
 void sts::read(string filename) {
 	std::ifstream file;
 	string contents;
-	file.open(filename, std::ifstream::in);
+	file.open(filename.c_str());
 	char c = file.get();
 
 	while (file.good())
@@ -39,7 +34,7 @@ void sts::read(string filename) {
 	}
 	file.close();
 
-	for (int x = 0; x <= size(contents); x++)
+	for (int x = 0; x <= contents.size(); x++)
 	{
 		if (contents[x] == '\n')
 		{
@@ -52,7 +47,7 @@ void sts::read(string filename) {
 	int loc = 0;
 	int a = 0;
 
-	for (int x = 0; x <= size(contents); x++)
+	for (int x = 0; x <= contents.size(); x++)
 	{
 		if (contents[x] == '\n') 
 		{
@@ -64,8 +59,8 @@ void sts::read(string filename) {
 			loc = x + 1;
 		}
 	}
-	for (int x=loc; x <= size(contents); x++) {
-		prg[size(prg)-1] += contents[x];
+	for (int x=loc; x <= contents.size(); x++) {
+		prg[prg.size()-1] += contents[x];
 	} //add last line to vector
 
 	string progm[10000]; //will change to something that doesn't limit lines
@@ -73,22 +68,21 @@ void sts::read(string filename) {
 	for (int x = 0; x <= sizeoff-1; x++) {
 		progm[x] = prg[x];
 	}
-
-	readline(progm,sizeoff-1);
+	
+	readline(progm, sizeoff - 1);
 }
 
 void sts::readline(string prg[],int big) {
-	std::vector<string> vars(big + 1);
-
+	
 	for (int x = 0; x <= big; x++) 
 	{
 		string l = prg[x];
 		string varval;
 
-		for (int y = 0; y < size(l); y++) {
+		for (int y = 0; y < l.size(); y++) {
 			int z = y + 4;
 			if ((l[y] == 'o') && (l[y + 1] == 'u') && (l[y + 2] == 't')) { //checks if command is out
-				string str=""; //string to print
+				string str = ""; //string to print
 				string varnm = ""; //variable name to print
 
 				while (l[z] != ';') {
@@ -104,7 +98,7 @@ void sts::readline(string prg[],int big) {
 						z++;
 						out(str);
 					}
-					
+
 					else {
 						int n = y + 4;
 
@@ -166,7 +160,7 @@ void sts::readline(string prg[],int big) {
 									error(0, varnm);
 								}
 							}
-						b++;
+							b++;
 						}
 						str = varval;
 						out(str);
@@ -189,17 +183,17 @@ void sts::readline(string prg[],int big) {
 					if (l[z] == '"') {
 						z++;
 
-						while (l[z] != '"'){
+						while (l[z] != '"') {
 							svar_cont += l[z]; //l[z] to variable cont
 							z++;
 						}
 
 						svar_cont += l[z];
-					
+
 					}
-					
-					vars.resize(var_num+1);
-					vars[var_num] += svar_name+":"+svar_cont;
+
+					vars.resize(var_num + 1);
+					vars[var_num] += svar_name + ":" + svar_cont;
 					var_num++;
 				}
 				else {
@@ -222,16 +216,30 @@ void sts::readline(string prg[],int big) {
 						z++;
 					}
 					ivar_conts += l[z];
-					for (int m = 0; m <= size(ivar_conts)-1; m++) {
-						if ((std::isdigit(ivar_conts[m]) / 4 == true) or (ivar_conts[m]==';')) {
-							sivar_cont += ivar_conts[m];
+					if (PLATFORM == "windows") {
+						for (int m = 0; m <= ivar_conts.size() - 1; m++) {
+							if ((std::isdigit(ivar_conts[m]) / 4 == true) or (ivar_conts[m] == ';')) {
+								sivar_cont += ivar_conts[m];
+							}
+							else {
+								cout << ivar_conts << endl;
+								error(3, ivar_name);
+							}
 						}
-						else {
-							error(3, ivar_name);
+					}
+					else {
+						for (int m = 0; m <= ivar_conts.size() - 1; m++) {
+							if ((std::isdigit(ivar_conts[m]) == true) or (ivar_conts[m] == ';')) {
+								sivar_cont += ivar_conts[m];
+							}
+							else {
+								cout << ivar_conts << endl;
+								error(3, ivar_name);
+							}
 						}
 					}
 
-					vars.resize(var_num+1);
+					vars.resize(var_num + 1);
 					vars[var_num] = ivar_name + ":" + sivar_cont;
 					var_num++;
 
@@ -239,6 +247,18 @@ void sts::readline(string prg[],int big) {
 				else {
 					error(2, "");
 				}
+			}
+			else if ((l[y] == 'l') && (l[y + 1] == 'i') && (l[y + 2] == 'b')) {
+				string libname;
+				
+				while (l[z] != ';') {
+					libname += l[z];
+					z++;
+				}
+
+				libname = libname + ".stslib";
+				
+				read(libname);
 			}
 		}
 	}
@@ -270,14 +290,14 @@ void sts::out(string str) {
 }
 
 int main(int argc, char *argv[])
-{	
+{
 	sts script;
 
-	if (argc!=1) {
+	if (argc != 1) {
 		script.read(argv[1]);
 	}
 	else {
-		script.error(4,"");
+		script.error(4, "");
 	}
 
 	cout << "Press any key to exit...";

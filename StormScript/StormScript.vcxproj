@@ -209,6 +209,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="test.sts" />
+    <None Include="test.stslib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stsclasses.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
