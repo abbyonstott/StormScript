@@ -23,6 +23,10 @@ StormScript library files have the extension `.stslib`
 
 `end`: end current scope
 
+`loop(n)`: loop current scope
+
+### **_PUTTING A VARIABLE DEFINITION IN A LOOP IS BAD PRACTICE AND CAN CAUSE BUGS! DO NOT DO IT!_**
+
 `int name: 0`: int creates an integer variable
 
 `str name: "text"`: creates a string variable
