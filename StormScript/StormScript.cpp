@@ -273,7 +273,7 @@ bool sts::readline(string prg[],int big) {
 						timesstr += l[z];
 						z++;
 					}
-					times = stoi(timesstr);
+					times = std::stoi(timesstr);
 				}
 				else {
 					times--;
