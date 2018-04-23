@@ -15,6 +15,7 @@ StormScript was made on the idea that it is possible to have a strong, object-or
 ## Files
 
 StormScript files have the extension `.sts`
+StormScript library files have the extension `.stslib`
 
 ## Commands
 

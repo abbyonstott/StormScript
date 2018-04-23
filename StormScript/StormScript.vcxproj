@@ -208,6 +208,7 @@
     <ClCompile Include="StormScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\README.md" />
     <None Include="test.sts" />
     <None Include="test.stslib" />
   </ItemGroup>

@@ -24,6 +24,7 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="test.stslib" />
+    <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stsclasses.h">

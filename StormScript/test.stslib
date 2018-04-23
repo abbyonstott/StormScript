@@ -1,2 +1,3 @@
-str test.x: "I'm an external function!";
-int test.y: 0;
+do{
+	str x: "I'm an external variable!";
+}end;

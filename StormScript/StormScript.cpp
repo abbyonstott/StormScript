@@ -10,7 +10,7 @@
 #define PLATFORM "linux"
 #elif defined(_WIN32) // any windows system
 #define PLATFORM "windows"
-#else
+#else //other: please compile if you are on mac. The stormscript.out file was compiled in a linux terminal and therefore is not compatible with mac 
 #define PLATFORM "other"
 #endif
 
@@ -68,11 +68,17 @@ void sts::read(string filename) {
 	for (int x = 0; x <= sizeoff-1; x++) {
 		progm[x] = prg[x];
 	}
-	
-	readline(progm, sizeoff - 1);
+	for (int x = 0; x <= sizeoff - 1; x++) {
+		if ((prg[x] == "do{") && (fin == false)) {
+			while (fin == false) {
+				fin = readline(progm, sizeoff - 1);
+			}
+		}
+	}
+
 }
 
-void sts::readline(string prg[],int big) {
+bool sts::readline(string prg[],int big) {
 	
 	for (int x = 0; x <= big; x++) 
 	{
@@ -151,9 +157,17 @@ void sts::readline(string prg[],int big) {
 									}
 									a++;
 
-									while (var[a] != ';') {
-										varval += var[a];
-										a++;
+									if (PLATFORM == "windows") {
+										while (var[a] != ';') {
+											varval += var[a];
+											a++;
+										}
+									}
+									else {
+										while (var[a] != ';') {
+											varval += var[a];
+											a++;
+										}
 									}
 								}
 								catch (const std::out_of_range& l) {
@@ -216,29 +230,15 @@ void sts::readline(string prg[],int big) {
 						z++;
 					}
 					ivar_conts += l[z];
-					if (PLATFORM == "windows") {
-						for (int m = 0; m <= ivar_conts.size() - 1; m++) {
-							if ((std::isdigit(ivar_conts[m]) / 4 == true) or (ivar_conts[m] == ';')) {
-								sivar_cont += ivar_conts[m];
-							}
-							else {
-								cout << ivar_conts << endl;
-								error(3, ivar_name);
-							}
+					for (int m = 0; m <= ivar_conts.size() - 1; m++) {
+						if ((std::isdigit(ivar_conts[m]) / 4 == true) or (ivar_conts[m] == ';')) {
+							sivar_cont += ivar_conts[m];
+						}
+						else {
+							cout << ivar_conts << endl;
+							error(3, ivar_name);
 						}
 					}
-					else {
-						for (int m = 0; m <= ivar_conts.size() - 1; m++) {
-							if ((std::isdigit(ivar_conts[m]) == true) or (ivar_conts[m] == ';')) {
-								sivar_cont += ivar_conts[m];
-							}
-							else {
-								cout << ivar_conts << endl;
-								error(3, ivar_name);
-							}
-						}
-					}
-
 					vars.resize(var_num + 1);
 					vars[var_num] = ivar_name + ":" + sivar_cont;
 					var_num++;
@@ -248,6 +248,7 @@ void sts::readline(string prg[],int big) {
 					error(2, "");
 				}
 			}
+
 			else if ((l[y] == 'l') && (l[y + 1] == 'i') && (l[y + 2] == 'b')) {
 				string libname;
 				
@@ -259,6 +260,30 @@ void sts::readline(string prg[],int big) {
 				libname = libname + ".stslib";
 				
 				read(libname);
+			}
+
+			else if ((l[y] == '}') && (l[y + 1] == 'e') && (l[y + 2] == 'n') && (l[y + 3] = 'd') && (l[y + 4] == ';')) {
+				return true;
+			}
+
+			else if ((l[y] == '}') && (l[y + 1] == 'l') && (l[y + 2] == 'o') && (l[y + 3] = 'o') && (l[y + 4] == 'p')) {
+				z+=2;
+				if (!times) {
+					while (l[z] != ')') {
+						timesstr += l[z];
+						z++;
+					}
+					times = std::stoi(timesstr);
+				}
+				else {
+					times--;
+				}
+				if (times != 1) {
+					return false;
+				}
+				else {
+					return true;
+				}
 			}
 		}
 	}
