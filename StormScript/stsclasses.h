@@ -18,7 +18,7 @@ class sts
 public:
 	bool fin = false; //finished
 	string timesstr; //times to run as string
-	int times; //times to run as int
+	int times = 0; //times to run as int
 	int lineon; //line the parser is on
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<string> vars; //variables

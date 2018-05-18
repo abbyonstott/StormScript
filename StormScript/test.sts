@@ -1,5 +1,3 @@
-lib test;
-
 do{
-	out x;
+	out "hi";
 }loop(5);
