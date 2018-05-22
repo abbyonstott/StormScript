@@ -10,7 +10,7 @@
 #define PLATFORM "linux"
 #elif defined(_WIN32) // any windows system
 #define PLATFORM "windows"
-#else //other: please compile if you are on mac. The stormscript.out file was compiled in a linux terminal and therefore is not compatible with mac
+#else //other: please compile if you are on mac. The sts file was compiled in a linux terminal and therefore is not compatible with mac
 #define PLATFORM "other"
 #endif
 
@@ -46,7 +46,6 @@ void sts::read(string filename)
 	std::vector<string> prg(sizeoff); //create vector for lines
 	int loc = 0;
 	int a = 0;
-
 	for (int x = 0; x <= contents.size(); x++)
 	{
 		if (contents[x] == '\n')
@@ -64,32 +63,69 @@ void sts::read(string filename)
 		prg[prg.size() - 1] += contents[x];
 	} //add last line to vector
 
-	string progm[10000]; //will change to something that doesn't limit lines
+	string progm[prg.size()]; //will change to something that doesn't limit lines
 
 	for (int x = 0; x <= sizeoff - 1; x++)
 	{
 		progm[x] = prg[x];
 	}
+
 	for (int x = 0; x <= sizeoff - 1; x++)
 	{
-		if ((prg[x] == "do{") && (fin == false))
+		fin = false;
+		if ((progm[x] == "do{") && (fin == false)) //if "do{" run everthing in braces({})
 		{
+			int y = x + 1;
+			while (progm[y] != "}end;")
+			{
+				y++;
+			}
 			while (fin == false)
 			{
-				fin = readline(progm, sizeoff - 1);
+				fin = readline(progm, y + 1, x + 1);
+			}
+		}
+		else if ((progm[x][0] == 'f') && (progm[x][1] == 'u') && (progm[x][2] == 'n') && (progm[x][3] == 'c')) // if "func" run everything in braces
+		{
+			int y = x + 1;
+			int nm = 5;
+			fun_num++; //increase function number
+			fsize.resize(fun_num);
+			funnames.resize(fun_num);
+			fsize[fun_num] = 0;
+
+			int i = fun_num-1;
+
+			while (progm[y] != "}end;")
+			{
+				fsize[fun_num]++;
+				y++;
+			}
+			y = x + 1;
+
+			functions.resize(fsize[fun_num]);
+
+			while (progm[x][nm] != '{')
+			{
+				funnames[i] = progm[x][nm];
+				nm++;
+			}
+
+			while (progm[y] != "}end;")
+			{
+				functions[fsize[fun_num-1]] += progm[y];
+				y++;
 			}
 		}
 	}
 }
 
-bool sts::readline(string prg[], int big)
+bool sts::readline(string prg[], int big, int startat)
 {
-
-	for (int x = 0; x <= big; x++)
+	for (int x = startat; x <= big; x++)
 	{
 		string l = prg[x];
 		string varval;
-
 		for (int y = 0; y < l.size(); y++)
 		{
 			int z = y + 4;
@@ -235,7 +271,6 @@ bool sts::readline(string prg[], int big)
 
 						svar_cont += l[z];
 					}
-
 					vars.resize(var_num + 1);
 					vars[var_num] += svar_name + ":" + svar_cont;
 					var_num++;
@@ -267,14 +302,28 @@ bool sts::readline(string prg[], int big)
 					ivar_conts += l[z];
 					for (int m = 0; m <= ivar_conts.size() - 1; m++)
 					{
-						if ((std::isdigit(ivar_conts[m]) / 4 == true) or (ivar_conts[m] == ';'))
+						if (PLATFORM == "windows")
 						{
-							sivar_cont += ivar_conts[m];
+							if ((std::isdigit(ivar_conts[m]) / 4 == true) or (ivar_conts[m] == ';'))
+							{
+								sivar_cont += ivar_conts[m];
+							}
+							else
+							{
+								error(3, ivar_name);
+							}
 						}
 						else
 						{
-							cout << ivar_conts << endl;
-							error(3, ivar_name);
+							if ((std::isdigit(ivar_conts[m]) == true) or (ivar_conts[m] == ';'))
+							{
+								sivar_cont += ivar_conts[m];
+							}
+							else
+							{
+
+								error(3, ivar_name);
+							}
 						}
 					}
 					vars.resize(var_num + 1);
@@ -285,21 +334,6 @@ bool sts::readline(string prg[], int big)
 				{
 					error(2, "");
 				}
-			}
-
-			else if ((l[y] == 'l') && (l[y + 1] == 'i') && (l[y + 2] == 'b'))
-			{
-				string libname;
-
-				while (l[z] != ';')
-				{
-					libname += l[z];
-					z++;
-				}
-
-				libname = libname + ".stslib";
-
-				read(libname);
 			}
 
 			else if ((l[y] == '}') && (l[y + 1] == 'e') && (l[y + 2] == 'n') && (l[y + 3] = 'd') && (l[y + 4] == ';'))
@@ -332,6 +366,36 @@ bool sts::readline(string prg[], int big)
 					return true;
 				}
 			}
+			else if ((l[y] == 'e') && (l[y] = 'x'))
+			{
+				int i = 4;
+				string fun;
+				string func2[functions.size()];
+				string fnames2[funnames.size()];
+				for (int m = 1; m<=fun_num; m++){
+					for (int o = 0; o <= fsize[m] - 1; o++)
+					{
+						func2[o] = functions[o];
+					}
+				}
+				for (int o = 0; o <= fun_num - 1; o++)
+				{
+					fnames2[o] = funnames[o];
+				}
+
+				while (l[i] != ';')
+				{
+					fun += l[i];
+					i++;
+				}
+				for (int o = 0; o <= fun_num - 1; o++)
+				{
+					if (fun == fnames2[o])
+					{
+						readline(func2, fsize[o + 1] - 1, fsize[o]); //read starting at the previous item's size and end at the current item's size
+					}
+				}
+			}
 		}
 	}
 }
@@ -358,7 +422,7 @@ void sts::error(int num, string issue)
 	{
 		cout << "Error: No input files" << endl;
 	}
-	cout << "Press any key to exit...";
+	cout << "Press return to exit...";
 	getchar();
 	exit(0);
 }

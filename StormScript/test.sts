@@ -1,3 +1,0 @@
-do{
-	out "hi";
-}loop(5);

@@ -1,3 +1,0 @@
-do{
-	str x: "I'm an external variable!";
-}end;

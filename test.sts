@@ -1,0 +1,10 @@
+func n{
+	int x: 3;
+	str y: "hi";
+}end;
+
+do{
+	ex n;
+	out x;
+	out y;
+}end;
