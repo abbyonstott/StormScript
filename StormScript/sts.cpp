@@ -1,5 +1,25 @@
 #include "stsclasses.h"
 
+/*
+   _____ _                        _____           _       _   
+  / ____| |                      / ____|         (_)     | |  
+ | (___ | |_ ___  _ __ _ __ ___ | (___   ___ _ __ _ _ __ | |_ 
+  \___ \| __/ _ \| '__| '_ ` _ \ \___ \ / __| '__| | '_ \| __|
+  ____) | || (_) | |  | | | | | |____) | (__| |  | | |_) | |_ 
+ |_____/ \__\___/|_|  |_| |_| |_|_____/ \___|_|  |_| .__/ \__|
+                                                   | |        
+                                                   |_|              
+Overview:
+	Locations:
+		sts class: stsclasses.h
+		read and main: here
+		out: stsstream.cpp
+		parser (readline and errors): parse.cpp
+		variable and function declarations: stsdec.cpp
+		Executable(not on git repository): bin directory
+	Example files (example.sts) are stored in the root directory.
+*/
+
 void sts::read(string filename)
 {
 	std::ifstream file;
@@ -52,33 +72,6 @@ void sts::read(string filename)
 	readline(progm, sizeoff);
 }
 
-void sts::error(int num, string issue)
-{
-	if (num == 0)
-	{
-		cout << "Error: No variable named \"" << issue << "\"." << endl;
-	}
-	else if (num == 1)
-	{
-		cout << "Error: string variable must have name" << endl;
-	}
-	else if (num == 2)
-	{
-		cout << "Error: integer variable must have name" << endl;
-	}
-	else if (num == 3)
-	{
-		cout << "Error: integer \"" << issue << "\" must be a number" << endl;
-	}
-	else if (num == 4)
-	{
-		cout << "Error: No input files" << endl;
-	}
-	cout << "Press return to exit...";
-	getchar();
-	exit(0);
-}
-
 int main(int argc, char *argv[])
 {
 	sts script;
@@ -92,7 +85,7 @@ int main(int argc, char *argv[])
 		script.error(4, "");
 	}
 
-	cout << "Press any key to exit...";
+	cout << "Press return to exit...";
 	getchar();
 	return 0;
 }

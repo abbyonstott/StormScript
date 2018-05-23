@@ -23,7 +23,6 @@ public:
 	void error(int num, string issue); //error
 	void read(string filename); //read file
 	void out(string str); //out function
-	void stsdo(); //do (main) function
 };
 
 #endif
