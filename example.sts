@@ -1,3 +1,4 @@
 do{
+	str xf: "hello, world";
 	out "Hello, World";
 }end;

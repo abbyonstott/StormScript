@@ -42,6 +42,26 @@ void sts::readline(string prg[], int psize) {
 
                     out(print); // call out(located in stsstream)
                 }
+                if (ln[lnon] == "str") {
+                    string str = "";
+                    string name = "";
+                    varnames.resize(varnames.size()+1);
+                    int ch = 5;
+
+                    while (prg[lnon][ch]!=':') {
+                        name+=prg[lnon][ch];
+                        ch++;
+                    }
+                    ch+=2;
+                    varnames[varnames.size()-1]=name;
+
+                    while (prg[lnon][ch]!=';'){
+                        str+=prg[lnon][ch];
+                        ch++;
+                    }
+                    
+                    decvar(str, 's');
+                }
                 lnon++;
             }
         }

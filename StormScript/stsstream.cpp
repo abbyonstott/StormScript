@@ -6,7 +6,7 @@ void sts::out(string str)
         str[0]='\0';
         str[str.size()-1]='\0';
     }
-    else {error(0,str);}
+    else { error(0,str); }
 
 	cout << str << endl;
 }
