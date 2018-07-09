@@ -7,9 +7,17 @@ std::vector<string> sts::parse(std::vector<string> prg){
     while (y!=prg.size()){
         int z = 0;
         x.resize(x.size()+1);
-
+        bool inquotes = false;
         while (z!=prg[y].size()){
-            if ((prg[y][z]==' ') || (prg[y][z]=='\n')){
+            if (prg[y][z]=='"'){
+                if (inquotes == false){
+                    inquotes = true;
+                }
+                else{
+                    inquotes = false;
+                }
+            }
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
