@@ -94,29 +94,3 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
     cout << "Successfully Compiled" << endl;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
