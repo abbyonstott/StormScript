@@ -26,7 +26,7 @@ void sts::read(string filename)
 	string contents;
 	file.open(filename.c_str());
 	char c = file.get();
-
+	
 	while (file.good())
 	{
 		contents += c;
@@ -63,13 +63,34 @@ void sts::read(string filename)
 		prg[prg.size() - 1] += contents[x];
 	} //add last line to vector
 
-	string progm[prg.size()];
+	compile(filename, prg, sizeoff);
+}
 
-	for (int x = 0; x <= sizeoff - 1; x++)
+void sts::error(int num, string issue)
+{
+	if (num == 0)
 	{
-		progm[x] = prg[x];
+		cout << "Error: No variable named \"" << issue << "\"." << endl;
 	}
-	readline(progm, sizeoff);
+	else if (num == 1)
+	{
+		cout << "Error: string variable must have name" << endl;
+	}
+	else if (num == 2)
+	{
+		cout << "Error: integer variable must have name" << endl;
+	}
+	else if (num == 3)
+	{
+		cout << "Error: integer \"" << issue << "\" must be a number" << endl;
+	}
+	else if (num == 4)
+	{
+		cout << "Error: No input files" << endl;
+	}
+	cout << "Press return to exit...";
+	getchar();
+	exit(0);
 }
 
 int main(int argc, char *argv[])
@@ -84,8 +105,6 @@ int main(int argc, char *argv[])
 	{
 		script.error(4, "");
 	}
-
-	cout << "Press return to exit...";
-	getchar();
+	
 	return 0;
 }

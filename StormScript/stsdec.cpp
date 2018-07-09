@@ -8,4 +8,8 @@ void sts::decvar(string contents, char type){
         vars.resize(vars.size()+1);
         vars[vars.size()-1]=contents;
     }
+    /* if (type=='i'){
+        vars.resize(vars.size()+1);
+        vars[vars.size()-1]=contents;
+    } */
 }
