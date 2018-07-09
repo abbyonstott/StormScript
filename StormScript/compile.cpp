@@ -96,9 +96,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                     val+=prs[x+2][y];
                 }
             }
-            cout << "'" << val << "'" << endl;
             for (int y=0; y<=val.size()-2; y++){
-                cout << isdigit(val[y]) << endl;
                 if (isdigit(val[y])==false){
                     error(2, name);
                 }
