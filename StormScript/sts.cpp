@@ -78,18 +78,16 @@ void sts::error(int num, string issue)
 	}
 	else if (num == 2)
 	{
-		cout << "Error: integer variable must have name" << endl;
+		cout << "Error: integer \"" << issue << "\" must be a number" << endl;
+	}
+		else if (num == 2)
+	{
+		cout << "Error: string \"" << issue << "\" must be a string" << endl;
 	}
 	else if (num == 3)
 	{
-		cout << "Error: integer \"" << issue << "\" must be a number" << endl;
-	}
-	else if (num == 4)
-	{
 		cout << "Error: No input files" << endl;
 	}
-	cout << "Press return to exit...";
-	getchar();
 	exit(0);
 }
 
@@ -105,6 +103,6 @@ int main(int argc, char *argv[])
 	{
 		script.error(4, "");
 	}
-	
+
 	return 0;
 }

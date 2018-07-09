@@ -1,4 +1,4 @@
 do{
-	str x: "10";
+	int x: 30;
 	out x;
 }end;

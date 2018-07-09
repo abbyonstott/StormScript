@@ -85,6 +85,37 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
 
             system(strc);
         }
+        else if (prs[x]=="\tint"){
+            for (int y=0; y<=prs[x+1].size();y++){
+                if (prs[x+1][y]!=':'){
+                    name+=prs[x+1][y];
+                }
+            }
+            for (int y=0; y<=prs[x+2].size();y++){
+                if (prs[x+2][y]!=';'){
+                    val+=prs[x+2][y];
+                }
+            }
+            cout << "'" << val << "'" << endl;
+            for (int y=0; y<=val.size()-2; y++){
+                cout << isdigit(val[y]) << endl;
+                if (isdigit(val[y])==false){
+                    error(2, name);
+                }
+            }
+            string a = "echo '\tint ";
+            const char *c = name.c_str();
+            const char *e = " = ";
+            const char *d = val.c_str();
+            const char *f = ";' >> stscompile/stscomp.cpp";
+            a+=c;
+            a+=e;
+            a+=d;
+            a+=f;
+            const char *intc = a.c_str();
+
+            system(intc);
+        }
     }
 
     system("echo '\treturn 0;\\n}\\n' >> stscompile/stscomp.cpp");
