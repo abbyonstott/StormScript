@@ -42,25 +42,53 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
     system("echo '#include <iostream>\\nint main(){' > stscompile/stscomp.cpp");
 
     for (int x = 0; x<=prs.size()-1; x++){
-        string wtp = "";
+        string name = "";
+        string val = "";
+
         if (prs[x]=="\tout"){
             for (int y=0; y<=prs[x+1].size();y++){
-                if ((prs[x+1][y]!='\"') && (prs[x+1][y]!=';')){
-                    wtp+=prs[x+1][y];
+                if (prs[x+1][y]!=';'){
+                    val+=prs[x+1][y];
                 }
             }
 
-            string a = "echo '\tstd::cout << \""; 
-            const char *c = "\" << std::endl;' >> stscompile/stscomp.cpp";
-            a+=wtp.c_str();
+            string a = "echo '\tstd::cout << "; 
+            const char *c = " << std::endl;' >> stscompile/stscomp.cpp";
+            a+=val.c_str();
             a+=c;
             const char *prnc = a.c_str(); //kind of a hack, but it works. Makes c_str and concatinates.
 
             system(prnc);
         }
+        else if (prs[x]=="\tstr"){
+            for (int y=0; y<=prs[x+1].size();y++){
+                if (prs[x+1][y]!=':'){
+                    name+=prs[x+1][y];
+                }
+            }
+            for (int y=0; y<=prs[x+2].size();y++){
+                if (prs[x+2][y]!=';'){
+                    val+=prs[x+2][y];
+                }
+            }
+            
+            string a = "echo '\tstd::string ";
+            const char *c = name.c_str();
+            const char *e = " = ";
+            const char *d = val.c_str();
+            const char *f = ";' >> stscompile/stscomp.cpp";
+            a+=c;
+            a+=e;
+            a+=d;
+            a+=f;
+            const char *strc = a.c_str();
+
+            system(strc);
+        }
     }
 
     system("echo '\treturn 0;\\n}\\n' >> stscompile/stscomp.cpp");
+
     system("g++ stscompile/stscomp.cpp -o stsprg.out");
 
     cout << "Successfully Compiled" << endl;

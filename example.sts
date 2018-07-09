@@ -1,3 +1,4 @@
 do{
-	out "hello, world!"
+	str x: "10";
+	out x;
 }end;

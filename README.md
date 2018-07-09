@@ -2,9 +2,9 @@
 
 ## About
 
-StormScript is an interpreted, object-oriented, free scripting language. 
+StormScript is an compiled, object-oriented, scripting language. 
 
-StormScript is programmed in C++ and is simple to use.
+StormScript is based in C++ and is simple to use.
 
 ## Basics
 
@@ -19,6 +19,10 @@ StormScript files have the extension `.sts`
 ## Commands
 
 `do`: initial function
+
+`out`: write to console
+
+`str`: make a string variable
 
 `end`: end current scope
 
