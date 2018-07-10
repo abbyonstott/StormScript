@@ -44,8 +44,8 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
     for (int x = 0; x<=prs.size()-1; x++){
         string name = "";
         string val = "";
-
-        if (prs[x]=="\tout"){
+        
+        if ((prs[x]=="\tout") || (prs[x]=="out")){
             for (int y=0; y<=prs[x+1].size();y++){
                 if (prs[x+1][y]!=';'){
                     val+=prs[x+1][y];
@@ -60,7 +60,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
 
             system(prnc);
         }
-        else if (prs[x]=="\tstr"){
+        else if ((prs[x]=="\tstr") || (prs[x]=="str")){
             for (int y=0; y<=prs[x+1].size();y++){
                 if (prs[x+1][y]!=':'){
                     name+=prs[x+1][y];
@@ -85,7 +85,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
 
             system(strc);
         }
-        else if (prs[x]=="\tint"){
+        else if ((prs[x]=="\tint") || (prs[x]=="int")){
             for (int y=0; y<=prs[x+1].size();y++){
                 if (prs[x+1][y]!=':'){
                     name+=prs[x+1][y];

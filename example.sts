@@ -1,4 +1,3 @@
 do{
-	int x: 30;
-	out x;
+out "hello, world!";
 }end;
