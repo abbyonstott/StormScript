@@ -36,7 +36,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
 }
 
 void sts::compile(string fname, std::vector<string> prg, int psize){
-    std::vector<string> prs= parse(prg);
+    prs = parse(prg);
 
     system("compilecheck.sh");
     system("echo '#include <iostream>\\nint main(){' > stscompile/stscomp.cpp");
@@ -61,58 +61,10 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             system(prnc);
         }
         else if ((prs[x]=="\tstr") || (prs[x]=="str")){
-            for (int y=0; y<=prs[x+1].size();y++){
-                if (prs[x+1][y]!=':'){
-                    name+=prs[x+1][y];
-                }
-            }
-            for (int y=0; y<=prs[x+2].size();y++){
-                if (prs[x+2][y]!=';'){
-                    val+=prs[x+2][y];
-                }
-            }
-            
-            string a = "echo '\tstd::string ";
-            const char *c = name.c_str();
-            const char *e = " = ";
-            const char *d = val.c_str();
-            const char *f = ";' >> stscompile/stscomp.cpp";
-            a+=c;
-            a+=e;
-            a+=d;
-            a+=f;
-            const char *strc = a.c_str();
-
-            system(strc);
+            system(declare('s',x).c_str());
         }
         else if ((prs[x]=="\tint") || (prs[x]=="int")){
-            for (int y=0; y<=prs[x+1].size();y++){
-                if (prs[x+1][y]!=':'){
-                    name+=prs[x+1][y];
-                }
-            }
-            for (int y=0; y<=prs[x+2].size();y++){
-                if (prs[x+2][y]!=';'){
-                    val+=prs[x+2][y];
-                }
-            }
-            for (int y=0; y<=val.size()-2; y++){
-                if (isdigit(val[y])==false){
-                    error(2, name);
-                }
-            }
-            string a = "echo '\tint ";
-            const char *c = name.c_str();
-            const char *e = " = ";
-            const char *d = val.c_str();
-            const char *f = ";' >> stscompile/stscomp.cpp";
-            a+=c;
-            a+=e;
-            a+=d;
-            a+=f;
-            const char *intc = a.c_str();
-
-            system(intc);
+            system(declare('i',x).c_str());
         }
     }
 

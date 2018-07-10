@@ -14,9 +14,9 @@ Overview:
 		sts class: stsclasses.h
 		read and main: here
 		out: stsstream.cpp
-		parser (readline and errors): parse.cpp
+		parser (readline and errors): compile.cpp
 		variable and function declarations: stsdec.cpp
-		Executable(not on git repository): bin directory
+		Executable(not in repo): bin directory
 	Example files (example.sts) are stored in the root directory.
 */
 
@@ -43,7 +43,7 @@ void sts::read(string filename)
 	} //create sizeof in lines
 
 	sizeoff++;
-	std::vector<string> prg(sizeoff); //create vector for lines
+	prg.resize(sizeoff); //create vector for lines
 	int loc = 0;
 	int a = 0;
 	for (int x = 0; x <= contents.size(); x++)

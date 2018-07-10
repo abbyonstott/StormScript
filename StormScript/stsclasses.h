@@ -20,10 +20,13 @@ public:
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<string> varnames; //variable names
 	std::vector<string> vars; //variable contents
+	std::vector<string> prg;
+	std::vector<string> prs;
 	//function
+	string declare(char type, int line); //declare variables - 
 	void error(int num, string issue); //error
 	void read(string filename); //read file
-	string out(string str); //out function
+	string out(int line); //out function
 	std::vector<string> parse(std::vector<string> prg);
 	void decvar(string contents, char type); //declare variables
 	void compile(string fname, std::vector<string> prg, int psize);

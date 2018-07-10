@@ -1,3 +1,6 @@
 do{
-out "hello, world!";
+    int x: 3;
+    str y: "hi";
+    out x;
+    out y;
 }end;

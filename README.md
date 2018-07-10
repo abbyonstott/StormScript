@@ -24,6 +24,8 @@ StormScript files have the extension `.sts`
 
 `str`: make a string variable
 
+`int`: make a integer variable
+
 `end`: end current scope
 
 ## Hello World Program

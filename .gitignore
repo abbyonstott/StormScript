@@ -1,3 +1,5 @@
 .vscode
 stscompile
 stsprg.out
+linux-x86
+linux-arm
