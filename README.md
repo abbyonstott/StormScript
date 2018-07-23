@@ -20,6 +20,8 @@ StormScript files have the extension `.sts`
 
 `do`: initial function
 
+`func`: declare function
+
 `out`: write to console
 
 `str`: make a string variable
@@ -27,6 +29,8 @@ StormScript files have the extension `.sts`
 `int`: make a integer variable
 
 `end`: end current scope
+
+`loop`: loop program
 
 ## Hello World Program
 
