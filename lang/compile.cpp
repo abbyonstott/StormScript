@@ -21,7 +21,8 @@ std::vector<string> sts::parse(std::vector<string> prg){
                     inquotes = false;
                 }
             }
-            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')')) && (inquotes==false)){
+            // this is what checks for chars to remove from parsed version
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='\t')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
@@ -51,15 +52,15 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             int y = x+1;
             int times;
             while (true){
-                if ((prs[y]=="\tout") || (prs[y]=="out")){
+                if (prs[y]=="out"){
                     system(out(y).c_str());
                 }
-                else if ((prs[y]=="\tstr") || (prs[y]=="str")){
+                else if (prs[y]=="str"){
                     if (onloop==false){
                         system(declare('s',y).c_str());
                     }
                 }
-                else if ((prs[y]=="\tint") || (prs[y]=="int")){
+                else if (prs[y]=="int"){
                     if (onloop==false){
                         system(declare('i',y).c_str());
                     }
@@ -105,9 +106,18 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             functions[functions.size()-1]=fdeclare(x);
             int y = x+1;
             while (true){
-                if ((prs[y]=="\tout") || (prs[y]=="out")) {
+                if (prs[y]=="out") {
                     system(out(y).c_str());
                 }
+                else if (prs[y]=="int"){
+                    system(declare('i',y).c_str());
+                }
+                else if (prs[y]=="str"){
+                    system(declare('s',y).c_str());
+                }
+                /* else if (prs[y]=="}loop"){
+                    loop  (will be added later)
+                } */
                 else if (prs[y]=="}end;"){
                     system("echo '}' >> stscompile/stscomp.cpp");
                     break;

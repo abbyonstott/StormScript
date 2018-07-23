@@ -1,5 +1,6 @@
 func y{
-    out "hi";
+    str x: "hi";
+    out x;
 }end;
 
 do{
