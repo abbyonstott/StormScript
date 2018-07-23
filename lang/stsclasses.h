@@ -34,7 +34,7 @@ public:
 	void decvar(string contents, char type); //declare variables
 	void compile(string fname, std::vector<string> prg, int psize);
 	int loop(string line);
-	string fdeclare(int line);
+	string fdeclare(int lifixne);
 	int checkiffunction(string line);
 };
 
