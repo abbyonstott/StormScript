@@ -1,6 +1,7 @@
-do{
-    int x: 3;
-    str y: "hi";
-    out x;
-    out y;
+func y{
+    out "hi";
 }end;
+
+do{
+    y;
+}loop(4);
