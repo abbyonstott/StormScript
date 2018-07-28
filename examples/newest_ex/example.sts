@@ -1,7 +1,9 @@
-#This example program takes user input of z and prints the value
+#This example program takes user input of z and prints the value if it is hi
 func y{
     in str z;
-    out z;
+    if z is "hi"{
+        out z;
+    }end;
 }end;
 
 do{

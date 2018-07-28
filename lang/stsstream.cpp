@@ -29,3 +29,27 @@ string sts::in(int line){
     
     return cmd1;
 }
+
+string sts::ifs(int line){
+    string cmd1 = "echo '\tif (";
+    string name = prs[line];
+    string cmd2;
+    line++;
+    if (prs[line]=="is"){
+        cmd2 = "==";
+    }
+    line++;
+    /*if (isdigit(prs[line])){
+        cmd2+='\"';
+    }
+    TODO: add int support
+    */
+    prs[line].pop_back();
+    string val = prs[line];
+    string cmd3 = "){' >> stscompile/stscomp.cpp";
+    cmd1+=name.c_str();
+    cmd1+=cmd2.c_str();
+    cmd1+=val.c_str();
+    cmd1+=cmd3.c_str();
+    return cmd1;
+}

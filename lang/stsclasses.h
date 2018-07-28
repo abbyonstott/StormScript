@@ -39,6 +39,7 @@ public:
 	void read(string filename); //read file
 	string out(int line); //out function
 	string in(int line); //in function
+	string ifs(int line);
 	std::vector<string> parse(std::vector<string> prg);
 	void decvar(string contents, char type); //declare variables
 	void compile(string fname, std::vector<string> prg, int psize); //compiler

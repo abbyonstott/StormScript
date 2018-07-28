@@ -60,6 +60,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             system("echo 'int main(){' >> stscompile/stscomp.cpp");
             int y = x+1;
             int times;
+            int neededends = 1;
             while (true){
                 if (prs[y]=="out"){
                     system(out(y).c_str());
@@ -93,9 +94,20 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                         system(declare('i',y).c_str());
                     }
                 }
+                else if (prs[y]=="if"){
+                    neededends++;
+                    y++;
+                    system(ifs(y).c_str());
+                }
                 else if (prs[y]=="}end;"){
-                    system("echo '\treturn 0;\n}' >> stscompile/stscomp.cpp");
-                    break;
+                    neededends--;
+                    if (neededends==0){
+                        system("echo '\treturn 0;\n}' >> stscompile/stscomp.cpp");
+                        break;
+                    }
+                    else{
+                        system("echo '\t}' >> stscompile/stscomp.cpp");
+                    }
                 }
                 else{
                     int cf = checkiffunction(prs[y]);
@@ -119,6 +131,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             functions[functions.size()-1]=fdeclare(x);
             fval[fval.size()-1]="";
             int y = x+1;
+            int neededends = 1;
             while (true){
                 if (prs[y]=="out") {
                     system(out(y).c_str());
@@ -141,6 +154,11 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                     }
                     system(in(y).c_str());
                 }
+                else if (prs[y]=="if"){
+                    neededends++;
+                    y++;
+                    system(ifs(y).c_str());
+                }
                 else if (prs[y]=="int"){
                     system(declare('i',y).c_str());
                 }
@@ -151,8 +169,14 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                     //TODO: add return
                 }
                 else if (prs[y]=="}end;"){
-                    system("echo '}' >> stscompile/stscomp.cpp");
-                    break;
+                    neededends--;
+                    if (neededends==0){
+                        system("echo '}' >> stscompile/stscomp.cpp");
+                        break;
+                    }
+                    else{
+                        system("echo '\t}' >> stscompile/stscomp.cpp");
+                    }
                 }
                 y++;
             }
