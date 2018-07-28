@@ -109,6 +109,22 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                         system("echo '\t}' >> stscompile/stscomp.cpp");
                     }
                 }
+                else if (prs[y]=="}loop"){
+                    if (onloop==false){
+                        times = std::stoi(prs[y+1]);
+                        onloop = true;
+                        y = x+1;
+                        continue;
+                    }
+                    else if (times!=2){
+                        y = x+1;
+                        times--;
+                    }
+                    else{
+                        system("echo '\treturn 0;\n}' >> stscompile/stscomp.cpp");
+                        break;
+                    }
+                }
                 else{
                     int cf = checkiffunction(prs[y]);
                     if ((cf == -1) && (prs[y]!="")){ // if it's not a function give error
@@ -132,6 +148,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             fval[fval.size()-1]="";
             int y = x+1;
             int neededends = 1;
+            int times;
             while (true){
                 if (prs[y]=="out") {
                     system(out(y).c_str());
@@ -176,6 +193,22 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                     }
                     else{
                         system("echo '\t}' >> stscompile/stscomp.cpp");
+                    }
+                }
+                else if (prs[y]=="}loop"){
+                    if (onloop==false){
+                        times = std::stoi(prs[y+1]);
+                        onloop = true;
+                        y = x+1;
+                        continue;
+                    }
+                    else if (times!=2){
+                        y = x+1;
+                        times--;
+                    }
+                    else{
+                        system("echo '}' >> stscompile/stscomp.cpp");
+                        break;
                     }
                 }
                 y++;

@@ -8,4 +8,4 @@ func y{
 
 do{
     y;
-}end;
+}loop(20);
