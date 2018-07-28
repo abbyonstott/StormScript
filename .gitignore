@@ -5,3 +5,5 @@ linux-x86
 linux-arm
 release
 *.obj
+comwin.sh
+comlinux.sh
