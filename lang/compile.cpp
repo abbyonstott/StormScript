@@ -30,6 +30,9 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
+            else if ((prg[y][z]=='#') && (inquotes==false)){
+                break;
+            }
             else{
                 x[x.size()-1]+=prg[y][z];
             }
