@@ -1,5 +1,4 @@
 #include "stsclasses.h" 
-
 /*
 the compiler parses the file and calls functions in other files
 */
@@ -22,16 +21,18 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from parsed version
-            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='\t')) && (inquotes==false)){
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
             }
-
+            else if (prg[y][z]=='\t'){
+                z++;
+                continue;
+            }
             else{
                 x[x.size()-1]+=prg[y][z];
             }
-            
             z++;
         }
 
@@ -43,7 +44,12 @@ std::vector<string> sts::parse(std::vector<string> prg){
 
 void sts::compile(string fname, std::vector<string> prg, int psize){
     prs = parse(prg);
-
+    if (PLATFORM == "Windows"){
+        system("compilecheck.bat");
+    }
+    else{
+        system("compilecheck.sh");
+    }
     system("compilecheck.sh");
     system("echo '#include <iostream>' > stscompile/stscomp.cpp");
     for (int x = 0; x<=prs.size(); x++){
@@ -54,6 +60,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             while (true){
                 if (prs[y]=="out"){
                     system(out(y).c_str());
+                    y++;
                 }
                 else if (prs[y]=="str"){
                     if (onloop==false){

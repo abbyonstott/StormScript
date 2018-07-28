@@ -4,5 +4,6 @@ func y{
 }end;
 
 do{
+    out "hi";
     y;
-}loop(4);
+}end;

@@ -2,6 +2,12 @@
 #ifndef STSCLASSES_H_
 #define STSCLASSES_H_
 
+#if defined(_WIN32)
+#define PLATFORM "Windows"
+#else
+#define PLATFORM "unix"
+#endif
+
 #include <iostream>
 #include <string>
 #include <fstream>
