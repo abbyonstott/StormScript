@@ -65,6 +65,24 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                     system(out(y).c_str());
                     y++;
                 }
+                if (prs[y]=="in"){
+                    y++;
+                    char t; //type
+                    if ((prs[y]=="str") || (prs[y]=="int")){ //check if it declaring
+                        if (prs[y]=="str"){
+                            t='s';
+                        }
+                        else{
+                            t='i';
+                        }
+                        y++;
+                        system(bdeclare(t,y).c_str());
+                    }
+                    else{
+                        error(6,"");
+                    }
+                    system(in(y).c_str());
+                }
                 else if (prs[y]=="str"){
                     if (onloop==false){
                         system(declare('s',y).c_str());
@@ -78,22 +96,6 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                 else if (prs[y]=="}end;"){
                     system("echo '\treturn 0;\n}' >> stscompile/stscomp.cpp");
                     break;
-                }
-                else if (prs[y]=="}loop"){
-                    if (onloop==false){
-                        times = std::stoi(prs[y+1]);
-                        onloop = true;
-                        y = x+1;
-                        continue;
-                    }
-                    else if (times!=2){
-                        y = x+1;
-                        times--;
-                    }
-                    else{
-                        system("echo '\treturn 0;\n}' >> stscompile/stscomp.cpp");
-                        break;
-                    }
                 }
                 else{
                     int cf = checkiffunction(prs[y]);
@@ -113,11 +115,31 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
         }
         else if (prs[x]=="func"){
             functions.resize(functions.size()+1);
+            fval.resize(fval.size()+1);
             functions[functions.size()-1]=fdeclare(x);
+            fval[fval.size()-1]="";
             int y = x+1;
             while (true){
                 if (prs[y]=="out") {
                     system(out(y).c_str());
+                }
+                if (prs[y]=="in"){
+                    y++;
+                    char t; //type
+                    if ((prs[y]=="str") || (prs[y]=="int")){ //check if it declaring
+                        if (prs[y]=="str"){
+                            t='s';
+                        }
+                        else{
+                            t='i';
+                        }
+                        y++;
+                        system(bdeclare(t,y).c_str());
+                    }
+                    else{
+                        error(6,"");
+                    }
+                    system(in(y).c_str());
                 }
                 else if (prs[y]=="int"){
                     system(declare('i',y).c_str());
@@ -125,9 +147,9 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                 else if (prs[y]=="str"){
                     system(declare('s',y).c_str());
                 }
-                /* else if (prs[y]=="}loop"){
-                    loop  (will be added later)
-                } */
+                else if (prs[y]=="return"){
+                    //TODO: add return
+                }
                 else if (prs[y]=="}end;"){
                     system("echo '}' >> stscompile/stscomp.cpp");
                     break;

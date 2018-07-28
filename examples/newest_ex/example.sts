@@ -1,9 +1,9 @@
+#This example program takes user input of z and prints the value
 func y{
-    str x: "hi";
-    out x;
+    in str z;
+    out z;
 }end;
-#Comments work, too!
+
 do{
-    out "hi";
     y;
 }end;

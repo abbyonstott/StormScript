@@ -20,3 +20,12 @@ string sts::out(int line){
 
     return a;
 }
+
+string sts::in(int line){
+    string cmd1 = "echo '\tstd::cin >> ";
+    string cmd2 = ";' >> stscompile/stscomp.cpp";
+    cmd1+=prs[line].c_str();
+    cmd1+=cmd2.c_str();
+    
+    return cmd1;
+}

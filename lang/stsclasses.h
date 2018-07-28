@@ -31,14 +31,17 @@ public:
 	std::vector<string> prg;
 	std::vector<string> prs;
 	std::vector<string> functions;
+	std::vector<string> fval;
 	//functions
-	string declare(char type, int line); //declare variables - 
+	string declare(char type, int line); //declare variables
+	string bdeclare(char type, int line); //allows for declaration without values
 	void error(int num, string issue); //error
 	void read(string filename); //read file
 	string out(int line); //out function
+	string in(int line); //in function
 	std::vector<string> parse(std::vector<string> prg);
 	void decvar(string contents, char type); //declare variables
-	void compile(string fname, std::vector<string> prg, int psize);
+	void compile(string fname, std::vector<string> prg, int psize); //compiler
 	int loop(string line);
 	string fdeclare(int lifixne);
 	int checkiffunction(string line);

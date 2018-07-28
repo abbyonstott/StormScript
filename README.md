@@ -30,8 +30,6 @@ StormScript files have the extension `.sts`
 
 `end`: end current scope
 
-`loop`: loop program
-
 ## Hello World Program
 
 ```
