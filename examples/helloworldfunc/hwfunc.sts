@@ -1,0 +1,6 @@
+func hw{
+    out "Hello, World!";
+}end;
+do{
+    hw;
+}end;  

@@ -5,7 +5,7 @@
 #if defined(_WIN32)
 #define PLATFORM "Windows"
 #else
-#define PLATFORM "unix"
+#define PLATFORM "other"
 #endif
 
 #include <iostream>

@@ -2,7 +2,7 @@ func y{
     str x: "hi";
     out x;
 }end;
-
+#Comments work, too!
 do{
     out "hi";
     y;
