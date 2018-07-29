@@ -1,0 +1,7 @@
+func hw{
+        out "hello world";
+}end;
+
+do{
+        hw;
+}loop(9);

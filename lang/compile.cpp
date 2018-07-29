@@ -62,11 +62,11 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             int times;
             int neededends = 1;
             while (true){
+                cout << "prs[y]" << endl;
                 if (prs[y]=="out"){
                     system(out(y).c_str());
-                    y++;
                 }
-                if (prs[y]=="in"){
+                else if (prs[y]=="in"){
                     y++;
                     char t; //type
                     if ((prs[y]=="str") || (prs[y]=="int")){ //check if it declaring
@@ -142,6 +142,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
             }
         }
         else if (prs[x]=="func"){
+            
             functions.resize(functions.size()+1);
             fval.resize(fval.size()+1);
             functions[functions.size()-1]=fdeclare(x);
@@ -153,7 +154,7 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                 if (prs[y]=="out") {
                     system(out(y).c_str());
                 }
-                if (prs[y]=="in"){
+                else if (prs[y]=="in"){
                     y++;
                     char t; //type
                     if ((prs[y]=="str") || (prs[y]=="int")){ //check if it declaring

@@ -7,6 +7,7 @@ stsstream.cpp: all of the basic input and output streams.
 string sts::out(int line){
     string name = "";
     string val = "";
+
     for (int y=0; y<=prs[line+1].size();y++){
         if (prs[line+1][y]!=';'){
             val+=prs[line+1][y];

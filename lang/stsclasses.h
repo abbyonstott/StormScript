@@ -26,8 +26,6 @@ public:
 	int lineon; //line the parser is on
 	unsigned int sizeoff = 0; //size of the program
 	bool onloop=false;
-	std::vector<string> varnames; //variable names
-	std::vector<string> vars; //variable contents
 	std::vector<string> prg;
 	std::vector<string> prs;
 	std::vector<string> functions;
