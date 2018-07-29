@@ -5,7 +5,7 @@
 #if defined(_WIN32)
 #define PLATFORM "Windows"
 #else
-#define PLATFORM "other"
+#define PLATFORM "unix"
 #endif
 
 #include <iostream>
@@ -31,18 +31,14 @@ public:
 	std::vector<string> prg;
 	std::vector<string> prs;
 	std::vector<string> functions;
-	std::vector<string> fval;
 	//functions
-	string declare(char type, int line); //declare variables
-	string bdeclare(char type, int line); //allows for declaration without values
+	string declare(char type, int line); //declare variables - 
 	void error(int num, string issue); //error
 	void read(string filename); //read file
 	string out(int line); //out function
-	string in(int line); //in function
-	string ifs(int line);
 	std::vector<string> parse(std::vector<string> prg);
 	void decvar(string contents, char type); //declare variables
-	void compile(string fname, std::vector<string> prg, int psize); //compiler
+	void compile(string fname, std::vector<string> prg, int psize);
 	int loop(string line);
 	string fdeclare(int lifixne);
 	int checkiffunction(string line);

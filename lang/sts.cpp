@@ -93,9 +93,6 @@ void sts::error(int num, string issue)
 	{
 		cout << "Error: " << issue << " not a recognised command" << endl;
 	}
-	else if (num == 6){
-		cout << "Error: In statement must have type" << endl;
-	}
 	exit(0);
 }
 
