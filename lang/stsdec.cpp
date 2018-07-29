@@ -13,17 +13,21 @@ string sts::declare(char type, int line){ //variable declarations
     string a; //command to compile
 
     if (type == 'i'){
-        prs[line+1].pop_back();
-        prs[line+2].pop_back();
-        name=prs[line+1];
-        val = prs[line+2];
-
+        for (int y=0; y<=prs[line+1].size();y++){
+            if (prs[line+1][y]!=':'){
+                name+=prs[line+1][y];
+            }
+        }
+        for (int y=0; y<=prs[line+2].size();y++){
+            if (prs[line+2][y]!=';'){
+                val+=prs[line+2][y];
+            }
+        }
         for (int y=0; y<=val.size()-2; y++){
             if (isdigit(val[y])==false){
                 error(2, name);
             }
         }
-        
         a = "echo '\tint ";
         const char *c = name.c_str();
         const char *e = " = ";
@@ -35,10 +39,16 @@ string sts::declare(char type, int line){ //variable declarations
         a+=f;
     }
     else if (type == 's'){
-        prs[line+1].pop_back();
-        prs[line+2].pop_back();
-        name=prs[line+1];
-        val = prs[line+2];
+        for (int y=0; y<=prs[line+1].size();y++){
+            if (prs[line+1][y]!=':'){
+                name+=prs[line+1][y];
+            }
+        }
+        for (int y=0; y<=prs[line+2].size();y++){
+            if (prs[line+2][y]!=';'){
+                val+=prs[line+2][y];
+            }
+        }
         
         a = "echo '\tstd::string ";
         const char *c = name.c_str();
@@ -52,20 +62,6 @@ string sts::declare(char type, int line){ //variable declarations
     }
 
     return a;
-}
-
-string sts::bdeclare(char type, int line){
-    string cmd1;
-    if (type='s'){
-        cmd1 = "echo '\tstd::string ";
-    }
-    string cmd2 = ";' >> stscompile/stscomp.cpp";
-    prs[line].pop_back();
-    string name = prs[line];
-
-    cmd1+=name.c_str();
-    cmd1+=cmd2.c_str();
-    return cmd1;
 }
 
 string sts::fdeclare(int line){
