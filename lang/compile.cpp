@@ -50,17 +50,16 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
     else{
         system("compilecheck.sh");
     }
-    system("compilecheck.sh");
     system("echo '#include <iostream>' > stscompile/stscomp.cpp");
-    for (int x = 0; x<=prs.size(); x++){
+    for (int x = 0; x<=prs.size()-1; x++){
         if (prs[x]=="do{"){
             system("echo 'int main(){' >> stscompile/stscomp.cpp");
             int y = x+1;
             int times;
             while (true){
-                cout << "prs[y]" << endl;
                 if (prs[y]=="out"){
                     system(out(y).c_str());
+                    y++;
                 }
                 else if (prs[y]=="str"){
                     if (onloop==false){
@@ -93,16 +92,18 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                     }
                 }
                 else{
-                    int cf = checkiffunction(prs[y]);
-                    if ((cf == -1) && (prs[y]!="")){ // if it's not a function give error
-                        error(5,prs[y]);
-                    }
-                    else if (prs[y]!=""){
-                        string cmd1 = "echo '\t";
-                        string cmd2 = "();' >> stscompile/stscomp.cpp";
-                        cmd1 += functions[cf].c_str();
-                        cmd1 += cmd2.c_str();
-                        system(cmd1.c_str());
+                    if (prs[y] != ""){
+                        int cf = checkiffunction(prs[y]);
+                        if (cf == -1){ // if it's not a function give error
+                            error(5,prs[y]);
+                        }
+                        else{
+                            string cmd1 = "echo '\t";
+                            string cmd2 = "();' >> stscompile/stscomp.cpp";
+                            cmd1 += functions[cf].c_str();
+                            cmd1 += cmd2.c_str();
+                            system(cmd1.c_str());
+                        }
                     }
                 }
                 y++;
