@@ -8,3 +8,4 @@ release
 *.code-workspace
 comwin.sh
 comlinux.sh
+comlinuxarm.sh

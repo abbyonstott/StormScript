@@ -1,6 +1,6 @@
-func f{
-    str z: "h";
-}end;
 do{
-    f;
+    in str x;
+    if x is "hello"{
+        out "hi";
+    }end;
 }end;

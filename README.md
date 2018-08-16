@@ -1,39 +1,65 @@
-# General
+# StormScript
 
-## About
+## General
 
-StormScript is an compiled, object-oriented, scripting language. 
+### About
+
+StormScript is an interpreted, object-oriented, scripting language. 
 
 StormScript is based in C++ and is simple to use.
 
-## Basics
+### Basics
 
-StormScript was made on the idea that it is possible to have a strong, object-oriented programming language that has short, easy to remember syntax.
+StormScript was made on the idea that it is possible to have a strong scripting language that has short, easy to remember syntax.
 
-# The Language
+## The Language
 
-## Files
+### Files
 
 StormScript files have the extension `.sts`
 
-## Commands
+### Running files
+
+_Once you add the executable to your PATH environment variable:_
+
+* `sts filename.sts`
+
+
+### Commands
 
 `do`: initial function
 
-`func`: declare function
-
 `out`: write to console
+
+`in`: take input from console
 
 `str`: make a string variable
 
 `int`: make a integer variable
 
-`end`: end current scope
+`if`: if statement
 
-## Hello World Program
+`end`: end current scope
+## Examples:
+
+### Hello World Program
 
 ```
 do{
   out "Hello, World";
 }end;
 ```
+
+### Dealing With Input
+
+```
+do{
+  in str x;
+
+  if x is "hi"{
+    out "you typed hi!";
+  }end;
+}end;
+```
+
+_version specific examples can be found in the `example.sts` file_

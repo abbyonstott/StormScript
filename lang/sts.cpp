@@ -64,7 +64,7 @@ void sts::read(string filename)
 		prg[prg.size() - 1] += contents[x];
 	} //add last line to vector
 
-	compile(filename, prg, sizeoff);
+	interp(filename, prg, sizeoff);
 }
 
 void sts::error(int num, string issue)

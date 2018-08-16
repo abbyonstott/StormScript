@@ -19,27 +19,35 @@ using std::string;
 using std::cout;
 using std::endl;
 
+
+class stsvars{
+public:
+	int valint = 0;
+	string valstring = "";
+	char type;
+	string name;
+};
+
 class sts
 {
 public:
 	//variables
 	int lineon; //line the parser is on
 	unsigned int sizeoff = 0; //size of the program
-	bool onloop=false;
+
 	std::vector<string> prg;
 	std::vector<string> prs;
-	std::vector<string> functions;
 	//functions
-	string declare(char type, int line); //declare variables - 
+	stsvars declare(char type, int line); //declare variables - 
 	void error(int num, string issue); //error
 	void read(string filename); //read file
-	string out(int line); //out function
+	void out(int line, std::vector<stsvars> current_vars); //out function
+	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
-	void decvar(string contents, char type); //declare variables
-	void compile(string fname, std::vector<string> prg, int psize);
-	int loop(string line);
-	string fdeclare(int lifixne);
-	int checkiffunction(string line);
+	void interp(string fname, std::vector<string> prg, int psize);
+	bool compare(int line, std::vector<stsvars> current_vars);
 };
+
+
 
 #endif
