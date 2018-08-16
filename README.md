@@ -46,7 +46,7 @@ _Once you add the executable to your PATH environment variable:_
 
 ```
 do{
-  out "Hello, World";
+  out "Hello, World!\n";
 }end;
 ```
 
@@ -57,7 +57,7 @@ do{
   in str x;
 
   if x is "hi"{
-    out "you typed hi!";
+    out "you typed hi!\n";
   }end;
 }end;
 ```
