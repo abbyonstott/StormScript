@@ -1,3 +1,6 @@
+func f{
+    str z: "h";
+}end;
 do{
-    out "Hello, World";
+    f;
 }end;

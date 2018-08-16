@@ -64,6 +64,8 @@ void sts::compile(string fname, std::vector<string> prg, int psize){
                 else if (prs[y]=="str"){
                     if (onloop==false){
                         system(declare('s',y).c_str());
+                        y++;
+                        y++;
                     }
                 }
                 else if (prs[y]=="int"){
