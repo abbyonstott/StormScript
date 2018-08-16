@@ -23,8 +23,15 @@ void sts::out(int line, std::vector<stsvars> current_vars){
             }
         }
     }
+    
+    for (int x = 0; x<=val.size(); x++){
+        if ((val[x]=='\\') && (val[x+1]=='n')){
+            val.pop_back();
+            val[x]='\n';
+        }
+    }
 
-    cout << val << endl;
+    cout << val;
 }
 
 stsvars sts::in(int line){

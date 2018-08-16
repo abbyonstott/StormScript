@@ -1,6 +1,7 @@
 do{
+    out "Type hello: ";
     in str x;
     if x is "hello"{
-        out "hi";
+        out "hi\n";
     }end;
 }end;
