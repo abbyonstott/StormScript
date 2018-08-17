@@ -3,5 +3,9 @@ do{
     in str x;
     if x is "hello"{
         out "hi\n";
+    }else{
+        out "You typed ";
+        out x;
+        out " instead of hello. :(\n";
     }end;
 }end;

@@ -65,8 +65,18 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     else{
                         while (prs[y]!="}end;"){
                             y++;
+                            if (prs[y]=="}else{"){
+                                endreq+=1;
+                                break;
+                            }
                         }
                     }
+                }
+                else if (prs[y]=="}else{"){
+                    while (prs[y]!="}end;"){
+                        y++;
+                    }
+                    endreq-=1;
                 }
                 else if (prs[y]=="int"){
                     vars.resize(vars.size()+1);
