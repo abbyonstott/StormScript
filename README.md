@@ -37,7 +37,7 @@ _Once you add the executable to your PATH environment variable:_
 
 `int`: make a integer variable
 
-`if`: if statement
+`if`, `else`: if statement
 
 `end`: end current scope
 ## Examples:
