@@ -25,9 +25,14 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if (prg[y][z]=='\t'){
+            else if ((prg[y][z]=='\t') || (prg[y][z]==',')){
                 z++;
                 continue;
+            }
+            else if (prg[y][z]==';'){
+                x.resize(x.size()+1);
+                x[x.size()-1]+=prg[y][z];
+                x.resize(x.size()+1);
             }
             else{
                 x[x.size()-1]+=prg[y][z];
@@ -49,7 +54,6 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
             names.resize(names.size()+1);
             names[names.size()-1]=prs[x+1];
             names[names.size()-1].pop_back();
-            system("cache.sh");
         }
         else if (prs[x]=="do{"){
             std::vector<stsvars> vars;
@@ -58,46 +62,61 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
             int endreq = 1;
             while (true){
                 if (prs[y]=="out"){
-                    out(y,vars);
+                    y++;
+                    while(prs[y]!=";"){
+                        out(y, vars);
+                        y++;
+                    }
                 }
                 else if (prs[y]=="in"){
                     vars.resize(vars.size()+1);
+                    y++;
                     vars[vars.size()-1]=in(y);
                     y+=2;
                 }
                 else if (prs[y]=="if"){
+                    y++;
                     if (compare(y,vars)){
                         endreq+=1;
                     }
                     else{
-                        while (prs[y]!="}end;"){
+                        while (prs[y]!="}end"){
                             y++;
                             if (prs[y]=="}else{"){
                                 endreq+=1;
                                 break;
                             }
                         }
+                        if (prs[y]!="}end") {
+                            y++;
+                        }
                     }
                 }
                 else if (prs[y]=="}else{"){
-                    while (prs[y]!="}end;"){
+                    while (prs[y]!="}end"){
                         y++;
                     }
                     endreq-=1;
+                    y++;
                 }
                 else if (prs[y]=="int"){
+                    y++;
                     vars.resize(vars.size()+1);
                     vars[vars.size()-1]=declare('i',y);
+                    y++;
                 }
                 else if (prs[y]=="str"){
+                    y++;
                     vars.resize(vars.size()+1);
                     vars[vars.size()-1]=declare('s',y);
+                    y++;
                 }
-                else if (prs[y]=="}end;"){
+                else if (prs[y]=="}end"){
                     endreq-=1;
                     if (endreq==0){
                         break;
                     }
+                    y++;
                 }
                 y++;
             }

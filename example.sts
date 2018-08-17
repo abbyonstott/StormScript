@@ -1,13 +1,3 @@
-lib cache;
-
 do{
-    out "Type hello: ";
-    in str x;
-    if x is "hello"{
-        out "hi\n";
-    }else{
-        out "You typed ";
-        out x;
-        out " instead of hello. :(\n";
-    }end;
+    out "Kenobi: Hello There!\n", "Grievous: General Kenobi!\n";
 }end;

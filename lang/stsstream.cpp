@@ -7,15 +7,14 @@ stsstream.cpp: all of the basic input and output streams.
 void sts::out(int line, std::vector<stsvars> current_vars){
     string val = "";
 
-    prs[line+1].pop_back();
-    if (prs[line+1][0]=='\"'){
-        prs[line+1].erase(prs[line+1].begin());
-        prs[line+1].pop_back();
-        val = prs[line+1];
+    if (prs[line][0]=='\"'){
+        prs[line].erase(prs[line].begin());
+        prs[line].pop_back();
+        val = prs[line];
     }
     else{
         for (int x = 0; x<=current_vars.size(); x++){
-            if (prs[line+1]==current_vars[x].name){
+            if (prs[line]==current_vars[x].name){
                 if (current_vars[x].type=='i') { val = std::to_string(current_vars[x].valint); }
                 else { val = current_vars[x].valstring; }
 
@@ -37,14 +36,13 @@ void sts::out(int line, std::vector<stsvars> current_vars){
 stsvars sts::in(int line){
     stsvars input;
 
-    prs[line+2].pop_back();
-    input.name = prs[line+2];
+    input.name = prs[line+1];
 
-    if (prs[line+1]=="int"){
+    if (prs[line]=="int"){
         input.type = 'i';
         std::cin >> input.valint;
     }
-    else if (prs[line+1]=="str"){
+    else if (prs[line]=="str"){
         input.type = 's';
         std::cin >> input.valstring;
     }
@@ -54,18 +52,18 @@ stsvars sts::in(int line){
 
 bool sts::compare(int line, std::vector<stsvars> current_vars){
     bool condition = 0;
-    prs[line+3].pop_back();
+    prs[line+2].pop_back();
     for (int x = 0; x<=current_vars.size(); x++){
-        if (current_vars[x].name==prs[line+1]){
-            if ((current_vars[x].type=='i') && (current_vars[x].valint==std::stoi(prs[line+3]))){
+        if (current_vars[x].name==prs[line]){
+            if ((current_vars[x].type=='i') && (current_vars[x].valint==std::stoi(prs[line+2]))){
                 condition=1;
             }
 
             else if (current_vars[x].type=='s'){
-                if (prs[line+3][0]=='\"'){
-                    prs[line+3].erase(prs[line+3].begin());
-                    prs[line+3].pop_back();
-                    if (prs[line+3]==current_vars[x].valstring){
+                if (prs[line+2][0]=='\"'){
+                    prs[line+2].erase(prs[line+2].begin());
+                    prs[line+2].pop_back();
+                    if (prs[line+2]==current_vars[x].valstring){
                         condition=1;
                     }
                 }
