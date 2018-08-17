@@ -43,8 +43,15 @@ std::vector<string> sts::parse(std::vector<string> prg){
 
 void sts::interp(string fname, std::vector<string> prg, int psize){
     prs = parse(prg);
+    std::vector<string> names; // the names of imported libraries
     for (int x = 0; x<=prs.size()-1; x++){
-        if (prs[x]=="do{"){
+        if (prs[x]=="lib"){
+            names.resize(names.size()+1);
+            names[names.size()-1]=prs[x+1];
+            names[names.size()-1].pop_back();
+            system("cache.sh");
+        }
+        else if (prs[x]=="do{"){
             std::vector<stsvars> vars;
             int y = x+1;
             int times;

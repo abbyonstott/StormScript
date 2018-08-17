@@ -1,3 +1,5 @@
+lib cache;
+
 do{
     out "Type hello: ";
     in str x;
