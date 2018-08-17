@@ -1,3 +1,9 @@
 do{
-    out "Kenobi: Hello There!\n", "Grievous: General Kenobi!\n";
+    out "Type hello: ";
+    in str x;
+    if x is "hello"{
+        out "Hello!\n";
+    }else{
+        out "You typed ", x, ", not hello. :(\n"; 
+    }end;
 }end;

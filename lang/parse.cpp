@@ -25,7 +25,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if ((prg[y][z]=='\t') || (prg[y][z]==',')){
+            else if ((prg[y][z]=='\t') || (prg[y][z]==',') && (inquotes==false)){
                 z++;
                 continue;
             }
@@ -50,12 +50,12 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
     prs = parse(prg);
     std::vector<string> names; // the names of imported libraries
     for (int x = 0; x<=prs.size()-1; x++){
-        if (prs[x]=="lib"){
+        /*if (prs[x]=="lib"){
             names.resize(names.size()+1);
             names[names.size()-1]=prs[x+1];
             names[names.size()-1].pop_back();
-        }
-        else if (prs[x]=="do{"){
+        }*/ //TODO: Add library support
+        if (prs[x]=="do{"){
             std::vector<stsvars> vars;
             int y = x+1;
             int times;
