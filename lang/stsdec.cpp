@@ -4,7 +4,6 @@
 stsdec.cpp: basic type and function declarations
 declare(): variables
 fdeclare(): declare functions
-checkiffunction(): returns a boolean of if the name is a function or not
 */
 
 
@@ -26,4 +25,26 @@ stsvars sts::declare(char type, int line){ //variable declarations
         new_var.valstring = prs[line+1];
     }
     return new_var;
+}
+
+stsfunc sts::fdeclare(int line){
+    stsfunc new_func;
+    line++;
+
+    if (prs[line]=="int"){
+        new_func.type='i';
+    }
+    else if (prs[line]=="str"){
+        new_func.type='s';
+    }
+    else if (prs[line]=="void"){
+        new_func.type='v';
+    }
+    else{
+        error(2,prs[line]);
+    }
+    prs[line+1].pop_back();
+    new_func.name = prs[line+1];
+    new_func.line = line+1;
+    return new_func;
 }

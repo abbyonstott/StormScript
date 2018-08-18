@@ -28,6 +28,11 @@ public:
 	string name;
 };
 
+class stsfunc : public stsvars {
+public:
+	int line;
+};
+
 class sts
 {
 public:
@@ -38,7 +43,8 @@ public:
 	std::vector<string> prg;
 	std::vector<string> prs;
 	//functions
-	stsvars declare(char type, int line); //declare variables - 
+	stsvars declare(char type, int line); //declare variables -
+	stsfunc fdeclare(int line); 
 	void error(int num, string issue); //error
 	void read(string filename); //read file
 	void out(int line, std::vector<stsvars> current_vars); //out function

@@ -71,27 +71,15 @@ void sts::error(int num, string issue)
 {
 	if (num == 0)
 	{
-		cout << "Error: No variable named \"" << issue << "\"." << endl;
+		cout << "Error: No input files" << endl;
 	}
 	else if (num == 1)
 	{
-		cout << "Error: string variable must have name" << endl;
+		cout << "Error: " << issue << " not a recognised command" << endl;
 	}
 	else if (num == 2)
 	{
-		cout << "Error: integer \"" << issue << "\" must be a number" << endl;
-	}
-	else if (num == 3)
-	{
-		cout << "Error: string \"" << issue << "\" must be a string" << endl;
-	}
-	else if (num == 4)
-	{
-		cout << "Error: No input files" << endl;
-	}
-	else if (num == 5)
-	{
-		cout << "Error: " << issue << " not a recognised command" << endl;
+		cout << "Error: " << issue << " not a recognised type" << endl;
 	}
 	exit(0);
 }
@@ -106,7 +94,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		script.error(4, "");
+		script.error(0, "");
 	}
 
 	return 0;

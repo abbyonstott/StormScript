@@ -1,9 +1,8 @@
+func void z{
+    int x: 3;
+    out x, "\n";
+}end;
+
 do{
-    out "Type hello: ";
-    in str x;
-    if x is "hello"{
-        out "Hello!\n";
-    }else{
-        out "You typed ", x, ", not hello. :(\n"; 
-    }end;
+    z;
 }end;
