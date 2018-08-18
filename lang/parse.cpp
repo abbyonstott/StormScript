@@ -59,9 +59,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
         if (prs[x]=="do{"){
             std::vector<stsvars> vars;
             int y = x+1;
-            int realline = y;
             int times;
-            bool infunc = 0;
             int endreq = 1;
             while (true){
                 if (prs[y]=="out"){
@@ -119,35 +117,15 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     if (endreq==0){
                         break;
                     }
-                    else if (infunc==1){
-                        y=realline;
-                        continue;
-                    }
                     y++;
                 }
                 else{
-                    bool t = 0;
-                    for (int z = 0; z<=functions.size()-1; z++){ //check if command is function
-                        if ((functions[z].name==prs[y]) && (infunc==0)) {
-                            endreq++;
-                            y++;
-                            realline=y;
-                            y=functions[z].line;
-                            infunc = 1;
-                            t=1;
-                            break;
-                        }
-                    }
-                    if ((prs[y]!="") && (prs[y]!=";") && (t==0)){ //if not function give error
+                    if ((prs[y]!="") && (prs[y]!=";")) { //if not function give error
                         error(1,prs[y]);
                     }
                 }
                 y++;
             }
-        }
-        else if (prs[x]=="func"){
-            functions.resize(functions.size()+1);
-            functions[functions.size()-1] = fdeclare(x);
         }
     }
 }   

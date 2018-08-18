@@ -1,5 +1,4 @@
 .vscode
-libraries/
 stscompile
 stsprg.out
 linux-x86

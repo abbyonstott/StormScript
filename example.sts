@@ -1,8 +1,3 @@
-func void z{
-    str x: "hi from function z!";
-    out x, "\n";
-}end;
-
 do{
-    z;
+    out "hi\n";
 }end;
