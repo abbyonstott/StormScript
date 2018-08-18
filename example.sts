@@ -1,5 +1,5 @@
 func void z{
-    int x: 3;
+    str x: "hi from function z!";
     out x, "\n";
 }end;
 

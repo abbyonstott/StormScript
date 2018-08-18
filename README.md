@@ -37,9 +37,12 @@ _Once you add the executable to your PATH environment variable:_
 
 `int`: make a integer variable
 
+`func`: make a function
+
 `if`, `else`: if statement
 
 `end`: end current scope
+
 ## Examples:
 
 ### Hello World Program
@@ -58,8 +61,12 @@ do{
 
   if x is "hi"{
     out "you typed hi!\n";
+  }else{
+    out "You didn't type hi\n";
   }end;
 }end;
 ```
 
 _version specific examples can be found in the `example.sts` file_
+
+Tutorial available [here](https://stormprograms.com/stormscript/helloworld).
