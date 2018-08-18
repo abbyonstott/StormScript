@@ -1,3 +1,11 @@
 do{
-    out "hi\n";
+    int x: 3;
+    str y: "hi";
+    out x, "\n";
+    x: 4;
+    out x, "\n";
+    x: 5;
+    out x, "\n", y, "\n";
+    y: "f";
+    out y, "\n";
 }end;

@@ -120,7 +120,27 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     y++;
                 }
                 else{
-                    if ((prs[y]!="") && (prs[y]!=";")) { //if not function give error
+                    bool isvar = 0;
+                    if (vars.size()!=0){
+                        string s = prs[y];
+                        s.pop_back();
+                        for (int z = 0; z<=vars.size()-1; z++){
+                            if (s == vars[z].name){
+                                isvar = 1;
+                                if (vars[z].type=='i'){
+                                    vars[z].valint = std::stoi(prs[y+1]);
+                                }
+                                else{
+                                    prs[y+1].pop_back();
+                                    prs[y+1].erase(prs[y+1].begin());
+                                    vars[z].valstring = prs[y+1];
+                                }
+                                y++;
+                                break;
+                            }
+                        }
+                    }
+                    if ((prs[y]!="") && (prs[y]!=";") && (isvar==0)) { //if not function give error
                         error(1,prs[y]);
                     }
                 }
