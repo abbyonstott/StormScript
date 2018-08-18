@@ -1,6 +1,6 @@
 #include "stsclasses.h" 
 /*
-the compiler parses the file and calls functions in other files
+the interpreter parses the file and calls functions in other files
 */
 
 std::vector<string> sts::parse(std::vector<string> prg){
