@@ -39,7 +39,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
             }
             z++;
         }
-
         y++;
     }
     x[x.size()-1].pop_back(); //removes EOF char from end of file so I can parse
@@ -143,8 +142,14 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                         for (int z = 0; z<=names.size()-1; z++){
                             if (names[z]==prs[y]){
                                 y++;
+                                string cmd1;
                                 string cmd0 = names[z];
-                                string cmd1 = ".stslib ";
+                                if (PLATFORM=="Windows"){
+                                    cmd1 = "stslib.exe ";
+                                }
+                                else{
+                                    cmd1 = ".stslib ";
+                                }
                                 cmd0+=cmd1.c_str();
                                 cmd0+=prs[y].c_str();
                                 system(cmd0.c_str());
