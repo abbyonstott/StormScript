@@ -1,12 +1,12 @@
 .vscode
 stscompile
 stsprg.out
-linux-x86
-linux-arm
-release
+release/*/bin/sts*
 *.obj
 *.code-workspace
 *.stslib
 comwin.sh
 comlinux.sh
 comlinuxarm.sh
+*.tar*
+*.zip
