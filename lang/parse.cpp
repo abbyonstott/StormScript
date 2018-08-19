@@ -110,6 +110,10 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     vars[vars.size()-1]=declare('s',y);
                     y++;
                 }
+                else if (prs[y]=="sys"){
+                    y++;
+                    sys(y);
+                }
                 else if (prs[y]=="}end"){
                     endreq-=1;
                     if (endreq==0){

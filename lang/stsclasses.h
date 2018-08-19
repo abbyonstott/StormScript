@@ -42,6 +42,7 @@ public:
 	void error(int num, string issue); //error
 	void read(string filename); //read file
 	void out(int line, std::vector<stsvars> current_vars); //out function
+	void sys(int line);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, std::vector<string> prg, int psize);

@@ -50,6 +50,12 @@ stsvars sts::in(int line){
     return input;
 }
 
+void sts::sys(int line){
+    prs[line].pop_back();
+    prs[line].erase(prs[line].begin());
+    system(prs[line].c_str());
+}
+
 bool sts::compare(int line, std::vector<stsvars> current_vars){
     bool condition = 0;
     prs[line+2].pop_back();

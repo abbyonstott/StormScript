@@ -1,5 +1,3 @@
-lib helloworld;
-
 do{
-    helloworld.out;
+    sys "echo hi";
 }end;
