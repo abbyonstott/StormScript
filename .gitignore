@@ -6,6 +6,7 @@ linux-arm
 release
 *.obj
 *.code-workspace
+*.stslib
 comwin.sh
 comlinux.sh
 comlinuxarm.sh
