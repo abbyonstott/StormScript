@@ -5,6 +5,7 @@ release/*/bin/sts*
 *.obj
 *.code-workspace
 *.stslib
+*.exe
 comwin.sh
 comlinux.sh
 comlinuxarm.sh
