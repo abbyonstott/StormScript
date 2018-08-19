@@ -1,9 +1,5 @@
+lib helloworld;
+
 do{
-    str x: "hi";
-    
-    if x not "hi"{
-        out "hi\n";
-    }else{
-        out "you typed hi.\n";
-    }end;
+    helloworld.out;
 }end;

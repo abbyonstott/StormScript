@@ -20,7 +20,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from parsed version
-            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')')) && (inquotes==false)){
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
@@ -49,14 +49,12 @@ std::vector<string> sts::parse(std::vector<string> prg){
 void sts::interp(string fname, std::vector<string> prg, int psize){
     prs = parse(prg);
     std::vector<string> names; // the names of imported libraries
-    std::vector<stsfunc> functions;
     for (int x = 0; x<=prs.size()-1; x++){
-        /*if (prs[x]=="lib"){
+        if (prs[x]=="lib"){
             names.resize(names.size()+1);
             names[names.size()-1]=prs[x+1];
-            names[names.size()-1].pop_back();
-        }*/ //TODO: Add library support
-        if (prs[x]=="do{"){
+        }
+        else if (prs[x]=="do{"){
             std::vector<stsvars> vars;
             int y = x+1;
             int times;
@@ -121,13 +119,13 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     y++;
                 }
                 else{
-                    bool isvar = 0;
+                    bool is = 0;
                     if (vars.size()!=0){
                         string s = prs[y];
                         s.pop_back();
                         for (int z = 0; z<=vars.size()-1; z++){
                             if (s == vars[z].name){
-                                isvar = 1;
+                                is = 1;
                                 if (vars[z].type=='i'){
                                     vars[z].valint = std::stoi(prs[y+1]);
                                 }
@@ -141,7 +139,21 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                             }
                         }
                     }
-                    if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")&& (isvar==0)) { //if not function give error
+                    if (names.size()!=0){
+                        for (int z = 0; z<=names.size()-1; z++){
+                            if (names[z]==prs[y]){
+                                y++;
+                                string cmd0 = names[z];
+                                string cmd1 = ".stslib ";
+                                cmd0+=cmd1.c_str();
+                                cmd0+=prs[y].c_str();
+                                system(cmd0.c_str());
+                                is = 1;
+                                y++;
+                            }
+                        }
+                    }
+                    if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")&& (is==0)) { //if not function give error
                         cout << y << endl << prs.size() << endl << prs[y-1] << endl;
                         error(1,prs[y]);
                     }
