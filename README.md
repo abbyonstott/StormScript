@@ -37,7 +37,7 @@ _Once you add the executable to your PATH environment variable:_
 
 `int`: make a integer variable
 
-`func`: make a function
+`lib`: import a library
 
 `if`, `else`: if statement
 
