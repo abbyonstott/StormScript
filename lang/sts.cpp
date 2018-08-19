@@ -75,11 +75,14 @@ void sts::error(int num, string issue)
 	}
 	else if (num == 1)
 	{
-		cout << "Error: " << issue << " not a recognised command" << endl;
+		cout << "Error: " << issue << " is not a recognised command" << endl;
 	}
 	else if (num == 2)
 	{
-		cout << "Error: " << issue << " not a recognised type" << endl;
+		cout << "Error: " << issue << " is not a recognised type" << endl;
+	}
+	else if (num == 3){
+		cout << "Error: " << issue << " is not a valid expression" << endl;
 	}
 	exit(0);
 }

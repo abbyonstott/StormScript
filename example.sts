@@ -1,11 +1,9 @@
 do{
-    int x: 3;
-    str y: "hi";
-    out x, "\n";
-    x: 4;
-    out x, "\n";
-    x: 5;
-    out x, "\n", y, "\n";
-    y: "f";
-    out y, "\n";
+    str x: "hi";
+    
+    if x not "hi"{
+        out "hi\n";
+    }else{
+        out "you typed hi.\n";
+    }end;
 }end;

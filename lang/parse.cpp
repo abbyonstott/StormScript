@@ -79,6 +79,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     y++;
                     if (compare(y,vars)){
                         endreq+=1;
+                        y+=2;
                     }
                     else{
                         while (prs[y]!="}end"){
@@ -140,7 +141,8 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                             }
                         }
                     }
-                    if ((prs[y]!="") && (prs[y]!=";") && (isvar==0)) { //if not function give error
+                    if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")&& (isvar==0)) { //if not function give error
+                        cout << y << endl << prs.size() << endl << prs[y-1] << endl;
                         error(1,prs[y]);
                     }
                 }
