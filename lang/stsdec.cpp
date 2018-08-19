@@ -3,7 +3,6 @@
 /*
 stsdec.cpp: basic type and function declarations
 declare(): variables
-fdeclare(): declare functions
 */
 
 
