@@ -25,6 +25,7 @@ public:
 	int valint = 0;
 	string valstring = "";
 	char type;
+	bool glob;
 	string name;
 };
 
@@ -37,6 +38,7 @@ public:
 
 	std::vector<string> prg;
 	std::vector<string> prs;
+	std::vector<stsvars> globvars; //global variables
 	//functions
 	stsvars declare(char type, int line); //declare variables -
 	void error(int num, string issue); //error

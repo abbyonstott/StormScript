@@ -51,12 +51,33 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
     for (int x = 0; x<=prs.size()-1; x++){
         if (prs[x]=="lib"){
             names.resize(names.size()+1);
-            names[names.size()-1]=prs[x+1];
+            x++;
+            names[names.size()-1]=prs[x];
+        }
+        else if (prs[x]=="glob"){
+            globvars.resize(globvars.size()+1);
+            x++;
+            if (prs[x]=="int") {
+                x++;
+                globvars[globvars.size()-1]=declare('i', x);
+                globvars[globvars.size()-1].glob=1;
+            }
+            else if (prs[x]=="str") {
+                x++;
+                globvars[globvars.size()-1]=declare('s', x);
+                globvars[globvars.size()-1].glob=1;
+            }
+            else {
+                error(2,prs[x]);
+                x++;
+            }
         }
         else if (prs[x]=="do{"){
             std::vector<stsvars> vars;
+            vars.resize(globvars.size());
+            vars = globvars;
             int y = x+1;
-            int times;
+            bool looped=0;
             int endreq = 1;
             while (true){
                 if (prs[y]=="out"){
@@ -102,19 +123,29 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                     y++;
                     vars.resize(vars.size()+1);
                     vars[vars.size()-1]=declare('i',y);
+                    vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
                     y++;
                 }
                 else if (prs[y]=="str"){
                     y++;
                     vars.resize(vars.size()+1);
                     vars[vars.size()-1]=declare('s',y);
+                    vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
                     y++;
                 }
                 else if (prs[y]=="sys"){
                     y++;
                     sys(y);
                 }
-                else if (prs[y]=="}end"){
+                else if ((prs[y]=="}end") || (prs[y]=="}loop")){
+                    if (prs[y]=="}loop"){
+                        if (looped==0){
+                            looped=1;
+                            endreq=std::stoi(prs[y+1]);
+                        }
+                        prs=parse(prg);
+                        y=x+1;
+                    }
                     endreq-=1;
                     if (endreq==0){
                         break;
@@ -131,11 +162,13 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                                 is = 1;
                                 if (vars[z].type=='i'){
                                     vars[z].valint = std::stoi(prs[y+1]);
+                                    if (vars[z].glob==1) { globvars[z].valint = std::stoi(prs[y+1]); }
                                 }
                                 else{
                                     prs[y+1].pop_back();
                                     prs[y+1].erase(prs[y+1].begin());
                                     vars[z].valstring = prs[y+1];
+                                    if (vars[z].glob==1) { globvars[z].valstring = prs[y+1]; }
                                 }
                                 y++;
                                 break;

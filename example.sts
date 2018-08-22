@@ -1,5 +1,9 @@
-lib helloworldpy;
+glob str x: "hi";
 
 do{
-    helloworldpy.out;
-}end;
+    if x is "hi"{
+        out x, "\n";
+    }end;
+    x: "hi2";
+    out x, "\n";
+}loop(3);
