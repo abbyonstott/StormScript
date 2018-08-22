@@ -1,6 +1,12 @@
 glob str x: "";
 
 do{
-    x+: "hi";
-    out x, "\n";
-}loop(50);
+    out "Do you want to exit (y/n): ";
+    in str y;
+    if y is "y"{
+        exit;
+    }else{
+        x+: "hi";
+        out x, "\n";
+    }end;
+}loop(inf);

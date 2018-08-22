@@ -87,6 +87,9 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                         y++;
                     }
                 }
+                else if (prs[y]=="exit"){
+                    exit(0);
+                }
                 else if (prs[y]=="in"){
                     vars.resize(vars.size()+1);
                     y++;
@@ -140,9 +143,16 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                 else if ((prs[y]=="}end") || (prs[y]=="}loop")){
                     if (prs[y]=="}loop"){
                         if (looped==0){
-                            looped=1;
-                            endreq=std::stoi(prs[y+1]);
+                            if (prs[y+1]!="inf"){
+                                looped=1;
+                                endreq=std::stoi(prs[y+1]);
+                            }
+                            else{
+                                endreq=2;
+                            }
                         }
+                        vars.resize(globvars.size());
+                        vars = globvars;
                         prs=parse(prg);
                         y=x+1;
                     }
@@ -193,6 +203,12 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                                 if (vars[z].type=='i'){
                                     vars[z].valint -= std::stoi(prs[y+1]);
                                     if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                                }
+                                else {
+                                    char type = vars[z].type;
+                                    string types;
+                                    if (type=='s') types="str"; 
+                                    error(4, types);
                                 }
                                 y++;
                                 break;

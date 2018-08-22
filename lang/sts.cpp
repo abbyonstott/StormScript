@@ -84,6 +84,9 @@ void sts::error(int num, string issue)
 	else if (num == 3){
 		cout << "Error: " << issue << " is not a valid expression" << endl;
 	}
+	else if (num == 4){
+		cout << "Error: " << issue << " is an unsupported type" << endl;
+	}
 	exit(0);
 }
 
