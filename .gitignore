@@ -6,8 +6,7 @@ release/*/bin/sts*
 *.code-workspace
 *.stslib
 *.exe
-comwin.sh
-comlinux.sh
-comlinuxarm.sh
+package.sh
 *.tar*
 *.zip
+test.sh
