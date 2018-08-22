@@ -33,6 +33,8 @@ _Once you add the executable to your PATH environment variable:_
 
 `in`: take input from console
 
+`glob`: make a variable global
+
 `str`: make a string variable
 
 `int`: make a integer variable
@@ -42,6 +44,8 @@ _Once you add the executable to your PATH environment variable:_
 `if`, `else`: if statement
 
 `end`: end current scope
+
+`loop`: loop the current scope
 
 ## Examples:
 

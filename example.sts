@@ -1,9 +1,6 @@
-glob str x: "hi";
+glob str x: "";
 
 do{
-    if x is "hi"{
-        out x, "\n";
-    }end;
-    x: "hi2";
+    x+: "hi";
     out x, "\n";
-}loop(3);
+}loop(50);

@@ -173,6 +173,30 @@ void sts::interp(string fname, std::vector<string> prg, int psize){
                                 y++;
                                 break;
                             }
+                            else if (s == vars[z].name+'+'){ // plus operator
+                                is=1;
+                                if (vars[z].type=='i'){
+                                    vars[z].valint += std::stoi(prs[y+1]);
+                                    if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                                }
+                                else{
+                                    prs[y+1].pop_back();
+                                    prs[y+1].erase(prs[y+1].begin());
+                                    vars[z].valstring += prs[y+1];
+                                    if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
+                                }
+                                y++;
+                                break;
+                            }
+                            else if (s == vars[z].name+'-'){ // minus operator
+                                is=1;
+                                if (vars[z].type=='i'){
+                                    vars[z].valint -= std::stoi(prs[y+1]);
+                                    if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                                }
+                                y++;
+                                break;
+                            }
                         }
                     }
                     if (names.size()!=0){
