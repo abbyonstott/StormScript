@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
     std::string cmd1;
     if (PLATFORM == "Windows"){
-        cmd1 = "python helloworldstslibwin.py ";
+        cmd1 = "helloworldstslibwin.py ";
     }
     else{
         cmd1 = "helloworldstslib.py ";

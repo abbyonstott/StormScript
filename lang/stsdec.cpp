@@ -17,7 +17,7 @@ stsvars sts::declare(char type, int line){ //variable declarations
         new_var.valint = std::stoi(prs[line+1]);
     }
     else{
-        if (prs[line+1][0]='\"'){
+        if (prs[line+1][0]=='\"'){
             prs[line+1].pop_back();
             prs[line+1].erase(prs[line+1].begin());
         }
