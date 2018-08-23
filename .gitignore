@@ -4,7 +4,8 @@ stsprg.out
 release/*/bin/sts*
 *.obj
 *.code-workspace
-*.stslib
+helloworld.stslib
+helloworldpy.stslib
 *.exe
 package.sh
 *.tar*

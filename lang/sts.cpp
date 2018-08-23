@@ -21,8 +21,9 @@ Overview:
 	Example files (example.sts) are stored in the root directory.
 */
 
-void sts::read(string filename)
+void sts::read(char *argv[], int argc)
 {
+	string filename = argv[1];
 	std::ifstream file;
 	string contents;
 	file.open(filename.c_str());
@@ -64,7 +65,7 @@ void sts::read(string filename)
 		prg[prg.size() - 1] += contents[x];
 	} //add last line to vector
 
-	interp(filename, prg, sizeoff);
+	interp(filename, prg, sizeoff, argv, argc);
 }
 
 void sts::error(int num, string issue)
@@ -96,7 +97,7 @@ int main(int argc, char *argv[])
 
 	if (argc != 1)
 	{
-		script.read(argv[1]);
+		script.read(argv, argc);
 	}
 	else
 	{

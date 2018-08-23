@@ -42,12 +42,12 @@ public:
 	//functions
 	stsvars declare(char type, int line); //declare variables -
 	void error(int num, string issue); //error
-	void read(string filename); //read file
+	void read(char *argv[], int argc); //read file
 	void out(int line, std::vector<stsvars> current_vars); //out function
 	void sys(int line);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
-	void interp(string fname, std::vector<string> prg, int psize);
+	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);
 	bool compare(int line, std::vector<stsvars> current_vars);
 };
 

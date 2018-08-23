@@ -1,0 +1,5 @@
+do{
+    if arg is "out"{
+        out "Hello, World!";
+    }end;
+}end;

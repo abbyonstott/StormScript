@@ -1,0 +1,6 @@
+#!/usr/bin/sts
+do{
+    if arg is "out"{
+        out "Hello, World!\n";
+    }end;
+}end;

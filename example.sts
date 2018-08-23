@@ -1,12 +1,5 @@
-glob str x: "";
+lib helloworldsts;
 
 do{
-    out "Do you want to exit (y/n): ";
-    in str y;
-    if y is "y"{
-        exit;
-    }else{
-        x+: "hi";
-        out x, "\n";
-    }end;
-}loop(inf);
+    helloworldsts.out;
+}end;
