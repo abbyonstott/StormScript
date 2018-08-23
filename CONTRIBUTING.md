@@ -11,4 +11,4 @@ These are the guidlines to contributing to this project.
 ### What you should not do
 
 * Insult others' work
-* Introduce new files unless absolutely necessary
+* Introduce new files unless absolutely necessary or if it is a library
