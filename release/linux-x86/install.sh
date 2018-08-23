@@ -6,7 +6,7 @@ if [ `whoami` == 'root' ]; then
     cmd=$cmd1`pwd`$cmd2
     echo $cmd >> ~/.bashrc
     echo test: `sts example/helloworld.sts`
-    if [ `sts example/helloworld.sts` == 'Hello, World!']; then
+    if [ `sts example/helloworld.sts` == 'Hello, World!' ]; then
         echo "Test: Test Successful"
         echo Restart terminal for some changes to take place
     else
