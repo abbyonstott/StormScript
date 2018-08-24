@@ -43,7 +43,7 @@ public:
 	stsvars declare(char type, int line); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc); //read file
-	void out(int line, std::vector<stsvars> current_vars); //out function
+	void print(int line, std::vector<stsvars> current_vars); //out function
 	void sys(int line);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);

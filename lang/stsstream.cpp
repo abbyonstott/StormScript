@@ -4,7 +4,7 @@
 stsstream.cpp: all of the basic input and output streams and if statements.
 */
 
-void sts::out(int line, std::vector<stsvars> current_vars){
+void sts::print(int line, std::vector<stsvars> current_vars){
     string val = "";
 
     if (prs[line][0]=='\"'){

@@ -87,10 +87,10 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             bool looped=0;
             int endreq = 1;
             while (true){
-                if (prs[y]=="out"){
+                if (prs[y]=="print"){
                     y++;
                     while(prs[y]!=";"){
-                        out(y, vars);
+                        print(y, vars);
                         y++;
                     }
                 }
