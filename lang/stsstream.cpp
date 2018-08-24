@@ -44,7 +44,9 @@ stsvars sts::in(int line){
     }
     else if (prs[line]=="str"){
         input.type = 's';
-        std::cin >> input.valstring;
+        char valstring[256];
+        std::cin.getline(valstring, 256);
+        input.valstring=valstring;
     }
 
     return input;

@@ -1,5 +1,4 @@
-lib helloworldpy;
-
 do{
-    helloworldpy.out;
+    in str x;
+    out x, "\n";
 }end;
