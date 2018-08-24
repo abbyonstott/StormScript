@@ -3,11 +3,10 @@ stscompile
 stsprg.out
 release/*/bin/sts*
 *.obj
+release/windows-x86/libs/
 *.code-workspace
 helloworld.stslib
 helloworldpy.stslib
 *.exe
-package.sh
 *.tar*
 *.zip
-test.sh
