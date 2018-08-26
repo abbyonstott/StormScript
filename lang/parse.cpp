@@ -242,7 +242,6 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                                     prs[y].erase(prs[y].begin());
                                     prs[y].pop_back();
                                     cmd0+=prs[y].c_str();
-                                    cout << cmd0 << endl;
                                 }
                                 system(cmd0.c_str());
                                 is = 1;
