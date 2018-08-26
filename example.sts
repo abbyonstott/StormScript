@@ -1,5 +1,7 @@
-lib helloworldsts;
-
 do{
-    helloworldsts.out;
-}end;
+    print "hi\n", "do you want to exit? ";
+    in str x;
+    if x is "y"{
+        exit;
+    }end;
+}loop(inf);
