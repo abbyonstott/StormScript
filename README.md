@@ -29,7 +29,7 @@ _Once you add the executable to your PATH environment variable:_
 
 `do`: initial function
 
-`out`: write to console
+`print`: write to console
 
 `in`: take input from console
 
@@ -53,7 +53,7 @@ _Once you add the executable to your PATH environment variable:_
 
 ```
 do{
-  out "Hello, World!\n";
+  print "Hello, World!\n";
 }end;
 ```
 
@@ -64,9 +64,9 @@ do{
   in str x;
 
   if x is "hi"{
-    out "you typed hi!\n";
+    print "you typed hi!\n";
   }else{
-    out "You didn't type hi\n";
+    print "You didn't type hi\n";
   }end;
 }end;
 ```
