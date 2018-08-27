@@ -16,12 +16,21 @@ stsvars sts::declare(char type, int line){ //variable declarations
     if (type=='i'){
         new_var.valint = std::stoi(prs[line+1]);
     }
-    else{
+    else if (type=='s'){
         if (prs[line+1][0]=='\"'){
             prs[line+1].pop_back();
             prs[line+1].erase(prs[line+1].begin());
         }
         new_var.valstring = prs[line+1];
+    }
+    else if (type=='j'){
+	int y = line+1;
+
+	while (prs[y]!=";"){
+	    new_var.valsint.resize(new_var.valsint.size()+1);
+	    new_var.valsint[new_var.valsint.size()-1]=std::stoi(prs[y]);
+	    y++;
+	}
     }
     return new_var;
 }

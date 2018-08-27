@@ -23,7 +23,9 @@ using std::endl;
 class stsvars{
 public:
 	int valint = 0;
+	std::vector<int> valsint;
 	string valstring = "";
+	std::vector<string> valsstring;
 	char type;
 	bool glob;
 	string name;

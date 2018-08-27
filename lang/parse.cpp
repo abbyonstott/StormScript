@@ -41,7 +41,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
         }
         y++;
     }
-    x[x.size()-1].pop_back(); //removes EOF char from end of file so I can parse
+    x[x.size()-1].pop_back(); //removes EOF char from end of file so it can parse
     return x;
 }
 
@@ -86,6 +86,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             int y = x+1;
             bool looped=0;
             int endreq = 1;
+
             while (true){
                 if (prs[y]=="print"){
                     y++;
