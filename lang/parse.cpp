@@ -90,7 +90,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             while (true){
                 if (prs[y]=="print"){
                     y++;
-                    while(prs[y]!=";"){
+                    while (prs[y]!=";"){
                         print(y, vars);
                         y++;
                     }
@@ -201,9 +201,14 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                             }
                             else if (s == vars[z].name+'+'){ // plus operator
                                 is=1;
+
                                 if (vars[z].type=='i'){
                                     vars[z].valint += std::stoi(prs[y+1]);
                                     if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                                }
+                                else if (vars[z].type=='j'){
+                                    vars[z].valsint.resize(vars[z].valsint.size()+1);
+                                    vars[z].valsint[vars[z].valsint.size()-1]=std::stoi(prs[y+1]);
                                 }
                                 else{
                                     prs[y+1].pop_back();
@@ -211,7 +216,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                                     vars[z].valstring += prs[y+1];
                                     if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
                                 }
-                                y++;
+                                y+=2;
                                 break;
                             }
                             else if (s == vars[z].name+'-'){ // minus operator
