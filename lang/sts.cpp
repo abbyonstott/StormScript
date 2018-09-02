@@ -88,6 +88,12 @@ void sts::error(int num, string issue)
 	else if (num == 4){
 		cout << "Error: " << issue << " is an unsupported type" << endl;
 	}
+	else if (num == 5){
+		cout << "Error: \"" << issue << "\" is an array and must use a subscript on print" << endl;
+	}
+	else if (num == 6){
+		cout << "Error: " << issue << " is out of range" << endl; 
+	}
 	exit(0);
 }
 

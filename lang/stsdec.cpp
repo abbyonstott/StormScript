@@ -13,6 +13,7 @@ stsvars sts::declare(char type, int line){ //variable declarations
 
     prs[line].pop_back();
     new_var.name = prs[line];
+
     if (type=='i'){
         new_var.valint = std::stoi(prs[line+1]);
     }
@@ -24,13 +25,13 @@ stsvars sts::declare(char type, int line){ //variable declarations
         new_var.valstring = prs[line+1];
     }
     else if (type=='j'){
-	int y = line+1;
+        int y = line+1;
 
-	while (prs[y]!=";"){
-	    new_var.valsint.resize(new_var.valsint.size()+1);
-	    new_var.valsint[new_var.valsint.size()-1]=std::stoi(prs[y]);
-	    y++;
-	}
+        while (prs[y]!=";"){
+            new_var.valsint.resize(new_var.valsint.size()+1);
+            new_var.valsint[new_var.valsint.size()-1]=std::stoi(prs[y]);
+            y++;
+        }
     }
     return new_var;
 }

@@ -29,7 +29,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if ((prg[y][z]==';') && (inquotes==false)){
+            else if (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 x[x.size()-1]+=prg[y][z];
                 x.resize(x.size()+1);
@@ -133,9 +133,17 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 else if (prs[y]=="int"){
                     y++;
                     vars.resize(vars.size()+1);
-                    vars[vars.size()-1]=declare('i',y);
-                    vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-                    y++;
+                    if (prs[y+2]==";"){
+                        vars[vars.size()-1]=declare('i',y);
+                        vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
+                    }
+                    else{
+                        vars[vars.size()-1]=declare('j',y);
+                        vars[vars.size()-1].glob=0;
+                    }
+                    while (prs[y]!=";"){
+                        y++;
+                    }
                 }
                 else if (prs[y]=="str"){
                     y++;
