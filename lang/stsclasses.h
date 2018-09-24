@@ -31,6 +31,11 @@ public:
 	string name;
 };
 
+class stsfunc:public stsvars{
+public:
+	int linestarted;
+};
+
 class sts
 {
 public:
@@ -51,6 +56,7 @@ public:
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);
 	bool compare(int line, std::vector<stsvars> current_vars);
+	void exec(std::vector<string> parsed, int line, std::vector<string> names, std::vector<stsfunc> functions);
 };
 
 

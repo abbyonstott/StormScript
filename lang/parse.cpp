@@ -48,6 +48,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
 void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc){
     prs = parse(prg);
     std::vector<string> names; // the names of imported libraries
+    std::vector<stsfunc> functions;
     globvars.resize(globvars.size()+1);
     if (argc-1==2){
         globvars[globvars.size()-1].valstring=argv[2];
@@ -79,197 +80,215 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 x++;
             }
         }
+        else if (prs[x]=="func"){
+            prs[x+1].pop_back();
+            cout << "you are creating a function with the name of " << prs[x+1] << endl;
+            functions.resize(functions.size()+1);
+            functions[functions.size()-1].name=prs[x+1];
+            functions[functions.size()-1].linestarted=x+2;
+        }
         else if (prs[x]=="do{"){
-            std::vector<stsvars> vars;
-            vars.resize(globvars.size());
-            vars = globvars;
-            int y = x+1;
-            bool looped=0;
-            int endreq = 1;
-
-            while (true){
-                if (prs[y]=="print"){
-                    y++;
-                    while (prs[y]!=";"){
-                        print(y, vars);
-                        y++;
-                    }
-                }
-                else if (prs[y]=="exit"){
-                    exit(0);
-                }
-                else if (prs[y]=="in"){
-                    vars.resize(vars.size()+1);
-                    y++;
-                    vars[vars.size()-1]=in(y);
-                    y+=2;
-                }
-                else if (prs[y]=="if"){
-                    y++;
-                    if (compare(y,vars)){
-                        endreq+=1;
-                        y+=2;
-                    }
-                    else{
-                        while (prs[y]!="}end"){
-                            y++;
-                            if (prs[y]=="}else{"){
-                                endreq+=1;
-                                break;
-                            }
-                        }
-                        if (prs[y]!="}end") {
-                            y++;
-                        }
-                    }
-                }
-                else if (prs[y]=="}else{"){
-                    while (prs[y]!="}end"){
-                        y++;
-                    }
-                    endreq-=1;
-                    y++;
-                }
-                else if (prs[y]=="int"){
-                    y++;
-                    vars.resize(vars.size()+1);
-                    if (prs[y+2]==";"){
-                        vars[vars.size()-1]=declare('i',y);
-                        vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-                    }
-                    else{
-                        vars[vars.size()-1]=declare('j',y);
-                        vars[vars.size()-1].glob=0;
-                    }
-                    while (prs[y]!=";"){
-                        y++;
-                    }
-                }
-                else if (prs[y]=="str"){
-                    y++;
-                    vars.resize(vars.size()+1);
-                    vars[vars.size()-1]=declare('s',y);
-                    vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-                    y++;
-                }
-                else if (prs[y]=="sys"){
-                    y++;
-                    sys(y);
-                }
-                else if ((prs[y]=="}end") || (prs[y]=="}loop")){
-                    if (prs[y]=="}loop"){
-                        if (looped==0){
-                            if (prs[y+1]!="inf"){
-                                looped=1;
-                                endreq=std::stoi(prs[y+1]);
-                            }
-                            else{
-                                endreq=2;
-                            }
-                        }
-                        vars.resize(globvars.size());
-                        vars = globvars;
-                        prs=parse(prg);
-                        y=x+1;
-                    }
-                    endreq-=1;
-                    if (endreq==0){
-                        break;
-                    }
-                    y++;
-                }
-                else{
-                    bool is = 0;
-                    if (vars.size()!=0){
-                        string s = prs[y];
-                        s.pop_back();
-                        for (int z = 0; z<=vars.size()-1; z++){
-                            if (s == vars[z].name){
-                                is = 1;
-                                if (vars[z].type=='i'){
-                                    vars[z].valint = std::stoi(prs[y+1]);
-                                    if (vars[z].glob==1) { globvars[z].valint = std::stoi(prs[y+1]); }
-                                }
-                                else{
-                                    prs[y+1].pop_back();
-                                    prs[y+1].erase(prs[y+1].begin());
-                                    vars[z].valstring = prs[y+1];
-                                    if (vars[z].glob==1) { globvars[z].valstring = prs[y+1]; }
-                                }
-                                y++;
-                                break;
-                            }
-                            else if (s == vars[z].name+'+'){ // plus operator
-                                is=1;
-
-                                if (vars[z].type=='i'){
-                                    vars[z].valint += std::stoi(prs[y+1]);
-                                    if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
-                                }
-                                else if (vars[z].type=='j'){
-                                    vars[z].valsint.resize(vars[z].valsint.size()+1);
-                                    vars[z].valsint[vars[z].valsint.size()-1]=std::stoi(prs[y+1]);
-                                }
-                                else{
-                                    prs[y+1].pop_back();
-                                    prs[y+1].erase(prs[y+1].begin());
-                                    vars[z].valstring += prs[y+1];
-                                    if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
-                                }
-                                y+=2;
-                                break;
-                            }
-                            else if (s == vars[z].name+'-'){ // minus operator
-                                is=1;
-                                if (vars[z].type=='i'){
-                                    vars[z].valint -= std::stoi(prs[y+1]);
-                                    if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
-                                }
-                                else {
-                                    char type = vars[z].type;
-                                    string types;
-                                    if (type=='s') types="str"; 
-                                    error(4, types);
-                                }
-                                y++;
-                                break;
-                            }
-                        }
-                    }
-                    if (names.size()!=0){
-                        for (int z = 0; z<=names.size()-1; z++){
-                            if (names[z]==prs[y]){
-                                y++;
-                                string cmd1;
-                                string cmd0 = names[z];
-                                if (PLATFORM=="Windows"){
-                                    cmd1 = "stslib.exe ";
-                                }
-                                else{
-                                    cmd1 = ".stslib ";
-                                }
-                                cmd0+=cmd1.c_str();
-                                cmd0+=prs[y].c_str();
-                                if (prs[y][prs[y].size()-1]==':'){
-                                    cmd0[cmd0.size()-1]=' ';
-                                    y++;
-                                    prs[y].erase(prs[y].begin());
-                                    prs[y].pop_back();
-                                    cmd0+=prs[y].c_str();
-                                }
-                                system(cmd0.c_str());
-                                is = 1;
-                                y++;
-                            }
-                        }
-                    }
-                    if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")&& (is==0)) { //if not function give error
-                        cout << y << endl << prs.size() << endl << prs[y-1] << endl;
-                        error(1,prs[y]);
-                    }
-                }
-                y++;
-            }
+            exec(prs, x, names, functions);
         }
     }
 }   
+
+void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std::vector<stsfunc> functions){ //THIS FUNCTION IS HOW EACH COMMAND IS EXECUTED
+    std::vector<stsvars> vars;
+    vars.resize(globvars.size());
+    vars = globvars;
+    int y = x+1;
+    bool looped=0;
+    int endreq = 1;
+
+    while (true){
+        if (prs[y]=="print"){
+            y++;
+            while (prs[y]!=";"){
+                print(y, vars);
+                y++;
+            }
+        }
+        else if (prs[y]=="exit"){
+            exit(0);
+        }
+        else if (prs[y]=="in"){
+            vars.resize(vars.size()+1);
+            y++;
+            vars[vars.size()-1]=in(y);
+            y+=2;
+        }
+        else if (prs[y]=="if"){
+            y++;
+            if (compare(y,vars)){
+                endreq+=1;
+                y+=2;
+            }
+            else{
+                while (prs[y]!="}end"){
+                    y++;
+                    if (prs[y]=="}else{"){
+                        endreq+=1;
+                        break;
+                    }
+                }
+                if (prs[y]!="}end") {
+                    y++;
+                }
+            }
+        }
+        else if (prs[y]=="}else{"){
+            while (prs[y]!="}end"){
+                y++;
+            }
+            endreq-=1;
+            y++;
+        }
+        else if (prs[y]=="int"){
+            y++;
+            vars.resize(vars.size()+1);
+            if (prs[y+2]==";"){
+                vars[vars.size()-1]=declare('i',y);
+                vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
+            }
+            else{
+                vars[vars.size()-1]=declare('j',y);
+                vars[vars.size()-1].glob=0;
+            }
+            while (prs[y]!=";"){
+                y++;
+            }
+        }
+        else if (prs[y]=="str"){
+            y++;
+            vars.resize(vars.size()+1);
+            vars[vars.size()-1]=declare('s',y);
+            vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
+            y++;
+        }
+        else if (prs[y]=="sys"){
+            y++;
+            sys(y);
+        }
+        else if ((prs[y]=="}end") || (prs[y]=="}loop")){
+            if (prs[y]=="}loop"){
+                if (looped==0){
+                    if (prs[y+1]!="inf"){
+                        looped=1;
+                        endreq=std::stoi(prs[y+1]);
+                    }
+                    else{
+                        endreq=2;
+                    }
+                }
+                vars.resize(globvars.size());
+                vars = globvars;
+                prs=parse(prg);
+                y=x+1;
+            }
+            endreq-=1;
+            if (endreq==0){
+                break;
+            }
+            y++;
+        }
+        else{
+            bool is = 0;
+            if (vars.size()!=0){
+                string s = prs[y];
+                s.pop_back();
+                for (int z = 0; z<=vars.size()-1; z++){
+                    if (s == vars[z].name){
+                        is = 1;
+                        if (vars[z].type=='i'){
+                            vars[z].valint = std::stoi(prs[y+1]);
+                            if (vars[z].glob==1) { globvars[z].valint = std::stoi(prs[y+1]); }
+                        }
+                        else{
+                            prs[y+1].pop_back();
+                            prs[y+1].erase(prs[y+1].begin());
+                            vars[z].valstring = prs[y+1];
+                            if (vars[z].glob==1) { globvars[z].valstring = prs[y+1]; }
+                        }
+                        y++;
+                        break;
+                    }
+                    else if (s == vars[z].name+'+'){ // plus operator
+                        is=1;
+
+                        if (vars[z].type=='i'){
+                            vars[z].valint += std::stoi(prs[y+1]);
+                            if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                        }
+                        else if (vars[z].type=='j'){
+                            vars[z].valsint.resize(vars[z].valsint.size()+1);
+                            vars[z].valsint[vars[z].valsint.size()-1]=std::stoi(prs[y+1]);
+                        }
+                        else{
+                            prs[y+1].pop_back();
+                            prs[y+1].erase(prs[y+1].begin());
+                            vars[z].valstring += prs[y+1];
+                            if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
+                        }
+                        y+=2;
+                        break;
+                    }
+                    else if (s == vars[z].name+'-'){ // minus operator
+                        is=1;
+                        if (vars[z].type=='i'){
+                            vars[z].valint -= std::stoi(prs[y+1]);
+                            if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                        }
+                        else {
+                            char type = vars[z].type;
+                            string types;
+                            if (type=='s') types="str"; 
+                            error(4, types);
+                        }
+                        y++;
+                        break;
+                    }
+                }
+            }
+            if (names.size()!=0){
+                for (int z = 0; z<=names.size()-1; z++){
+                    if (names[z]==prs[y]){
+                        y++;
+                        string cmd1;
+                        string cmd0 = names[z];
+                        if (PLATFORM=="Windows"){
+                            cmd1 = "stslib.exe ";
+                        }
+                        else{
+                            cmd1 = ".stslib ";
+                        }
+                        cmd0+=cmd1.c_str();
+                        cmd0+=prs[y].c_str();
+                        if (prs[y][prs[y].size()-1]==':'){
+                            cmd0[cmd0.size()-1]=' ';
+                            y++;
+                            prs[y].erase(prs[y].begin());
+                            prs[y].pop_back();
+                            cmd0+=prs[y].c_str();
+                        }
+                        system(cmd0.c_str());
+                        is = 1;
+                        y++;
+                    }
+                }
+            }
+            if (functions.size()!=0){
+                for (int z = 0; z<=functions.size()-1; z++){
+                    if (functions[z].name==prs[y]){
+                        exec(parsed, functions[z].linestarted, names, functions);
+                        y++;
+                    }
+                }
+            }
+            if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")&& (is==0)) { //if not function give error
+                error(1,prs[y]);
+            }
+        }
+        y++;
+    }
+}
