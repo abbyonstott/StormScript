@@ -82,7 +82,6 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
         }
         else if (prs[x]=="func"){
             prs[x+1].pop_back();
-            cout << "you are creating a function with the name of " << prs[x+1] << endl;
             functions.resize(functions.size()+1);
             functions[functions.size()-1].name=prs[x+1];
             functions[functions.size()-1].linestarted=x+2;
@@ -164,7 +163,7 @@ void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std
             vars.resize(vars.size()+1);
             vars[vars.size()-1]=declare('s',y);
             vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-            y++;
+            y+=2;
         }
         else if (prs[y]=="sys"){
             y++;
@@ -195,60 +194,62 @@ void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std
         else{
             bool is = 0;
             if (vars.size()!=0){
-                string s = prs[y];
-                s.pop_back();
-                for (int z = 0; z<=vars.size()-1; z++){
-                    if (s == vars[z].name){
-                        is = 1;
-                        if (vars[z].type=='i'){
-                            vars[z].valint = std::stoi(prs[y+1]);
-                            if (vars[z].glob==1) { globvars[z].valint = std::stoi(prs[y+1]); }
+                if (prs[y].size()!=1){
+                    string s = prs[y];
+                    s.pop_back();
+                    for (int z = 0; z<=vars.size()-1; z++){
+                        if (s == vars[z].name){
+                            is = 1;
+                            if (vars[z].type=='i'){
+                                vars[z].valint = std::stoi(prs[y+1]);
+                                if (vars[z].glob==1) { globvars[z].valint = std::stoi(prs[y+1]); }
+                            }
+                            else{
+                                prs[y+1].pop_back();
+                                prs[y+1].erase(prs[y+1].begin());
+                                vars[z].valstring = prs[y+1];
+                                if (vars[z].glob==1) { globvars[z].valstring = prs[y+1]; }
+                            }
+                            y++;
+                            break;
                         }
-                        else{
-                            prs[y+1].pop_back();
-                            prs[y+1].erase(prs[y+1].begin());
-                            vars[z].valstring = prs[y+1];
-                            if (vars[z].glob==1) { globvars[z].valstring = prs[y+1]; }
-                        }
-                        y++;
-                        break;
-                    }
-                    else if (s == vars[z].name+'+'){ // plus operator
-                        is=1;
+                        else if (s == vars[z].name+'+'){ // plus operator
+                            is=1;
 
-                        if (vars[z].type=='i'){
-                            vars[z].valint += std::stoi(prs[y+1]);
-                            if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                            if (vars[z].type=='i'){
+                                vars[z].valint += std::stoi(prs[y+1]);
+                                if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                            }
+                            else if (vars[z].type=='j'){
+                                vars[z].valsint.resize(vars[z].valsint.size()+1);
+                                vars[z].valsint[vars[z].valsint.size()-1]=std::stoi(prs[y+1]);
+                            }
+                            else{
+                                prs[y+1].pop_back();
+                                prs[y+1].erase(prs[y+1].begin());
+                                vars[z].valstring += prs[y+1];
+                                if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
+                            }
+                            y+=2;
+                            break;
                         }
-                        else if (vars[z].type=='j'){
-                            vars[z].valsint.resize(vars[z].valsint.size()+1);
-                            vars[z].valsint[vars[z].valsint.size()-1]=std::stoi(prs[y+1]);
+                        else if (s == vars[z].name+'-'){ // minus operator
+                            is=1;
+                            if (vars[z].type=='i'){
+                                vars[z].valint -= std::stoi(prs[y+1]);
+                                if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
+                            }
+                            else {
+                                char type = vars[z].type;
+                                string types;
+                                if (type=='s') types="str"; 
+                                error(4, types);
+                            }
+                            y++;
+                            break;
                         }
-                        else{
-                            prs[y+1].pop_back();
-                            prs[y+1].erase(prs[y+1].begin());
-                            vars[z].valstring += prs[y+1];
-                            if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
-                        }
-                        y+=2;
-                        break;
                     }
-                    else if (s == vars[z].name+'-'){ // minus operator
-                        is=1;
-                        if (vars[z].type=='i'){
-                            vars[z].valint -= std::stoi(prs[y+1]);
-                            if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
-                        }
-                        else {
-                            char type = vars[z].type;
-                            string types;
-                            if (type=='s') types="str"; 
-                            error(4, types);
-                        }
-                        y++;
-                        break;
-                    }
-                }
+                }       
             }
             if (names.size()!=0){
                 for (int z = 0; z<=names.size()-1; z++){
@@ -282,6 +283,8 @@ void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std
                     if (functions[z].name==prs[y]){
                         exec(parsed, functions[z].linestarted, names, functions);
                         y++;
+                        is=1;
+                        break;
                     }
                 }
             }

@@ -1,7 +1,8 @@
-func hellofunc{
+func y{
+    str x: "hi";
     print "hi\n";
 }end;
 
 do{
-    hellofunc;
+    y;
 }end;
