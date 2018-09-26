@@ -1,8 +1,8 @@
 func y{
     str x: "hi";
-    print "hi\n";
+    return x;
 }end;
 
 do{
-    y;
+    print y, "\n";
 }end;

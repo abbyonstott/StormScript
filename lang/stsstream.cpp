@@ -13,26 +13,29 @@ void sts::print(int line, std::vector<stsvars> current_vars){
         val = prs[line];
     }
     else{
-        for (int x = 0; x<=current_vars.size(); x++){
+        for (int x = 0; x<=current_vars.size()-1; x++){
             if (prs[line]==current_vars[x].name){
                 if (current_vars[x].type=='i') {
-                    val = std::to_string(current_vars[x].valint);
-                    break;
-                }
+                    val = std::to_string(current_vars[x].valint); }
                 else if (current_vars[x].type=='j') { 
                     if (prs[line+1]=="["){
                         if (std::stoi(prs[line+2])<=current_vars[x].valsint.size()-1){
                             val=std::to_string(current_vars[x].valsint[std::stoi(prs[line+2])]);
                         }
-                        else{
-                            error(6, prs[line+2]);
-                        }
+                        else{ error(6, prs[line+2]); }
                     }
-                    else{
-                        error(5, current_vars[x].name);
-                    }
+                    else{ error(5, current_vars[x].name); }
                 }
                 else { val = current_vars[x].valstring; }
+                break;
+            }
+        }
+        for (int x = 0; x<=functions.size()-1; x++){
+            if (prs[line]==functions[x].name){
+                exec(functions[x].linestarted, names, x);
+                if (functions[x].value.type='s'){
+                    val=functions[x].value.valstring;
+                }
                 break;
             }
         }

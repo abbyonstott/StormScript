@@ -19,7 +19,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                     inquotes = false;
                 }
             }
-            // this is what checks for chars to remove from parsed version
+            // this is what checks for chars to remove from prs version
             if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
@@ -47,8 +47,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
 
 void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc){
     prs = parse(prg);
-    std::vector<string> names; // the names of imported libraries
-    std::vector<stsfunc> functions;
     globvars.resize(globvars.size()+1);
     if (argc-1==2){
         globvars[globvars.size()-1].valstring=argv[2];
@@ -87,12 +85,12 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             functions[functions.size()-1].linestarted=x+2;
         }
         else if (prs[x]=="do{"){
-            exec(prs, x, names, functions);
+            exec(x, names, -1);
         }
     }
 }   
 
-void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std::vector<stsfunc> functions){ //THIS FUNCTION IS HOW EACH COMMAND IS EXECUTED
+void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION IS HOW EACH COMMAND IS EXECUTED
     std::vector<stsvars> vars;
     vars.resize(globvars.size());
     vars = globvars;
@@ -191,6 +189,20 @@ void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std
             }
             y++;
         }
+        else if (prs[y]=="return"){
+            if (function>-1){
+                cout << prs[y+1] << endl;
+                for (int z = 0; z<=vars.size()-1; z++){
+                    if (prs[y+1]==vars[z].name){
+                        functions[function].value=vars[z];
+                    }
+                }
+                break;
+            }
+            else{
+                error(7, "");
+            }
+        }
         else{
             bool is = 0;
             if (vars.size()!=0){
@@ -281,7 +293,7 @@ void sts::exec(std::vector<string> parsed, int x, std::vector<string> names, std
             if (functions.size()!=0){
                 for (int z = 0; z<=functions.size()-1; z++){
                     if (functions[z].name==prs[y]){
-                        exec(parsed, functions[z].linestarted, names, functions);
+                        exec(functions[z].linestarted, names, z);
                         y++;
                         is=1;
                         break;

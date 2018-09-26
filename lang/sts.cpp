@@ -94,6 +94,9 @@ void sts::error(int num, string issue)
 	else if (num == 6){
 		cout << "Error: " << issue << " is out of range" << endl; 
 	}
+	else if (num == 7){
+		cout << "Error: return is not allowed in do{ function." << endl;
+	}
 	exit(0);
 }
 

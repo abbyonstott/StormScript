@@ -34,6 +34,7 @@ public:
 class stsfunc:public stsvars{
 public:
 	int linestarted;
+	stsvars value;
 };
 
 class sts
@@ -42,9 +43,10 @@ public:
 	//variables
 	int lineon; //line the parser is on
 	unsigned int sizeoff = 0; //size of the program
-
-	std::vector<string> prg;
-	std::vector<string> prs;
+	std::vector<stsfunc> functions; //functions
+	std::vector<string> names; //imported libraries
+	std::vector<string> prg; //unparsed program
+	std::vector<string> prs; //parsed program
 	std::vector<stsvars> globvars; //global variables
 	//functions
 	stsvars declare(char type, int line); //declare variables -
@@ -56,7 +58,7 @@ public:
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);
 	bool compare(int line, std::vector<stsvars> current_vars);
-	void exec(std::vector<string> parsed, int line, std::vector<string> names, std::vector<stsfunc> functions);
+	void exec(int line, std::vector<string> names, int function);
 };
 
 
