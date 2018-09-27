@@ -1,5 +1,5 @@
 func y{
-    str x: "hi";
+    int x: 3;
     return x;
 }end;
 

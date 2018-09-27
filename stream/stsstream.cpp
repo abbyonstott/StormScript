@@ -33,9 +33,8 @@ void sts::print(int line, std::vector<stsvars> current_vars){
         for (int x = 0; x<=functions.size()-1; x++){
             if (prs[line]==functions[x].name){
                 exec(functions[x].linestarted, names, x);
-                if (functions[x].value.type='s'){
-                    val=functions[x].value.valstring;
-                }
+                if (functions[x].value.type=='s'){ val=functions[x].value.valstring; }
+                else if (functions[x].value.type=='i') { val=std::to_string(functions[x].value.valint); }
                 break;
             }
         }
