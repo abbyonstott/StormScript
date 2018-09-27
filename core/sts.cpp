@@ -76,26 +76,29 @@ void sts::error(int num, string issue)
 	}
 	else if (num == 1)
 	{
-		cout << "Error: " << issue << " is not a recognised command" << endl;
+		cout << "Error: \"" << issue << "\" is not a recognised command" << endl;
 	}
 	else if (num == 2)
 	{
-		cout << "Error: " << issue << " is not a recognised type" << endl;
+		cout << "Error: \"" << issue << "\" is not a recognised type" << endl;
 	}
 	else if (num == 3){
-		cout << "Error: " << issue << " is not a valid expression" << endl;
+		cout << "Error: \"" << issue << "\" is not a valid expression" << endl;
 	}
 	else if (num == 4){
-		cout << "Error: " << issue << " is an unsupported type" << endl;
+		cout << "Error: \"" << issue << "\" is an unsupported type" << endl;
 	}
 	else if (num == 5){
 		cout << "Error: \"" << issue << "\" is an array and must use a subscript on print" << endl;
 	}
 	else if (num == 6){
-		cout << "Error: " << issue << " is out of range" << endl; 
+		cout << "Error: \"" << issue << "\" is out of range" << endl; 
 	}
 	else if (num == 7){
 		cout << "Error: return is not allowed in do{ function." << endl;
+	}
+	else if (num == 8){
+		cout << "Error: \"" << issue << "\" is not a value." << endl;
 	}
 	exit(0);
 }

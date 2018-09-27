@@ -33,12 +33,5 @@ stsvars sts::declare(char type, int line){ //variable declarations
             y++;
         }
     }
-    else if (type=='t'){
-        int y = line+1;
-
-        while (prs[y]!=";"){
-            y++;
-        }
-    }
     return new_var;
 }

@@ -1,8 +1,4 @@
-func y{
-    str x: "hi";
-    return x;
-}end;
-
 do{
-    print y, "\n";
+    str y: "Hi", "How are you?", "Bye!";
+    print y[0], "\n", y[1], "\n", y[2], "\n";
 }end;

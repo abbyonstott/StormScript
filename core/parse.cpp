@@ -159,9 +159,17 @@ void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION 
         else if (prs[y]=="str"){
             y++;
             vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('s',y);
-            vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-            y+=2;
+            if (prs[y+2]==";"){
+                vars[vars.size()-1]=declare('s',y);
+                vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
+            }
+            else{
+                vars[vars.size()-1]=declare('t',y);
+                vars[vars.size()-1].glob=0;
+            }
+            while (prs[y]!=";"){
+                y++;
+            }
         }
         else if (prs[y]=="sys"){
             y++;
