@@ -1,4 +1,4 @@
-#include "stsclasses.h"
+#include "../core/stsclasses.h"
 
 /*
 stsstream.cpp: all of the basic input and output streams and if statements.

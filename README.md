@@ -1,76 +1,15 @@
 # StormScript
 
-## General
+This is the GitHub repository for the StormScript Scripting language
 
-### About
+## Layout
 
-StormScript is an interpreted, object-oriented, scripting language. 
-
-StormScript is based in C++ and is simple to use.
-
-### Basics
-
-StormScript was made on the idea that it is possible to have a strong scripting language that has short, easy to remember syntax.
-
-## The Language
-
-### Files
-
-StormScript files have the extension `.sts`
-
-### Running files
-
-_Once you add the executable to your PATH environment variable:_
-
-* `sts filename.sts`
-
-
-### Commands
-
-`do`: initial function
-
-`print`: write to console
-
-`in`: take input from console
-
-`glob`: make a variable global
-
-`str`: make a string variable
-
-`int`: make a integer variable
-
-`lib`: import a library
-
-`if`, `else`: if statement
-
-`end`: end current scope
-
-`loop`: loop the current scope
-
-## Examples:
-
-### Hello World Program
-
-```
-do{
-  print "Hello, World!\n";
-}end;
-```
-
-### Dealing With Input
-
-```
-do{
-  in str x;
-
-  if x is "hi"{
-    print "you typed hi!\n";
-  }else{
-    print "You didn't type hi\n";
-  }end;
-}end;
-```
-
-_version specific examples can be found in the `example.sts` file_
-
-Tutorial available [here](https://stormprograms.com/stormscript/helloworld).
+Folder | Description | Contents 
+------ | ----------- | --------
+docs/ | contributing guide, code of conduct. etc. | `CODE_OF_CONDUCT.md`: code of conduct. `CONTRIBUTING.md`: contributing guide.
+core/ | The core StormScript files | `sts.cpp`: file input, reading, errors. `parse.cpp`: The parser and interpreter. `stsclasses.h`: all classes needed for StormScript development.
+stream/ | Files that deal with the console. | `stsstream.cpp`: if statements, print, in, and sys.
+values/ | Files that deal with variables and functions. | `stsdec.cpp`: Lets you declare variables.
+libraries/ | StormScript test libraries. | This folder contains three test libraries that all print `Hello, world!`. 
+tests/ | Files that allow you to test StormScript | `test.sh`: compiles stormscript and runs `example.sts`. `example.sts`: The file where features are tested.
+release/ | Compiled versions of libraries | `package.sh`: shell script that compiles StormScript and its libraries for Linux and Windows and compresses the folders for release.

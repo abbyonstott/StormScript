@@ -1,4 +1,4 @@
-#include "stsclasses.h"
+#include "../core/stsclasses.h"
 
 /*
 stsdec.cpp: basic type and function declarations
