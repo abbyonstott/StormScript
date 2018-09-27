@@ -36,7 +36,6 @@ void sts::print(int line, std::vector<stsvars> current_vars){
                 if (functions[x].value.type='s'){
                     val=functions[x].value.valstring;
                 }
-                else if (functions[x].value.type='i'){ val=std::to_string(functions[x].value.valint); }
                 break;
             }
         }
