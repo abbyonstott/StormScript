@@ -191,7 +191,6 @@ void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION 
         }
         else if (prs[y]=="return"){
             if (function>-1){
-                cout << prs[y+1] << endl;
                 for (int z = 0; z<=vars.size()-1; z++){
                     if (prs[y+1]==vars[z].name){
                         functions[function].value=vars[z];
