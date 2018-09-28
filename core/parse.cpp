@@ -47,13 +47,18 @@ std::vector<string> sts::parse(std::vector<string> prg){
 
 void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc){
     prs = parse(prg);
+
     globvars.resize(globvars.size()+1);
-    if (argc-1==2){
-        globvars[globvars.size()-1].valstring=argv[2];
+    for (int x = 1; x<=argc-1; x++){
+        globvars[globvars.size()-1].type='t';
+        globvars[globvars.size()-1].valsstring.resize(
+            globvars[globvars.size()-1].valsstring.size()+1
+        );
+        globvars[globvars.size()-1].valsstring[globvars[globvars.size()-1].valsstring.size()-1]=argv[x];
         globvars[globvars.size()-1].name="arg"; 
-        globvars[globvars.size()-1].type='s';
         globvars[globvars.size()-1].glob=1;
     }
+
     for (int x = 0; x<=prs.size()-1; x++){
         if (prs[x]=="lib"){
             names.resize(names.size()+1);

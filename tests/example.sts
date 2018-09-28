@@ -1,4 +1,3 @@
 do{
-    str y: "Hi", "How are you?", "Bye!";
-    print y[0], "\n", y[1], "\n", y[2], "\n";
+    print arg[0];
 }end;
