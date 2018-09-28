@@ -16,7 +16,4 @@
             "path": "../values/stsdec.cpp"
         }
     ],
-    "libraries": [
-
-    ]
 }
