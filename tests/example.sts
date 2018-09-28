@@ -1,3 +1,3 @@
 do{
-    print arg[0]+"\n";
+    printl arg[0];
 }end;

@@ -104,12 +104,17 @@ void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION 
     int endreq = 1;
 
     while (true){
-        if (prs[y]=="print"){
+        if ((prs[y]=="print") || (prs[y]=="printl")){
+            bool l = 0;
+            if (prs[y]=="printl") { l = 1; }
+
             y++;
             while (prs[y]!=";"){
                 print(y, vars);
                 y++;
             }
+            
+            if (l){ cout << endl; }
         }
         else if (prs[y]=="exit"){
             exit(0);
