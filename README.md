@@ -8,7 +8,7 @@ Folder | Description | Contents
 ------ | ----------- | --------
 docs/ | contributing guide, code of conduct. etc. | `CODE_OF_CONDUCT.md`: code of conduct. `CONTRIBUTING.md`: contributing guide.
 core/ | The core StormScript files | `sts.cpp`: file input, reading, errors. `parse.cpp`: The parser and interpreter. `stsclasses.h`: all classes needed for StormScript development.
-stream/ | Files that deal with the console. | `stsstream.cpp`: if statements, print, in, and sys.
+stream/ | Files that deal with the console. | `stsstream.cpp`: if statements and `sys`. `io.cpp`: `print` and `in` commands
 values/ | Files that deal with variables and functions. | `stsdec.cpp`: Lets you declare variables.
 libraries/ | StormScript test libraries. | This folder contains three test libraries that all print `Hello, world!`. 
 tests/ | Files that allow you to test StormScript | `test.sh`: compiles stormscript and runs `example.sts`. `example.sts`: The file where features are tested.
