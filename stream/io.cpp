@@ -2,7 +2,6 @@
 
 void sts::print(int line, std::vector<stsvars> current_vars){
     string val = "";
-
     if (prs[line][0]=='\"'){
         prs[line].erase(prs[line].begin());
         prs[line].pop_back();
@@ -37,12 +36,15 @@ void sts::print(int line, std::vector<stsvars> current_vars){
                 }
             }
         }
-        else if (functions.size()!=0){
+        if (functions.size()!=0){
             for (int x = 0; x<=functions.size()-1; x++){
                 if (prs[line]==functions[x].name){
                     exec(functions[x].linestarted, names, x);
-                    if (functions[x].value.type='s'){
+                    if (functions[x].value.type=='s'){
                         val=functions[x].value.valstring;
+                    }
+                    else{
+                        val=std::to_string(functions[x].value.valint);
                     }
                     break;
                 }
