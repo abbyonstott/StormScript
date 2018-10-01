@@ -1,3 +1,8 @@
+func y{
+    str x: "hello";
+    return x;
+}end;
+
 do{
-    print arg[0]+"\n";
+    print y, "\n";
 }end;
