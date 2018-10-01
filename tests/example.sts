@@ -2,9 +2,6 @@ glob bool x: true;
 
 func z{
     if x is true{
-        bool n: false;
-        return n;
-    }else{
         return x;
     }end;
 }end;
