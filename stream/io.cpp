@@ -11,8 +11,12 @@ void sts::print(int line, std::vector<stsvars> current_vars){
         if (current_vars.size()!=0){
             for (int x = 0; x<=current_vars.size()-1; x++){
                 if (prs[line]==current_vars[x].name){
-                    if (current_vars[x].type=='i') {
-                        val = std::to_string(current_vars[x].valint); }
+                    if (current_vars[x].type=='i') { val = std::to_string(current_vars[x].valint); }
+                    if (current_vars[x].type=='b') { 
+                        bool z = current_vars[x].val;
+                        if (z==true){ val="true"; }
+                        else{ val="false"; }
+                    }
                     else if (current_vars[x].type=='j') { //integer array
                         if (prs[line+1]=="["){
                             if (std::stoi(prs[line+2])<=current_vars[x].valsint.size()-1){
@@ -42,6 +46,11 @@ void sts::print(int line, std::vector<stsvars> current_vars){
                     exec(functions[x].linestarted, names, x);
                     if (functions[x].value.type=='s'){
                         val=functions[x].value.valstring;
+                    }
+                    else if (functions[x].value.type=='b') { 
+                        bool z = functions[x].value.val;
+                        if (z==true){ val="true"; }
+                        else{ val="false"; }
                     }
                     else{
                         val=std::to_string(functions[x].value.valint);
