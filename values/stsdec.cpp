@@ -25,6 +25,13 @@ stsvars sts::declare(char type, int line){ //variable declarations
         }
         new_var.valstring = prs[y];
     }
+    else if (type=='b'){
+        bool bval = false;
+        if (prs[y]=="true"){
+            bval=true;
+        }
+        new_var.val=bval;
+    }
     else if (type=='j'){
         while (prs[y]!=";"){
             new_var.valsint.resize(new_var.valsint.size()+1);

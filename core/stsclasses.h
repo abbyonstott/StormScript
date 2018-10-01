@@ -26,6 +26,7 @@ public:
 	std::vector<int> valsint;
 	string valstring = "";
 	std::vector<string> valsstring;
+	bool val;
 	char type;
 	bool glob;
 	string name;

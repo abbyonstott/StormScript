@@ -78,6 +78,11 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 globvars[globvars.size()-1]=declare('s', x);
                 globvars[globvars.size()-1].glob=1;
             }
+            else if (prs[x]=="bool") {
+                x++;
+                globvars[globvars.size()-1]=declare('b', x);
+                globvars[globvars.size()-1].glob=1;
+            }
             else {
                 error(2,prs[x]);
                 x++;
@@ -165,6 +170,14 @@ void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION 
             while (prs[y]!=";"){
                 y++;
             }
+        }
+        else if (prs[y]=="bool"){
+            y++;
+            vars.resize(vars.size()+1);
+            if (prs[y+2]==";"){
+                vars[vars.size()-1]=declare('b',y);
+            }
+            y++;
         }
         else if (prs[y]=="str"){
             y++;
