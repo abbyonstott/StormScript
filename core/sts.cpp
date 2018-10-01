@@ -100,6 +100,9 @@ void sts::error(int num, string issue)
 	else if (num == 8){
 		cout << "Error: \"" << issue << "\" is not a value." << endl;
 	}
+	else if (num == 9){
+		cout << "Error: \"" << issue << "\" is not the correct type." << endl;
+	}
 	exit(0);
 }
 

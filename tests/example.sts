@@ -1,8 +1,8 @@
-glob int x: 3;
+glob bool x: true;
 
 func z{
-    bool n: true;
-    if x is 3{
+    if x is true{
+        bool n: false;
         return n;
     }else{
         return x;
@@ -11,5 +11,4 @@ func z{
 
 do{
     printl z;
-    x+: 2;
-}loop(3);
+}end;

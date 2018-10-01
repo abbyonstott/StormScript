@@ -24,6 +24,12 @@ bool sts::compare(int line, std::vector<stsvars> current_vars){
                             condition=1;
                         }
                     }
+                    else { error(9, prs[line+2]); }
+                }
+                else if (current_vars[x].type=='b'){
+                    if (prs[line+2]=="true"){ if (current_vars[x].val==true){ condition = 1; } }
+                    else if (prs[line+2]=="false"){ if (current_vars[x].val==true){ condition = 1; } }
+                    else { error(9, prs[line+2]); }
                 }
             }
             else if (prs[line+1]=="not"){ // compared with 'not' expression
