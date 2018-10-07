@@ -1,11 +1,5 @@
-glob bool x: true;
-
-func z{
-    if x is true{
-        return x;
-    }end;
-}end;
-
 do{
-    printl z;
+    int x: 3;
+    x+:3;
+    print x;
 }end;
