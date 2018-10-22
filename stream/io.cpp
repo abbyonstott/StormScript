@@ -12,7 +12,7 @@ void sts::print(int line, std::vector<stsvars> current_vars){
             for (int x = 0; x<=current_vars.size()-1; x++){
                 if (prs[line]==current_vars[x].name){
                     if (current_vars[x].type=='i') { val = std::to_string(current_vars[x].valint); }
-                    if (current_vars[x].type=='b') { 
+                    else if (current_vars[x].type=='b') { 
                         bool z = current_vars[x].val;
                         if (z==true){ val="true"; }
                         else{ val="false"; }
@@ -67,7 +67,6 @@ void sts::print(int line, std::vector<stsvars> current_vars){
             val[x]='\n';
         }
     }
-
     cout << val;
 }
 

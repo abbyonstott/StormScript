@@ -1,6 +1,8 @@
 #include "../core/stsclasses.h"
 
-std::vector<stsvars> sts::valchange(std::vector<stsvars> vars, int y){
+void sts::valchange(std::vector<stsvars> * pvars, int * ln){ //changes the value of the stsvars list
+    std::vector<stsvars> vars = *pvars;
+    int y = *ln;
     if (vars.size()!=0){
         if (prs[y].size()!=1){
             string s = prs[y];
@@ -93,5 +95,6 @@ std::vector<stsvars> sts::valchange(std::vector<stsvars> vars, int y){
             }
         }
     }
-    return vars;
+    *ln = y;
+    *pvars = vars;
 }

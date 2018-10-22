@@ -234,12 +234,9 @@ void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION 
             }
         }
         else{
-            std::vector<stsvars> nval = valchange(vars, y);
-            if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")&& (nval==vars)) { //if not function give error
+            valchange(&vars, &y);
+            if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")) { //if not function give error
                 error(1,prs[y]);
-            }
-            else if (vars!=nval){
-                vars=nval;
             }
         }
         y++;
