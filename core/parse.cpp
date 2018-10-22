@@ -196,7 +196,7 @@ void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION 
         }
         else if (prs[y]=="sys"){
             y++;
-            sys(y);
+            sys(y, vars);
         }
         else if ((prs[y]=="}end") || (prs[y]=="}loop")){
             if (prs[y]=="}loop"){

@@ -54,7 +54,7 @@ public:
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc); //read file
 	void print(int line, std::vector<stsvars> current_vars); //out function
-	void sys(int line);
+	void sys(int line,std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);

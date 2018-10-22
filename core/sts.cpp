@@ -103,6 +103,9 @@ void sts::error(int num, string issue)
 	else if (num == 9){
 		cout << "Error: \"" << issue << "\" is not the correct type." << endl;
 	}
+	else if (num == 10){
+		cout << "Error: variable used in 'sys' command is of type " << issue << " and should be a str." << endl;
+	}
 	exit(0);
 }
 

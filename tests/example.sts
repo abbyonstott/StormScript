@@ -1,5 +1,4 @@
 do{
-    int x: 3;
-    x+: 3;
-    printl x;
+    str x: "echo hi";
+    sys x;
 }end;
