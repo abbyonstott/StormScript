@@ -1,4 +1,5 @@
 # StormScript
+[![Snap Status](https://build.snapcraft.io/badge/stormprograms/StormScript.svg)](https://build.snapcraft.io/user/stormprograms/StormScript)
 
 This is the GitHub repository for the StormScript Scripting language
 
