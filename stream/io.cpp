@@ -85,6 +85,10 @@ stsvars sts::in(int line){
         std::cin.getline(valstring, 256);
         input.valstring=valstring;
     }
+    else if (prs[line]=="bool") {
+        input.type = 'b';
+        std::cin >> input.val;
+    }
 
     return input;
 }

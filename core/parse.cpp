@@ -92,32 +92,39 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             x++;
             if (prs[x]=="args:") {
                 x++;
-                stsvars arg;
+                std::vector<stsvars> args;
                 
                 // declare var
-                if (prs[x] == "bool") {
-                    arg.type='b';
-                }
-                else if (prs[x] == "str") {
-                    arg.type='s';
-                }
-                else if (prs[x] == "int") {
-                    arg.type='i';
-                }
-                else {
-                    error(2, prs[x]);
+                while (prs[x]!=";") {
+                    args.resize(args.size()+1);
+
+                    if (prs[x] == "bool") {
+                        args[args.size()-1].type='b';
+                    }
+                    else if (prs[x] == "str") {
+                        args[args.size()-1].type='s';
+                    }
+                    else if (prs[x] == "int") {
+                        args[args.size()-1].type='i';
+                    }
+                    else {
+                        error(2, prs[x]);
+                    }
+                    x++;
+                    args[args.size()-1].name = prs[x];
+                    x++;
                 }
 
-                x++;
-                arg.name = prs[x];
-                x+=3;
+                while (prs[x]!="func") {
+                    x++;
+                }
 
                 // declare
                 prs[x+1].pop_back();
                 functions.resize(functions.size()+1);
                 functions[functions.size()-1].name=prs[x+1];
                 functions[functions.size()-1].linestarted=x+2;
-                functions[functions.size()-1].args=arg;
+                functions[functions.size()-1].args=args;
             } 
         }
         else if (prs[x]=="func"){
@@ -141,8 +148,10 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
     int endreq = 1;
 
     if (function>-1) {
-        vars.resize(vars.size()+1);
-        vars[vars.size()-1] = functions[function].args;
+        for (int i = 0; i < functions[function].args.size(); i++) {
+            vars.resize(vars.size()+1);
+            vars[vars.size()-1] = functions[function].args[i];
+        }
     }
 
     while (true){

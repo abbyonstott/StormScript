@@ -36,7 +36,7 @@ class stsfunc:public stsvars{
 public:
 	int linestarted;
 	stsvars value;
-	stsvars args;
+	std::vector<stsvars> args;
 };
 
 class sts
