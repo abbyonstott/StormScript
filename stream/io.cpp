@@ -14,7 +14,7 @@ void sts::print(int line, std::vector<stsvars> current_vars){
                     if (current_vars[x].type=='i') { val = std::to_string(current_vars[x].valint); }
                     else if (current_vars[x].type=='b') { 
                         bool z = current_vars[x].val;
-                        if (z==true){ val="true"; }
+                        if (z==1){ val="true"; }
                         else{ val="false"; }
                     }
                     else if (current_vars[x].type=='j') { //integer array
@@ -49,7 +49,7 @@ void sts::print(int line, std::vector<stsvars> current_vars){
                     }
                     else if (functions[x].value.type=='b') { 
                         bool z = functions[x].value.val;
-                        if (z==true){ val="true"; }
+                        if (z==1){ val="true"; }
                         else{ val="false"; }
                     }
                     else{

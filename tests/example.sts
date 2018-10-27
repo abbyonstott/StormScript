@@ -1,4 +1,8 @@
+@args: bool x;
+func b{
+    printl x;
+}end;
+
 do{
-    str x: "echo hi";
-    sys x;
+    b => x: false;
 }end;

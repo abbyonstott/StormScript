@@ -89,6 +89,21 @@ void sts::valchange(std::vector<stsvars> * pvars, int * ln){ //changes the value
     if (functions.size()!=0){
         for (int z = 0; z<=functions.size()-1; z++){
             if (functions[z].name==prs[y]){
+                if (prs[y+1]=="=>"){
+                    y+=3;
+                    char *argtype = &functions[z].args.type;
+                    bool bval = false;
+                    if (prs[y]=="true"){ bval = true; }
+
+                    switch (*argtype) {
+                        case 's': functions[z].args.valstring = prs[y];
+                            break;
+                        case 'b': functions[z].args.val = bval;
+                            break;
+                        case 'i': functions[z].args.valint = std::stoi(prs[y]);
+                            break;
+                    }
+                }
                 exec(functions[z].linestarted, names, z);
                 y++;
                 break;

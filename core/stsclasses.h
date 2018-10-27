@@ -36,6 +36,7 @@ class stsfunc:public stsvars{
 public:
 	int linestarted;
 	stsvars value;
+	stsvars args;
 };
 
 class sts

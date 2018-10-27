@@ -29,7 +29,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)){
+            else if (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z]=='@')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 x[x.size()-1]+=prg[y][z];
                 x.resize(x.size()+1);
@@ -88,6 +88,38 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 x++;
             }
         }
+        else if (prs[x]=="@"){
+            x++;
+            if (prs[x]=="args:") {
+                x++;
+                stsvars arg;
+                
+                // declare var
+                if (prs[x] == "bool") {
+                    arg.type='b';
+                }
+                else if (prs[x] == "str") {
+                    arg.type='s';
+                }
+                else if (prs[x] == "int") {
+                    arg.type='i';
+                }
+                else {
+                    error(2, prs[x]);
+                }
+
+                x++;
+                arg.name = prs[x];
+                x+=3;
+
+                // declare
+                prs[x+1].pop_back();
+                functions.resize(functions.size()+1);
+                functions[functions.size()-1].name=prs[x+1];
+                functions[functions.size()-1].linestarted=x+2;
+                functions[functions.size()-1].args=arg;
+            } 
+        }
         else if (prs[x]=="func"){
             prs[x+1].pop_back();
             functions.resize(functions.size()+1);
@@ -100,13 +132,18 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
     }
 }   
 
-void sts::exec(int x, std::vector<string> names, int function){ //THIS FUNCTION IS HOW EACH COMMAND IS EXECUTED
+void sts::exec(int x, std::vector<string> names, int function){ // how each command is executed
     std::vector<stsvars> vars;
     vars.resize(globvars.size());
     vars = globvars;
     int y = x+1;
     bool looped=0;
     int endreq = 1;
+
+    if (function>-1) {
+        vars.resize(vars.size()+1);
+        vars[vars.size()-1] = functions[function].args;
+    }
 
     while (true){
         if ((prs[y]=="print") || (prs[y]=="printl")){
