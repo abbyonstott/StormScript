@@ -88,6 +88,10 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 x++;
             }
         }
+        else if (prs[x]=="type") { // declares a class
+            classes.resize(classes.size()+1);
+            classes[classes.size()-1].declare(&x, &prs);
+        }
         else if (prs[x]=="@"){
             x++;
             if (prs[x]=="args:") {

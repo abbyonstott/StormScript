@@ -17,6 +17,9 @@
         },
         {
             "path": "../values/man.cpp"
+        },
+        {
+            "path": "../classes/dectype.cpp"
         }
     ]
 }

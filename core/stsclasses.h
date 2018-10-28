@@ -39,6 +39,13 @@ public:
 	std::vector<stsvars> args;
 };
 
+class stsclass {
+	public:
+		std::vector<stsvars> variables;
+		string name;
+		void declare(int *y, std::vector<string> *prs);
+};
+
 class sts
 {
 public:
@@ -50,6 +57,7 @@ public:
 	std::vector<string> prg; //unparsed program
 	std::vector<string> prs; //parsed program
 	std::vector<stsvars> globvars; //global variables
+	std::vector<stsclass> classes;
 	//functions
 	stsvars declare(char type, int line); //declare variables -
 	void error(int num, string issue); //error
