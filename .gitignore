@@ -1,6 +1,7 @@
 .vscode
 stscompile
 stsprg.out
+build/
 release/*/bin/sts*
 *.obj
 release/windows-x86/libs/
@@ -10,3 +11,10 @@ helloworldpy.stslib
 *.exe
 *.tar*
 *.zip
+
+snap/.snapcraft/
+snap/parts/
+snap/prime/
+snap/stage/
+snap/snap/
+*.snap

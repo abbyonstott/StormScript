@@ -1,0 +1,2 @@
+#define StormScript_VERSION_MAJOR @StormScript_VERSION_MAJOR@
+#define StormScript_VERSION_MINOR @StormScript_VERSION_MAJOR@
