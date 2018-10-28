@@ -11,6 +11,7 @@ helloworldpy.stslib
 *.exe
 *.tar*
 *.zip
+release/
 
 snap/.snapcraft/
 snap/parts/
