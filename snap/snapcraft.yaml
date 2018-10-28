@@ -9,7 +9,7 @@ confinement: strict # use 'strict' once you have the right plugs and slots
 
 apps:
   stormscript:
-    command: bin/sts
+    command: bin/stormscript
 
 plugs:
   home:
