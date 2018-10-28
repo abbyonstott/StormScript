@@ -1,7 +1,8 @@
 #include "../core/stsclasses.h"
 
-void sts::print(int line, std::vector<stsvars> current_vars){
+void sts::print(int line, int *y, std::vector<stsvars> current_vars, std::vector<stsclasstype> classtypes){ //handles both print and printl.
     string val = "";
+    int ln = *y;
     if (prs[line][0]=='\"'){
         prs[line].erase(prs[line].begin());
         prs[line].pop_back();
@@ -9,7 +10,7 @@ void sts::print(int line, std::vector<stsvars> current_vars){
     }
     else{
         if (current_vars.size()!=0){
-            for (int x = 0; x<=current_vars.size()-1; x++){
+            for (int x = 0; x<=current_vars.size()-1; x++){ //check variables
                 if (prs[line]==current_vars[x].name){
                     if (current_vars[x].type=='i') { val = std::to_string(current_vars[x].valint); }
                     else if (current_vars[x].type=='b') { 
@@ -59,6 +60,25 @@ void sts::print(int line, std::vector<stsvars> current_vars){
                 }
             }
         }
+        if (classtypes.size()!=0) {
+            for (int i = 0; i<classtypes.size(); i++) {
+                if (prs[ln] == classtypes[i].name) {
+                    ln++;
+                    for (int d = 0; d<classtypes[i].tpe.variables.size(); d++) {
+                        if (prs[ln]==classtypes[i].tpe.variables[d].name) {
+                            switch (classtypes[i].tpe.variables[d].type) {
+                                case 'i': val = std::to_string(classtypes[i].tpe.variables[d].valint);
+                                    break;
+                                case 's': val = classtypes[i].tpe.variables[d].valstring;
+                                    break;
+                                case 'b': val = ((classtypes[i].tpe.variables[d].val) ? "true" : "false");
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     for (int x = 0; x<=val.size(); x++){
@@ -67,6 +87,9 @@ void sts::print(int line, std::vector<stsvars> current_vars){
             val[x]='\n';
         }
     }
+
+    *y = ln;
+
     cout << val;
 }
 

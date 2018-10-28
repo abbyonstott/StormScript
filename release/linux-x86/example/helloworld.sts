@@ -1,3 +1,0 @@
-do{
-    print "Hello, World!\n";
-}end;

@@ -1,8 +1,17 @@
 #include "../core/stsclasses.h"
 
-void sts::valchange(std::vector<stsvars> * pvars, int * ln){ //changes the value of the stsvars list
+string striplit(string line) {
+    line.pop_back();
+    line.erase(line.begin());
+
+    return line;
+}
+
+void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
+    std::vector<stsclasstype> ct = *classtypes;
+
     if (vars.size()!=0){
         if (prs[y].size()!=1){
             string s = prs[y];
@@ -99,7 +108,7 @@ void sts::valchange(std::vector<stsvars> * pvars, int * ln){ //changes the value
 
 
                         switch (*argtype) {
-                            case 's': functions[z].args[i].valstring = prs[y];
+                            case 's': functions[z].args[i].valstring = striplit(prs[y]);
                                 break;
                             case 'b': functions[z].args[i].val = bval;
                                 break;
@@ -118,6 +127,45 @@ void sts::valchange(std::vector<stsvars> * pvars, int * ln){ //changes the value
             }
         }
     }
+    if (classes.size()!=0) {
+        for (int i = 0; i<classes.size(); i++) {
+            if (classes[i].name==prs[y]) {
+                ct.resize(ct.size()+1);
+                ct[ct.size()-1].tpe = classes[i];
+                y++;
+                ct[ct.size()-1].name = prs[y];
+                y++;
+            }
+        }
+    }
+    if (ct.size()!=0) {
+        for (int i = 0; i<ct.size(); i++) {
+            if (ct[i].name==prs[y]) {
+                y++;
+                prs[y].pop_back();
+                ct[i].type='c';
+                for (int d = 0; d<ct[i].tpe.variables.size(); d++) {
+                    if (ct[i].tpe.variables[d].name==prs[y]) {
+                        y++;
+                        
+                        bool bval = false;
+                        if (prs[y]=="true"){ bval = true; }
+
+                        switch (ct[i].tpe.variables[d].type) {
+                            case 'i': ct[i].tpe.variables[d].valint = std::stoi(prs[y]);
+                                break;
+                            case 'b': ct[i].tpe.variables[d].val = bval;
+                                break;
+                            case 's': ct[i].tpe.variables[d].valstring = striplit(prs[y]);
+                                break;
+                        }
+                        y++;
+                    } 
+                }
+            }
+        }
+    }
     *ln = y;
+    *classtypes = ct;
     *pvars = vars;
 }

@@ -1,5 +1,0 @@
-do{
-    if arg[1] is "out"{
-        print "Hello, World!\n";
-    }end;
-}end;

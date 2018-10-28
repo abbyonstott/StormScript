@@ -88,6 +88,12 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 x++;
             }
         }
+
+        else if (prs[x]=="type") { // declares a class
+            classes.resize(classes.size()+1);
+            classes[classes.size()-1].declare(&x, this);
+        }
+        
         else if (prs[x]=="@"){
             x++;
             if (prs[x]=="args:") {
@@ -141,11 +147,15 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
 
 void sts::exec(int x, std::vector<string> names, int function){ // how each command is executed
     std::vector<stsvars> vars;
+    std::vector<stsclasstype> classtypes;
     vars.resize(globvars.size());
     vars = globvars;
     int y = x+1;
     bool looped=0;
     int endreq = 1;
+
+
+
 
     if (function>-1) {
         for (int i = 0; i < functions[function].args.size(); i++) {
@@ -161,7 +171,7 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
 
             y++;
             while (prs[y]!=";"){
-                print(y, vars);
+                print(y, &y, vars, classtypes);
                 y++;
             }
             
@@ -268,7 +278,8 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
         }
         else if (prs[y]=="return"){
             if (function>-1){
-                for (int z = 0; z<=vars.size()-1; z++){
+                // check variables
+                for (int z = 0; z<vars.size(); z++) {
                     if (prs[y+1]==vars[z].name){
                         functions[function].value=vars[z];
                     }
@@ -280,7 +291,7 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
             }
         }
         else{
-            valchange(&vars, &y);
+            valchange(&vars, &classtypes, &y);
             if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")) { //if not function give error
                 error(1,prs[y]);
             }
