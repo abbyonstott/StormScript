@@ -154,6 +154,9 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
     bool looped=0;
     int endreq = 1;
 
+
+
+
     if (function>-1) {
         for (int i = 0; i < functions[function].args.size(); i++) {
             vars.resize(vars.size()+1);
@@ -168,7 +171,7 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
 
             y++;
             while (prs[y]!=";"){
-                print(y, vars);
+                print(y, &y, vars, classtypes);
                 y++;
             }
             
@@ -275,7 +278,8 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
         }
         else if (prs[y]=="return"){
             if (function>-1){
-                for (int z = 0; z<=vars.size()-1; z++){
+                // check variables
+                for (int z = 0; z<vars.size(); z++) {
                     if (prs[y+1]==vars[z].name){
                         functions[function].value=vars[z];
                     }

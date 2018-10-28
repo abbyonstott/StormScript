@@ -50,6 +50,8 @@ class stsfunc:public stsvars{
 public:
 	int linestarted;
 	stsvars value;
+	stsclasstype cval;
+	char valtype;
 	std::vector<stsvars> args;
 };
 
@@ -70,7 +72,7 @@ public:
 	stsvars declare(char type, int line); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc); //read file
-	void print(int line, std::vector<stsvars> current_vars); //out function
+	void print(int line, int *y, std::vector<stsvars> current_vars, std::vector<stsclasstype> classtypes); //out function
 	void sys(int line,std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);

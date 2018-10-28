@@ -28,7 +28,7 @@ void stsclass::declare(int *y, sts *inst) { //declare type
         }
         else if (prs[ln]=="bool") {
             variables.resize(variables.size()+1);
-            variables[variables.size()-1].type = 's';
+            variables[variables.size()-1].type = 'b';
             ln++;
             variables[variables.size()-1].name = prs[ln];
             ln++;  

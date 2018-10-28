@@ -143,6 +143,7 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             if (ct[i].name==prs[y]) {
                 y++;
                 prs[y].pop_back();
+                ct[i].type='c';
                 for (int d = 0; d<ct[i].tpe.variables.size(); d++) {
                     if (ct[i].tpe.variables[d].name==prs[y]) {
                         y++;
