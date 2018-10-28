@@ -17,5 +17,6 @@ plugs:
 parts:
   stormscript:
     # See 'snapcraft plugins'
-    source: https://github.com/stormprograms/StormScript/releases/download/v0.9.0-alpha/linux-x86_64.tar.gz
-    plugin: dump
+    source: https://github.com/stormprograms/StormScript.git
+    source-type: git
+    plugin: cmake

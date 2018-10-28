@@ -1,6 +1,7 @@
 .vscode
 stscompile
 stsprg.out
+build/
 release/*/bin/sts*
 *.obj
 release/windows-x86/libs/

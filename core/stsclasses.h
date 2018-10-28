@@ -14,6 +14,7 @@
 #include <vector>
 #include <cctype>
 #include <cstdlib>
+#include "../StormScriptconfig.h"
 
 using std::string;
 using std::cout;
