@@ -1,0 +1,8 @@
+@args: str x;
+func y{
+    printl x;
+}end;
+
+do{
+    y => x: "hi";
+}end;

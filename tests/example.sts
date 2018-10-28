@@ -1,14 +1,9 @@
-type test {
+type test{
     int x;
-    string y;
+    str y;
 };
 
-@args: int x;
 func f{
-    printl x;
-}end;
-
-func f2{
     test n;
     n.x: 3;
     return n;
@@ -18,6 +13,5 @@ do{
     test z;
     z.x: 1;
 
-    f => x: z.x;
-    printl f2.x;
+    printl f.x;
 }end;

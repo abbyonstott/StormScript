@@ -88,10 +88,12 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 x++;
             }
         }
+
         else if (prs[x]=="type") { // declares a class
             classes.resize(classes.size()+1);
-            classes[classes.size()-1].declare(&x, &prs);
+            classes[classes.size()-1].declare(&x, this);
         }
+        
         else if (prs[x]=="@"){
             x++;
             if (prs[x]=="args:") {
@@ -145,6 +147,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
 
 void sts::exec(int x, std::vector<string> names, int function){ // how each command is executed
     std::vector<stsvars> vars;
+    std::vector<stsclasstype> classtypes;
     vars.resize(globvars.size());
     vars = globvars;
     int y = x+1;
@@ -284,7 +287,7 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
             }
         }
         else{
-            valchange(&vars, &y);
+            valchange(&vars, &classtypes, &y);
             if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")) { //if not function give error
                 error(1,prs[y]);
             }

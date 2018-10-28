@@ -20,6 +20,7 @@ using std::string;
 using std::cout;
 using std::endl;
 
+class sts;
 
 class stsvars{
 public:
@@ -33,6 +34,18 @@ public:
 	string name;
 };
 
+class stsclass {
+public:
+	void declare(int *y, sts *inst);
+	std::vector<stsvars> variables;
+	string name;
+};
+
+class stsclasstype:public stsvars{
+public:
+	stsclass tpe;
+};
+
 class stsfunc:public stsvars{
 public:
 	int linestarted;
@@ -40,12 +53,6 @@ public:
 	std::vector<stsvars> args;
 };
 
-class stsclass {
-	public:
-		std::vector<stsvars> variables;
-		string name;
-		void declare(int *y, std::vector<string> *prs);
-};
 
 class sts
 {
@@ -70,7 +77,7 @@ public:
 	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);
 	bool compare(int line, std::vector<stsvars> current_vars);
 	void exec(int line, std::vector<string> names, int function);
-	void valchange(std::vector<stsvars> * pvars, int * ln);
+	void valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 };
 
 
