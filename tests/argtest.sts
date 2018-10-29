@@ -1,25 +1,8 @@
-@args: bool x, int y;
-func b{
-    if x is true{
-        printl y;
-    }else{
-        printl "x is ", x;
-    }end;
+@args: str x;
+func y{
+    printl x;
 }end;
 
 do{
-    print "type true/false: ";
-    in str d;
-
-    if d is "true"{
-        bool ip: true;
-    }else{
-        bool ip: false;
-    }end;
-
-    if ip is true{
-        b => x: true, y: 3;
-    }else{
-        b => x: false, y: 4;
-    }end;
+    y => x: "hi";
 }end;

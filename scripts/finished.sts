@@ -1,0 +1,10 @@
+do{
+    printl;
+    printl "Successfully installed.";
+    printl;
+    printl;
+    printl "Read the docs at https://stormprograms.com/stormscript/docs.";
+    printl "On Debian-based OSes, type 'stormscript docs.sts' to open this page in you default browser";
+    printl;
+    printl "Type 'stormscript helloworld.sts' to run the hello world program.";
+}end;

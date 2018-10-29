@@ -1,0 +1,3 @@
+do{
+    sys "sensible-browser https://stormprograms.com/stormscript/docs";
+}end;
