@@ -39,7 +39,7 @@ void sts::error(int num, string issue)
 		cout << "Error: variable used in 'sys' command is of type " << issue << " and should be a str." << endl;
 	}
 	else if (num == 11){
-		cout << "Error: failed to open \"" << issue << "\" couldn't find file." << endl; 
+		cout << "Error: failed to open \"" << issue << "\". Couldn't find file." << endl; 
 	}
 	exit(0);
 }
