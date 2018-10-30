@@ -19,3 +19,6 @@ for i in $( ls tests ); do
     printf "\n"
     B=$(($B+1))
 done
+
+echo $(($B+1)): File fail test
+stormscript thisfiledoesntexist.sts

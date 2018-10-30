@@ -11,12 +11,14 @@
                                                    |_|         
 */
 
-void sts::read(char *argv[], int argc)
-{
+void sts::read(char *argv[], int argc) {
 	string filename = argv[1];
 	std::ifstream file;
 	string contents;
 	file.open(filename.c_str());
+	if (file.fail()) {
+		error(11, filename);
+	}
 	char c = file.get();
 	
 	while (file.good())
@@ -58,8 +60,7 @@ void sts::read(char *argv[], int argc)
 	interp(filename, prg, sizeoff, argv, argc);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 	sts script;
 
 	if (argc != 1)
