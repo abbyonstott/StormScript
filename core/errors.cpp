@@ -4,7 +4,7 @@ void sts::error(int num, string issue)
 {
 	if (num == 0)
 	{
-		cout << "Error: No input files" << endl;
+		cout << "Error: No input files.\nTry 'stormscript --help' for more information." << endl;
 	}
 	else if (num == 1)
 	{

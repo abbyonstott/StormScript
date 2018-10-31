@@ -68,6 +68,17 @@ int main(int argc, char *argv[]) {
 		if (string(argv[1])=="--version"){
 			cout << "StormScript v1.0.0-alpha \"Apple 11\"" << endl;
 		}
+		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
+			cout << "Usage: stormscript [file|options]" << endl;
+			cout << "StormScript is an open source scripting language for Linux." << endl;
+			cout << endl;
+			cout <<  "  -h, --help: display help"<< endl;
+			cout << "  --version: show version" << endl;
+			cout << endl;
+			system("stormscript --version");
+			cout << "git: https://github.com/stormprograms/StormScript" << endl;
+			cout << "For documentation, go to https://stormprograms.com/stormscript/docs" << endl;
+		}
 		else{
 			script.read(argv, argc);
 		}

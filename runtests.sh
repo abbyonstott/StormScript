@@ -1,8 +1,18 @@
 #!/bin/bash
 sh builddebug.sh
 printf "\n \n \n"
-echo Version:
 
+echo Default:
+stormscript
+
+printf "\n"
+
+echo Help:
+stormscript --help
+
+printf "\n"
+
+echo Version:
 stormscript --version
 
 printf "\n"
@@ -19,5 +29,5 @@ for i in $( ls tests ); do
     B=$(($B+1))
 done
 
-echo $(($B+1)): File fail test
+echo $B: File fail test
 stormscript thisfiledoesntexist.sts
