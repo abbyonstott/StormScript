@@ -1,0 +1,13 @@
+do{
+    str x: "hi";
+    str y: "hi";
+    int n: 3;
+
+    if n is 3{
+        printl "x is 3";
+    }end;
+
+    if x is y{
+        printl x, " is ", y;
+    }end;
+}end;

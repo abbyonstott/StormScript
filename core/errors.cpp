@@ -41,5 +41,8 @@ void sts::error(int num, string issue)
 	else if (num == 11){
 		cout << "Error: failed to open \"" << issue << "\". Couldn't find file." << endl; 
 	}
+	else if (num == 12) {
+		cout << "Error: Variable \"" << issue << "\" not found." << endl;
+	}
 	exit(0);
 }

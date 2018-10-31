@@ -1,0 +1,10 @@
+do{
+    in str x;
+    in str y;
+
+    if x is y{
+        printl "You typed the same thing twice!";
+    }else{
+        printl "x is ", x, " and y is ", y, ".";
+    }end;
+}end;

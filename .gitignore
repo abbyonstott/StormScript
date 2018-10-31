@@ -1,17 +1,12 @@
 .vscode
-stscompile
-stsprg.out
 build/
-release/*/bin/sts*
-*.obj
-release/windows-x86/libs/
+release/
+
 *.code-workspace
-helloworld.stslib
-helloworldpy.stslib
+
 *.exe
 *.tar*
 *.zip
-release/
 
 snap/.snapcraft/
 snap/parts/

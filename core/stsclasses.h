@@ -20,6 +20,8 @@ using std::string;
 using std::cout;
 using std::endl;
 
+string striplit(string line);
+
 class sts;
 
 class stsvars{
