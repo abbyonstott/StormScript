@@ -1,8 +1,10 @@
-@args: str x;
-func y{
+@args: str x, int y;
+func f{
     printl x;
+    printl y;
 }end;
 
 do{
-    y => x: "hi";
+    int x: 3;
+    f => x: "hi", y: x;
 }end;

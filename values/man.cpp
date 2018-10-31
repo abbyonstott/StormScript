@@ -103,16 +103,46 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                     for (int i = 0; i<functions[z].args.size(); i++) {
                         char *argtype = &functions[z].args[i].type;
                     
-                        bool bval = false;
-                        if (prs[y]=="true"){ bval = true; }
+                        bool val;
+                        string valstring;
+                        int valint;
+                        bool nonvar = false;
+
+                        if ((isint(prs[y])) || (prs[y][0]=='"') || (prs[y]=="true") || (prs[y]=="false")) { 
+                            if (isint(prs[y])) { 
+                                valint = std::stoi(prs[y]);
+                            }
+                            else if (prs[y][0]=='"') { 
+                                valstring = striplit(prs[y]);
+                            }
+                            else { 
+                                if (prs[y]=="true") {
+                                    val = true;
+                                }
+                                else {
+                                    val = false;
+                                }
+                            }
+                            nonvar = true;
+                        }
+
+                        if (!nonvar) {
+                            for (int i = 0; i<vars.size(); i++) {
+                                if (vars[i].name==prs[y]) {
+                                    val = vars[i].val;
+                                    valstring = vars[i].valstring;
+                                    valint = vars[i].valint;
+                                }
+                            }
+                        }
 
 
                         switch (*argtype) {
-                            case 's': functions[z].args[i].valstring = striplit(prs[y]);
+                            case 's': functions[z].args[i].valstring = valstring;
                                 break;
-                            case 'b': functions[z].args[i].val = bval;
+                            case 'b': functions[z].args[i].val = val;
                                 break;
-                            case 'i': functions[z].args[i].valint = std::stoi(prs[y]);
+                            case 'i': functions[z].args[i].valint = valint;
                                 break;
                         }
                         y+=2;

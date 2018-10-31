@@ -1,6 +1,10 @@
-do{
-    str x: "hi";
-    str y: x;
-
+@args: str x, bool y;
+func f{
+    printl x;
     printl y;
+}end;
+
+do{
+    bool x: true;
+    f => x: "hi", y: x;
 }end;
