@@ -181,6 +181,10 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         bool bval = false;
                         if (prs[y]=="true"){ bval = true; }
 
+                        string name = ct[i].name + "|" + ct[i].tpe.variables[d].name;
+
+                        vars.resize(vars.size()+1);
+
                         switch (ct[i].tpe.variables[d].type) {
                             case 'i': ct[i].tpe.variables[d].valint = std::stoi(prs[y]);
                                 break;
@@ -189,6 +193,8 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                             case 's': ct[i].tpe.variables[d].valstring = striplit(prs[y]);
                                 break;
                         }
+                        vars[vars.size()-1] = ct[i].tpe.variables[d];
+                        vars[vars.size()-1].name=name;
                         y++;
                     } 
                 }
