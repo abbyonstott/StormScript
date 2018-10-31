@@ -1,9 +1,14 @@
 .vscode
 build/
 release/
+CMakeFiles/
+CMakeCache.txt
+*.cmake
+Makefile
 
 *.code-workspace
 
+stormscript
 *.exe
 *.tar*
 *.zip
