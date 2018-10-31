@@ -38,6 +38,7 @@ stsvars sts::declare(char type, int line, std::vector<stsvars> vars) { //variabl
     }
 
     if (!nonvar) {
+        // check variables
         for (int i = 0; i<vars.size(); i++) {
             if (vars[i].name==prs[y]) {
                 nonvar = false;
@@ -49,6 +50,16 @@ stsvars sts::declare(char type, int line, std::vector<stsvars> vars) { //variabl
                     case 'b': val = vars[i].val;
                         break;
                 }
+            }
+        }
+        // check functions
+        for (int i = 0; i<functions.size(); i++) {
+            if (functions[i].name==prs[y]) {
+                exec(functions[i].linestarted, names, i);
+                nonvar = false;
+                valint = functions[i].value.valint;
+                valstring = functions[i].value.valstring;
+                val = functions[i].value.val;
             }
         }
     }

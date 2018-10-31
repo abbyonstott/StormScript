@@ -1,10 +1,9 @@
-@args: str x, bool y;
 func f{
-    printl x;
-    printl y;
+    str y: "hi";
+    return y;
 }end;
 
 do{
-    bool x: true;
-    f => x: "hi", y: x;
+    str x: f;
+    printl x;
 }end;
