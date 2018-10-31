@@ -21,6 +21,7 @@ using std::cout;
 using std::endl;
 
 string striplit(string line);
+bool isint(string s);
 
 class sts;
 
@@ -71,7 +72,7 @@ public:
 	std::vector<stsvars> globvars; //global variables
 	std::vector<stsclass> classes;
 	//functions
-	stsvars declare(char type, int line); //declare variables -
+	stsvars declare(char type, int line, std::vector<stsvars> vars); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc); //read file
 	void print(int line, int *y, std::vector<stsvars> current_vars, std::vector<stsclasstype> classtypes); //out function

@@ -70,17 +70,17 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             x++;
             if (prs[x]=="int") {
                 x++;
-                globvars[globvars.size()-1]=declare('i', x);
+                globvars[globvars.size()-1]=declare('i', x, globvars);
                 globvars[globvars.size()-1].glob=1;
             }
             else if (prs[x]=="str") {
                 x++;
-                globvars[globvars.size()-1]=declare('s', x);
+                globvars[globvars.size()-1]=declare('s', x, globvars);
                 globvars[globvars.size()-1].glob=1;
             }
             else if (prs[x]=="bool") {
                 x++;
-                globvars[globvars.size()-1]=declare('b', x);
+                globvars[globvars.size()-1]=declare('b', x, globvars);
                 globvars[globvars.size()-1].glob=1;
             }
             else {
@@ -216,11 +216,11 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
             y++;
             vars.resize(vars.size()+1);
             if (prs[y+2]==";"){
-                vars[vars.size()-1]=declare('i',y);
+                vars[vars.size()-1]=declare('i',y, vars);
                 vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
             }
             else{
-                vars[vars.size()-1]=declare('j',y);
+                vars[vars.size()-1]=declare('j',y, vars);
                 vars[vars.size()-1].glob=0;
             }
             while (prs[y]!=";"){
@@ -231,7 +231,7 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
             y++;
             vars.resize(vars.size()+1);
             if (prs[y+2]==";"){
-                vars[vars.size()-1]=declare('b',y);
+                vars[vars.size()-1]=declare('b',y, vars);
             }
             y++;
         }
@@ -239,11 +239,11 @@ void sts::exec(int x, std::vector<string> names, int function){ // how each comm
             y++;
             vars.resize(vars.size()+1);
             if (prs[y+2]==";"){
-                vars[vars.size()-1]=declare('s',y);
+                vars[vars.size()-1]=declare('s',y, vars);
                 vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
             }
             else{
-                vars[vars.size()-1]=declare('t',y);
+                vars[vars.size()-1]=declare('t',y, vars);
                 vars[vars.size()-1].glob=0;
             }
             while (prs[y]!=";"){
