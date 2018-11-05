@@ -55,7 +55,7 @@ stsvars sts::declare(char type, int line, std::vector<stsvars> vars) { //variabl
         // check functions
         for (int i = 0; i<functions.size(); i++) {
             if (functions[i].name==prs[y]) {
-                exec(functions[i].linestarted, names, i);
+                exec(functions[i].linestarted, i);
                 nonvar = false;
                 valint = functions[i].value.valint;
                 valstring = functions[i].value.valstring;

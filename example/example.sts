@@ -1,0 +1,5 @@
+lib test;
+
+do{
+    test.command => foo: bar;
+}end;

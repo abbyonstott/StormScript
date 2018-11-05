@@ -83,12 +83,15 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 }
                 cmd0+=cmd1.c_str();
                 cmd0+=prs[y].c_str();
-                if (prs[y][prs[y].size()-1]==':'){
-                    cmd0[cmd0.size()-1]=' ';
+                y++;
+                if (prs[y]=="=>") {
                     y++;
-                    prs[y].erase(prs[y].begin());
-                    prs[y].pop_back();
-                    cmd0+=prs[y].c_str();
+
+                    while (prs[y]!=";") {
+                        cmd0+=" ";
+                        cmd0+=prs[y].c_str();
+                        y++;
+                    }
                 }
                 system(cmd0.c_str());
                 y++;
@@ -147,10 +150,10 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         }
                         y+=2;
                     }
-                    exec(functions[z].linestarted, names, z);
+                    exec(functions[z].linestarted, z);
                 }
                 else {
-                    exec(functions[z].linestarted, names, z);
+                    exec(functions[z].linestarted, z);
                     y++;
                 }
                 break;

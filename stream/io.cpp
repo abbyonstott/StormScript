@@ -44,7 +44,7 @@ void sts::print(int line, int *y, std::vector<stsvars> current_vars, std::vector
         if (functions.size()!=0){
             for (int x = 0; x<=functions.size()-1; x++){
                 if (prs[line]==functions[x].name){
-                    exec(functions[x].linestarted, names, x);
+                    exec(functions[x].linestarted, x);
                     if (functions[x].value.type=='s'){
                         val=functions[x].value.valstring;
                     }

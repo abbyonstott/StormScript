@@ -1,19 +1,20 @@
 #!/bin/bash
-sh builddebug.sh
+cmake CMakeLists.txt
+make
 printf "\n \n \n"
 
 echo Default:
-stormscript
+./stormscript
 
 printf "\n"
 
 echo Help:
-stormscript --help
+./stormscript --help
 
 printf "\n"
 
 echo Version:
-stormscript --version
+./stormscript --version
 
 printf "\n"
 
@@ -24,10 +25,10 @@ printf "\n"
 B=0
 for i in $( ls tests ); do
     echo $B: 
-    stormscript tests/$i
+    ./stormscript tests/$i
     printf "\n"
     B=$(($B+1))
 done
 
 echo $B: File fail test
-stormscript thisfiledoesntexist.sts
+./stormscript thisfiledoesntexist.sts

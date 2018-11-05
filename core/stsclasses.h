@@ -81,7 +81,7 @@ public:
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);
 	bool compare(int line, std::vector<stsvars> current_vars);
-	void exec(int line, std::vector<string> names, int function);
+	void exec(int line, int function);
 	void valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 };
 

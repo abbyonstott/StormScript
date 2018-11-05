@@ -140,12 +140,12 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             functions[functions.size()-1].linestarted=x+2;
         }
         else if (prs[x]=="do{"){
-            exec(x, names, -1);
+            exec(x, -1);
         }
     }
 }   
 
-void sts::exec(int x, std::vector<string> names, int function){ // how each command is executed
+void sts::exec(int x,int function){ // how each command is executed
     std::vector<stsvars> vars;
     std::vector<stsclasstype> classtypes;
     vars.resize(globvars.size());
