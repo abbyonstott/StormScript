@@ -2,5 +2,5 @@ lib test;
 
 do{
     test.greet;
-    test.ask => name: "Bob";
+    test.ask => name: "Bob", occupation: "building";
 }end;
