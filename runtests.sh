@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 cmake CMakeLists.txt
 make
 printf "\n \n \n"

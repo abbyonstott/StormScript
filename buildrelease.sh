@@ -9,6 +9,7 @@ cp -r core release/src
 cp -r values release/src
 cp -r scripts/* release
 cp StormScriptconfig.h release/src
+cp -r libraries release/src
 
 cd release
 
