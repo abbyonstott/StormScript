@@ -84,10 +84,8 @@ int main(int argc, char *argv[]) {
 			if (argv[2]!=NULL) {
 				string name = string(argv[2]);
 				cout << "Creating library '" << name << "'..." << endl;
-				system("touch reader.cc");
-				system("echo '#include <iostream>' > reader.cc");
-				system("touch download.sh && touch getname.py");
-				system("echo `curl -s https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/download.sh` > download.sh && sh download.sh && rm download.sh");
+				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/reader.cc");
+				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/getname.py");
 				string cmd = "python getname.py " + name + "&& rm getname.py";
 				system(cmd.c_str());
 				string cmd2 = "touch "+name+".py";
