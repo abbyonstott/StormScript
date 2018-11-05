@@ -84,13 +84,14 @@ int main(int argc, char *argv[]) {
 			if (argv[2]!=NULL) {
 				string name = string(argv[2]);
 				cout << "Creating library '" << name << "'..." << endl;
-				system("touch download.sh");
-				system("echo `curl https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/download.sh` > ./download.sh");
 				system("touch reader.cc");
 				system("echo '#include <iostream>' > reader.cc");
-				system("sh download.sh");
+				system("touch download.sh && touch getname.py");
+				system("echo `curl -s https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/download.sh` > download.sh && sh download.sh && rm download.sh");
+				string cmd = "python getname.py " + name + "&& rm getname.py";
+				system(cmd.c_str());
+				string cmd2 = "touch "+name+".py";
 				string command = "g++ reader.cc -o " + name + ".stslib";
-				cout << command.c_str() << endl;
 				system(command.c_str());
 			}
 			else {
