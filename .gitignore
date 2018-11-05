@@ -9,7 +9,7 @@ Makefile
 
 *.code-workspace
 
-stormscript
+
 *.exe
 *.tar*
 *.zip
