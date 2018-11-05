@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>\\n
 
 using std::string;
 using std::cout;
