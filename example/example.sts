@@ -1,3 +1,5 @@
+lib system;
+
 do{
-    printl "Nothing to see here...";
+    system.setVar => PATH: "/home/storm/stormscript/libraries";
 }end;
