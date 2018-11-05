@@ -1,5 +1,6 @@
 lib test;
 
 do{
-    test.command => foo: bar;
+    test.greet;
+    test.ask => name: "Bob";
 }end;
