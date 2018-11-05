@@ -44,5 +44,8 @@ void sts::error(int num, string issue)
 	else if (num == 12) {
 		cout << "Error: Variable \"" << issue << "\" not found." << endl;
 	}
+	else if (num == 13) {
+		cout << "Error: Expected library name" << endl;
+	}
 	exit(0);
 }

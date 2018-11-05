@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 	if (argc != 1)
 	{
 		if (string(argv[1])=="--version"){
-			cout << "StormScript v0.12.0-alpha \"Apple 12\"" << endl;
+			cout << "StormScript v1.0.0-alpha \"Apple 12\"" << endl;
 		}
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
 			cout << "Usage: stormscript [file|options]" << endl;
@@ -74,10 +74,20 @@ int main(int argc, char *argv[]) {
 			cout << endl;
 			cout <<  "  -h, --help: display help"<< endl;
 			cout << "  --version: show version" << endl;
+			cout << "  -l, --library [name]: initialize library" << endl;
 			cout << endl;
 			system("stormscript --version");
 			cout << "git: https://github.com/stormprograms/StormScript" << endl;
 			cout << "For documentation, go to https://stormprograms.com/stormscript/docs" << endl;
+		}
+		else if ((string(argv[1])=="--library") || (string(argv[1])=="-l")){ // check for library
+			if (argv[2]!=NULL) {
+				string name = string(argv[2]);
+				system("echo `curl https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/download.sh");
+			}
+			else {
+				script.error(13, "");
+			}
 		}
 		else{
 			script.read(argv, argc);

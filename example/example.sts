@@ -1,6 +1,3 @@
-lib test;
-
 do{
-    test.greet;
-    test.ask => name: "Bob", occupation: "building";
+    printl "Nothing to see here...";
 }end;
