@@ -85,6 +85,7 @@ int main(int argc, char *argv[]) {
 				string name = string(argv[2]);
 				cout << "Creating library '" << name << "'..." << endl;
 				system("echo '`curl https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/download.sh`' > ./download.sh");
+				system("touch reader.cc");
 				system("sh download.sh");
 				string command = "g++ reader.cc -o " + name + ".stslib";
 				system(command.c_str());
