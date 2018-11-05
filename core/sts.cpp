@@ -81,14 +81,16 @@ int main(int argc, char *argv[]) {
 			cout << "For documentation, go to https://stormprograms.com/stormscript/docs" << endl;
 		}
 		else if ((string(argv[1])=="--library") || (string(argv[1])=="-l")){ // check for library
-			if (argv[2]!=NULL) {
+			if ((argv[2]!=NULL)){
 				string name = string(argv[2]);
 				cout << "Creating library '" << name << "'..." << endl;
-				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/reader.cc");
-				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/json/api/python/getname.py");
-				string cmd = "python getname.py " + name + "&& rm getname.py";
+				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/reader.cc");
+				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/getname.py");
+				system("mkdir stormscript && wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/stormscript/__init__.py");
+				string cmd = "python getname.py " + name + " && rm getname.py";
 				system(cmd.c_str());
-				string cmd2 = "touch "+name+".py";
+				string cmd2 = "touch "+name+".py && echo 'import stormscript' > "+name+".py";
+				system(cmd2.c_str());
 				string command = "g++ reader.cc -o " + name + ".stslib";
 				system(command.c_str());
 			}
