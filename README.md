@@ -1,6 +1,12 @@
 # StormScript
 [![Snap Status](https://build.snapcraft.io/badge/stormprograms/StormScript.svg)](https://build.snapcraft.io/user/stormprograms/StormScript)
-[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)](https://github.com/stormprograms/StormScript)
+[![GitHub license](https://img.shields.io/github/license/stormprograms/stormscript.svg)](https://github.com/stormprograms/StormScript/blob/master/LICENSE)
+![GitHub (pre-)release](https://img.shields.io/github/release-pre/stormprograms/stormscript.svg)
+![GitHub All Releases](https://img.shields.io/github/downloads/stormprograms/stormscript/total.svg)
+![GitHub repo size in bytes](https://img.shields.io/github/repo-size/stormprograms/stormscript.svg)
+
+
+
 
 This is the GitHub repository for the StormScript Scripting language.
 ## Table of Contents
