@@ -75,6 +75,7 @@ int main(int argc, char *argv[]) {
 			cout <<  "  -h, --help: display help"<< endl;
 			cout << "  --version: show version" << endl;
 			cout << "  -l, --library [name]: initialize library" << endl;
+			cout << "  -bl, --build-library: builds library and adds it to the .stormscript folder." << endl;
 			cout << endl;
 			system("stormscript --version");
 			cout << "git: https://github.com/stormprograms/StormScript" << endl;
@@ -97,6 +98,10 @@ int main(int argc, char *argv[]) {
 			else {
 				script.error(13, "");
 			}
+		}
+		else if ((string(argv[1])=="-bl") || (string(argv[1])=="--build-library")) {
+			system("wget https://raw.githubusercontent.com/stormprograms/StormScript/installib/api/python/build.sh");
+			system("sh build.sh");
 		}
 		else{
 			script.read(argv, argc);
