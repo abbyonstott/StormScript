@@ -6,6 +6,8 @@ if [ -f ./*.stslib ]; then
     fi
     cp ./*.py ~/.stormscript
     cp ./*.stslib ~/.stormscript
+    rm build.sh
 else
     echo 'Error: not a library'
+    rm build.sh
 fi

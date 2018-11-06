@@ -15,4 +15,3 @@ if "setVar" in cmds: # adds to bashrc so that path is always appended
     if "PATH" in vals[0]:
         cmd = "echo 'export PATH="+'$PATH ' + vals[0]['PATH'] + "' >> " + os.path.expanduser("~")+"/.bashrc"
         os.system(cmd)
-    

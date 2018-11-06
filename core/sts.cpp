@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		else if ((string(argv[1])=="-bl") || (string(argv[1])=="--build-library")) {
-			system("wget https://raw.githubusercontent.com/stormprograms/StormScript/installib/api/python/build.sh");
+			system("wget https://raw.githubusercontent.com/stormprograms/StormScript/installlib/api/python/build.sh");
 			system("sh build.sh");
 		}
 		else{
