@@ -9,7 +9,7 @@ This is the GitHub repository for the StormScript Scripting language.
 
 ## Why is this special?
 
-StormScript is important not because it presents 1 or 2 revolutionary ideas that change your usual workflow, but because it changes almost everything about common programming syntax to make it easier to read and write. **This my seem more like a problem at first,** but I believe that StormScript changes programming syntax *for the better.* Here are a few examples:
+StormScript is important not because it presents 1 or 2 revolutionary ideas that change your usual workflow, but because it changes almost everything about common programming syntax to make it easier to read and write. **This may seem more like a problem at first,** but I believe that StormScript changes programming syntax *for the better.* Here are a few examples:
 1. Keywords
 For most people, keywords make no sense when learning programming languages, and a large portion of what StormScript changes has to do with keywords.
 In most languages in order to declare custom types, you would use the `class` keyword. The word class kind of has a connection with the word type, but at that point why not just use the word `type`. This is something StormScript addresses.
