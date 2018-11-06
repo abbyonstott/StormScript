@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 	if (argc != 1)
 	{
 		if (string(argv[1])=="--version"){
-			cout << "StormScript v1.0.0-alpha \"Apple 12\"" << endl;
+			cout << "StormScript v1.0.1-alpha \"Apple 12\"" << endl;
 		}
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
 			cout << "Usage: stormscript [file|options]" << endl;
