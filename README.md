@@ -20,9 +20,10 @@ type person{
   bool gender;
 };
 ```
+In StormScript the keyword `do` replaces the `main` function.
 
 2. Symbols
-StormScript's second major difference is in symbols. Symbols are almost, if not as important as keywords in programming. In StormScript, this is just as true as in any other language. The largests change with symbols in StormScript is in meaning. An example is the `=>` symbol, which in most programming language means *define.* In StormScript, `=>` means *with.* In a function with arguments, you would run with the `=>` symbol followed by the arguments.
+StormScript's second major difference is in symbols. Symbols are almost, if not as important as keywords in programming. In StormScript, this is just as true as in any other language. The largest change with symbols in StormScript is in meaning. An example is the `=>` symbol, which in most programming language means *define.* In StormScript, `=>` means *with.* In a function with arguments, you would put the `=>` symbol followed by the arguments.
 ```
 @args: str x;
 func f{
