@@ -22,3 +22,4 @@ snap/prime/
 snap/stage/
 snap/snap/
 *.snap
+libraries/*/reader.cc

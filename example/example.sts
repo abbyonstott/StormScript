@@ -1,5 +1,7 @@
 lib system;
 
 do{
-    system.setVar => PATH: "/home/storm/stormscript/libraries";
+    printl "Hi";
+    system.stdout => message: "message";
+    system.stderr => message: "error";
 }end;
