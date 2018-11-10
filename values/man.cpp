@@ -18,15 +18,14 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             s.pop_back();
             for (int z = 0; z<=vars.size()-1; z++){
                 if (s == vars[z].name){
-                    if (vars[z].type=='i'){
-                        vars[z].valint = std::stoi(prs[y+1]);
-                        if (vars[z].glob==1) { globvars[z].valint = std::stoi(prs[y+1]); }
-                    }
-                    else{
-                        prs[y+1].pop_back();
-                        prs[y+1].erase(prs[y+1].begin());
-                        vars[z].valstring = prs[y+1];
-                        if (vars[z].glob==1) { globvars[z].valstring = prs[y+1]; }
+                    y++;
+                    switch (vars[z].type) {
+                        case 'i': vars[z].valint = getval(vars, ln).valint;
+                            break;
+                        case 's': vars[z].valstring = getval(vars, ln).valstring;
+                            break;
+                        case 'b': vars[z].val = getval(vars, ln).val;
+                            break;  
                     }
                     y++;
                     break;
@@ -106,46 +105,15 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                     for (int i = 0; i<functions[z].args.size(); i++) {
                         char *argtype = &functions[z].args[i].type;
                     
-                        bool val;
-                        string valstring;
-                        int valint;
-                        bool nonvar = false;
-
-                        if ((isint(prs[y])) || (prs[y][0]=='"') || (prs[y]=="true") || (prs[y]=="false")) { 
-                            if (isint(prs[y])) { 
-                                valint = std::stoi(prs[y]);
-                            }
-                            else if (prs[y][0]=='"') { 
-                                valstring = striplit(prs[y]);
-                            }
-                            else { 
-                                if (prs[y]=="true") {
-                                    val = true;
-                                }
-                                else {
-                                    val = false;
-                                }
-                            }
-                            nonvar = true;
-                        }
-
-                        if (!nonvar) {
-                            for (int i = 0; i<vars.size(); i++) {
-                                if (vars[i].name==prs[y]) {
-                                    val = vars[i].val;
-                                    valstring = vars[i].valstring;
-                                    valint = vars[i].valint;
-                                }
-                            }
-                        }
+                        stsvars argval = getval(vars, &y);
 
 
                         switch (*argtype) {
-                            case 's': functions[z].args[i].valstring = valstring;
+                            case 's': functions[z].args[i].valstring = argval.valstring;
                                 break;
-                            case 'b': functions[z].args[i].val = val;
+                            case 'b': functions[z].args[i].val = argval.val;
                                 break;
-                            case 'i': functions[z].args[i].valint = valint;
+                            case 'i': functions[z].args[i].valint = argval.valint;
                                 break;
                         }
                         y+=2;

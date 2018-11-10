@@ -9,67 +9,20 @@ declare(): variables
 stsvars sts::declare(char type, int line, std::vector<stsvars> vars) { //variable declarations
     stsvars new_var;
     new_var.type = type;
+    
     int y = line+1;
-    string a; //command to compile
-    bool nonvar;
-    int valint;
-    string valstring;
-    bool val;
-
 
     prs[line].pop_back();
     new_var.name = prs[line];
-    if ((isint(prs[y])) || (prs[y][0]=='"') || (prs[y]=="true") || (prs[y]=="false")) { 
-        if (isint(prs[y])) { 
-            valint = std::stoi(prs[y]);
-        }
-        else if (prs[y][0]=='"') { 
-            valstring = striplit(prs[y]);
-        }
-        else { 
-            if (prs[y]=="true") {
-                val = true;
-            }
-            else {
-                val = false;
-            }
-        }
-        nonvar = true;
-    }
-
-    if (!nonvar) {
-        // check variables
-        for (int i = 0; i<vars.size(); i++) {
-            if (vars[i].name==prs[y]) {
-                nonvar = false;
-                switch (vars[i].type) {
-                    case 'i': valint = vars[i].valint;
-                        break;
-                    case 's': valstring = vars[i].valstring;
-                        break;
-                    case 'b': val = vars[i].val;
-                        break;
-                }
-            }
-        }
-        // check functions
-        for (int i = 0; i<functions.size(); i++) {
-            if (functions[i].name==prs[y]) {
-                exec(functions[i].linestarted, i);
-                nonvar = false;
-                valint = functions[i].value.valint;
-                valstring = functions[i].value.valstring;
-                val = functions[i].value.val;
-            }
-        }
-    }
+    
+    stsvars set_to = getval(vars, &y);
 
     switch (type) {
-        case 'i': new_var.valint=valint;
+        case 'i': new_var.valint=set_to.valint;
             break;
-        case 'b': new_var.val=val;
+        case 'b': new_var.val=set_to.val;
             break;
-        case 's': new_var.valstring=valstring;
+        case 's': new_var.valstring=set_to.valstring;
     }
 
     return new_var;

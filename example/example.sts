@@ -1,4 +1,9 @@
 do{
     str x: "hi";
-    printl x;
+    int y: 3;
+    y+: 1;
+    
+    if "hi" is x{
+        printl y;
+    }end;
 }end;

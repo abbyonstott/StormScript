@@ -1,6 +1,6 @@
 #include "../core/stsclasses.h"
 
-stsvars sts::getval(std::vector<string> prs, std::vector<stsvars> vars, int *line) {
+stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 

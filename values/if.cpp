@@ -15,13 +15,7 @@ bool isint(string s) {
 
 bool sts::compare(int line, std::vector<stsvars> current_vars) {
     bool condition = 0;
-    bool nonvar = 0;
-    
     char compt;
-    char comptype; // the type of literals being compared.
-    int valint;
-    string valstring;
-    bool val;
 
     stsvars comp;
     stsvars compto;
@@ -40,70 +34,31 @@ bool sts::compare(int line, std::vector<stsvars> current_vars) {
     }
 
     // check if variable
-    if ((isint(prs[line+2])) || (prs[line+2][0]=='"') || (prs[line+2]=="true") || (prs[line+2]=="false")) { 
-        if (isint(prs[line+2])) { 
-            comptype='i'; 
-            valint = std::stoi(prs[line+2]);
-        }
-        else if (prs[line+2][0]=='"') { 
-            comptype='s';
-            valstring = striplit(prs[line+2]);
-        }
-        else { 
-            comptype='b';
-            if (prs[line+2]=="true") {
-                val = true;
-            }
-            else {
-                val = false;
-            }
-        }
-        nonvar = true;
-    }
-
-    // set compares
-    for (int x = 0; x<current_vars.size(); x++) {
-        if (current_vars[x].name == prs[line]) {
-            comp = current_vars[x];
-        }
-
-        if (!nonvar) {
-            if (current_vars[x].name == prs[line+2]) {
-                compto = current_vars[x];
-                val = compto.val;
-                valint = compto.valint;
-                valstring = compto.valstring;
-                comptype = compto.type;
-            }
-        }
-    }
-
-    // if variable not found
-    if ((!nonvar) && (compto.name=="\0")) {
-        error(12, prs[line+2]);
-    }
+    comp = getval(current_vars, &line);
+    line+=2;
+    compto = getval(current_vars, &line);
 
     // compare
     char t = comp.type;
 
-    if (t == comptype) {
+    if (t == compto.type) {
         if (compt == 'i') {
             switch (t) {
-                case 'i': condition = ((comp.valint == valint) ? true : false);
+                case 'i': condition = ((comp.valint == compto.valint) ? true : false);
                     break;
-                case 's': condition = ((comp.valstring) == valstring);
+                case 's': condition = ((comp.valstring) == compto.valstring);
                     break;
-                case 'b': condition = ((comp.val) == val);
+                case 'b': condition = ((comp.val) == compto.val);
                     break;
             }
         }
         else{
             switch (t) {
-                case 'i': condition = ((comp.valint != valint) ? true : false);
+                case 'i': condition = ((comp.valint != compto.valint) ? true : false);
                     break;
-                case 's': condition = ((comp.valstring) != valstring);
+                case 's': condition = ((comp.valstring) != compto.valstring);
                     break;
-                case 'b': condition = ((comp.val) != val);
+                case 'b': condition = ((comp.val) != compto.val);
                     break;
             }
         }

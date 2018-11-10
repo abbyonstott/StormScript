@@ -2,7 +2,7 @@
 
 void sts::print(int line, int *y, std::vector<stsvars> current_vars){ //handles both print and printl.
     int ln = *y;
-    stsvars val = getval(prs, current_vars, y);
+    stsvars val = getval(current_vars, y);
     string value;
 
     switch (val.type) {
