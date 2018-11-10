@@ -25,7 +25,7 @@ type person{
   int age;
   str name;
   bool gender;
-};
+}end;
 ```
 In StormScript the keyword `do` replaces the `main` function.
 
@@ -48,7 +48,7 @@ type person{
   int age;
   str name;
   bool gender;
-};
+}end;
 
 do{
   person p;
