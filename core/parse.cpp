@@ -171,7 +171,7 @@ void sts::exec(int x,int function){ // how each command is executed
 
             y++;
             while (prs[y]!=";"){
-                print(y, &y, vars, classtypes);
+                print(y, &y, vars);
                 y++;
             }
             

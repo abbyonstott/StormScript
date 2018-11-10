@@ -47,5 +47,8 @@ void sts::error(int num, string issue)
 	else if (num == 13) {
 		cout << "Error: Expected library name" << endl;
 	}
+	else if (num == 14) {
+		cout << "Error: Missing end quote on literal\"" << issue << "\"." << endl;
+	}
 	exit(0);
 }

@@ -72,10 +72,11 @@ public:
 	std::vector<stsvars> globvars; //global variables
 	std::vector<stsclass> classes;
 	//functions
+	stsvars getval(std::vector<string> prs, int *line);
 	stsvars declare(char type, int line, std::vector<stsvars> vars); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc); //read file
-	void print(int line, int *y, std::vector<stsvars> current_vars, std::vector<stsclasstype> classtypes); //out function
+	void print(int line, int *y, std::vector<stsvars> current_vars); //out function
 	void sys(int line,std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);

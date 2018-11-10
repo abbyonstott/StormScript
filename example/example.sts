@@ -1,7 +1,3 @@
-lib system;
-
 do{
-    printl "Hi";
-    system.stdout => message: "message";
-    system.stderr => message: "error";
+    printl false;
 }end;
