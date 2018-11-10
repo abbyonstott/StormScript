@@ -13,14 +13,43 @@ bool isint(string s) {
     return false;
 }
 
-bool sts::compare(int line, std::vector<stsvars> current_vars) {
+void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
+    int y = *line;
+    int endreq = *endr;
+    y++;
+
+    if (!compare(&y,vars)){
+        y++;
+        while (prs[y] != "end") {
+            y++;
+            if (prs[y] == "else") {
+                if (prs[y+1] == "if") {
+                    y++;
+                    ifs(&y, &endreq, vars);
+                    break;
+                }
+                else {
+                    y++;
+                    break;
+                }
+            }
+        }
+    }
+    else{
+        y++;
+    }
+
+    *line = y;
+    *endr = endreq;
+}
+
+bool sts::compare(int *y, std::vector<stsvars> current_vars) {
     bool condition = 0;
     char compt;
+    int line = *y;
 
     stsvars comp;
     stsvars compto;
-
-    prs[line+2].pop_back();
 
     // check if "is" or "not"
     if (prs[line+1]=="is") {
@@ -65,6 +94,7 @@ bool sts::compare(int line, std::vector<stsvars> current_vars) {
     }
     else { error(9, compto.name); }
 
+    *y = line;
 
     return condition;
 }

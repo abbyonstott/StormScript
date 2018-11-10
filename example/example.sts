@@ -1,9 +1,11 @@
 do{
-    str x: "hi";
-    int y: 3;
-    y+: 1;
+    in str x;
     
-    if "hi" is x{
-        printl y;
+    if x is "hi"{
+        printl x;
+    }else if x is "g"{
+        printl "It's not hi";
+    }else{
+        printl "It's not either.";
     }end;
 }end;

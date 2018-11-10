@@ -6,7 +6,6 @@ void stsclass::declare(int *y, sts *inst) { //declare type
 
     // get name of type
     ln++;
-    prs[ln].pop_back();
     name=prs[ln];
 
     ln++;
@@ -33,7 +32,7 @@ void stsclass::declare(int *y, sts *inst) { //declare type
             variables[variables.size()-1].name = prs[ln];
             ln++;  
         }
-        else if (prs[ln]=="}") {
+        else if (prs[ln]=="end") {
             ln+=2;
             break;
         }

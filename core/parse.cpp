@@ -3,7 +3,7 @@
 the interpreter parses the file and calls functions in other files
 */
 
-std::vector<string> sts::parse(std::vector<string> prg){
+std::vector<string> sts::parse(std::vector<string> prg){ 
     std::vector<string> x;
     int y = 0;
     while (y!=prg.size()){
@@ -20,15 +20,18 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from prs version
+            // omitted and separated
             if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
             }
-            else if ((prg[y][z]=='\t') || (prg[y][z]==',') && (inquotes==false)){
+            // omitted and not separated
+            else if (((prg[y][z]=='\t') || (prg[y][z]==',') || (prg[y][z]=='{') || (prg[y][z]=='}')) && (inquotes==false)){
                 z++;
                 continue;
             }
+            // included and separated
             else if (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z]=='@')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 x[x.size()-1]+=prg[y][z];
@@ -126,7 +129,6 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
                 }
 
                 // declare
-                prs[x+1].pop_back();
                 functions.resize(functions.size()+1);
                 functions[functions.size()-1].name=prs[x+1];
                 functions[functions.size()-1].linestarted=x+2;
@@ -134,12 +136,11 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             } 
         }
         else if (prs[x]=="func"){
-            prs[x+1].pop_back();
             functions.resize(functions.size()+1);
             functions[functions.size()-1].name=prs[x+1];
             functions[functions.size()-1].linestarted=x+2;
         }
-        else if (prs[x]=="do{"){
+        else if (prs[x]=="do"){
             exec(x, -1);
         }
     }
@@ -186,31 +187,18 @@ void sts::exec(int x,int function){ // how each command is executed
             vars[vars.size()-1]=in(y);
             y+=2;
         }
-        else if (prs[y]=="if"){
-            y++;
-            if (compare(y,vars)){
-                endreq+=1;
-                y+=2;
-            }
-            else{
-                while (prs[y]!="}end"){
-                    y++;
-                    if (prs[y]=="}else{"){
-                        endreq+=1;
-                        break;
-                    }
-                }
-                if (prs[y]!="}end") {
-                    y++;
-                }
+        else if ((prs[y]=="if")){
+            endreq+=1;
+            ifs(&y, &endreq, vars);
+            if (prs[y-1]=="else") {
+                y--;
             }
         }
-        else if (prs[y]=="}else{"){
-            while (prs[y]!="}end"){
+        else if (prs[y] == "else") {
+            while (prs[y] != "end") {
                 y++;
             }
-            endreq-=1;
-            y++;
+            y--;
         }
         else if (prs[y]=="int"){
             y++;
@@ -254,8 +242,8 @@ void sts::exec(int x,int function){ // how each command is executed
             y++;
             sys(y, vars);
         }
-        else if ((prs[y]=="}end") || (prs[y]=="}loop")){
-            if (prs[y]=="}loop"){
+        else if ((prs[y]=="end") || (prs[y]=="loop")){
+            if (prs[y]=="loop"){
                 if (looped==0){
                     if (prs[y+1]!="inf"){
                         looped=1;
