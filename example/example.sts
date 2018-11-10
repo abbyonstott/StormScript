@@ -1,11 +1,5 @@
+set printl to p
+
 do{
-    in str x;
-    
-    if x is "hi"{
-        printl x;
-    }else if x is "g"{
-        printl "It's not hi";
-    }else{
-        printl "It's not either.";
-    }end;
+    p "Hi";
 }end;

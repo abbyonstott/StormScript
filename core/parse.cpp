@@ -96,6 +96,11 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             classes.resize(classes.size()+1);
             classes[classes.size()-1].declare(&x, this);
         }
+
+        else if (prs[x]=="set") {
+            x++;
+            set(prs[x], prs[x+2], x);
+        }
         
         else if (prs[x]=="@"){
             x++;

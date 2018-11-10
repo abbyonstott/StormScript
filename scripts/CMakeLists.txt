@@ -1,7 +1,18 @@
 cmake_minimum_required (VERSION 2.6)
 project (StormScript)
 set (CMAKE_CXX_FLAGS "--std=c++11")
-add_executable(stormscript src/core/sts.cpp src/core/errors.cpp src/core/parse.cpp src/stream/io.cpp src/stream/stsstream.cpp src/values/stsdec.cpp src/values/man.cpp src/values/if.cpp src/values/getvals.cpp src/classes/dectype.cpp)
+add_executable(stormscript 
+    src/core/sts.cpp 
+    src/core/errors.cpp 
+    src/core/set.cpp 
+    src/core/parse.cpp 
+    src/stream/io.cpp 
+    src/stream/stsstream.cpp 
+    src/values/stsdec.cpp 
+    src/values/man.cpp 
+    src/values/if.cpp 
+    src/values/getvals.cpp 
+    src/classes/dectype.cpp)
 set (StormScript_VERSION_MAJOR 1)
 set (StormScript_VERSION_MINOR 1)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)

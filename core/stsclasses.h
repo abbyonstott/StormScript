@@ -84,6 +84,7 @@ public:
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
 	void exec(int line, int function);
+	void set(string command, string setto, int x); // "Set" command
 	void valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 };
 
