@@ -2,6 +2,7 @@
 cmake CMakeLists.txt
 make
 install stormscript build/stormscript
+rm stormscript
 printf "\n \n \n"
 
 echo Default:

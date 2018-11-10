@@ -1,0 +1,5 @@
+set printl to p
+
+do{
+    p "hi";
+}end;

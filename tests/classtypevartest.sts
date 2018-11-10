@@ -1,7 +1,7 @@
 type human{
     int age;
     str name;
-};
+}end;
 
 do{
     human p;

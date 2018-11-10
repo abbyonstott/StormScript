@@ -2,9 +2,18 @@ do{
     str x: "hi";
     str y: "hi";
     int n: 3;
+    bool d: true;
 
     if n is 3{
         printl "x is 3";
+    }end;
+
+    if d is false{
+        printl "Hi";    
+    }else if n is 4{
+        printl "d is true";
+    }else{
+        printl n;
     }end;
 
     if x is y{

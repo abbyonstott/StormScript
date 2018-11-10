@@ -1,11 +1,11 @@
 type test{
     bool x;
     str y;
-};
+}end;
 
 do{
     test z;
     z.x: true;
     
-    printl z.x;
+    printl z|x;
 }end;

@@ -1,5 +1,5 @@
 do{
-    if "this" is "that"{
+    if "this" is "this"{
         printl "Test Succeded";
     }end;
 }end;

@@ -195,7 +195,7 @@ void sts::exec(int x,int function){ // how each command is executed
         else if ((prs[y]=="if")){
             endreq+=1;
             ifs(&y, &endreq, vars);
-            if (prs[y-1]=="else") {
+            if (prs[y]!="else") {
                 y--;
             }
         }
