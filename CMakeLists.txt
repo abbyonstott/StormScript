@@ -6,6 +6,7 @@ add_executable(stormscript
     core/parse.cpp
     core/set.cpp
     core/errors.cpp
+    core/runlibfunc.cpp
     stream/io.cpp
     stream/stsstream.cpp
     values/stsdec.cpp

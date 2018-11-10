@@ -72,28 +72,7 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         for (int z = 0; z<=names.size()-1; z++){
             if (names[z]==prs[y]){
                 y++;
-                string cmd1;
-                string cmd0 = names[z];
-                if (PLATFORM=="Windows"){
-                    cmd1 = "stslib.exe ";
-                }
-                else{
-                    cmd1 = ".stslib ";
-                }
-                cmd0+=cmd1.c_str();
-                cmd0+=prs[y].c_str();
-                y++;
-                if (prs[y]=="=>") {
-                    y++;
-
-                    while (prs[y]!=";") {
-                        cmd0+=" ";
-                        cmd0+=prs[y].c_str();
-                        y++;
-                    }
-                }
-                system(cmd0.c_str());
-                y++;
+                runlibfunc(names[z], &y);
             }
         }
     }

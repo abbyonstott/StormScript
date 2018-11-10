@@ -208,14 +208,8 @@ void sts::exec(int x,int function){ // how each command is executed
         else if (prs[y]=="int"){
             y++;
             vars.resize(vars.size()+1);
-            if (prs[y+2]==";"){
-                vars[vars.size()-1]=declare('i',y, vars);
-                vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-            }
-            else{
-                vars[vars.size()-1]=declare('j',y, vars);
-                vars[vars.size()-1].glob=0;
-            }
+            vars[vars.size()-1]=declare('i',y, vars);
+            vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";"){
                 y++;
             }
@@ -223,22 +217,14 @@ void sts::exec(int x,int function){ // how each command is executed
         else if (prs[y]=="bool"){
             y++;
             vars.resize(vars.size()+1);
-            if (prs[y+2]==";"){
-                vars[vars.size()-1]=declare('b',y, vars);
-            }
+            vars[vars.size()-1]=declare('b',y, vars);
             y++;
         }
         else if (prs[y]=="str"){
             y++;
             vars.resize(vars.size()+1);
-            if (prs[y+2]==";"){
-                vars[vars.size()-1]=declare('s',y, vars);
-                vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-            }
-            else{
-                vars[vars.size()-1]=declare('t',y, vars);
-                vars[vars.size()-1].glob=0;
-            }
+            vars[vars.size()-1]=declare('s',y, vars);
+            vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";"){
                 y++;
             }

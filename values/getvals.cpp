@@ -33,6 +33,18 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                 v = functions[x];
             }
         }
+        if (names.size()!=0){
+            for (int z = 0; z<=names.size()-1; z++){
+                if (names[z]==prs[y]){
+                    y++;
+                    string output = runlibfunc(names[z], &y);
+
+                    v.type = ((isint(output)) ? 'i' : 's');
+                    if (v.type == 's') { v.valstring = output; }
+                    else { v.valint = std::stoi(output); }
+                }
+            }
+        }
     }
 
     *line = y;

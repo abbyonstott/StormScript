@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 				system("mkdir stormscript &&  cd stormscript && wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/stormscript/__init__.py");
 				string cmd = "python getname.py " + name + " && rm getname.py";
 				system(cmd.c_str());
-				string cmd2 = "touch "+name+".py && echo 'import stormscript' > "+name+".py";
+				string cmd2 = "touch "+name+".py && echo '#!/usr/bin/python\nimport stormscript' > "+name+".py && chmod u+x "+name+".py";
 				system(cmd2.c_str());
 				string command = "g++ reader.cc -o " + name + ".stslib";
 				system(command.c_str());
