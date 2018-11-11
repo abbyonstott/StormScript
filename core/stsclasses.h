@@ -71,6 +71,7 @@ public:
 	std::vector<string> prs; //parsed program
 	std::vector<stsvars> globvars; //global variables
 	std::vector<stsclass> classes;
+	bool term;
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
 	stsvars declare(char type, int line, std::vector<stsvars> vars); //declare variables -
@@ -80,7 +81,7 @@ public:
 	void sys(int line,std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
-	void interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc);
+	void interp(string fname, int psize, char *argv[], int argc);
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
 	void exec(int line, int function);

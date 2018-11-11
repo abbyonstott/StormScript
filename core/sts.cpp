@@ -57,16 +57,15 @@ void sts::read(char *argv[], int argc) {
 		prg[prg.size() - 1] += contents[x];
 	} //add last line to vector
 
-	interp(filename, prg, sizeoff, argv, argc);
+	interp(filename, sizeoff, argv, argc);
 }
 
 int main(int argc, char *argv[]) {
 	sts script;
 
-	if (argc != 1)
-	{
+	if (argc != 1) {
 		if (string(argv[1])=="--version"){
-			cout << "StormScript v1.1.1-alpha \"Apple 13.1\"" << endl;
+			cout << "StormScript v1.2.0-alpha \"Apple 14\"" << endl;
 		}
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
 			cout << "Usage: stormscript [file|options]" << endl;
@@ -108,9 +107,13 @@ int main(int argc, char *argv[]) {
 			script.read(argv, argc);
 		}
 	}
-	else
-	{
-		script.error(0, "");
+	else {
+		system("stormscript --version");
+		cout << "Try 'stormscript --help' for more information." << endl << endl;
+		script.prg.resize(script.prg.size()+1);
+		script.prg[script.prg.size()-1] = "do{\n";
+		script.term = true;
+		script.interp("", -1, argv, argc);
 	}
 
 	return 0;

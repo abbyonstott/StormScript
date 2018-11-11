@@ -48,7 +48,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
     return x;
 }
 
-void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[], int argc){
+void sts::interp(string fname,int psize, char *argv[], int argc){
     prs = parse(prg);
 
     globvars.resize(globvars.size()+1);
@@ -146,7 +146,7 @@ void sts::interp(string fname, std::vector<string> prg, int psize, char *argv[],
             functions[functions.size()-1].linestarted=x+2;
         }
         else if (prs[x]=="do"){
-            exec(x, -1);
+            exec(x, ((psize==-1) ? -2 : -1));
         }
     }
 }   
@@ -169,8 +169,34 @@ void sts::exec(int x,int function){ // how each command is executed
             vars[vars.size()-1] = functions[function].args[i];
         }
     }
-
     while (true){
+        if (function == -2) { // if running in terminal
+            y = 0;
+            char command[256];
+
+            cout << "stormscript >>> ";
+            std::cin.getline(command, 256);
+
+            prg[prg.size()-1] = string(command);
+            if (prg[prg.size()-1]=="") {
+                y++;
+                continue;
+            }
+            prs = parse(prg);
+
+            if (prs[y]=="lib") {
+                names.resize(names.size()+1);
+                y++;
+                names[names.size()-1]=prs[y];
+                y++;
+            }
+            else if (prs[y]=="set") {
+                y++;
+                set(prs[y], prs[y+2], y);
+            }
+        }
+
+
         if ((prs[y]=="print") || (prs[y]=="printl")){
             bool l = 0;
             if (prs[y]=="printl") { l = 1; }
@@ -275,6 +301,8 @@ void sts::exec(int x,int function){ // how each command is executed
                 error(1,prs[y]);
             }
         }
-        y++;
+        if (y+1!=prs.size()) {
+            y++;
+        }
     }
 }
