@@ -1,18 +1,5 @@
 #include "../core/stsclasses.h"
 
-// checks if string can be converted to int
-bool isint(string s) {
-    for (int i = 0; i<s.size(); i++) {
-        if (std::isdigit(s[i])) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    return false;
-}
-
 void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
     int y = *line;
     int endreq = *endr;

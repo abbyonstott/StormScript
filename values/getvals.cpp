@@ -10,12 +10,10 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     }
     else if (prs[y].front() == '"') {
         v.type = 's';
-        if (prs[y].back() == '"') {
+        if (prs[y].back() == '"') 
             v.valstring = striplit(prs[y]);
-        }
-        else {
+        else
             error(14, prs[y]);
-        }
     }
     else if ((prs[y] == "true") || (prs[y]=="false")) {
         v.type = 'b';

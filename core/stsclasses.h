@@ -19,8 +19,8 @@
 using std::string;
 using std::cout;
 using std::endl;
-
 string striplit(string line);
+
 bool isint(string s);
 
 class sts;
@@ -72,6 +72,9 @@ public:
 	std::vector<stsvars> globvars; //global variables
 	std::vector<stsclass> classes;
 	bool term;
+
+
+
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
 	stsvars declare(char type, int line, std::vector<stsvars> vars); //declare variables -

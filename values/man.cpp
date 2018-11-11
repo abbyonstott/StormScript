@@ -1,5 +1,12 @@
 #include "../core/stsclasses.h"
 
+/* 
+This file deals with non-keyword commands like:
+    variable manipulation
+    functions
+    class type declarations
+*/
+
 string striplit(string line) {
     line.pop_back();
     line.erase(line.begin());
@@ -7,75 +14,83 @@ string striplit(string line) {
     return line;
 }
 
+bool isint(string s) {
+    for (int i = 0; i<s.size(); i++) {
+        if (std::isdigit(s[i]))
+            return true;
+        else
+            return false;
+    }
+    return false;
+}
+
 void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
 
-    if (vars.size()!=0){
-        if (prs[y].size()!=1){
-            string s = prs[y];
-            s.pop_back();
-            for (int z = 0; z<=vars.size()-1; z++){
-                if (s == vars[z].name){
-                    y++;
-                    switch (vars[z].type) {
-                        case 'i': vars[z].valint = getval(vars, ln).valint;
-                            break;
-                        case 's': vars[z].valstring = getval(vars, ln).valstring;
-                            break;
-                        case 'b': vars[z].val = getval(vars, ln).val;
-                            break;  
-                    }
-                    y++;
-                    break;
-                }
-                else if (s == vars[z].name+'+'){ // plus operator
-                    
+    if (prs[y][prs[y].size()-1]==':') { // variable manipulation operation
+        int varnum;
+        string line = prs[y];
+        prs[y].pop_back();
 
-                    if (vars[z].type=='i'){
-                        vars[z].valint += std::stoi(prs[y+1]);
-                        if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
-                    }
-                    else if (vars[z].type=='j'){
-                        vars[z].valsint.resize(vars[z].valsint.size()+1);
-                        vars[z].valsint[vars[z].valsint.size()-1]=std::stoi(prs[y+1]);
-                    }
-                    else{
-                        prs[y+1].pop_back();
-                        prs[y+1].erase(prs[y+1].begin());
-                        vars[z].valstring += prs[y+1];
-                        if (vars[z].glob==1) { globvars[z].valstring += prs[y+1]; }
-                    }
-                    y+=2;
-                    break;
-                }
-                else if (s == vars[z].name+'-'){ // minus operator
-                    
-                    if (vars[z].type=='i'){
-                        vars[z].valint -= std::stoi(prs[y+1]);
-                        if (vars[z].glob==1) { globvars[z].valint += std::stoi(prs[y+1]); }
-                    }
-                    else {
-                        char type = vars[z].type;
-                        string types;
-                        if (type=='s') types="str"; 
-                        error(4, types);
-                    }
-                    y++;
-                    break;
+
+        if ((prs[y][prs[y].size()-1]=='-') || (prs[y][prs[y].size()-1]=='+'))
+            prs[y].pop_back();
+
+        // loops through var names
+        for (int i = 0; i<vars.size() && prs[y]!=vars[i-1].name; i++)
+            varnum = ((vars[i].name==prs[y]) ? i : -1);
+
+        // change value if is vars
+        if (varnum!=-1){
+            y++;
+            *ln = y;
+            if (line.find("+")!=string::npos) { // add
+                switch (vars[varnum].type) {
+                    case 'i': vars[varnum].valint += getval(vars, ln).valint;
+                        break;
+                    case 's': vars[varnum].valstring += getval(vars, ln).valstring;
+                        break;
+                    case 'b': error(3, "+");
+                        break;
                 }
             }
-        }       
+            else if (line.find("-")!=string::npos) { // subtract
+                switch (vars[varnum].type) {
+                    case 'i': vars[varnum].valint -= getval(vars, ln).valint;
+                        break;
+                    case 's': error(3, "-");
+                        break;
+                    case 'b': error(3, "-");
+                        break;
+                }
+            }
+            else{ // change value
+                switch (vars[varnum].type) {
+                    case 'i': vars[varnum].valint = getval(vars, ln).valint;
+                        break;
+                    case 's': vars[varnum].valstring = getval(vars, ln).valstring;
+                        break;
+                    case 'b': vars[varnum].val = getval(vars, ln).val;
+                        break;
+                }
+            }
+            y++;
+        }
+        else
+            error(12, prs[y]);
     }
+
+
+    // find in libfuncs
     if (names.size()!=0){
-        for (int z = 0; z<=names.size()-1; z++){
-            if (names[z]==prs[y]){
+        for (int z = 0; z<=names.size()-1 && names[z-1]!=prs[y]; z++){
                 y++;
                 runlibfunc(names[z], &y);
-            }
         }
     }
+
     if (functions.size()!=0){
         for (int z = 0; z<=functions.size()-1; z++){
             if (functions[z].name==prs[y]){
@@ -107,16 +122,21 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             }
         }
     }
-    if (classes.size()!=0) {
-        for (int i = 0; i<classes.size(); i++) {
-            if (classes[i].name==prs[y]) {
-                ct.resize(ct.size()+1);
-                ct[ct.size()-1].tpe = classes[i];
-                y++;
-                ct[ct.size()-1].name = prs[y];
-                y++;
+
+    /*if (classes.size()!=0) {
+        for (int i = 0; i<classes.size() && classes[i-1].name!=prs[y]; i++){
+            ct.resize(ct.size()+1);
+            ct[ct.size()-1].tpe = classes[i];
+            y++;
+            ct[ct.size()-1].name = prs[y];
+            
+            for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
+                vars.resize(vars.size()+1);
+
+                
             }
         }
+        y++;
     }
     if (ct.size()!=0) {
         for (int i = 0; i<ct.size(); i++) {
@@ -150,7 +170,7 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 }
             }
         }
-    }
+    }*/
     *ln = y;
     *classtypes = ct;
     *pvars = vars;
