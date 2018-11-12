@@ -52,9 +52,9 @@ type person{
 
 do{
   person p;
-  p.name: "Bob";
-  p.age: 24;
-  p.gender: true;
+  p|name: "Bob";
+  p|age: 24;
+  p|gender: true;
   
   str name: p|name;
   

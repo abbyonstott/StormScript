@@ -10,6 +10,8 @@ std::vector<string> sts::parse(std::vector<string> prg){
         int z = 0;
         x.resize(x.size()+1);
         bool inquotes = false;
+        while (prg[y][0]==' ')
+            prg[y].erase(prg[y].begin());
         while (z!=prg[y].size()){
             if (prg[y][z]=='"'){
                 if (inquotes == false){
@@ -20,31 +22,32 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from prs version
-            // omitted and separated
             if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
             }
-            // omitted and not separated
-            else if (((prg[y][z]=='\t') || (prg[y][z]==',') || (prg[y][z]=='{') || (prg[y][z]=='}')) && (inquotes==false)){
+            else if  (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z]=='@')) && (inquotes==false)) {
+                x.resize(x.size()+1);
+                x[x.size()-1]+=prg[y][z];
+                break;
+            }
+            else if ((prg[y][z]=='{') || (prg[y][z]=='}') || (prg[y][z]=='\t') && (inquotes==false)) {
                 z++;
                 continue;
             }
-            // included and separated
-            else if (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z]=='@')) && (inquotes==false)){
-                x.resize(x.size()+1);
+            else
                 x[x.size()-1]+=prg[y][z];
-                x.resize(x.size()+1);
-            }
-            else{
-                x[x.size()-1]+=prg[y][z];
-            }
+
             z++;
         }
         y++;
     }
     x[x.size()-1].pop_back(); //removes EOF char from end of file so it can parse
+    for (int i = 0; i<x.size(); i++) {
+        if ((x[i]=="\0") || (x[i]==""))
+            x.erase(x.begin() + i);
+    }
     return x;
 }
 
@@ -61,8 +64,8 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
         globvars[globvars.size()-1].name="arg"; 
         globvars[globvars.size()-1].glob=1;
     }
-
-    for (int x = 0; x<=prs.size()-1; x++){
+    
+    for (int x = 0; x<prs.size(); x++){
         if (prs[x]=="lib"){
             names.resize(names.size()+1);
             x++;
@@ -207,7 +210,8 @@ void sts::exec(int x,int function){ // how each command is executed
                 y++;
             }
             
-            if (l){ cout << endl; }
+            if (l)
+                cout << "\n";
         }
         else if (prs[y]=="exit"){
             exit(0);

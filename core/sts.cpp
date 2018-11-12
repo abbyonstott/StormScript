@@ -10,7 +10,6 @@
                                                    | |        
                                                    |_|         
 */
-
 void sts::read(char *argv[], int argc) {
 	string filename = argv[1];
 	std::ifstream file;
@@ -68,22 +67,20 @@ int main(int argc, char *argv[]) {
 			cout << "StormScript v1.2.0-alpha \"Apple 14\"" << endl;
 		}
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
-			cout << "Usage: stormscript [file|options]" << endl;
-			cout << "StormScript is an open source scripting language for Linux." << endl;
-			cout << endl;
-			cout <<  "  -h, --help: display help"<< endl;
-			cout << "  --version: show version" << endl;
-			cout << "  -l, --library [name]: initialize library" << endl;
-			cout << "  -bl, --build-library: builds library and adds it to the .stormscript folder" << endl;
-			cout << endl;
+			cout << "Usage: stormscript [file|options]\n";
+			cout << "StormScript is an open source scripting language for Linux.\n\n";
+			cout <<  "  -h, --help: display help\n";
+			cout << "  --version: show version\n";
+			cout << "  -l, --library [name]: initialize library\n";
+			cout << "  -bl, --build-library: builds library and adds it to the .stormscript folder\n\n";
 			system("stormscript --version");
-			cout << "git: https://github.com/stormprograms/StormScript" << endl;
-			cout << "For documentation, go to https://stormprograms.com/stormscript/docs" << endl;
+			cout << "git: https://github.com/stormprograms/StormScript\n";
+			cout << "For documentation, go to https://stormprograms.com/stormscript/docs\n";
 		}
 		else if ((string(argv[1])=="--library") || (string(argv[1])=="-l")){ // check for library
 			if ((argv[2]!=NULL)){
 				string name = string(argv[2]);
-				cout << "Creating library '" << name << "'..." << endl;
+				cout << "Creating library '" << name << "'...\n";
 				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/reader.cc");
 				system("wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/getname.py");
 				system("mkdir stormscript &&  cd stormscript && wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/stormscript/__init__.py");
@@ -99,7 +96,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		else if ((string(argv[1])=="-bl") || (string(argv[1])=="--build-library")) {
-			cout << "Building..." << endl;
+			cout << "Building...\n";
 			system("wget https://raw.githubusercontent.com/stormprograms/StormScript/master/api/python/build.sh");
 			system("sh build.sh");
 		}

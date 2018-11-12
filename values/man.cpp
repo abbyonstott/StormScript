@@ -123,7 +123,8 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         }
     }
 
-    /*if (classes.size()!=0) {
+    if (classes.size()!=0) {
+        y++;
         for (int i = 0; i<classes.size() && classes[i-1].name!=prs[y]; i++){
             ct.resize(ct.size()+1);
             ct[ct.size()-1].tpe = classes[i];
@@ -133,44 +134,11 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
                 vars.resize(vars.size()+1);
 
-                
+                vars[vars.size()-1].name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
             }
         }
-        y++;
+        y+=2;
     }
-    if (ct.size()!=0) {
-        for (int i = 0; i<ct.size(); i++) {
-            if (ct[i].name==prs[y]) {
-                y++;
-                prs[y].pop_back();
-                ct[i].type='c';
-                for (int d = 0; d<ct[i].tpe.variables.size(); d++) {
-                    if (ct[i].tpe.variables[d].name==prs[y]) {
-                        y++;
-                        
-                        bool bval = false;
-                        if (prs[y]=="true"){ bval = true; }
-
-                        string name = ct[i].name + "|" + ct[i].tpe.variables[d].name;
-
-                        vars.resize(vars.size()+1);
-
-                        switch (ct[i].tpe.variables[d].type) {
-                            case 'i': ct[i].tpe.variables[d].valint = std::stoi(prs[y]);
-                                break;
-                            case 'b': ct[i].tpe.variables[d].val = bval;
-                                break;
-                            case 's': ct[i].tpe.variables[d].valstring = striplit(prs[y]);
-                                break;
-                        }
-                        vars[vars.size()-1] = ct[i].tpe.variables[d];
-                        vars[vars.size()-1].name=name;
-                        y++;
-                    } 
-                }
-            }
-        }
-    }*/
     *ln = y;
     *classtypes = ct;
     *pvars = vars;
