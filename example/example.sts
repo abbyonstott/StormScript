@@ -1,11 +1,5 @@
-type person {
-    int age;
-}end;
+set printl to p
 
 do{
-    person p;
-
-    p|age: 30;
-
-    printl p|age;
+    p "hi";
 }end;

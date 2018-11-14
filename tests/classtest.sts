@@ -5,7 +5,7 @@ type test{
 
 do{
     test z;
-    z.x: true;
+    z|x: true;
     
     printl z|x;
 }end;

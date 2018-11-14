@@ -22,15 +22,20 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from prs version
-            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
+            if (((prg[y][z]==' ') || (prg[y][z]==',') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 x.resize(x.size()+1);
                 z++;
                 continue;
             }
-            else if  (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z]=='@')) && (inquotes==false)) {
+            else if  (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
                 x.resize(x.size()+1);
                 x[x.size()-1]+=prg[y][z];
                 break;
+            }
+            else if ((prg[y][z]=='@') && (inquotes==false)) {
+                x.resize(x.size()+1);
+                x[x.size()-1]+=prg[y][z];
+                x.resize(x.size()+1);
             }
             else if ((prg[y][z]=='{') || (prg[y][z]=='}') || (prg[y][z]=='\t') && (inquotes==false)) {
                 z++;
@@ -104,7 +109,6 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x++;
             set(prs[x], prs[x+2], x);
         }
-        
         else if (prs[x]=="@"){
             x++;
             if (prs[x]=="args:") {
