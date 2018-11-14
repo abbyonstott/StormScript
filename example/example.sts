@@ -1,16 +1,11 @@
-type person{
+type person {
     int age;
-    str name;
-    bool gender;
 }end;
 
 do{
     person p;
-    p|name: "Bob";
-    p|age: 24;
-    p|gender: true;
 
-    str name: p|name;
+    p|age: 30;
 
-    printl name;
+    printl p|age;
 }end;

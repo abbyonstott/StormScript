@@ -159,7 +159,7 @@ void sts::exec(int x,int function){ // how each command is executed
     std::vector<stsclasstype> classtypes;
     vars.resize(globvars.size());
     vars = globvars;
-    int y = x+1;
+    int y = ((prs[x]=="do") ? x+1 : x);
     bool looped=0;
     int endreq = 1;
 
@@ -283,7 +283,6 @@ void sts::exec(int x,int function){ // how each command is executed
             if (endreq==0){
                 break;
             }
-            y++;
         }
         else if (prs[y]=="return"){
             if (function>-1){
@@ -300,8 +299,9 @@ void sts::exec(int x,int function){ // how each command is executed
             }
         }
         else{
-            valchange(&vars, &classtypes, &y);
-            if ((prs[y]!="") && (prs[y]!=";") && (prs[y]!="\0")) { //if not function give error
+            bool changed = valchange(&vars, &classtypes, &y);
+
+            if ((prs[y]!=";") && (changed==false)) { //if not function give error
                 error(1,prs[y]);
             }
         }

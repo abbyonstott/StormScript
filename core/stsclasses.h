@@ -90,7 +90,7 @@ public:
 	void exec(int line, int function);
 	void set(string command, string setto, int x); // set command
 	string runlibfunc(string name, int *line); // run library function
-	void valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
+	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 };
 
 

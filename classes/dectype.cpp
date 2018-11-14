@@ -15,30 +15,28 @@ void stsclass::declare(int *y, sts *inst) { //declare type
             variables.resize(variables.size()+1);
             variables[variables.size()-1].type = 'i'; 
             ln++;
-            variables[variables.size()-1].name = prs[ln];
-            ln++;  
+            variables[variables.size()-1].name = prs[ln];  
+            ln++;
         }
         else if (prs[ln]=="str") {
             variables.resize(variables.size()+1);
             variables[variables.size()-1].type = 's';
             ln++;
             variables[variables.size()-1].name = prs[ln];
-            ln++;  
+            ln++;
         }
         else if (prs[ln]=="bool") {
             variables.resize(variables.size()+1);
             variables[variables.size()-1].type = 'b';
             ln++;
             variables[variables.size()-1].name = prs[ln];
-            ln++;  
+            ln++;
         }
         else if (prs[ln]=="end") {
-            ln+=2;
+            ln++;
             break;
         }
-        else if (prs[ln]!=""){
-            inst->error(1, prs[ln]);
-        }
+
     }
 
     *y = ln;

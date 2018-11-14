@@ -24,7 +24,7 @@ bool isint(string s) {
     return false;
 }
 
-void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
+bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
@@ -77,6 +77,13 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 }
             }
             y++;
+
+            *ln = y;
+            *classtypes = ct;
+            *pvars = vars;
+            
+            return true;
+            
         }
         else
             error(12, prs[y]);
@@ -86,8 +93,16 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
     // find in libfuncs
     if (names.size()!=0){
         for (int z = 0; z<=names.size()-1 && names[z-1]!=prs[y]; z++){
+            if (names[z]==prs[y]) {
                 y++;
                 runlibfunc(names[z], &y);
+
+                *ln = y;
+                *classtypes = ct;
+                *pvars = vars;
+                
+                return true;
+            }
         }
     }
 
@@ -116,30 +131,41 @@ void sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 }
                 else {
                     exec(functions[z].linestarted, z);
-                    y++;
                 }
-                break;
+                *ln = y;
+                *classtypes = ct;
+                *pvars = vars;
+                
+                return true;
             }
         }
     }
 
     if (classes.size()!=0) {
-        y++;
         for (int i = 0; i<classes.size() && classes[i-1].name!=prs[y]; i++){
-            ct.resize(ct.size()+1);
-            ct[ct.size()-1].tpe = classes[i];
-            y++;
-            ct[ct.size()-1].name = prs[y];
-            
-            for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
-                vars.resize(vars.size()+1);
+            if (classes[i].name==prs[y]) {
+                ct.resize(ct.size()+1);
+                ct[ct.size()-1].tpe = classes[i];
+                y++;
+                ct[ct.size()-1].name = prs[y];
+                
+                for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
+                    vars.resize(vars.size()+1);
 
-                vars[vars.size()-1].name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
+                    vars[vars.size()-1].name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
+                    vars[vars.size()-1].type = ct[i].tpe.variables[b].type;
+                }
+                y++;
+
+                *ln = y;
+                *classtypes = ct;
+                *pvars = vars;
+                
+                return true;
             }
+
         }
-        y+=2;
     }
-    *ln = y;
-    *classtypes = ct;
-    *pvars = vars;
+
+    return false;
 }
