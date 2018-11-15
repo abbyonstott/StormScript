@@ -11,6 +11,7 @@
 This is the GitHub repository for the StormScript Scripting language.
 ## Table of Contents
 * [Why is this special?](#why-is-this-special)
+* [How to Build](#how-to-build)
 * [Layout](#layout)
 * [Files You Should Know](#files-you-should-know)
 
@@ -66,6 +67,26 @@ In  StormScript, the `is` keyword replaces the `==` symbol and `not` replaces th
 
 3. API
 Possible the most important part of StormScript is the API. Generally, in order to create a library in a language, you have to develop it in that language. In StormScript, libraries can be made in Python, StormScript, and C++.
+
+## How to Build
+
+Terminal:
+
+To build StormScript clone this repository and cd into it. Run 
+```
+$ cmake CMakeLists.txt
+```
+and
+```
+$ make
+```
+You can then add it to path or install it to usr/bin.
+
+Visual Studio Code:
+
+Clone this repository like before and open it in Visual Studio Code. Make sure you have the CMake, C++, and python plugins installed. Press `Build:` in the bottom left or press `f5` to start debugging.
+
+When it builds, it should be put into a `build/` directory.
 
 ## Layout
 
