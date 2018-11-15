@@ -1,5 +1,4 @@
-set printl to p
-
+lib random;
 do{
-    p "hi";
+    printl random.gen => from: "0", to: "100";
 }end;

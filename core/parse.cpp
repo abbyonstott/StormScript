@@ -217,16 +217,15 @@ void sts::exec(int x,int function){ // how each command is executed
             if (l)
                 cout << "\n";
         }
-        else if (prs[y]=="exit"){
+        else if (prs[y]=="exit")
             exit(0);
-        }
-        else if (prs[y]=="in"){
+        else if (prs[y]=="in") {
             vars.resize(vars.size()+1);
             y++;
             vars[vars.size()-1]=in(y);
             y+=2;
         }
-        else if ((prs[y]=="if")){
+        else if ((prs[y]=="if")) {
             endreq+=1;
             ifs(&y, &endreq, vars);
             if (prs[y]!="else") {
@@ -239,7 +238,7 @@ void sts::exec(int x,int function){ // how each command is executed
             }
             y--;
         }
-        else if (prs[y]=="int"){
+        else if (prs[y]=="int") {
             y++;
             vars.resize(vars.size()+1);
             vars[vars.size()-1]=declare('i',y, vars);
@@ -248,26 +247,24 @@ void sts::exec(int x,int function){ // how each command is executed
                 y++;
             }
         }
-        else if (prs[y]=="bool"){
+        else if (prs[y]=="bool") {
             y++;
             vars.resize(vars.size()+1);
             vars[vars.size()-1]=declare('b',y, vars);
             y++;
         }
-        else if (prs[y]=="str"){
+        else if (prs[y]=="str") {
             y++;
             vars.resize(vars.size()+1);
             vars[vars.size()-1]=declare('s',y, vars);
             vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-            while (prs[y]!=";"){
+            while (prs[y]!=";")
                 y++;
-            }
         }
-        else if (prs[y]=="sys"){
+        else if (prs[y]=="sys")
             y++;
             sys(y, vars);
-        }
-        else if ((prs[y]=="end") || (prs[y]=="loop")){
+        else if ((prs[y]=="end") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
                     if (prs[y+1]!="inf"){
@@ -284,9 +281,8 @@ void sts::exec(int x,int function){ // how each command is executed
                 y=x+1;
             }
             endreq-=1;
-            if (endreq==0){
+            if (endreq==0)
                 break;
-            }
         }
         else if (prs[y]=="return"){
             if (function>-1){
