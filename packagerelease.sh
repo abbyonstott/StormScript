@@ -1,8 +1,8 @@
 #!/bin/bash
 rm -r release/*
 cd release
-mkdir stormscript_v1.1.1-alpha
-cd stormscript_v1.1.1-alpha
+mkdir stormscript_v0.1.0
+cd stormscript_v0.1.0
 mkdir src
 
 cp -r ../../classes src
@@ -14,4 +14,4 @@ cp ../../StormScriptconfig.h src
 cp -r ../../libraries src
 
 cd ..
-tar -cf stormscript_v1.1.1-alpha.tar.xz stormscript_v1.1.1-alpha
+tar -cf stormscript_v0.1.0.tar.xz stormscript_v0.1.0
