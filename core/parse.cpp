@@ -217,8 +217,9 @@ void sts::exec(int x,int function){ // how each command is executed
             if (l)
                 cout << "\n";
         }
-        else if (prs[y]=="exit")
+        else if (prs[y]=="exit") {
             exit(0);
+        }  
         else if (prs[y]=="in") {
             vars.resize(vars.size()+1);
             y++;
