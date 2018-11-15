@@ -21,6 +21,7 @@ string sts::runlibfunc(string name, int *line) {
             cmd0+=prs[y].c_str();
             y++;
         }
+        y--;
     }
     cmd0 += "` >> output.log";
     system(cmd0.c_str());
@@ -40,7 +41,6 @@ string sts::runlibfunc(string name, int *line) {
     output.pop_back();
     output.pop_back();
 
-    y++;
     *line = y;
     return output;
 }
