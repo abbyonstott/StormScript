@@ -27,12 +27,12 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if  (((prg[y][z]==';') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
+            else if  ((prg[y][z]==';') && (inquotes==false)) {
                 x.resize(x.size()+1);
                 x[x.size()-1]+=prg[y][z];
                 break;
             }
-            else if ((prg[y][z]=='@') && (inquotes==false)) {
+            else if (((prg[y][z]=='@') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
                 x.resize(x.size()+1);
                 x[x.size()-1]+=prg[y][z];
                 x.resize(x.size()+1);
@@ -61,12 +61,11 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
 
     globvars.resize(globvars.size()+1);
     for (int x = 1; x<=argc-1; x++){
-        globvars[globvars.size()-1].type='t';
-        globvars[globvars.size()-1].valsstring.resize(
-            globvars[globvars.size()-1].valsstring.size()+1
-        );
-        globvars[globvars.size()-1].valsstring[globvars[globvars.size()-1].valsstring.size()-1]=argv[x];
-        globvars[globvars.size()-1].name="arg"; 
+        globvars[globvars.size()-1].type='l';
+        globvars[globvars.size()-1].vals.resize(globvars[globvars.size()-1].vals.size()+1);
+        globvars[globvars.size()-1].vals[globvars[globvars.size()-1].vals.size()-1].type = 's';
+        globvars[globvars.size()-1].vals[globvars[globvars.size()-1].vals.size()-1].valstring=argv[x];
+        globvars[globvars.size()-1].name="arg";
         globvars[globvars.size()-1].glob=1;
     }
     
@@ -93,6 +92,14 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                 x++;
                 globvars[globvars.size()-1]=declare('b', x, globvars);
                 globvars[globvars.size()-1].glob=1;
+            }
+            else if (prs[x]=="list") {
+                x++;
+                globvars[globvars.size()-1]=declare('l', x, globvars);
+                globvars[globvars.size()-1].glob=1;
+            
+                while (prs[x]!=";") 
+                    x++;
             }
             else {
                 error(2,prs[x]);
@@ -253,6 +260,14 @@ void sts::exec(int x,int function){ // how each command is executed
             vars.resize(vars.size()+1);
             vars[vars.size()-1]=declare('b',y, vars);
             y++;
+        }
+        else if (prs[y]=="list") {
+            y++;
+            vars.resize(vars.size()+1);
+            vars[vars.size()-1]=declare('l', y, vars);
+            
+            while (prs[y]!=";") 
+                y++;
         }
         else if (prs[y]=="str") {
             y++;

@@ -1,4 +1,7 @@
-lib random;
+glob list x: ["hi", "hi"];
+
 do{
-    printl random.gen => from: "0", to: "100";
+    if x[0] is "hi"{
+        printl x[0];
+    }end;
 }end;

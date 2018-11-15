@@ -19,6 +19,25 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         v.type = 'b';
         v.val = (prs[y]=="true");
     }
+    else if (prs[y+1]=="[") {
+        string name = prs[y];
+        y+=2;
+        int index = std::stoi(prs[y]);
+
+        for (int i = 0; i<vars.size() && vars[i-1].name != name; i++) {
+            if (vars[i].name == name) {
+                try{ // set v to index
+                    v = vars[i].vals[index];
+                }
+                catch (std::bad_alloc) { // if out of range throw error
+                    string message = prs[y-2] + prs[y-1] + prs[y] + prs[y+1];
+                    error(6, message);
+                }
+            }
+        }
+
+        y++;
+    }
     else {
         for (int x = 0; x<vars.size(); x++) {
             if (vars[x].name==prs[y]) {
@@ -32,7 +51,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             }
         }
         if (names.size()!=0){
-            for (int z = 0; z<=names.size()-1; z++){
+            for (int z = 0; z<names.size(); z++){
                 if (names[z]==prs[y]){
                     y++;
                     string output = runlibfunc(names[z], &y);
@@ -43,6 +62,9 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             }
         }
     }
+
+    if (v.type=='\000')
+        error(12, prs[*line]);
 
     *line = y;
     return v;

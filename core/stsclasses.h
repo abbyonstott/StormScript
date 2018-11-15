@@ -28,13 +28,14 @@ class sts;
 class stsvars{
 public:
 	int valint = 0;
-	std::vector<int> valsint;
+	std::vector<stsvars> vals;
 	string valstring = "";
-	std::vector<string> valsstring;
 	bool val;
 	char type;
 	bool glob;
 	string name;
+
+	void assignlist(sts *script, std::vector<stsvars> vars, int *line);
 };
 
 class stsclass {

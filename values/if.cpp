@@ -39,10 +39,10 @@ bool sts::compare(int *y, std::vector<stsvars> current_vars) {
     stsvars compto;
 
     // check if "is" or "not"
-    if (prs[line+1]=="is") {
+    if ((prs[line+1]=="is") || ((prs[line+1]=="[")) && (prs[line+4]=="is")) {
         compt = 'i';
     }
-    else if (prs[line+1]=="not") {
+    else if ((prs[line+1]=="not") || ((prs[line+1]=="[")) && (prs[line+4]=="not")) {
         compt = 'n';
     }
     else {
