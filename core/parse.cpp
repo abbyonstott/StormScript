@@ -262,9 +262,10 @@ void sts::exec(int x,int function){ // how each command is executed
             while (prs[y]!=";")
                 y++;
         }
-        else if (prs[y]=="sys")
+        else if (prs[y]=="sys") {
             y++;
             sys(y, vars);
+        }
         else if ((prs[y]=="end") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
