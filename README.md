@@ -5,7 +5,7 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/stormprograms/stormscript/total.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/stormprograms/stormscript.svg)
 
-
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/stormscript)
 
 
 This is the GitHub repository for the StormScript Scripting language.
