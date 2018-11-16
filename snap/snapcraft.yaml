@@ -5,11 +5,15 @@ description: |
   StormScript is an open source scripting language. StormScript was created on the belief that a good scripting language can be both powerful and easily readable and learnable.
 
 grade: stable 
-confinement: classic
+confinement: strict
 
 apps:
   stormscript:
     command: bin/stormscript
+
+plugs:
+  home:
+  removable-media:
 
 parts:
   stormscript:
