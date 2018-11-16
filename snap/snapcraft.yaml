@@ -11,9 +11,6 @@ apps:
   stormscript:
     command: bin/stormscript
 
-plugs:
-  home:
-
 parts:
   stormscript:
     source: https://github.com/stormprograms/StormScript.git
