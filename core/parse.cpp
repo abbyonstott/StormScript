@@ -215,8 +215,7 @@ void sts::exec(int x,int function){ // how each command is executed
 
 
         if ((prs[y]=="print") || (prs[y]=="printl")){
-            bool l = 0;
-            if (prs[y]=="printl") { l = 1; }
+            bool l = (prs[y]=="printl");
 
             y++;
             while (prs[y]!=";"){
@@ -298,7 +297,7 @@ void sts::exec(int x,int function){ // how each command is executed
                 vars.resize(globvars.size());
                 vars = globvars;
                 prs=parse(prg);
-                y=x+1;
+                y=x; //set y equal to x to rerun from start of scope
             }
             endreq-=1;
             if (endreq==0)

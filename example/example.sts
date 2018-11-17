@@ -1,7 +1,10 @@
-glob list x: ["hi", "hi"];
+glob list x: ["hi", "bye"];
 
 do{
     if x[0] is "hi"{
         printl x[0];
+        x[0]: "hello";
+    }else{
+        printl x[1];
     }end;
-}end;
+}loop(2);

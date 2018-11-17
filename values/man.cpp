@@ -29,23 +29,31 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
 
-    if (prs[y][prs[y].size()-1]==':') { // variable manipulation operation
+    if ((prs[y].back()==':') || (prs[y+4] == ":")) { // variable manipulation operation
         int varnum;
-        string line = prs[y];
-        prs[y].pop_back();
+        const string name = prs[y];
+        const string line = ((prs[y+1] == "[") ? prs[y] + prs[y+1] + prs[y+2] + prs[y+3] + prs[y+4] : prs[y]); // set unmodifiable "copy" to variable[i]:
+        string lineorig = line; // set original "copy" to variable[i]:
+        lineorig.pop_back();
 
 
-        if ((prs[y][prs[y].size()-1]=='-') || (prs[y][prs[y].size()-1]=='+'))
-            prs[y].pop_back();
-
+        if ((lineorig.back()=='-') || (lineorig.back()=='+'))
+            lineorig.pop_back();
+        
+        if (prs[y+1] == "[") {
+            lineorig.erase(lineorig.find('['), lineorig.back()); //erase to show name
+            vars.resize(vars.size()+1);
+            vars.back() = getval(vars, &y);
+            varnum = vars.size()-1;
+            *ln += 5;
+        }
         // loops through var names
-        for (int i = 0; i<vars.size() && prs[y]!=vars[i-1].name; i++)
-            varnum = ((vars[i].name==prs[y]) ? i : -1);
+        else
+            for (int i = 0; i<vars.size() && lineorig!=vars[i-1].name; i++)
+                varnum = ((vars[i].name==lineorig) ? i : -1);
 
         // change value if is vars
         if (varnum!=-1){
-            y++;
-            *ln = y;
             if (line.find("+")!=string::npos) { // add
                 switch (vars[varnum].type) {
                     case 'i': vars[varnum].valint += getval(vars, ln).valint;
@@ -76,7 +84,16 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         break;
                 }
             }
-            y++;
+            if (prs[y-2] == "[") {
+                int ind = 0;
+
+                for (ind; vars[ind].name!=name; ind++) {}
+                
+                vars[ind].vals[std::stoi(prs[y-1])] = vars.back();
+
+                vars.pop_back();
+            }
+            for (y; y<=prs.size() && prs[y]!=";"; y++) {} // Increase y until it sees semicolon
 
             *ln = y;
             *classtypes = ct;

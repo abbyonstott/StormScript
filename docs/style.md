@@ -16,7 +16,7 @@ C++ has the strictest rules when it comes to styling as it makes up the majority
 ## Includes
 **YOU MUST FOLLOW THIS**
 
-All includes must go at the top of [core/stsclasses.h](core/stsclasses.h).
+All includes must go at the top of [stsclasses.h](/core/stsclasses.h).
 
 ## Formatting
 The general rule of formatting here is not to use more lines than you need to make it readable.
@@ -49,6 +49,19 @@ for (int i = 0; i<=number; i++)
     foo(bar);
 ```
 **Always put braces on the same line as the statement with a space separating them**
+
+## SubScripts
+
+Use `string::back()` and `string::front()` when applicable
+
+for instance
+```cpp
+if  ((prs[y].back()==':') || (prs[y+4]==":")) {
+    ...
+}
+```
+source: [man.cpp](/values/man.cpp)
+
 
 ## Keywords
 Use `'\n'` instead of `std::endl;` unless absolutely neccessary
