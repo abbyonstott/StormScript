@@ -5,6 +5,10 @@ mkdir stormscript_v0.2.0
 cd stormscript_v0.2.0
 mkdir src
 
+cp ../../CMakeLists.txt src
+cp -r ../../api src
+cp -r ../../interpreter src
+cp -r ../../parser src
 cp -r ../../classes src
 cp -r ../../stream src
 cp -r ../../core src
