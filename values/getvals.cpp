@@ -58,6 +58,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     v.type = ((isint(output)) ? 'i' : 's');
                     if (v.type == 's') { v.valstring = output; }
                     else { v.valint = std::stoi(output); }
+                    y--;
                 }
             }
         }

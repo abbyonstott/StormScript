@@ -6,10 +6,12 @@ This is the changelog for the December 2018 build of StormScript
 * Changelog
 * Parser and interpreter split up into more files
 * Installer now uses the regular cmake file for the project which is located in the release's src directory
+* StormScript library written in StormScript
 
 # What's Fixed
 * Global variables no longer reset for every iteration of a loop
 * Fixed issue where installer could find `src/libraries/system/stormscript`
+* Fixed issue where library function couldn't be run in print without args.
 
 # Other
 * Renamed sts.cpp to stormscript.cpp

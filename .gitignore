@@ -14,7 +14,6 @@ Makefile
 *.tar*
 *.zip
 *.pyc
-*.stslib
 
 snap/.snapcraft/
 snap/parts/
@@ -23,3 +22,4 @@ snap/stage/
 snap/snap/
 *.snap
 libraries/*/reader.cc
+*.xdelta3
