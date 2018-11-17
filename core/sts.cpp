@@ -57,9 +57,9 @@ int main(int argc, char *argv[]) {
 	sts script;
 
 	if (argc != 1) {
-		if (string(argv[1])=="--version")
-			cout << "StormScript v0.2.0 \"Banana\"" << endl;
-
+		if (string(argv[1])=="--version"){
+			cout << "StormScript v0.1.2 \"Apple\"" << endl;
+		}
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
 			cout << "Usage: stormscript [file|options]\n";
 			cout << "StormScript is an open source scripting language for Linux.\n\n";
