@@ -43,7 +43,9 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         if (prs[y+1] == "[") {
             lineorig.erase(lineorig.find('['), lineorig.back()); //erase to show name
             vars.resize(vars.size()+1);
+
             vars.back() = getval(vars, &y);
+            vars.back().glob = 0;
             varnum = vars.size()-1;
             *ln += 5;
         }
@@ -84,12 +86,18 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         break;
                 }
             }
+            
+            if (vars[varnum].glob)
+                globvars[varnum]=vars[varnum];
+
             if (prs[y-2] == "[") {
                 int ind = 0;
 
                 for (ind; vars[ind].name!=name; ind++) {}
                 
                 vars[ind].vals[std::stoi(prs[y-1])] = vars.back();
+                if (vars[ind].glob)
+                    globvars[ind]=vars[ind];
 
                 vars.pop_back();
             }
