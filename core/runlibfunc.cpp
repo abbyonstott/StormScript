@@ -13,6 +13,7 @@ string sts::runlibfunc(string name, int *line) {
     cmd0+=cmd1.c_str();
     cmd0+=prs[y].c_str();
     y++;
+    
     if (prs[y]=="=>") {
         y++;
 

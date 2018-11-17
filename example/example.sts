@@ -1,10 +1,5 @@
-glob list x: ["hi", "bye"];
+lib helloworld;
 
 do{
-    if x[0] is "hi"{
-        printl x[0];
-        x[0]: "hello";
-    }else{
-        printl x[1];
-    }end;
-}loop(2);
+    printl helloworld.out;
+}end;
