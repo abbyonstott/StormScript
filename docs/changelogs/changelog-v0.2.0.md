@@ -3,7 +3,7 @@ This is the changelog for the December 2018 build of StormScript
 
 # What's New:
 * You can change items in lists with `list[item]: "value";`
-* Changlog
+* Changelog
 * Parser and interpreter split up into more files
 * Installer now uses the regular cmake file for the project which is located in the release's src directory
 
