@@ -10,8 +10,10 @@ std::vector<string> sts::parse(std::vector<string> prg){
         int z = 0;
         x.resize(x.size()+1);
         bool inquotes = false;
+        
         while (prg[y][0]==' ')
             prg[y].erase(prg[y].begin());
+
         while (z!=prg[y].size()){
             if (prg[y][z]=='"'){
                 if (inquotes == false){
@@ -48,7 +50,8 @@ std::vector<string> sts::parse(std::vector<string> prg){
         }
         y++;
     }
-    x[x.size()-1].pop_back(); //removes EOF char from end of file so it can parse
+    if (!term)
+        x[x.size()-1].pop_back(); //removes EOF char from end of file so it can parse
     for (int i = 0; i<x.size(); i++) {
         if ((x[i]=="\0") || (x[i]==""))
             x.erase(x.begin() + i);
