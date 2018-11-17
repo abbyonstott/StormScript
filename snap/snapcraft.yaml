@@ -4,8 +4,17 @@ summary: StormScript is an easy to use, open-source scripting language  # 79 cha
 description: |
   StormScript is an open source scripting language. StormScript was created on the belief that a good scripting language can be both powerful and easily readable and learnable.
 
-grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs and slots
+
+grade: stable 
+confinement: strict
+
+architectures: 
+  - amd64
+  - armhf
+  - arm64
+  - i386
+  - ppc64el
+  - s390x
 
 apps:
   stormscript:
@@ -13,10 +22,10 @@ apps:
 
 plugs:
   home:
+  removable-media:
 
 parts:
   stormscript:
-    # See 'snapcraft plugins'
     source: https://github.com/stormprograms/StormScript.git
     source-type: git
     plugin: cmake

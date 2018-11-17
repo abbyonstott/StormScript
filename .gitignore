@@ -23,3 +23,4 @@ snap/stage/
 snap/snap/
 *.snap
 libraries/*/reader.cc
+*.xdelta3
