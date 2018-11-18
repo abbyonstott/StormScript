@@ -4,8 +4,6 @@
 
 * [Info](#info)
 * [C++ Style](#c++-ctyle)
-* [Python Style](#python-style)
-* [StormScript Style](#stormscript-style)
 
 # Info
 I mainly created this code as a guide and less of a "law" because I feel that it is important to have readable code, but not to stress it so much as to deter newcomers. I sometimes will forget to follow this style guide, and if you do as long as your code is readable I will accept it. That said, I want you to try to use this style guide as much as you can for the sake of time. If I forget to follow this somewhere, feel free to create a PR that cleans up my code.
