@@ -1,6 +1,8 @@
 #include "../core/stsclasses.h"
 
-void sts::sys(int line, std::vector<stsvars> vars){
+void sts::sys(int *y, std::vector<stsvars> vars){
+    int line = *y;
+    line++;
     if (prs[line][0]=='"'){
         prs[line].pop_back();
         prs[line].erase(prs[line].begin());

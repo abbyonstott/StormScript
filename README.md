@@ -8,8 +8,6 @@
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/stormscript)
 
-
-This is the GitHub repository for the StormScript Scripting language.
 ## Table of Contents
 * [Why is this special?](#why-is-this-special)
 * [How to Build](#how-to-build)
@@ -81,7 +79,7 @@ and
 ```
 $ make
 ```
-You can then add it to path or install it to usr/bin.
+You can then add it to path or install it to /usr/bin.
 
 Visual Studio Code:
 
@@ -105,7 +103,8 @@ tests/ | Files that allow you to test StormScript
 
 file | Description
 ---- | -----------
-core/stsclasses.h | This is where all classes needed for a program to run are put.
-core/sts.cpp | This is where files are read.
-core/errors.cpp | This is where all new errors are added.
-core/parse.cpp | This is the parser and the interpreter.
+[core/stsclasses.h](core/stsclasses.h) | This is where all classes needed for a program to run are put.
+[core/stormscript.cpp](core/stormscript.cpp) | This is where files are read.
+[core/errors.cpp](core/errors.cpp) | This is where all new errors are added.
+[parser/parse.cpp](parser/parse.cpp) | This is the parser.
+[interpreter/exec.cpp](interpreter/exec.cpp) | This is the function that interprets functions

@@ -3,21 +3,16 @@
 void sts::exec(int x,int function){ // how each command is executed
     std::vector<stsvars> vars;
     std::vector<stsclasstype> classtypes;
-    vars.resize(globvars.size());
     vars = globvars;
     int y = ((prs[x]=="do") ? x+1 : x);
     bool looped=0;
     int endreq = 1;
 
 
+    if (function>-1)
+        for (int i = 0; i<functions[function].args.size(); i++) 
+             vars.push_back(functions[function].args[i]);
 
-
-    if (function>-1) {
-        for (int i = 0; i < functions[function].args.size(); i++) {
-            vars.resize(vars.size()+1);
-            vars[vars.size()-1] = functions[function].args[i];
-        }
-    }
     while (true){
         if (function == -2) { // if running in terminal
             y = 0;
@@ -26,17 +21,16 @@ void sts::exec(int x,int function){ // how each command is executed
             cout << "stormscript >>> ";
             std::cin.getline(command, 256);
 
-            prg[prg.size()-1] = string(command);
-            if (prg[prg.size()-1]=="") {
+            prg.back() = string(command);
+            if (prg.back()=="") {
                 y++;
                 continue;
             }
             prs = parse(prg);
 
             if (prs[y]=="lib") {
-                names.resize(names.size()+1);
                 y++;
-                names[names.size()-1]=prs[y];
+                names.push_back(prs[y]);
                 y++;
             }
             else if (prs[y]=="set") {
@@ -48,12 +42,8 @@ void sts::exec(int x,int function){ // how each command is executed
 
         if ((prs[y]=="print") || (prs[y]=="printl")){
             bool l = (prs[y]=="printl");
-
-            y++;
-            while (prs[y]!=";"){
+            for (y; prs[y]!=";"; y++)
                 print(y, &y, vars);
-                y++;
-            }
             
             if (l)
                 cout << "\n";
@@ -70,9 +60,8 @@ void sts::exec(int x,int function){ // how each command is executed
         else if ((prs[y]=="if")) {
             endreq+=1;
             ifs(&y, &endreq, vars);
-            if (prs[y]!="else") {
+            if (prs[y]!="else")
                 y--;
-            }
         }
         else if (prs[y] == "else") {
             while (prs[y] != "end") {
@@ -91,30 +80,26 @@ void sts::exec(int x,int function){ // how each command is executed
         }
         else if (prs[y]=="bool") {
             y++;
-            vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('b',y, vars);
+            vars.push_back(declare('b',y, vars));
             y++;
         }
         else if (prs[y]=="list") {
             y++;
-            vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('l', y, vars);
+            vars.push_back(declare('l', y, vars));
             
             while (prs[y]!=";") 
                 y++;
         }
         else if (prs[y]=="str") {
             y++;
-            vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('s',y, vars);
-            vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
+            vars.push_back(declare('s',y, vars));
+            vars.back().glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";")
                 y++;
         }
-        else if (prs[y]=="sys") {
-            y++;
-            sys(y, vars);
-        }
+        else if (prs[y]=="sys")
+            sys(&y, vars);
+
         else if ((prs[y]=="end") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
@@ -126,7 +111,6 @@ void sts::exec(int x,int function){ // how each command is executed
                         endreq=2;
                     }
                 }
-                vars.resize(globvars.size());
                 vars = globvars;
                 prs=parse(prg);
                 y=x; //set y equal to x to rerun from start of scope
@@ -139,25 +123,22 @@ void sts::exec(int x,int function){ // how each command is executed
             if (function>-1){
                 // check variables
                 for (int z = 0; z<vars.size(); z++) {
-                    if (prs[y+1]==vars[z].name){
+                    if (prs[y+1]==vars[z].name)
                         functions[function].value=vars[z];
-                    }
                 }
+
                 break;
             }
-            else{
+            else
                 error(7, "");
-            }
         }
         else{
             bool changed = valchange(&vars, &classtypes, &y);
 
-            if ((prs[y]!=";") && (changed==false)) { //if not function give error
+            if ((prs[y]!=";") && (changed==false)) //if not function give error
                 error(1,prs[y]);
-            }
         }
-        if (y+1!=prs.size()) {
+        if (y+1!=prs.size())
             y++;
-        }
     }
 }

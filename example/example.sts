@@ -1,5 +1,3 @@
-lib helloworld;
-
 do{
-    printl helloworld.out;
+    printl "hello, world";
 }end;

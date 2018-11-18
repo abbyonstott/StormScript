@@ -14,4 +14,5 @@ This is the changelog for the December 2018 build of StormScript
 * Fixed issue where library function couldn't be run in print without args.
 
 # Other
-* Renamed sts.cpp to stormscript.cpp
+* Renamed sts.cpp to [stormscript.cpp](/core/stormscript.cpp)
+* made [interpreter](/interpreter/exec/cpp) easier to use

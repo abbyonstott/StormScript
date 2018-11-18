@@ -42,17 +42,20 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         
         if (prs[y+1] == "[") {
             lineorig.erase(lineorig.find('['), lineorig.back()); //erase to show name
-            vars.resize(vars.size()+1);
 
-            vars.back() = getval(vars, &y);
+            vars.push_back(getval(vars, &y));
             vars.back().glob = 0;
             varnum = vars.size()-1;
             *ln += 5;
         }
         // loops through var names
-        else
+        else {
             for (int i = 0; i<vars.size() && lineorig!=vars[i-1].name; i++)
                 varnum = ((vars[i].name==lineorig) ? i : -1);
+
+            y++;
+            *ln = y;
+        }
 
         // change value if is vars
         if (varnum!=-1){
@@ -170,15 +173,14 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         for (int i = 0; i<classes.size() && classes[i-1].name!=prs[y]; i++){
             if (classes[i].name==prs[y]) {
                 ct.resize(ct.size()+1);
-                ct[ct.size()-1].tpe = classes[i];
+                ct.back().tpe = classes[i];
                 y++;
-                ct[ct.size()-1].name = prs[y];
-                
+                ct.back().name = prs[y];
+
                 for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
                     vars.resize(vars.size()+1);
-
-                    vars[vars.size()-1].name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
-                    vars[vars.size()-1].type = ct[i].tpe.variables[b].type;
+                    vars.back().name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
+                    vars.back().type = ct[i].tpe.variables[b].type;
                 }
                 y++;
 
