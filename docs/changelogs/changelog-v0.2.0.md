@@ -7,6 +7,9 @@ This is the changelog for the December 2018 build of StormScript
 * Parser and interpreter split up into more files
 * Installer now uses the regular cmake file for the project which is located in the release's src directory
 * StormScript library written in StormScript
+* [runtests.sh](runtests.sh) now only shows which tests failed
+* Outputs folder for expected test results
+* [writenewouts.sh](writenewouts.sh) generates results to be put in the outputs folder
 
 # What's Fixed
 * Global variables no longer reset for every iteration of a loop
