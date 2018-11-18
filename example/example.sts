@@ -1,3 +1,20 @@
+type person {
+    int age;
+    str name;
+
+    func birthday {
+        age+:1;
+    }end;
+}end;
+
 do{
-    printl "hello, world";
+    person p;
+    p|age: 22;
+    p|name: "Joe";
+
+    printl p|name, " is ", p|age, " years old!";
+
+    p|birthday;
+
+    printl "It's ", p|name, "'s birthday.", p|name, " is ", p|age, " years old!";
 }end;

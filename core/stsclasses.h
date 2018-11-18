@@ -24,6 +24,8 @@ string striplit(string line);
 bool isint(string s);
 
 class sts;
+class stsvars;
+class stsfunc;
 
 class stsvars{
 public:
@@ -41,7 +43,9 @@ public:
 class stsclass {
 public:
 	void declare(int *y, sts *inst);
+	void decmethod(sts *inst, int *ln);
 	std::vector<stsvars> variables;
+	std::vector<stsfunc> methods;
 	string name;
 };
 
@@ -52,7 +56,8 @@ public:
 
 class stsfunc:public stsvars{
 public:
-	int linestarted;
+	int linestarted; // line funcion code starts, not line "func" keyword is used
+	bool classmethod = false;
 	stsvars value;
 	stsclasstype cval;
 	char valtype;

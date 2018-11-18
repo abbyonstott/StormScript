@@ -15,7 +15,8 @@ add_executable(stormscript
     values/man.cpp
     values/if.cpp
     values/getvals.cpp
-    classes/dectype.cpp)
+    classes/dectype.cpp
+    classes/decmethod.cpp)
 set (StormScript_VERSION_MAJOR 0)
 set (StormScript_VERSION_MINOR 2)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)

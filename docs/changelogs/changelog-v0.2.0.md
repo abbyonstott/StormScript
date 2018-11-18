@@ -10,6 +10,7 @@ This is the changelog for the December 2018 build of StormScript
 * [runtests.sh](runtests.sh) now only shows which tests failed
 * Outputs folder for expected test results
 * [writenewouts.sh](writenewouts.sh) generates results to be put in the outputs folder
+* class methods can now be declared. [C++ file](/classes/decmethod.cpp)
 
 # What's Fixed
 * Global variables no longer reset for every iteration of a loop
