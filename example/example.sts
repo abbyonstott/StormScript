@@ -3,7 +3,7 @@ type person {
     str name;
 
     func birthday {
-        age+:1;
+        age+: 1;
     }end;
 }end;
 
@@ -16,5 +16,5 @@ do{
 
     p|birthday;
 
-    printl "It's ", p|name, "'s birthday.", p|name, " is ", p|age, " years old!";
+    printl "It's ", p|name, "'s birthday. ", p|name, " is ", p|age, " years old!";
 }end;

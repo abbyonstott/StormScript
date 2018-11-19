@@ -135,38 +135,12 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
     }
 
     if (functions.size()!=0){
-        for (int z = 0; z<=functions.size()-1; z++){
-            if (functions[z].name==prs[y]){
-                if (prs[y+1]=="=>"){
-                    y+=3;
-                    for (int i = 0; i<functions[z].args.size(); i++) {
-                        char *argtype = &functions[z].args[i].type;
-                    
-                        stsvars argval = getval(vars, &y);
-
-
-                        switch (*argtype) {
-                            case 's': functions[z].args[i].valstring = argval.valstring;
-                                break;
-                            case 'b': functions[z].args[i].val = argval.val;
-                                break;
-                            case 'i': functions[z].args[i].valint = argval.valint;
-                                break;
-                        }
-                        y+=2;
-                    }
-                    exec(functions[z].linestarted, z);
-                }
-                else {
-                    exec(functions[z].linestarted, z);
-                }
-                *ln = y;
-                *classtypes = ct;
-                *pvars = vars;
-                
-                return true;
-            }
-        }
+        runfunc(&vars, &ct, &y);
+        *ln = y;
+        *classtypes = ct;
+        *pvars = vars;
+        
+        return true;
     }
 
     if (classes.size()!=0) {
@@ -181,6 +155,13 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                     vars.resize(vars.size()+1);
                     vars.back().name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
                     vars.back().type = ct[i].tpe.variables[b].type;
+                    ct[i].indexes.push_back(vars.size()-1); // dump index for reading during execution of method
+                }
+
+                for (int b = 0; b<ct[ct.size()-1].tpe.methods.size(); b++) {
+                    functions.push_back(ct[i].tpe.methods[b]);
+                    functions.back().name = ct[i].name + "|" + ct[i].tpe.methods[b].name;
+                    functions.back().cof = ct[i].name;
                 }
                 y++;
 

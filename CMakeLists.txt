@@ -15,6 +15,7 @@ add_executable(stormscript
     values/man.cpp
     values/if.cpp
     values/getvals.cpp
+    values/runfunc.cpp
     classes/dectype.cpp
     classes/decmethod.cpp)
 set (StormScript_VERSION_MAJOR 0)

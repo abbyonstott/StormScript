@@ -104,7 +104,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             functions[functions.size()-1].linestarted=x+2;
         }
         else if (prs[x]=="do"){
-            exec(x, ((psize==-1) ? -2 : -1));
+            exec(x, ((psize==-1) ? -2 : -1), {}, {});
         }
     }
 }   

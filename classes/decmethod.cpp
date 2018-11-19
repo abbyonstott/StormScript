@@ -1,16 +1,21 @@
 #include "../core/stsclasses.h"
 
+// this is only to declare methods, not to reference or use them.
+
 void stsclass::decmethod(sts *inst, int *ln) {
-    *ln++;
-    inst->functions.resize(inst->functions.size()+1);
+    int y = *ln;
+    y++;
 
-    inst->functions.back().classmethod = true; // tell stormscript that the function is a class method
+    methods.resize(methods.size()+1);
+    
+    methods.back().name = inst->prs[y]; //set name to next line
+    methods.back().classmethod = true;
+    
+    y++;
+    methods.back().linestarted = y;
 
-    inst->functions.back().name = inst->prs[*ln]; //set name to next line
+    while (inst->prs[y-1]!="end")
+        y++;
 
-    *ln++;
-    inst->functions.back().linestarted = *ln;
-
-    while (inst->prs[*ln-1]!="end")
-        *ln++;
+    *ln = y;
 }

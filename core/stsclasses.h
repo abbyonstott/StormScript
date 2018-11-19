@@ -52,6 +52,7 @@ public:
 class stsclasstype:public stsvars{
 public:
 	stsclass tpe;
+	std::vector<int> indexes;
 };
 
 class stsfunc:public stsvars{
@@ -59,6 +60,7 @@ public:
 	int linestarted; // line funcion code starts, not line "func" keyword is used
 	bool classmethod = false;
 	stsvars value;
+	string cof;
 	stsclasstype cval;
 	char valtype;
 	std::vector<stsvars> args;
@@ -93,7 +95,8 @@ public:
 	void interp(string fname, int psize, char *argv[], int argc);
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
-	void exec(int line, int function);
+	void exec(int line, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars> *objects);
+	void runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	void set(string command, string setto, int x); // set command
 	string runlibfunc(string name, int *line); // run library function
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);

@@ -1,6 +1,6 @@
 #include "../core/stsclasses.h"
 
-void sts::exec(int x,int function){ // how each command is executed
+void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars> *objects) { // how each command is executed
     std::vector<stsvars> vars;
     std::vector<stsclasstype> classtypes;
     vars = globvars;
@@ -9,9 +9,23 @@ void sts::exec(int x,int function){ // how each command is executed
     int endreq = 1;
 
 
-    if (function>-1)
+    if (function>-1) {
         for (int i = 0; i<functions[function].args.size(); i++) 
              vars.push_back(functions[function].args[i]);
+
+        if (functions[function].classmethod) {
+            classtypes = *pclasstypes;
+            stsclasstype ct;
+            for (int i = 0; i<classtypes.size(); i++)
+                if (functions[function].cof == classtypes[i].name) 
+                    ct = classtypes[i];
+            
+            for(int i = 0; i<objects->size(); i++) {
+                vars.push_back(objects->at(i));
+                vars.back().name = ct.tpe.variables[i].name;
+            }
+        }
+    }
 
     while (true){
         if (function == -2) { // if running in terminal
