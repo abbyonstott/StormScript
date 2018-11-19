@@ -1,8 +1,10 @@
 #include "../core/stsclasses.h"
 
-void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars> *objects) { // how each command is executed
+void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects) { // how each command is executed
     std::vector<stsvars> vars;
     std::vector<stsclasstype> classtypes;
+    std::vector<string> originalnames;
+    stsclasstype ct;
     vars = globvars;
     int y = ((prs[x]=="do") ? x+1 : x);
     bool looped=0;
@@ -15,13 +17,14 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
 
         if (functions[function].classmethod) {
             classtypes = *pclasstypes;
-            stsclasstype ct;
+            
             for (int i = 0; i<classtypes.size(); i++)
                 if (functions[function].cof == classtypes[i].name) 
                     ct = classtypes[i];
             
-            for(int i = 0; i<objects->size(); i++) {
-                vars.push_back(objects->at(i));
+            for(int i = 0; i<objects.size(); i++) {
+                vars.push_back(*objects.at(i));
+                originalnames.push_back(objects.at(i)->name);
                 vars.back().name = ct.tpe.variables[i].name;
             }
         }
@@ -129,6 +132,16 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 prs=parse(prg);
                 y=x; //set y equal to x to rerun from start of scope
             }
+
+            for (int i = 0; i<ct.indexes.size(); i++) {
+                for (int z = 0; z<vars.size(); z++) {
+                    if (vars[z].name == ct.tpe.variables[i].name) {
+                        *objects.at(i) = vars[z];
+                        objects.at(i)->name = originalnames[i];
+                    }
+                }
+            }
+
             endreq-=1;
             if (endreq==0)
                 break;

@@ -27,19 +27,20 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
                 exec(functions[z].linestarted, z, {}, {});
             }
             else {
-                std::vector<stsvars> o;
+                std::vector<stsvars*> o;
 
                 if (functions[z].classmethod) {
                     for (int i = 0; i<ct.size(); i++) {
                         if (ct[i].name==functions[z].cof) {
                             for (int x = 0; x<ct[i].indexes.size(); x++) {
-                                o.push_back(vars[ct[i].indexes[x]]);
+                                o.push_back(&vars[ct[i].indexes[x]]);
                             }
                         }
                     }
                 }
 
-                exec(functions[z].linestarted, z, classtypes, &o);
+                exec(functions[z].linestarted, z, classtypes, o);
+
             }
             *ln = y;
             *classtypes = ct;
