@@ -81,7 +81,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 y--;
         }
         else if (prs[y] == "else") {
-            while (prs[y] != "end") {
+            while (prs[y] != "}") {
                 y++;
             }
             y--;
@@ -117,7 +117,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
         else if (prs[y]=="sys")
             sys(&y, vars);
 
-        else if ((prs[y]=="end") || (prs[y]=="loop")) {
+        else if ((prs[y]=="}") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
                     if (prs[y+1]!="inf"){

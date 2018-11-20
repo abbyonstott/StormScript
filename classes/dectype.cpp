@@ -35,7 +35,7 @@ void stsclass::declare(int *y, sts *inst) { //declare type
         else if (prs[ln]=="func") {
             decmethod(inst, &ln);
         }
-        else if (prs[ln]=="end") {
+        else if (prs[ln]=="}") {
             ln++;
             break;
         }

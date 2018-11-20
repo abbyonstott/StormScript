@@ -4,8 +4,8 @@ type person {
 
     func birthday {
         age+: 1;
-    }end;
-}end;
+    }
+}
 
 do{
     person p;
@@ -17,4 +17,4 @@ do{
     p|birthday;
 
     printl "It's ", p|name, "'s birthday. ", p|name, " is ", p|age, " years old!";
-}end;
+}
