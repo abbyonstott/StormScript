@@ -1,7 +1,6 @@
 # StormScript v0.2.0 "Banana"
-This is the changelog for the December 2018 build of StormScript
 
-# What's New:
+## What's New:
 * You can change items in lists with `list[item]: "value";`
 * Changelog
 * Parser and interpreter split up into more files
@@ -12,12 +11,14 @@ This is the changelog for the December 2018 build of StormScript
 * [writenewouts.sh](writenewouts.sh) generates results to be put in the outputs folder
 * class methods can now be declared. [C++ file](/classes/decmethod.cpp)
 * Removed `end;` from being used at the end of scopes
+* Function arguments are declared with `func foo => int arg {` instead of `@args: int arg;`
 
-# What's Fixed
+## What's Fixed
 * Global variables no longer reset for every iteration of a loop
 * Fixed issue where installer could find `src/libraries/system/stormscript`
 * Fixed issue where library function couldn't be run in print without args.
 
-# Other
+## Other
 * Renamed sts.cpp to [stormscript.cpp](/core/stormscript.cpp)
-* made [interpreter](/interpreter/exec/cpp) easier to use
+* Made [interpreter](/interpreter/exec/cpp) easier to use
+* Moved reader from [stormscript.cpp](/core/stormscript.cpp) to [read.cpp](/parser/read.cpp)

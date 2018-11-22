@@ -60,24 +60,27 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x++;
             set(prs[x], prs[x+2], x);
         }
-        else if (prs[x]=="@"){
+        else if (prs[x]=="func"){
+            functions.resize(functions.size()+1);
             x++;
-            if (prs[x]=="args:") {
+            functions.back().name=prs[x];
+            x++;
+
+            if (prs[x]=="=>") {
                 x++;
                 std::vector<stsvars> args;
-                
-                // declare var
-                while (prs[x]!=";") {
+
+                while (prs[x]!="{") {
                     args.resize(args.size()+1);
 
                     if (prs[x] == "bool") {
-                        args[args.size()-1].type='b';
+                        args.back().type='b';
                     }
                     else if (prs[x] == "str") {
-                        args[args.size()-1].type='s';
+                        args.back().type='s';
                     }
                     else if (prs[x] == "int") {
-                        args[args.size()-1].type='i';
+                        args.back().type='i';
                     }
                     else {
                         error(2, prs[x]);
@@ -86,22 +89,11 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                     args[args.size()-1].name = prs[x];
                     x++;
                 }
-
-                while (prs[x]!="func") {
-                    x++;
-                }
-
-                // declare
-                functions.resize(functions.size()+1);
-                functions[functions.size()-1].name=prs[x+1];
-                functions[functions.size()-1].linestarted=x+2;
-                functions[functions.size()-1].args=args;
-            } 
-        }
-        else if (prs[x]=="func"){
-            functions.resize(functions.size()+1);
-            functions[functions.size()-1].name=prs[x+1];
-            functions[functions.size()-1].linestarted=x+2;
+                x++;
+                functions.back().args=args;
+            }
+            
+            functions[functions.size()-1].linestarted=x;
         }
         else if (prs[x]=="do"){
             exec(x, ((psize==-1) ? -2 : -1), {}, {});

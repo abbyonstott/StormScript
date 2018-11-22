@@ -1,5 +1,4 @@
-@args: str x, int y;
-func f{
+func f => str x, int y {
     printl x;
     printl y;
 }
