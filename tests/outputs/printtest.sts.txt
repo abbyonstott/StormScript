@@ -1,0 +1,1 @@
+Single string printl. Multple string printl with variable. Single string print. Multiple string print with variable.

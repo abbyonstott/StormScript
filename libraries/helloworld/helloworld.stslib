@@ -1,0 +1,12 @@
+#!/usr/bin/env stormscript
+lib system;
+
+do{
+    str cmd: arg[1];
+
+    if cmd is "out"{
+        printl "Hello, World!";
+    }else{
+        printl "helloworld library doesn't have command '", cmd, "'.";
+    }end;
+}end;

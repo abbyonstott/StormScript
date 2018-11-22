@@ -5,9 +5,6 @@ install stormscript build/stormscript
 rm stormscript
 printf "\n \n \n"
 
-echo Default:
-build/stormscript
-
 printf "\n"
 
 echo Help:
@@ -25,12 +22,15 @@ echo Running tests:
 printf "\n"
 
 B=0
-for i in $( ls tests ); do
-    echo $B: 
-    build/stormscript tests/$i
-    printf "\n"
+for i in $( ls tests | grep .sts ); do
+    # put the expected output to test
+    if [[ $(echo `cat tests/outputs/$i.txt`) = "$(echo `build/stormscript tests/$i`)" ]]; then
+        echo $B: Test Successful
+    else
+        echo Test $B failed:
+        echo expected$'\n'$(echo `cat tests/outputs/$i.txt`)$'\n'got$'\n'$(echo `build/stormscript tests/$i`)
+        break
+    fi
+    
     B=$(($B+1))
 done
-
-echo $B: File fail test
-build/stormscript thisfiledoesntexist.sts

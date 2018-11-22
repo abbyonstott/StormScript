@@ -14,7 +14,6 @@ Makefile
 *.tar*
 *.zip
 *.pyc
-*.stslib
 
 snap/.snapcraft/
 snap/parts/

@@ -29,23 +29,36 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
 
-    if (prs[y][prs[y].size()-1]==':') { // variable manipulation operation
+    if ((prs[y].back()==':') || (prs[y+4] == ":")) { // variable manipulation operation
         int varnum;
-        string line = prs[y];
-        prs[y].pop_back();
+        const string name = prs[y];
+        const string line = ((prs[y+1] == "[") ? prs[y] + prs[y+1] + prs[y+2] + prs[y+3] + prs[y+4] : prs[y]); // set unmodifiable "copy" to variable[i]:
+        string lineorig = line; // set original "copy" to variable[i]:
+        lineorig.pop_back();
 
 
-        if ((prs[y][prs[y].size()-1]=='-') || (prs[y][prs[y].size()-1]=='+'))
-            prs[y].pop_back();
+        if ((lineorig.back()=='-') || (lineorig.back()=='+'))
+            lineorig.pop_back();
+        
+        if (prs[y+1] == "[") {
+            lineorig.erase(lineorig.find('['), lineorig.back()); //erase to show name
 
+            vars.push_back(getval(vars, &y));
+            vars.back().glob = 0;
+            varnum = vars.size()-1;
+            *ln += 5;
+        }
         // loops through var names
-        for (int i = 0; i<vars.size() && prs[y]!=vars[i-1].name; i++)
-            varnum = ((vars[i].name==prs[y]) ? i : -1);
+        else {
+            for (int i = 0; i<vars.size() && lineorig!=vars[i-1].name; i++)
+                varnum = ((vars[i].name==lineorig) ? i : -1);
+
+            y++;
+            *ln = y;
+        }
 
         // change value if is vars
         if (varnum!=-1){
-            y++;
-            *ln = y;
             if (line.find("+")!=string::npos) { // add
                 switch (vars[varnum].type) {
                     case 'i': vars[varnum].valint += getval(vars, ln).valint;
@@ -76,7 +89,22 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         break;
                 }
             }
-            y++;
+            
+            if (vars[varnum].glob)
+                globvars[varnum]=vars[varnum];
+
+            if (prs[y-2] == "[") {
+                int ind = 0;
+
+                for (ind; vars[ind].name!=name; ind++) {}
+                
+                vars[ind].vals[std::stoi(prs[y-1])] = vars.back();
+                if (vars[ind].glob)
+                    globvars[ind]=vars[ind];
+
+                vars.pop_back();
+            }
+            for (y; y<=prs.size() && prs[y]!=";"; y++) {} // Increase y until it sees semicolon
 
             *ln = y;
             *classtypes = ct;
@@ -107,53 +135,33 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
     }
 
     if (functions.size()!=0){
-        for (int z = 0; z<=functions.size()-1; z++){
-            if (functions[z].name==prs[y]){
-                if (prs[y+1]=="=>"){
-                    y+=3;
-                    for (int i = 0; i<functions[z].args.size(); i++) {
-                        char *argtype = &functions[z].args[i].type;
-                    
-                        stsvars argval = getval(vars, &y);
-
-
-                        switch (*argtype) {
-                            case 's': functions[z].args[i].valstring = argval.valstring;
-                                break;
-                            case 'b': functions[z].args[i].val = argval.val;
-                                break;
-                            case 'i': functions[z].args[i].valint = argval.valint;
-                                break;
-                        }
-                        y+=2;
-                    }
-                    exec(functions[z].linestarted, z);
-                }
-                else {
-                    exec(functions[z].linestarted, z);
-                }
-                *ln = y;
-                *classtypes = ct;
-                *pvars = vars;
-                
-                return true;
-            }
-        }
+        runfunc(&vars, &ct, &y);
+        *ln = y;
+        *classtypes = ct;
+        *pvars = vars;
+        
+        return true;
     }
 
     if (classes.size()!=0) {
         for (int i = 0; i<classes.size() && classes[i-1].name!=prs[y]; i++){
             if (classes[i].name==prs[y]) {
                 ct.resize(ct.size()+1);
-                ct[ct.size()-1].tpe = classes[i];
+                ct.back().tpe = classes[i];
                 y++;
-                ct[ct.size()-1].name = prs[y];
-                
+                ct.back().name = prs[y];
+
                 for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
                     vars.resize(vars.size()+1);
+                    vars.back().name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
+                    vars.back().type = ct[i].tpe.variables[b].type;
+                    ct[i].indexes.push_back(vars.size()-1); // dump index for reading during execution of method
+                }
 
-                    vars[vars.size()-1].name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
-                    vars[vars.size()-1].type = ct[i].tpe.variables[b].type;
+                for (int b = 0; b<ct[ct.size()-1].tpe.methods.size(); b++) {
+                    functions.push_back(ct[i].tpe.methods[b]);
+                    functions.back().name = ct[i].name + "|" + ct[i].tpe.methods[b].name;
+                    functions.back().cof = ct[i].name;
                 }
                 y++;
 

@@ -1,5 +1,5 @@
-# StormScript
-[![Snap Status](https://build.snapcraft.io/badge/stormprograms/StormScript.svg)](https://build.snapcraft.io/user/stormprograms/StormScript)
+![](images/logo.png)
+
 [![GitHub license](https://img.shields.io/github/license/stormprograms/stormscript.svg)](https://github.com/stormprograms/StormScript/blob/master/LICENSE)
 ![GitHub (pre-)release](https://img.shields.io/github/release-pre/stormprograms/stormscript.svg)
 ![GitHub All Releases](https://img.shields.io/github/downloads/stormprograms/stormscript/total.svg)
@@ -7,8 +7,6 @@
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/stormscript)
 
-
-This is the GitHub repository for the StormScript Scripting language.
 ## Table of Contents
 * [Why is this special?](#why-is-this-special)
 * [How to Build](#how-to-build)
@@ -26,21 +24,20 @@ type person{
   int age;
   str name;
   bool gender;
-}end;
+}
 ```
 In StormScript the keyword `do` replaces the `main` function.
 
 2. Symbols
 StormScript's second major difference is in symbols. Symbols are almost, if not as important as keywords in programming. In StormScript, this is just as true as in any other language. The largest change with symbols in StormScript is in meaning. An example is the `=>` symbol, which in most programming language means *define.* In StormScript, `=>` means *with.* In a function with arguments, you would put the `=>` symbol followed by the arguments.
 ```
-@args: str x;
-func f{
+func f => str x {
   printl x;
-}end;
+}
 
 do{
   f => x: "hi";
-}end;
+}
 ```
 Another example of this is the `|` symbol, which is usually used as a separator. In StormScript, the `|` symbol tells the intepreter to find a property. For example:
 
@@ -49,7 +46,7 @@ type person{
   int age;
   str name;
   bool gender;
-}end;
+}
 
 do{
   person p;
@@ -60,7 +57,7 @@ do{
   str name: p|name;
   
   printl name;
-}end;
+}
 
 ```
 In  StormScript, the `is` keyword replaces the `==` symbol and `not` replaces the `!=` symbol.
@@ -80,7 +77,7 @@ and
 ```
 $ make
 ```
-You can then add it to path or install it to usr/bin.
+You can then add it to path or install it to /usr/bin.
 
 Visual Studio Code:
 
@@ -104,7 +101,8 @@ tests/ | Files that allow you to test StormScript
 
 file | Description
 ---- | -----------
-core/stsclasses.h | This is where all classes needed for a program to run are put.
-core/sts.cpp | This is where files are read.
-core/errors.cpp | This is where all new errors are added.
-core/parse.cpp | This is the parser and the interpreter.
+[core/stsclasses.h](core/stsclasses.h) | This is where all classes needed for a program to run are put.
+[core/stormscript.cpp](core/stormscript.cpp) | This is where files are read.
+[core/errors.cpp](core/errors.cpp) | This is where all new errors are added.
+[parser/parse.cpp](parser/parse.cpp) | This is the parser.
+[interpreter/exec.cpp](interpreter/exec.cpp) | This is the function that interprets functions

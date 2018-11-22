@@ -1,7 +1,8 @@
-glob list x: ["hi", "hi"];
+func name => int x, str y {
+    printl x;
+    printl y;
+}
 
 do{
-    if x[0] is "hi"{
-        printl x[0];
-    }end;
-}end;
+    name => x: 3, y: "hi";
+}
