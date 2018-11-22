@@ -1,6 +1,5 @@
 ![](images/logo.png)
 
-[![Snap Status](https://build.snapcraft.io/badge/stormprograms/StormScript.svg)](https://build.snapcraft.io/user/stormprograms/StormScript)
 [![GitHub license](https://img.shields.io/github/license/stormprograms/stormscript.svg)](https://github.com/stormprograms/StormScript/blob/master/LICENSE)
 ![GitHub (pre-)release](https://img.shields.io/github/release-pre/stormprograms/stormscript.svg)
 ![GitHub All Releases](https://img.shields.io/github/downloads/stormprograms/stormscript/total.svg)
