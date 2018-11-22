@@ -2,9 +2,9 @@
 func f{
     printl x;
     printl y;
-}end;
+}
 
 do{
     int x: 3;
     f => x: "hi", y: x;
-}end;
+}

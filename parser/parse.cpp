@@ -14,7 +14,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
         while (prg[y][0]==' ')
             prg[y].erase(prg[y].begin());
         
-        bool endscope = (prg[y]=="}\0");
 
         while (z!=prg[y].size()){
             if (prg[y][z]=='"'){
@@ -31,15 +30,25 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if  ((prg[y][z]==';') && (inquotes==false)) {
+            else if  ((prg[y][z]==';') || (prg[y][z]=='}') && (inquotes==false)) {
+                if (prg[y][z]=='}') {
+                    if (prg[y].find("else")==string::npos) {
+                        x.push_back( string(1,prg[y][z]) );
+                        break;
+                    }
+                    else {
+                        z++;
+                        continue;
+                    }
+                }
                 x.push_back( string(1,prg[y][z]) );
                 break;
             }
-            else if ((((prg[y][z]=='@') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) || ((prg[y][z]=='}') && (endscope==true))) {
+            else if (((prg[y][z]=='@') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }
-            else if ((prg[y][z]=='{') || (prg[y][z]=='}') || (prg[y][z]=='\t') && (inquotes==false)) {
+            else if (((prg[y][z]=='\t') || (prg[y][z]=='{'))  && (inquotes==false)) {
                 z++;
                 continue;
             }
@@ -50,8 +59,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
         }
         y++;
     }
-    if (!term)
-        x.back().pop_back(); //removes EOF char from end of file so it can parse
 
     for (int i = 0; i<x.size(); i++) {
         if ((x[i]=="\0") || (x[i]==""))

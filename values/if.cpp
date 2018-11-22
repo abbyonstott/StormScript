@@ -7,9 +7,9 @@ void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
 
     if (!compare(&y,vars)){
         y++;
-        while (prs[y] != "end") {
+        while (prs[y] != "}") {
             y++;
-            if (prs[y] == "else") {
+            if (prs[y+1] == "else") {
                 if (prs[y+1] == "if") {
                     y++;
                     ifs(&y, &endreq, vars);

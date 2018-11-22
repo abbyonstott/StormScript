@@ -25,7 +25,7 @@ type person{
   int age;
   str name;
   bool gender;
-}end;
+}
 ```
 In StormScript the keyword `do` replaces the `main` function.
 
@@ -35,11 +35,11 @@ StormScript's second major difference is in symbols. Symbols are almost, if not 
 @args: str x;
 func f{
   printl x;
-}end;
+}
 
 do{
   f => x: "hi";
-}end;
+}
 ```
 Another example of this is the `|` symbol, which is usually used as a separator. In StormScript, the `|` symbol tells the intepreter to find a property. For example:
 
@@ -48,7 +48,7 @@ type person{
   int age;
   str name;
   bool gender;
-}end;
+}
 
 do{
   person p;
@@ -59,7 +59,7 @@ do{
   str name: p|name;
   
   printl name;
-}end;
+}
 
 ```
 In  StormScript, the `is` keyword replaces the `==` symbol and `not` replaces the `!=` symbol.

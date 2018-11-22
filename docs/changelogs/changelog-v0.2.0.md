@@ -11,6 +11,7 @@ This is the changelog for the December 2018 build of StormScript
 * Outputs folder for expected test results
 * [writenewouts.sh](writenewouts.sh) generates results to be put in the outputs folder
 * class methods can now be declared. [C++ file](/classes/decmethod.cpp)
+* Removed `end;` from being used at the end of scopes
 
 # What's Fixed
 * Global variables no longer reset for every iteration of a loop

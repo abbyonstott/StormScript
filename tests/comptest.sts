@@ -6,7 +6,7 @@ do{
 
     if n is 3{
         printl "x is 3";
-    }end;
+    }
 
     if d is false{
         printl "Hi";    
@@ -14,9 +14,9 @@ do{
         printl "d is true";
     }else{
         printl n;
-    }end;
+    }
 
     if x is y{
         printl x, " is ", y;
-    }end;
-}end;
+    }
+}

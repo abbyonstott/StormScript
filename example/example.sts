@@ -7,7 +7,7 @@ type person {
     }
 }
 
-do{
+do {
     person p;
     p|age: 22;
     p|name: "Joe";

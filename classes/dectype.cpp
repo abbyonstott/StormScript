@@ -36,7 +36,6 @@ void stsclass::declare(int *y, sts *inst) { //declare type
             decmethod(inst, &ln);
         }
         else if (prs[ln]=="}") {
-            ln++;
             break;
         }
 
