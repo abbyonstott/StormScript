@@ -1,8 +1,8 @@
 #!/bin/bash
 rm -r release/*
 cd release
-mkdir stormscript_v0.2.0
-cd stormscript_v0.2.0
+mkdir stormscript_v0.3.0
+cd stormscript_v0.3.0
 mkdir src
 
 cp ../../CMakeLists.txt src
@@ -18,4 +18,4 @@ cp ../../StormScriptconfig.h src
 cp -r ../../libraries src
 
 cd ..
-tar -cf stormscript_v0.2.0.tar.xz stormscript_v0.2.0
+tar -cf stormscript_v0.3.0.tar.xz stormscript_v0.3.0
