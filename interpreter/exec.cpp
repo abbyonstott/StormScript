@@ -149,10 +149,8 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
         else if (prs[y]=="return"){
             if (function>-1){
                 // check variables
-                for (int z = 0; z<vars.size(); z++) {
-                    if (prs[y+1]==vars[z].name)
-                        functions[function].value=vars[z];
-                }
+                y++;
+                functions[function].value = getval(vars, &y);
 
                 break;
             }

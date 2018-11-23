@@ -46,8 +46,8 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         }
         for (int x = 0; x<functions.size(); x++) {
             if (functions[x].name==prs[y]) {
-                runfunc(&vars, {}, &y);
-                v = functions[x];
+                runfunc(&vars, new std::vector<stsclasstype>, &y);
+                v = functions[x].value;
             }
         }
         if (names.size()!=0){

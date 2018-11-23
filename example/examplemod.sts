@@ -1,3 +1,4 @@
 func helloworld => int i {
-    printl i;
+    i+: 3;
+    return i;
 }

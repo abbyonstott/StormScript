@@ -4,6 +4,7 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
+
     for (int z = 0; z<=functions.size()-1; z++){
         if (functions[z].name==prs[y]){
             if (prs[y+1]=="=>"){
@@ -32,9 +33,8 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
                 if (functions[z].classmethod) {
                     for (int i = 0; i<ct.size(); i++) {
                         if (ct[i].name==functions[z].cof) {
-                            for (int x = 0; x<ct[i].indexes.size(); x++) {
+                            for (int x = 0; x<ct[i].indexes.size(); x++)
                                 o.push_back(&vars[ct[i].indexes[x]]);
-                            }
                         }
                     }
                 }

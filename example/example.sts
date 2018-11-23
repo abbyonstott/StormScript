@@ -1,5 +1,12 @@
 mod examplemod;
+glob int x: 0;
+func hw {
+    return 3;
+}
 
 do{
-    helloworld => i: 3;
+    x: hw;
+    printl x;
+    x: helloworld => i: x;
+    printl x;
 }
