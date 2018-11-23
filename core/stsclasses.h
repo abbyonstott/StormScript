@@ -61,6 +61,7 @@ public:
 	bool classmethod = false;
 	stsvars value;
 	string cof;
+	string modname = "main";
 	stsclasstype cval;
 	char valtype;
 	std::vector<stsvars> args;
@@ -87,12 +88,13 @@ public:
 	stsvars getval(std::vector<stsvars> vars, int *line);
 	stsvars declare(char type, int line, std::vector<stsvars> vars); //declare variables -
 	void error(int num, string issue); //error
-	void read(char *argv[], int argc); //read file
+	void read(char *argv[], int argc, string filename); //read file
 	void print(int line, int *y, std::vector<stsvars> current_vars); //out function
 	void sys(int *y, std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, int psize, char *argv[], int argc);
+	void addmodule(int *ln);
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
 	void exec(int line, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects);

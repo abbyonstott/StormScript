@@ -1,7 +1,6 @@
 #include "../core/stsclasses.h"
 
-void sts::read(char *argv[], int argc) {
-	string filename = argv[1];
+void sts::read(char *argv[], int argc, string filename) {
 	std::ifstream file;
 	string contents;
 

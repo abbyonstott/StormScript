@@ -56,6 +56,11 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             classes[classes.size()-1].declare(&x, this);
         }
 
+        else if (prs[x]=="mod") {
+            x++;
+            addmodule(&x);
+        }
+
         else if (prs[x]=="set") {
             x++;
             set(prs[x], prs[x+2], x);

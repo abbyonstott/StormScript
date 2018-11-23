@@ -8,6 +8,7 @@ add_executable(stormscript
     core/runlibfunc.cpp
     parser/parse.cpp
     parser/read.cpp
+    parser/modules.cpp
     interpreter/globscope.cpp
     interpreter/exec.cpp
     stream/io.cpp

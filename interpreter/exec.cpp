@@ -142,7 +142,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 }
             }
 
-            endreq-=1;
+            endreq--;
             if (endreq==0)
                 break;
         }

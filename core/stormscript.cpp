@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 			system("sh build.sh");
 		}
 		else {
-			script.read(argv, argc);
+			script.read(argv, argc, argv[1]);
 		}
 	}
 	else {

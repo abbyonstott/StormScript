@@ -1,8 +1,5 @@
-func name => int x, str y {
-    printl x;
-    printl y;
-}
+mod examplemod;
 
 do{
-    name => x: 3, y: "hi";
+    helloworld => i: 3;
 }
