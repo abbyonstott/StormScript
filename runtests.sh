@@ -18,17 +18,17 @@ build/stormscript --version
 printf "\n"
 
 echo Running tests:
-
+cd tests
 printf "\n"
 
 B=0
-for i in $( ls tests | grep .sts ); do
+for i in $( ls | grep .sts ); do
     # put the expected output to test
-    if [[ $(echo `cat tests/outputs/$i.txt`) = "$(echo `build/stormscript tests/$i`)" ]]; then
+    if [[ $(echo `cat outputs/$i.txt`) = "$(echo `../build/stormscript $i`)" ]]; then
         echo $B: Test Successful
     else
         echo Test $B failed:
-        echo expected$'\n'$(echo `cat tests/outputs/$i.txt`)$'\n'got$'\n'$(echo `build/stormscript tests/$i`)
+        echo expected$'\n'$(echo `cat outputs/$i.txt`)$'\n'got$'\n'$(echo `../build/stormscript $i`)
         break
     fi
     

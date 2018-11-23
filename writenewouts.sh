@@ -4,7 +4,9 @@ make
 install stormscript build/stormscript
 rm stormscript
 
-for i in $(ls tests); do
-    touch tests/outputs/$i.txt
-    echo $(build/stormscript tests/$i) > tests/outputs/$i.txt
+cd tests
+
+for i in $(ls); do
+    touch outputs/$i.txt
+    echo $(../build/stormscript $i) > outputs/$i.txt
 done
