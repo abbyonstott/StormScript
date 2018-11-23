@@ -39,15 +39,26 @@ bool sts::compare(int *y, std::vector<stsvars> current_vars) {
     stsvars compto;
 
     // check if "is" or "not"
-    if ((prs[line+1]=="is") || ((prs[line+1]=="[")) && (prs[line+4]=="is")) {
+    if ((prs[line+1]=="is") || ((prs[line+1]=="[") && (prs[line+4]=="is"))) // equal to
         compt = 'i';
-    }
-    else if ((prs[line+1]=="not") || ((prs[line+1]=="[")) && (prs[line+4]=="not")) {
+    
+    else if ((prs[line+1]=="not") || ((prs[line+1]=="[") && (prs[line+4]=="not"))) // not equal to
         compt = 'n';
-    }
-    else {
+    
+    else if ((prs[line+1]=="less") || ((prs[line+1]=="[") && (prs[line+4]=="less"))) // less than
+        compt = 'l';
+
+    else if ((prs[line+1]=="greater") || ((prs[line+1]=="[") && (prs[line+4]=="greater"))) // greater than
+        compt = 'g';
+
+    else if ((prs[line+1]=="lesseq") || ((prs[line+1]=="[") && (prs[line+4]=="lesseq"))) // less than or equal to
+        compt = 'm';
+    
+    else if ((prs[line+1]=="greatereq") || ((prs[line+1]=="[") && (prs[line+4]=="greatereq"))) // greater than or equal to
+        compt = 'h';
+    
+    else
         error(3, prs[line+1]);
-    }
 
     // check if variable
     comp = getval(current_vars, &line);
@@ -60,21 +71,57 @@ bool sts::compare(int *y, std::vector<stsvars> current_vars) {
     if (t == compto.type) {
         if (compt == 'i') {
             switch (t) {
-                case 'i': condition = ((comp.valint == compto.valint) ? true : false);
+                case 'i': condition = (comp.valint == compto.valint);
                     break;
-                case 's': condition = ((comp.valstring) == compto.valstring);
+                case 's': condition = (comp.valstring == compto.valstring);
                     break;
-                case 'b': condition = ((comp.val) == compto.val);
+                case 'b': condition = (comp.val == compto.val);
+                    break;
+            }
+        }
+        else if (compt == 'l') {
+            switch (t) {
+                case 'i': condition = (comp.valint < compto.valint);
+                    break;
+                case 's':
+                case 'b': error(3, "less");
+                    break;
+            }
+        }
+        else if (compt == 'g') {
+            switch (t) {
+                case 'i': condition = (comp.valint > compto.valint);
+                    break;
+                case 's': 
+                case 'b': error(3, "greater");
+                    break;
+            }
+        }
+        else if (compt == 'm') {
+            switch (t) {
+                case 'i': condition = (comp.valint >= compto.valint);
+                    break;
+                case 's': 
+                case 'b': error(3, "lesseq");
+                    break;
+            }
+        }
+        else if (compt == 'h') {
+            switch (t) {
+                case 'i': condition = (comp.valint >= compto.valint);
+                    break;
+                case 's': 
+                case 'b': error(3, "greatereq");
                     break;
             }
         }
         else{
             switch (t) {
-                case 'i': condition = ((comp.valint != compto.valint) ? true : false);
+                case 'i': condition = (comp.valint != compto.valint);
                     break;
-                case 's': condition = ((comp.valstring) != compto.valstring);
+                case 's': condition = (comp.valstring != compto.valstring);
                     break;
-                case 'b': condition = ((comp.val) != compto.val);
+                case 'b': condition = (comp.val != compto.val);
                     break;
             }
         }

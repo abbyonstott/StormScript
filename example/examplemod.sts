@@ -1,4 +1,0 @@
-func helloworld => int i {
-    i+: 3;
-    return i;
-}

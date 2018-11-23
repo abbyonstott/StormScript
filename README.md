@@ -90,19 +90,19 @@ When it builds, it should be put into a `build/` directory.
 Folder | Description
 ------ | -----------
 docs/ | contributing guide, code of conduct. etc.
-core/ | The core StormScript files
-stream/ | Files that deal with the console.
-scripts/ | Scripts to be packaged with releases
-classes/ | Files that deal with classes.
-values/ | Files that deal with variables and functions.
-tests/ | Files that allow you to test StormScript
+src/core/ | The core StormScript files
+src/stream/ | Files that deal with the console.
+build-scripts/ | Scripts to be packaged with releases
+src/classes/ | Files that deal with classes.
+src/values/ | Files that deal with variables and functions.
+tests/ | Files for testing that core functionality is not messed up.
 
 ## Files You Should Know
 
 file | Description
 ---- | -----------
-[core/stsclasses.h](core/stsclasses.h) | This is where all classes needed for a program to run are put.
-[core/stormscript.cpp](core/stormscript.cpp) | This is where files are read.
-[core/errors.cpp](core/errors.cpp) | This is where all new errors are added.
-[parser/parse.cpp](parser/parse.cpp) | This is the parser.
-[interpreter/exec.cpp](interpreter/exec.cpp) | This is the function that interprets functions
+[src/core/stsclasses.h](src/core/stsclasses.h) | This is where all classes needed for a program to run are put.
+[src/core/stormscript.cpp](src/core/stormscript.cpp) | This is where files are read.
+[src/core/errors.cpp](src/core/errors.cpp) | This is where all new errors are added.
+[src/parser/parse.cpp](src/parser/parse.cpp) | This is the parser.
+[src/interpreter/exec.cpp](src/interpreter/exec.cpp) | This is the function that interprets functions

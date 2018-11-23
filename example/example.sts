@@ -1,12 +1,10 @@
-mod examplemod;
-glob int x: 0;
-func hw {
-    return 3;
-}
-
 do{
-    x: hw;
-    printl x;
-    x: helloworld => i: x;
-    printl x;
+    in int x;
+
+    if x greater 2 {
+        printl x, ">2";
+    }
+    else if x lesseq 2{
+        printl x, "<=2";
+    }
 }
