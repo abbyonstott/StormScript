@@ -7,3 +7,4 @@
 
 ## What's Fixed
 * Returns could only return variables, changed it to use new getvars function.
+* `pop_back()` was run on `prs` causing the vector of the parsed version of the program to lose characters on each loop iteration

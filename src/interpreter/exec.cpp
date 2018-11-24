@@ -122,7 +122,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 if (looped==0){
                     if (prs[y+1]!="inf"){
                         looped=1;
-                        endreq=std::stoi(prs[y+1]);
+                        endreq=getval(vars, new int(y+1)).valint;
                     }
                     else{
                         endreq=2;
@@ -130,10 +130,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 }
                 vars = globvars;
                 prs=parse(prg);
-                y = x; //set y equal to x to rerun from start of scope
-
-                if (function>-1)
-                    continue;
+                y = ((function>-1) ? x-1 : x); //set y equal to x to rerun from start of scope
             }
 
             for (int i = 0; i<ct.indexes.size(); i++) {
