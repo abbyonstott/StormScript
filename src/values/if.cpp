@@ -126,7 +126,10 @@ bool sts::compare(int *y, std::vector<stsvars> current_vars) {
             }
         }
     }
-    else { error(9, compto.name); }
+    else {
+        cout << prs[line-1] << endl;
+        error(9, compto.name);
+    } 
 
     *y = line;
 

@@ -28,8 +28,10 @@ stsvars sts::declare(char type, int line, std::vector<stsvars> vars) { //variabl
     
     int y = line+1;
 
-    prs[line].pop_back();
     new_var.name = prs[line];
+    // bad idea to pop back the line, just pop back the var
+
+    new_var.name.pop_back();
 
     switch (type) {
         case 'i': new_var.valint=getval(vars, &y).valint;

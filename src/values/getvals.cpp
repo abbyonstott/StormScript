@@ -54,7 +54,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             for (int z = 0; z<names.size(); z++){
                 if (names[z]==prs[y]){
                     y++;
-                    string output = runlibfunc(names[z], &y);
+                    string output = runlibfunc(names[z], &y, vars);
                     v.type = ((isint(output)) ? 'i' : 's');
                     if (v.type == 's') { v.valstring = output; }
                     else { v.valint = std::stoi(output); }

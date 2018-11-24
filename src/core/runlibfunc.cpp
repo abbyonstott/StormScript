@@ -1,6 +1,6 @@
 #include "stsclasses.h"
 
-string sts::runlibfunc(string name, int *line) {
+string sts::runlibfunc(string name, int *line, std::vector<stsvars> vars) {
     int y = *line;
     string cmd1;
     string cmd0 = "echo `"+name;
@@ -19,7 +19,14 @@ string sts::runlibfunc(string name, int *line) {
 
         while (prs[y]!=";") {
             cmd0+=" ";
-            cmd0+=prs[y].c_str();
+            if (prs[y].back()!=':') {
+                cmd0+="\'";
+                cmd0+=getval(vars, &y).valstring;
+                cmd0+="\'";
+            }
+            else {
+                cmd0+=prs[y].c_str();
+            }
             y++;
         }
         y--;

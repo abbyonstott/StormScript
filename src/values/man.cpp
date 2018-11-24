@@ -123,7 +123,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         for (int z = 0; z<=names.size()-1 && names[z-1]!=prs[y]; z++){
             if (names[z]==prs[y]) {
                 y++;
-                runlibfunc(names[z], &y);
+                runlibfunc(names[z], &y, vars);
 
                 *ln = y;
                 *classtypes = ct;

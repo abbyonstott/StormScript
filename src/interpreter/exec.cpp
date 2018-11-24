@@ -130,7 +130,10 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 }
                 vars = globvars;
                 prs=parse(prg);
-                y=x; //set y equal to x to rerun from start of scope
+                y = x; //set y equal to x to rerun from start of scope
+
+                if (function>-1)
+                    continue;
             }
 
             for (int i = 0; i<ct.indexes.size(); i++) {

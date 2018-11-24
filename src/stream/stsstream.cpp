@@ -4,9 +4,10 @@ void sts::sys(int *y, std::vector<stsvars> vars){
     int line = *y;
     line++;
     if (prs[line][0]=='"'){
-        prs[line].pop_back();
-        prs[line].erase(prs[line].begin());
-        system(prs[line].c_str());
+        string cmd = prs[line];
+        cmd.pop_back();
+        cmd.erase(cmd.begin());
+        system(cmd.c_str());
     }
     else{
         for (int x = 0; x<=vars.size()-1; x++) {
