@@ -8,14 +8,6 @@ description: |
 grade: stable 
 confinement: strict
 
-architectures: 
-  - amd64
-  - armhf
-  - arm64
-  - i386
-  - ppc64el
-  - s390x
-
 apps:
   stormscript:
     command: bin/stormscript
