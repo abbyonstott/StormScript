@@ -1,5 +1,6 @@
 do{
     in str x;
-    
+
     printl x|length;
+    printl x[0];
 }

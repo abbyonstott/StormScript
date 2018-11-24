@@ -27,11 +27,24 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         for (int i = 0; i<vars.size() && vars[i-1].name != name; i++) {
             if (vars[i].name == name) {
                 try{ // set v to index
-                    v = vars[i].vals[index];
+                    if (vars[i].type == 'l')
+                        v = vars[i].vals[index];
+                    else if (vars[i].type == 's') {
+                        v.type = 's';
+                        v.valstring = vars[i].valstring[index];
+                        if (index>=v.valstring.size())
+                            throw std::bad_alloc(); // throw bad alloc if string is out of range.
+                    }
+                    else
+                        throw 3;
                 }
-                catch (std::bad_alloc) { // if out of range throw error
+                catch (std::bad_alloc x) { // if out of range throw error
                     string message = prs[y-2] + prs[y-1] + prs[y] + prs[y+1];
                     error(6, message);
+                }
+                catch (int n) {
+                    string message = prs[y-2] + prs[y-1] + prs[y] + prs[y+1];
+                    error(n, message);
                 }
             }
         }
@@ -40,9 +53,8 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     }
     else {
         for (int x = 0; x<vars.size(); x++) {
-            if (vars[x].name==prs[y]) {
+            if (vars[x].name==prs[y])
                 v = vars[x];
-            }
         }
         for (int x = 0; x<functions.size(); x++) {
             if (functions[x].name==prs[y]) {
@@ -56,8 +68,10 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     y++;
                     string output = runlibfunc(names[z], &y, vars);
                     v.type = ((isint(output)) ? 'i' : 's');
-                    if (v.type == 's') { v.valstring = output; }
-                    else { v.valint = std::stoi(output); }
+                    if (v.type == 's')
+                        v.valstring = output;
+                    else
+                        v.valint = std::stoi(output);
                     y--;
                 }
             }
