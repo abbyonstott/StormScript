@@ -59,6 +59,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
 
         if ((prs[y]=="print") || (prs[y]=="printl")){
             bool l = (prs[y]=="printl");
+            y++;
             for (y; prs[y]!=";"; y++)
                 print(y, &y, vars);
             
@@ -73,6 +74,13 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
             y++;
             vars[vars.size()-1]=in(y);
             y+=2;
+            if (vars.back().type == 's') {
+                vars.back().length = vars.back().valstring.length();
+                vars.push_back(stsvars());
+                vars.back().name = vars[vars.size()-2].name + "|length";
+                vars.back().valint = vars[vars.size()-2].valstring.size();
+                vars.back().type = 'i';
+            }
         }
         else if ((prs[y]=="if")) {
             endreq+=1;
@@ -89,7 +97,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
         else if (prs[y]=="int") {
             y++;
             vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('i',y, vars);
+            vars[vars.size()-1]=declare('i',y, &vars);
             vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";"){
                 y++;
@@ -97,19 +105,19 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
         }
         else if (prs[y]=="bool") {
             y++;
-            vars.push_back(declare('b',y, vars));
+            vars.push_back(declare('b',y, &vars));
             y++;
         }
         else if (prs[y]=="list") {
             y++;
-            vars.push_back(declare('l', y, vars));
+            vars.push_back(declare('l', y, &vars));
             
             while (prs[y]!=";") 
                 y++;
         }
         else if (prs[y]=="str") {
             y++;
-            vars.push_back(declare('s',y, vars));
+            vars.push_back(declare('s',y, &vars));
             vars.back().glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";")
                 y++;

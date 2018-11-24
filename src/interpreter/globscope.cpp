@@ -24,22 +24,22 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x++;
             if (prs[x]=="int") {
                 x++;
-                globvars[globvars.size()-1]=declare('i', x, globvars);
+                globvars[globvars.size()-1]=declare('i', x, &globvars);
                 globvars[globvars.size()-1].glob=1;
             }
             else if (prs[x]=="str") {
                 x++;
-                globvars[globvars.size()-1]=declare('s', x, globvars);
+                globvars[globvars.size()-1]=declare('s', x, &globvars);
                 globvars[globvars.size()-1].glob=1;
             }
             else if (prs[x]=="bool") {
                 x++;
-                globvars[globvars.size()-1]=declare('b', x, globvars);
+                globvars[globvars.size()-1]=declare('b', x, &globvars);
                 globvars[globvars.size()-1].glob=1;
             }
             else if (prs[x]=="list") {
                 x++;
-                globvars[globvars.size()-1]=declare('l', x, globvars);
+                globvars[globvars.size()-1]=declare('l', x, &globvars);
                 globvars[globvars.size()-1].glob=1;
             
                 while (prs[x]!=";") 
