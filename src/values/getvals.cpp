@@ -14,6 +14,8 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             v.valstring = striplit(prs[y]);
         else
             error(14, prs[y]);
+
+        v.length = v.valstring.size();
     }
     else if ((prs[y] == "true") || (prs[y]=="false")) {
         v.type = 'b';

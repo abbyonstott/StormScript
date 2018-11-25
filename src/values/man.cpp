@@ -42,11 +42,22 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         
         if (prs[y+1] == "[") {
             lineorig.erase(lineorig.find('['), lineorig.back()); //erase to show name
+            
+            if (prs[y].back()!=':') {
+                vars.push_back(getval(vars, &y));
+                vars.back().glob = 0;
+                varnum = vars.size()-1;
+                *ln += 5;
+            }
+            else {
+                lineorig.pop_back();
 
-            vars.push_back(getval(vars, &y));
-            vars.back().glob = 0;
-            varnum = vars.size()-1;
-            *ln += 5;
+                for (int i = 0; i<vars.size() && lineorig!=vars[i-1].name; i++)
+                    varnum = ((vars[i].name==lineorig) ? i : -1);
+                
+                y++;
+                *ln = y;
+            }
         }
         // loops through var names
         else {
@@ -57,7 +68,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             *ln = y;
         }
 
-        // change value if is vars
+        // change value if in vars
         if (varnum!=-1){
             if (line.find("+")!=string::npos) { // add
                 switch (vars[varnum].type) {
@@ -87,6 +98,8 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         break;
                     case 's': vars[varnum].valstring = getval(vars, ln).valstring;
                         break;
+                    case 'l': vars[varnum].assignlist(this, vars, ln);
+                        break;
                     case 'b': vars[varnum].val = getval(vars, ln).val;
                         break;
                 }
@@ -100,7 +113,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 for (int i = 0; i<=vars.size(); i++) {
                     if (vars[i].name==vars[varnum].name+"|length") {
                         vars[i].valint = vars[varnum].length;
-                        if (vars[i].glob == true) {
+                        if (vars[i].glob) {
                             globvars[i] = vars[i];
                             globvars[varnum].length = vars[varnum].length;
                         }
@@ -114,9 +127,9 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 for (ind; vars[ind].name!=name; ind++) {}
                 
                 switch (vars[ind].type) {
-                    case 'l': vars[ind].vals[std::stoi(prs[y-1])] = vars.back();
+                    case 'l': vars[ind].vals[getval(vars, new int(y-1)).valint] = vars.back();
                         break;
-                    case 's': vars[ind].valstring[std::stoi(prs[y-1])] = vars.back().valstring[0];
+                    case 's': vars[ind].valstring[getval(vars, new int(y-1)).valint] = vars.back().valstring[0];
                         break;
                 }
                 if (vars[ind].glob)

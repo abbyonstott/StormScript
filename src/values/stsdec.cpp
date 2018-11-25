@@ -9,10 +9,10 @@ void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
     int y = *line;
     std::vector<string> prs = script.prs;
 
+    vals.erase(vals.begin(), vals.end());
     y++;
     while (prs[y]!="]") { // add variables to list
-        vals.resize(vals.size()+1);
-        vals[vals.size()-1]=script.getval(vars, &y);
+        vals.push_back(script.getval(vars, &y));
         y++;
     }
     y++;

@@ -26,7 +26,7 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
                             break;
                     }
                 }
-                exec(functions[z].linestarted, z, {}, {});
+                exec(new int(functions[z].linestarted), z, {}, {});
             }
             else {
                 std::vector<stsvars*> o;
@@ -40,12 +40,16 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
                     }
                 }
 
-                exec(functions[z].linestarted, z, classtypes, o);
+                exec(new int(functions[z].linestarted), z, classtypes, o);
 
             }
             *ln = y;
             *classtypes = ct;
             *pvars = vars;
+
+            for (int i = 0; i<globvars.size(); i++) {
+                pvars->at(i) = globvars[i];
+            }
         }
     }
 }

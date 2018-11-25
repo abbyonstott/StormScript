@@ -19,8 +19,8 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x++;
             names[names.size()-1]=prs[x];
         }
-        else if (prs[x]=="glob"){
-            x+=2;
+        else if ((prs[x]=="int") || (prs[x]=="str") || (prs[x]=="bool") || (prs[x]=="list")){
+            x++;
             if (prs[x-1]=="int")
                 globvars.push_back(declare('i', x, &globvars));
             else if (prs[x-1]=="str") {
@@ -33,12 +33,9 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
 
                 globvars.push_back(declare('l', x, &globvars));
                 globvars[globvars.size()-2].glob = true;
-            
-                while (prs[x]!=";") 
-                    x++;
             }
-            else
-                error(2,prs[x-1]);
+            while (prs[x]!=";") 
+                x++;
             globvars.back().glob=1;
         }
 
@@ -55,6 +52,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
         else if (prs[x]=="set") {
             x++;
             set(prs[x], prs[x+2], x);
+            x+=2;
         }
         else if (prs[x]=="func"){
             functions.resize(functions.size()+1);
@@ -90,9 +88,23 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             }
             
             functions[functions.size()-1].linestarted=x;
+            int endreq = 1;
+            while (endreq != 0) {
+                if ((prs[x]=="}") || (prs[x]=="loop"))
+                    endreq--;
+                else if (((prs[x]=="if") && (prs[x-1]!="else")) || (prs[x]=="else"))
+                    endreq++;
+                x++;
+            }
+            x--;
+            if (prs[x]=="loop")
+                x+=2;
         }
         else if (prs[x]=="do"){
-            exec(x, ((psize==-1) ? -2 : -1), {}, {});
+            exec(&x, ((psize==-1) ? -2 : -1), {}, {});
+        }
+        else if ((prs[x]!=";") && (prs[x][0]!='\0')){
+            error(1, prs[x]);
         }
     }
 }   
