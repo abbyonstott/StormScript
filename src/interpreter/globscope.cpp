@@ -20,35 +20,26 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             names[names.size()-1]=prs[x];
         }
         else if (prs[x]=="glob"){
-            globvars.resize(globvars.size()+1);
-            x++;
-            if (prs[x]=="int") {
-                x++;
-                globvars[globvars.size()-1]=declare('i', x, &globvars);
-                globvars[globvars.size()-1].glob=1;
+            x+=2;
+            if (prs[x-1]=="int")
+                globvars.push_back(declare('i', x, &globvars));
+            else if (prs[x-1]=="str") {
+                globvars.push_back(declare('s', x, &globvars));
+                globvars[globvars.size()-2].glob = true;
             }
-            else if (prs[x]=="str") {
-                x++;
-                globvars[globvars.size()-1]=declare('s', x, &globvars);
-                globvars[globvars.size()-1].glob=1;
-            }
-            else if (prs[x]=="bool") {
-                x++;
-                globvars[globvars.size()-1]=declare('b', x, &globvars);
-                globvars[globvars.size()-1].glob=1;
-            }
-            else if (prs[x]=="list") {
-                x++;
-                globvars[globvars.size()-1]=declare('l', x, &globvars);
-                globvars[globvars.size()-1].glob=1;
+            else if (prs[x-1]=="bool")
+                globvars.push_back(declare('b', x, &globvars));
+            else if (prs[x-1]=="list") {
+
+                globvars.push_back(declare('l', x, &globvars));
+                globvars[globvars.size()-2].glob = true;
             
                 while (prs[x]!=";") 
                     x++;
             }
-            else {
-                error(2,prs[x]);
-                x++;
-            }
+            else
+                error(2,prs[x-1]);
+            globvars.back().glob=1;
         }
 
         else if (prs[x]=="type") { // declares a class

@@ -12,8 +12,15 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
 
 
     if (function>-1) {
-        for (int i = 0; i<functions[function].args.size(); i++) 
-             vars.push_back(functions[function].args[i]);
+        for (int i = 0; i<functions[function].args.size(); i++)  {
+            vars.push_back(functions[function].args[i]);
+            if (functions[function].args[i].type == 's') {
+                vars.push_back(stsvars());
+                vars.back().name = functions[function].args[i].name + "|length";
+                vars.back().valint = functions[function].args[i].length;
+                vars.back().type = 'i';
+            }
+        }
 
         if (functions[function].classmethod) {
             classtypes = *pclasstypes;
@@ -78,7 +85,7 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
                 vars.back().length = vars.back().valstring.length();
                 vars.push_back(stsvars());
                 vars.back().name = vars[vars.size()-2].name + "|length";
-                vars.back().valint = vars[vars.size()-2].valstring.size();
+                vars.back().valint = vars[vars.size()-2].length;
                 vars.back().type = 'i';
             }
         }
@@ -129,16 +136,26 @@ void sts::exec(int x, int function, std::vector<stsclasstype> *pclasstypes, std:
             if (prs[y]=="loop"){
                 if (looped==0){
                     if (prs[y+1]!="inf"){
-                        looped=1;
                         endreq=getval(vars, new int(y+1)).valint;
+                        looped = 1;
                     }
-                    else{
+                    else
                         endreq=2;
-                    }
                 }
                 vars = globvars;
                 prs=parse(prg);
                 y = ((function>-1) ? x-1 : x); //set y equal to x to rerun from start of scope
+                if (function>-1) {
+                    for (int i = 0; i<functions[function].args.size(); i++)  {
+                        vars.push_back(functions[function].args[i]);
+                        if (functions[function].args[i].type == 's') {
+                            vars.push_back(stsvars());
+                            vars.back().name = functions[function].args[i].name + "|length";
+                            vars.back().valint = functions[function].args[i].length;
+                            vars.back().type = 'i';
+                        }
+                    }
+                }
             }
 
             for (int i = 0; i<ct.indexes.size(); i++) {

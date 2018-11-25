@@ -22,7 +22,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     else if (prs[y+1]=="[") {
         string name = prs[y];
         y+=2;
-        int index = std::stoi(prs[y]);
+        int index = getval(vars, new int(y)).valint;
 
         for (int i = 0; i<vars.size() && vars[i-1].name != name; i++) {
             if (vars[i].name == name) {
@@ -32,7 +32,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     else if (vars[i].type == 's') {
                         v.type = 's';
                         v.valstring = vars[i].valstring[index];
-                        if (index>=v.valstring.size())
+                        if (index>=vars[i].valstring.size())
                             throw std::bad_alloc(); // throw bad alloc if string is out of range.
                     }
                     else

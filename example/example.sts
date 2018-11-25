@@ -1,6 +1,22 @@
-do{
-    in str x;
+glob int i: -1;
+glob int it: -1;
+glob list appearances: [];
 
-    printl x|length;
-    printl x[0];
+func findh => str string {
+    i+: 1;
+    if string[i] is "h" {
+        appearances+: i;
+    }
+}loop(string|length);
+
+func printinh {
+    it+: 1;
+    printl appearances[it];
+}loop(appearances|length);
+
+do{
+    in str n;
+
+    findh => string: n;
+    printinh;
 }

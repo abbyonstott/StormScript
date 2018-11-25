@@ -16,7 +16,7 @@ string striplit(string line) {
 
 bool isint(string s) {
     for (int i = 0; i<s.size(); i++) {
-        if (std::isdigit(s[i]))
+        if ((std::isdigit(s[i])) || (s[i]=='-'))
             return true;
         else
             return false;
@@ -65,6 +65,8 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                         break;
                     case 's': vars[varnum].valstring += getval(vars, ln).valstring;
                         break;
+                    case 'l': vars[varnum].vals.push_back(getval(vars, ln));
+                        break;
                     case 'b': error(3, "+");
                         break;
                 }
@@ -73,8 +75,8 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 switch (vars[varnum].type) {
                     case 'i': vars[varnum].valint -= getval(vars, ln).valint;
                         break;
-                    case 's': error(3, "-");
-                        break;
+                    case 's':
+                    case 'l':
                     case 'b': error(3, "-");
                         break;
                 }
@@ -93,12 +95,30 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             if (vars[varnum].glob)
                 globvars[varnum]=vars[varnum];
 
+            if ((vars[varnum].type == 's') || (vars[varnum].type == 'l')) {
+                vars[varnum].length = ((vars[varnum].type=='s') ? vars[varnum].valstring.size() : vars[varnum].vals.size());
+                for (int i = 0; i<=vars.size(); i++) {
+                    if (vars[i].name==vars[varnum].name+"|length") {
+                        vars[i].valint = vars[varnum].length;
+                        if (vars[i].glob == true) {
+                            globvars[i] = vars[i];
+                            globvars[varnum].length = vars[varnum].length;
+                        }
+                    }
+                }
+            }
+
             if (prs[y-2] == "[") {
                 int ind = 0;
 
                 for (ind; vars[ind].name!=name; ind++) {}
                 
-                vars[ind].vals[std::stoi(prs[y-1])] = vars.back();
+                switch (vars[ind].type) {
+                    case 'l': vars[ind].vals[std::stoi(prs[y-1])] = vars.back();
+                        break;
+                    case 's': vars[ind].valstring[std::stoi(prs[y-1])] = vars.back().valstring[0];
+                        break;
+                }
                 if (vars[ind].glob)
                     globvars[ind]=vars[ind];
 

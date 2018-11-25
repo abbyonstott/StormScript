@@ -18,7 +18,7 @@
 
 using std::string;
 using std::cout;
-using std::endl;
+
 string striplit(string line);
 
 bool isint(string s);
