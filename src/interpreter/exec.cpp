@@ -104,7 +104,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         else if (prs[y]=="int") {
             y++;
             vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('i',y, &vars);
+            vars[vars.size()-1]=declare('i',&y, &vars);
             vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";"){
                 y++;
@@ -112,19 +112,19 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         }
         else if (prs[y]=="bool") {
             y++;
-            vars.push_back(declare('b',y, &vars));
+            vars.push_back(declare('b',&y, &vars));
             y++;
         }
         else if (prs[y]=="list") {
             y++;
-            vars.push_back(declare('l', y, &vars));
+            vars.push_back(declare('l', &y, &vars));
             
             while (prs[y]!=";") 
                 y++;
         }
         else if (prs[y]=="str") {
             y++;
-            vars.push_back(declare('s',y, &vars));
+            vars.push_back(declare('s',&y, &vars));
             vars.back().glob=0; //tells the interpreter not to modify the global value
             while (prs[y]!=";")
                 y++;

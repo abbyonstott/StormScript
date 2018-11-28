@@ -22,13 +22,13 @@ void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
 }
 
 
-stsvars sts::declare(char type, int line, std::vector<stsvars> *vars) { //variable declarations
+stsvars sts::declare(char type, int *line, std::vector<stsvars> *vars) { //variable declarations
     stsvars new_var;
     new_var.type = type;
     
-    int y = line+1;
+    int y = *line+1;
 
-    new_var.name = prs[line];
+    new_var.name = prs[*line];
     // bad idea to pop back the line, just pop back the var
 
     new_var.name.pop_back();
@@ -53,6 +53,7 @@ stsvars sts::declare(char type, int line, std::vector<stsvars> *vars) { //variab
             vars->back().type = 'i';
             break;
     }
+    *line = y;
 
     return new_var;
 }
