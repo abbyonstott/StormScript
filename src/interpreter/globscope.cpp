@@ -5,12 +5,17 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
 
     globvars.resize(globvars.size()+1);
     for (int x = 1; x<=argc-1; x++){
-        globvars[globvars.size()-1].type='l';
-        globvars[globvars.size()-1].vals.resize(globvars[globvars.size()-1].vals.size()+1);
-        globvars[globvars.size()-1].vals[globvars[globvars.size()-1].vals.size()-1].type = 's';
-        globvars[globvars.size()-1].vals[globvars[globvars.size()-1].vals.size()-1].valstring=argv[x];
-        globvars[globvars.size()-1].name="arg";
-        globvars[globvars.size()-1].glob=1;
+        globvars.back().type='l';
+        globvars.back().vals.resize(globvars[globvars.size()-1].vals.size()+1);
+        globvars.back().vals.back().type = 's';
+        globvars.back().vals.back().valstring=argv[x];
+        globvars.back().name="arg";
+        globvars.back().glob=1;
+
+        // THIS IS NEEDED FOR src/math/math.sts TO FUNCTION
+        if (isint(globvars.back().vals.back().valstring))
+            globvars.back().valint = std::stoi(globvars.back().valstring); // make add valint for support of using integers
+        
     }
     
     for (int x = 0; x<prs.size(); x++){

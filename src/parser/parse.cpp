@@ -30,7 +30,10 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 z++;
                 continue;
             }
-            else if  ((prg[y][z]==';') || (prg[y][z]=='}') || (prg[y][z]=='{') && (inquotes==false)) {
+            else if ((prg[y][z]=='#')) {
+                break;
+            }
+            else if  (((prg[y][z]==';') || (prg[y][z]=='}') || (prg[y][z]=='{')) && (inquotes==false)) {
                 if (prg[y][z]=='}') {
                     if ((prg[y].find("else")==string::npos) && (prg[y].find("loop")==string::npos)) {
                         x.push_back( string(1,prg[y][z]) );
@@ -54,7 +57,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 x.push_back( string(1,prg[y][z]) );
                 break;
             }
-            else if (((prg[y][z]=='@') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
+            else if (((prg[y][z]=='+') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }

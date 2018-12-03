@@ -4,14 +4,30 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
+    if (prs[y+1]=="+") {
+        /* 
+        This is addition. It can add numbers and use them in print, definitions, and if statements.
+        ex:
+        if x+1 is 3 {
+            printl "It's ", x+1, "!";
+        }
+        */
+        v = math(&y);
+        *line = y;
+        return v;
+    }
+
     if (isint(prs[y])) {
         v.type = 'i';
         v.valint = std::stoi(prs[y]);
     }
     else if (prs[y].front() == '"') {
         v.type = 's';
-        if (prs[y].back() == '"') 
+        if (prs[y].back() == '"') {
             v.valstring = striplit(prs[y]);
+            if (isint(v.valstring))
+                v.valint = std::stoi(v.valstring);
+        }
         else
             error(14, prs[y]);
 

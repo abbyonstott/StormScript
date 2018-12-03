@@ -1,6 +1,7 @@
 do{
-    str n: "say ";
-    in str x;
-    n+: x;
-    sys n;
+    int n: "3";
+    printl n;
+    printl n+1;
+    int x: n-1;
+    printl x;
 }
