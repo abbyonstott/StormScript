@@ -4,9 +4,9 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
-    if ((prs[y+1]=="+") || (prs[y-1]=="-")) {
+    if ((prs[y+1]=="+") || (prs[y+1]=="-") || (prs[y+1]=="*") || (prs[y+1]=="/")) {
         /* 
-        This is addition. It can add numbers and use them in print, definitions, and if statements.
+        This is math. It can add, subtract, multiply, and divide numbers and use them in print, definitions, and if statements.
         ex:
         if x+1 is 3 {
             printl "It's ", x+1, "!";
@@ -33,7 +33,10 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     v2 = vars[x];
             }
         }
-        v.valint = ((prs[y+1]=="+") ? v1.valint + v2.valint : v1.valint - v2.valint);
+        v.valint = (
+            (prs[y+1]=="+") ? v1.valint + v2.valint : (
+                (prs[y+1]=="-") ? v1.valint - v2.valint : (
+                    (prs[y+1]=="/") ? v1.valint / v2.valint : v1.valint * v2.valint)));
         y+=2;
         *line = y;
         return v;
