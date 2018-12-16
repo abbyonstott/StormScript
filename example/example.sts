@@ -1,5 +1,5 @@
 do{
-    int n: "3";
+    int n: 3;
     printl n;
     printl n+1;
     int x: n-1;

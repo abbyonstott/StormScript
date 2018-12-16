@@ -1,8 +1,0 @@
-#!/usr/bin/env stormscript
-
-# this is the first StormScript parser file written in StormScript
-do{
-    if arg[2] is "+" {
-        printl "4";
-    }
-}

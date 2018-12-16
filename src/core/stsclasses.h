@@ -20,7 +20,6 @@ using std::string;
 using std::cout;
 
 string striplit(string line);
-string runfile(string name, string operation);
 
 bool isint(string s);
 
@@ -103,7 +102,7 @@ public:
 	void set(string command, string setto, int x); // set command
 	string runlibfunc(string name, int *line, std::vector<stsvars> vars); // run library function
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
-	stsvars math(int *y);
+	stsvars math(int *y, std::vector<stsvars> vars);
 };
 
 

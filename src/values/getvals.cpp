@@ -4,7 +4,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
-    if (prs[y+1]=="+") {
+    if ((prs[y+1]=="+") || (prs[y-1]=="-")) {
         /* 
         This is addition. It can add numbers and use them in print, definitions, and if statements.
         ex:
@@ -12,7 +12,29 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             printl "It's ", x+1, "!";
         }
         */
-        v = math(&y);
+        stsvars v1, v2;
+        v.type='i';
+
+        if (isint(prs[y])) {
+            v1.valint = std::stoi(prs[y]);
+        }
+        else {
+            for (int x = 0; x<vars.size(); x++) {
+                if (vars[x].name==prs[y])
+                    v1 = vars[x];
+            }
+        }
+        if (isint(prs[y+2])) {
+            v2.valint = std::stoi(prs[y+2]);
+        }
+        else {
+            for (int x = 0; x<vars.size(); x++) {
+                if (vars[x].name==prs[y+2])
+                    v2 = vars[x];
+            }
+        }
+        v.valint = ((prs[y+1]=="+") ? v1.valint + v2.valint : v1.valint - v2.valint);
+        y+=2;
         *line = y;
         return v;
     }
