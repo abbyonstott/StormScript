@@ -1,7 +1,20 @@
-do{
-    int n: 3;
-    printl n;
-    printl n-1;
-    int x: n*20;
-    printl x, " ", x/3;
+type person {
+    int age;
+    str name;
+
+    func birthday {
+        age+: 1;
+    }
+}
+
+do {
+    person p;
+    p|age: 22;
+    p|name: "Joe";
+
+    printl p|name, " is ", p|age, " years old!";
+
+    p|birthday;
+
+    printl "It's ", p|name, "'s birthday. ", p|name, " is ", p|age, " years old!";
 }
