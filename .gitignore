@@ -13,6 +13,7 @@ Makefile
 *.exe
 *.tar*
 *.zip
+*.log
 *.pyc
 
 snap/.snapcraft/
