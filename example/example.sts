@@ -1,6 +1,8 @@
 #even though it changes nothing about the output, I think that it is smarter to use parentheses around ternary operations
 do{
     int y: 0;
-    int x: (y is 1) ? 10 : 0;
-    printl x;
+    int x: 4;
+    if y is 0 {
+        printl (x is 4) ? 10 : 3;
+    }
 }
