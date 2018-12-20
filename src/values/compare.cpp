@@ -44,42 +44,42 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         }
         else if (prs[y+1] == "greater") {
             switch (val1.type) {
-                case 's':
-                    v = (val1.valstring > val2.valstring);
-                    break;
                 case 'i':
+                    v = (val1.valint > val2.valint);
+                    break;
+                case 's':
                 case 'b':
-                    program->error(3, prs[y] + prs[y+1] + prs[y+2]);
+                    program->error(3, prs[y] + " " + prs[y+1] + " " + prs[y+2]);
                     
             }
         }
         else if (prs[y+1] == "greatereq") {
             switch (val1.type) {
-                case 's':
-                    v = (val1.valstring >= val2.valstring);
-                    break;
                 case 'i':
+                    v = (val1.valint >= val2.valint);
+                    break;
+                case 's':
                 case 'b':
-                    program->error(3, prs[y] + prs[y+1] + prs[y+2]);
+                    program->error(3, prs[y] + " " + prs[y+1] + " " + prs[y+2]);
             }
         }
         else if (prs[y+1] == "less") {
             switch (val1.type) {
-                case 's':
-                    v = (val1.valstring < val2.valstring);
-                    break;
                 case 'i':
+                    v = (val1.valint < val2.valint);
+                    break;
+                case 's':
                 case 'b':
-                    program->error(3, prs[y] + prs[y+1] + prs[y+2]);
+                    program->error(3, prs[y] + " " + prs[y+1] + " " + prs[y+2]);
                     
             }
         }
         else if (prs[y+1] == "lesseq") {
             switch (val1.type) {
-                case 's':
-                    v = (val1.valstring <= val2.valstring);
-                    break;
                 case 'i':
+                    v = (val1.valint <= val2.valint);
+                    break;
+                case 's':
                 case 'b':
                     program->error(3, prs[y] + prs[y+1] + prs[y+2]);
                     
