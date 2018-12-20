@@ -19,13 +19,14 @@
 using std::string;
 using std::cout;
 
-string striplit(string line);
-
-bool isint(string s);
-
 class sts;
 class stsvars;
 class stsfunc;
+
+// for the most part, it is a better idea to use functions outside of the sts class
+string striplit(string line);
+bool condition(sts *program, int *ln, std::vector<stsvars> vars);
+bool isint(string s);
 
 class stsvars{
 public:

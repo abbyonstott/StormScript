@@ -4,6 +4,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
+
     if ((prs[y+1]=="+") || (prs[y+1]=="-") || (prs[y+1]=="*") || (prs[y+1]=="/")) {
         /* 
         This is math. It can add, subtract, multiply, and divide numbers and use them in print, definitions, and if statements.
@@ -41,8 +42,31 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         *line = y;
         return v;
     }
+    else if (prs[y+1] == "is") {
+        bool cond  = condition(this, &y, vars);
+        // check if ternary;
+        y+=2;
+        if (prs[y+1] == "?") {
+            y+=2;
+            if (cond)
+                v = getval(vars, &y);
+            else {
+                y+=2;
+                v = getval(vars, &y);
+            }
+            y+=2;
+            *line = y;
+            return v;
+        }
+        else {
+            *line = y;
+            v.type = 'b';
+            v.val = cond;
+            return v;
+        }
+    }
 
-    if (isint(prs[y])) {
+    else if (isint(prs[y])) {
         v.type = 'i';
         v.valint = std::stoi(prs[y]);
     }
@@ -94,6 +118,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
 
         y++;
     }
+
     else {
         for (int x = 0; x<vars.size(); x++) {
             if (vars[x].name==prs[y])

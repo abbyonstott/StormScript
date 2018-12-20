@@ -3,7 +3,7 @@ type person {
     str name;
 
     func birthday {
-        age+: 1;
+        age: age+1;
     }
 }
 

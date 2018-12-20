@@ -37,7 +37,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         }
     }
 
-    while (true){
+    while (1) {
         if (function == -2) { // if running in terminal
             y = 0;
             char command[256];
