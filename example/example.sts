@@ -3,6 +3,6 @@ do{
     int y: 0;
     int x: 4;
     if y is 0 {
-        printl (x is 4) ? 10 : 3;
+        printl (x not 4) ? 10 : 3;
     }
 }
