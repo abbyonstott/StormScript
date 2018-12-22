@@ -22,7 +22,7 @@ For now I am not too concerned about how pretty code is as long as it is functio
 ### Formatting:
 
 1. Write functional code
-2. create new branches to add features.
+2. create new branches off of the dev branch to add features.
 3. Create new files for new non-global namespace commands
 4. Test your features using `example.sts`.
 
