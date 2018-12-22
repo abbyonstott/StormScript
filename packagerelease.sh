@@ -10,4 +10,4 @@ cp -r ../../api .
 cp ../../build-scripts/* .
 
 cd ..
-tar -cf stormscript_v0.3.0.tar.xz stormscript_v0.3.1
+tar -cf stormscript_v0.3.1.tar.xz stormscript_v0.3.1
