@@ -1,8 +1,0 @@
-mod modules/mod;
-
-do{
-    int x: 3;
-    printl x;
-    x: helloworld => i: x;
-    printl x;
-}
