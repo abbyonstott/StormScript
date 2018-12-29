@@ -29,10 +29,10 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
 
-    if ((prs[y].back()==':') || (prs[y+1].back() == ':') || (prs[y+4] == ":")) { // variable manipulation operation
+    if (((prs[y].back()==':') || (prs[y+2].back() == ':') || (prs[y+4] == ":")) && (prs[y+1]!="=>")) { // variable manipulation operation
         int varnum;
         const string name = prs[y];
-        const string line = ((prs[y+1] == "[") ? prs[y] + prs[y+1] + prs[y+2] + prs[y+3] + prs[y+4] : ((prs[y+1].front()=='+') ? prs[y] + prs[y+1] : prs[y])); // set unmodifiable "copy" to variable[i]:
+        const string line = ((prs[y+1] == "[") ? prs[y] + prs[y+1] + prs[y+2] + prs[y+3] + prs[y+4] : (((prs[y+1].front()=='+') || (prs[y+1].back()=='-')) ? prs[y] + prs[y+1] + prs[y+2] : prs[y])); // set unmodifiable "copy" to variable[i]:
         string lineorig = line; // set original "copy" to variable[i]:
         lineorig.pop_back();
 
@@ -71,6 +71,8 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         // change value if in vars
         if (varnum!=-1){
             if (line.find("+")!=string::npos) { // add
+                y+=2;
+                *ln = y;
                 switch (vars[varnum].type) {
                     case 'i': vars[varnum].valint += getval(vars, ln).valint;
                         break;
@@ -83,6 +85,8 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 }
             }
             else if (line.find("-")!=string::npos) { // subtract
+                y+=2;
+                *ln = y;
                 switch (vars[varnum].type) {
                     case 'i': vars[varnum].valint -= getval(vars, ln).valint;
                         break;
@@ -138,7 +142,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 vars.pop_back();
             }
 
-            for (y; y<=prs.size() && prs[y]!=";"; y++) {} // Increase y until it sees semicolon
+            for (y; y<=prs.size() && prs[y]!=";"; y++); // Increase y until it sees semicolon
 
             *ln = y;
             *classtypes = ct;
