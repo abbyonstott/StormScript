@@ -1,4 +1,4 @@
-#include "stsclasses.h"
+#include "../include/stormscript.h"
 
 string sts::runlibfunc(string name, int *line, std::vector<stsvars> vars) {
     int y = *line;

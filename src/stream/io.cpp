@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::print(int line, int *y, std::vector<stsvars> current_vars){ //handles both print and printl.
     int ln = *y;

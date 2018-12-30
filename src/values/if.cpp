@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
     int y = *line;

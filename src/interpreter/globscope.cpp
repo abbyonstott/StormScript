@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::interp(string fname,int psize, char *argv[], int argc){
     prs = parse(prg);

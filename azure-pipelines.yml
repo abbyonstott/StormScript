@@ -12,5 +12,6 @@ pool:
 steps:
 - script: |
     cmake CMakeLists.txt;
-    make
+    make;
+    ./runtests.sh
   displayName: 'make'

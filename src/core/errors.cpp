@@ -1,4 +1,4 @@
-#include "stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::error(int num, string issue)
 {

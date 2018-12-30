@@ -4,6 +4,7 @@
 ![GitHub (pre-)release](https://img.shields.io/github/release-pre/stormprograms/stormscript.svg)
 ![GitHub All Releases](https://img.shields.io/github/downloads/stormprograms/stormscript/total.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/stormprograms/stormscript.svg)
+[![Build Status](https://dev.azure.com/alegosdude/stormscript/_apis/build/status/stormprograms.StormScript%20(1)?branchName=dev)](https://dev.azure.com/alegosdude/stormscript/_build/latest?definitionId=2?branchName=dev)
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/stormscript)
 
@@ -43,7 +44,6 @@ tests/ | Files for testing that core functionality is not messed up.
 
 file | Description
 ---- | -----------
-[src/core/stsclasses.h](src/core/stsclasses.h) | This is where all classes needed for a program to run are put.
 [src/core/stormscript.cpp](src/core/stormscript.cpp) | This is where files are read.
 [src/core/errors.cpp](src/core/errors.cpp) | This is where all new errors are added.
 [src/parser/parse.cpp](src/parser/parse.cpp) | This is the parser.

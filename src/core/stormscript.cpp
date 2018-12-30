@@ -1,4 +1,4 @@
-#include "stsclasses.h"
+#include "../include/stormscript.h"
 
 /*
    _____ _                        _____           _       _   
