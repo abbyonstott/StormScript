@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::sys(int *y, std::vector<stsvars> vars){
     int line = *y;

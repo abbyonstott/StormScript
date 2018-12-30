@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::read(char *argv[], int argc, string filename) {
 	std::ifstream file;

@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 /*
 stsdec.cpp: basic type declarations

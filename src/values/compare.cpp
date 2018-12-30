@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
     std::vector<string> prs = program->prs;

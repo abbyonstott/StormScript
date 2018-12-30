@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln) {
     std::vector<stsvars> vars = *pvars;

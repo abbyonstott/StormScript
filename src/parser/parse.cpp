@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h" 
+#include "../include/stormscript.h" 
 /*
 the interpreter parses the file and calls functions in other files
 */

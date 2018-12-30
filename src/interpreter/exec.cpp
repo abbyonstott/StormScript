@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects) { // how each command is executed
     std::vector<stsvars> vars;

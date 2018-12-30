@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
