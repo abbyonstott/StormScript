@@ -42,14 +42,14 @@ stsvars sts::declare(char type, int *line, std::vector<stsvars> *vars) { //varia
             new_var.length = new_var.val.size();
             vars->push_back(stsvars());
             vars->back().name = new_var.name + "|length";
-            vars->back().val = new_var.length;
+            vars->back().val = std::to_string(new_var.length);
             vars->back().type = 'i';
             break;
         case 'l': new_var.assignlist(this, *vars, &y);
             new_var.length = new_var.vals.size();
             vars->push_back(stsvars());
             vars->back().name = new_var.name + "|length";
-            vars->back().val = new_var.length;
+            vars->back().val = std::to_string(new_var.length);
             vars->back().type = 'i';
             break;
     }
