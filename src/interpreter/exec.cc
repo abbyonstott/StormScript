@@ -17,7 +17,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             if (functions[function].args[i].type == 's') {
                 vars.push_back(stsvars());
                 vars.back().name = functions[function].args[i].name + "|length";
-                vars.back().valint = functions[function].args[i].length;
+                vars.back().val = functions[function].args[i].length;
                 vars.back().type = 'i';
             }
         }
@@ -82,10 +82,10 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             vars[vars.size()-1]=in(y);
             y+=2;
             if (vars.back().type == 's') {
-                vars.back().length = vars.back().valstring.length();
+                vars.back().length = vars.back().val.length();
                 vars.push_back(stsvars());
                 vars.back().name = vars[vars.size()-2].name + "|length";
-                vars.back().valint = vars[vars.size()-2].length;
+                vars.back().val = vars[vars.size()-2].length;
                 vars.back().type = 'i';
             }
         }
@@ -136,7 +136,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             if (prs[y]=="loop"){
                 if (looped==0){
                     if (prs[y+1]!="inf"){
-                        endreq=getval(vars, new int(y+1)).valint;
+                        endreq=std::stoi(getval(vars, new int(y+1)).val);
                         looped = 1;
                     }
                     else
@@ -151,7 +151,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                         if (functions[function].args[i].type == 's') {
                             vars.push_back(stsvars());
                             vars.back().name = functions[function].args[i].name + "|length";
-                            vars.back().valint = functions[function].args[i].length;
+                            vars.back().val = functions[function].args[i].length;
                             vars.back().type = 'i';
                         }
                     }

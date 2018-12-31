@@ -17,12 +17,12 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
 
 
                     switch (*argtype) {
-                        case 's': functions[z].args[i].valstring = argval.valstring;
+                        case 's': functions[z].args[i].val = argval.val;
                             functions[z].args[i].length = argval.length;
                             break;
                         case 'b': functions[z].args[i].val = argval.val;
                             break;
-                        case 'i': functions[z].args[i].valint = argval.valint;
+                        case 'i': functions[z].args[i].val = argval.val;
                             break;
                     }
                 }

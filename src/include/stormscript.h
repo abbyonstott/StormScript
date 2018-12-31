@@ -29,5 +29,6 @@ using std::cout;
 string striplit(string line);
 bool condition(sts *program, int *ln, std::vector<stsvars> vars);
 bool isint(string s);
+bool toBool(string s);
 
 #endif

@@ -4,7 +4,7 @@
 #include <vector>
 #include <cctype>
 #include <cstdlib>
-
+#include <memory>
 
 /*
 Let's forward declare these classes for the files that use them

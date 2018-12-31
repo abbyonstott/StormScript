@@ -7,23 +7,6 @@ This file deals with non-keyword commands like:
     class type declarations
 */
 
-string striplit(string line) {
-    line.pop_back();
-    line.erase(line.begin());
-
-    return line;
-}
-
-bool isint(string s) {
-    for (int i = 0; i<s.size(); i++) {
-        if ((std::isdigit(s[i])) || (s[i]=='-'))
-            return true;
-        else
-            return false;
-    }
-    return false;
-}
-
 bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
@@ -74,9 +57,9 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 y+=2;
                 *ln = y;
                 switch (vars[varnum].type) {
-                    case 'i': vars[varnum].valint += getval(vars, ln).valint;
+                    case 'i': vars[varnum].val = std::to_string(std::stoi(vars[varnum].val) + std::stoi(getval(vars, ln).val));
                         break;
-                    case 's': vars[varnum].valstring += getval(vars, ln).valstring;
+                    case 's': vars[varnum].val += getval(vars, ln).val;
                         break;
                     case 'l': vars[varnum].vals.push_back(getval(vars, ln));
                         break;
@@ -88,7 +71,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 y+=2;
                 *ln = y;
                 switch (vars[varnum].type) {
-                    case 'i': vars[varnum].valint -= getval(vars, ln).valint;
+                    case 'i': vars[varnum].val = std::to_string(std::stoi(vars[varnum].val) - std::stoi(getval(vars, ln).val));
                         break;
                     case 's':
                     case 'l':
@@ -98,13 +81,9 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
             }
             else{ // change value
                 switch (vars[varnum].type) {
-                    case 'i': vars[varnum].valint = getval(vars, ln).valint;
-                        break;
-                    case 's': vars[varnum].valstring = getval(vars, ln).valstring;
-                        break;
                     case 'l': vars[varnum].assignlist(this, vars, ln);
                         break;
-                    case 'b': vars[varnum].val = getval(vars, ln).val;
+                    default: vars[varnum].val = getval(vars, ln).val;
                         break;
                 }
             }
@@ -113,10 +92,10 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 globvars[varnum]=vars[varnum];
 
             if ((vars[varnum].type == 's') || (vars[varnum].type == 'l')) {
-                vars[varnum].length = ((vars[varnum].type=='s') ? vars[varnum].valstring.size() : vars[varnum].vals.size());
+                vars[varnum].length = ((vars[varnum].type=='s') ? vars[varnum].val.size() : vars[varnum].vals.size());
                 for (int i = 0; i<=vars.size(); i++) {
                     if (vars[i].name==vars[varnum].name+"|length") {
-                        vars[i].valint = vars[varnum].length;
+                        vars[i].val = vars[varnum].length;
                         if (vars[i].glob) {
                             globvars[i] = vars[i];
                             globvars[varnum].length = vars[varnum].length;
@@ -131,9 +110,9 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 for (ind; vars[ind].name!=name; ind++) {}
                 
                 switch (vars[ind].type) {
-                    case 'l': vars[ind].vals[getval(vars, new int(y-1)).valint] = vars.back();
+                    case 'l': vars[ind].vals[std::stoi(getval(vars, new int(y-1)).val)] = vars.back();
                         break;
-                    case 's': vars[ind].valstring[getval(vars, new int(y-1)).valint] = vars.back().valstring[0];
+                    case 's': vars[ind].val[std::stoi(getval(vars, new int(y-1)).val)] = vars.back().val[0];
                         break;
                 }
                 if (vars[ind].glob)

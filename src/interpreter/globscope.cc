@@ -8,14 +8,9 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
         globvars.back().type='l';
         globvars.back().vals.resize(globvars[globvars.size()-1].vals.size()+1);
         globvars.back().vals.back().type = 's';
-        globvars.back().vals.back().valstring=argv[x];
+        globvars.back().vals.back().val=argv[x];
         globvars.back().name="arg";
         globvars.back().glob=1;
-
-        // THIS IS NEEDED FOR src/math/math.sts TO FUNCTION
-        if (isint(globvars.back().vals.back().valstring))
-            globvars.back().valint = std::stoi(globvars.back().valstring); // make add valint for support of using integers
-        
     }
     
     for (int x = 0; x<prs.size(); x++){
