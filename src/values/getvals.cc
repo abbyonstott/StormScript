@@ -71,12 +71,12 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     }
     else if (prs[y].front() == '"') {
         v.type = 's';
-        if (prs[y].back() == '"') {
+
+        if (prs[y].back() == '"')
             v.val = striplit(prs[y]);
-        }
         else
             error(14, prs[y]);
-
+    
         v.length = v.val.size();
     }
     else if ((prs[y] == "true") || (prs[y]=="false")) {

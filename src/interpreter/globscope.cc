@@ -19,25 +19,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x++;
             names[names.size()-1]=prs[x];
         }
-        else if ((prs[x]=="int") || (prs[x]=="str") || (prs[x]=="bool") || (prs[x]=="list")){
-            x++;
-            if (prs[x-1]=="int")
-                globvars.push_back(declare('i', &x, &globvars));
-            else if (prs[x-1]=="str") {
-                globvars.push_back(declare('s', &x, &globvars));
-                globvars[globvars.size()-2].glob = true;
-            }
-            else if (prs[x-1]=="bool")
-                globvars.push_back(declare('b', &x, &globvars));
-            else if (prs[x-1]=="list") {
 
-                globvars.push_back(declare('l', &x, &globvars));
-                globvars[globvars.size()-2].glob = true;
-            }
-            while (prs[x]!=";") 
-                x++;
-            globvars.back().glob=1;
-        }
 
         else if (prs[x]=="type") { // declares a class
             classes.resize(classes.size()+1);
@@ -67,20 +49,8 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                 while (prs[x]!="{") {
                     args.resize(args.size()+1);
 
-                    if (prs[x] == "bool") {
-                        args.back().type='b';
-                    }
-                    else if (prs[x] == "str") {
-                        args.back().type='s';
-                    }
-                    else if (prs[x] == "int") {
-                        args.back().type='i';
-                    }
-                    else {
-                        error(2, prs[x]);
-                    }
-                    x++;
                     args[args.size()-1].name = prs[x];
+                    
                     x++;
                 }
                 x++;

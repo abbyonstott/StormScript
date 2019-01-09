@@ -1,6 +1,6 @@
 do{
-    str x: "hi";
-    list y: ["hi", "there"];
+    x: "hi";
+    y: ["hi", "there"];
 
     printl x|length;
     printl y|length;

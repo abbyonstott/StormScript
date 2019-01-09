@@ -1,7 +1,9 @@
-do{
-    str x: "hi";
-    list y: ["hi", "there"];
+func f => x, y {
+    printl x;
+    printl y;
+}
 
-    printl x|length;
-    printl y|length;
+do{
+    x: 3;
+    f => x: "hi", y: x;
 }
