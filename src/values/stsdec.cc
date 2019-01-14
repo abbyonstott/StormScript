@@ -25,14 +25,16 @@ void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
 stsvars sts::declare(int *line, std::vector<stsvars> *vars) { //variable declarations
     char type;
     int y = *line+1;
-    stsvars new_var = getval(*vars, new int(y));
-
-    cout << new_var.type << '\n';
+    stsvars new_var = ((prs[y]!="[") ? getval(*vars, new int(y)) : stsvars());
 
     new_var.name = prs[*line];
-    // bad idea to pop back the line, just pop back the var
-
     new_var.name.pop_back();
+
+    if (prs[y]=="[") {
+        new_var.type = 'l';
+        new_var.assignlist(this, *vars, line);
+    }
+    // bad idea to pop back the line, just pop back the var
 
     type = new_var.type;
     switch (type) {

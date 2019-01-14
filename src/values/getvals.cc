@@ -69,6 +69,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         v.type = 'i';
         v.val = prs[y];
     }
+
     else if (prs[y].front() == '"') {
         v.type = 's';
 

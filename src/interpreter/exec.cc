@@ -14,7 +14,8 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
     if (function>-1) {
         for (int i = 0; i<functions[function].args.size(); i++)  {
             vars.push_back(functions[function].args[i]);
-            if (functions[function].args[i].type == 's') {
+
+            if (vars.back().type == 's') {
                 vars.push_back(stsvars());
                 vars.back().name = functions[function].args[i].name + "|length";
                 vars.back().val = functions[function].args[i].length;
@@ -119,7 +120,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                         if (functions[function].args[i].type == 's') {
                             vars.push_back(stsvars());
                             vars.back().name = functions[function].args[i].name + "|length";
-                            vars.back().val = functions[function].args[i].length;
+                            vars.back().val = std::to_string(functions[function].args[i].length);
                             vars.back().type = 'i';
                         }
                     }

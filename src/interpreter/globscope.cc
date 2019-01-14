@@ -37,11 +37,10 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x+=2;
         }
         else if (prs[x]=="func"){
-            functions.resize(functions.size()+1);
+            functions.push_back(stsfunc());
             x++;
             functions.back().name=prs[x];
             x++;
-
             if (prs[x]=="=>") {
                 x++;
                 std::vector<stsvars> args;
@@ -57,12 +56,12 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                 functions.back().args=args;
             }
             
-            functions[functions.size()-1].linestarted=x;
+            functions.back().linestarted=x;
             int endreq = 1;
             while (endreq != 0) {
                 if ((prs[x]=="}") || (prs[x]=="loop"))
                     endreq--;
-                else if (((prs[x]=="if") && (prs[x-1]!="else")) || (prs[x]=="else"))
+                else if (prs[x] == "{")
                     endreq++;
                 x++;
             }

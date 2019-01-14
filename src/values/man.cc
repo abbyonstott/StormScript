@@ -7,15 +7,74 @@ This file deals with non-keyword commands like:
     class type declarations
 */
 
+bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
+    bool isvar = false;
+
+    for (int i = 0; i < pvars->size() && !isvar; i++) {
+        isvar = (pvars->at(i).name == query);
+        *num = i;
+    }
+    return isvar;
+}
+
 bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
 
     if (prs[y].back() == ':') {
-        pvars->push_back(declare(ln, pvars));
+        int *index = new int(0);
         
+        string *name = new string(prs[y]);
+        name->pop_back();
+
+        if (!isvar(pvars, *name, index))
+            pvars->push_back(declare(ln, pvars));
+        else
+            pvars->at(*index).val = getval(vars, new int(y+1)).val;
+        
+        while (prs[y]!=";")
+            y++;
+
+        *ln = y;
+
         return true;
+    }
+
+    if (prs[y+2].back() == ':') {
+        int *num = new int(0);
+
+        if (isvar(pvars, prs[y], num)) {
+            if (prs[y+1] == "+") {
+                if (pvars->at(*num).type == 's')
+                    pvars->at(*num).val += getval(vars, new int(y+3)).val;
+                else if (pvars->at(*num).type == 'i') {
+                    if (isint(prs[y+3]))
+                        pvars->at(*num).val = std::to_string(
+                            std::stoi(pvars->at(*num).val) + std::stoi(prs[y+3])
+                        );
+                    else
+                        error(9, prs[y+3]);
+                }
+                else
+                    error(9, prs[y]);
+            }
+            else if (prs[y+1] == "-") {
+                if (pvars->at(*num).type == 'i') {
+                    if (isint(prs[y+3]))
+                        pvars->at(*num).val = std::to_string(
+                            std::stoi(pvars->at(*num).val) - std::stoi(prs[y+3])
+                        );
+                    else
+                        error(9, prs[y+3]);
+                }
+                else
+                    error(9, prs[y]);
+            }
+            y += 3;
+            *ln = y;
+            return true;
+        }
     }
 
     // find in libfuncs
@@ -34,13 +93,19 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         }
     }
 
-    if (functions.size()!=0){
-        runfunc(&vars, &ct, &y);
-        *ln = y;
-        *classtypes = ct;
-        *pvars = vars;
-        
-        return true;
+    if (functions.size()>0){
+        bool isfunc = false;
+
+        for (int i = 0; i < functions.size() && !isfunc; i++)
+            isfunc = (functions[i].name == prs[y]);
+
+        if (isfunc) {
+            runfunc(&vars, &ct, &y);
+            *ln = y;
+            *classtypes = ct;
+            *pvars = vars;
+            return true;
+        }
     }
 
     if (classes.size()!=0) {

@@ -1,9 +1,4 @@
-func f => x, y {
-    printl x;
-    printl y;
-}
-
 do{
-    x: 3;
-    f => x: "hi", y: x;
+    x: 4;
+    x-: 3;
 }
