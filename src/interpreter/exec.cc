@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects) { // how each command is executed
     std::vector<stsvars> vars;
@@ -14,10 +14,11 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
     if (function>-1) {
         for (int i = 0; i<functions[function].args.size(); i++)  {
             vars.push_back(functions[function].args[i]);
-            if (functions[function].args[i].type == 's') {
+
+            if (vars.back().type == 's') {
                 vars.push_back(stsvars());
                 vars.back().name = functions[function].args[i].name + "|length";
-                vars.back().valint = functions[function].args[i].length;
+                vars.back().val = functions[function].args[i].length;
                 vars.back().type = 'i';
             }
         }
@@ -79,15 +80,12 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         else if (prs[y]=="in") {
             vars.resize(vars.size()+1);
             y++;
-            vars[vars.size()-1]=in(y);
-            y+=2;
-            if (vars.back().type == 's') {
-                vars.back().length = vars.back().valstring.length();
-                vars.push_back(stsvars());
-                vars.back().name = vars[vars.size()-2].name + "|length";
-                vars.back().valint = vars[vars.size()-2].length;
-                vars.back().type = 'i';
-            }
+            vars.push_back(in(y));
+            y++;
+            vars.push_back(stsvars());
+            vars.back().name = vars[vars.size()-2].name + "|length";
+            vars.back().val = std::to_string(vars[vars.size()-2].length);
+            vars.back().type = 'i';
         }
         else if ((prs[y]=="if")) {
             endreq+=1;
@@ -101,42 +99,13 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             }
             y--;
         }
-        else if (prs[y]=="int") {
-            y++;
-            vars.resize(vars.size()+1);
-            vars[vars.size()-1]=declare('i',&y, &vars);
-            vars[vars.size()-1].glob=0; //tells the interpreter not to modify the global value
-            while (prs[y]!=";"){
-                y++;
-            }
-        }
-        else if (prs[y]=="bool") {
-            y++;
-            vars.push_back(declare('b',&y, &vars));
-            y++;
-        }
-        else if (prs[y]=="list") {
-            y++;
-            vars.push_back(declare('l', &y, &vars));
-            
-            while (prs[y]!=";") 
-                y++;
-        }
-        else if (prs[y]=="str") {
-            y++;
-            vars.push_back(declare('s',&y, &vars));
-            vars.back().glob=0; //tells the interpreter not to modify the global value
-            while (prs[y]!=";")
-                y++;
-        }
         else if (prs[y]=="sys")
             sys(&y, vars);
-
         else if ((prs[y]=="}") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
                     if (prs[y+1]!="inf"){
-                        endreq=getval(vars, new int(y+1)).valint;
+                        endreq=std::stoi(getval(vars, new int(y+1)).val);
                         looped = 1;
                     }
                     else
@@ -151,7 +120,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                         if (functions[function].args[i].type == 's') {
                             vars.push_back(stsvars());
                             vars.back().name = functions[function].args[i].name + "|length";
-                            vars.back().valint = functions[function].args[i].length;
+                            vars.back().val = std::to_string(functions[function].args[i].length);
                             vars.back().type = 'i';
                         }
                     }
@@ -172,7 +141,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                 break;
         }
         else if (prs[y]=="return"){
-            if (function>-1){
+            if (function>-1) {
                 // check variables
                 y++;
                 functions[function].value = getval(vars, &y);

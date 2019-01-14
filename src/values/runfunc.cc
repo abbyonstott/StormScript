@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln) {
     std::vector<stsvars> vars = *pvars;
@@ -9,22 +9,13 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
         if (functions[z].name==prs[y]){
             if (prs[y+1]=="=>"){
                 y++;
-                for (int i = 0; i<functions[z].args.size(); i++) {
-                    y+=2;
-                    char *argtype = &functions[z].args[i].type;
-                
+                for (int i = 0; i < functions[z].args.size(); i++) {
+                    y+= 2;
+                    string *name = new string(functions[z].args[i].name);
                     stsvars argval = getval(vars, new int(y));
-
-
-                    switch (*argtype) {
-                        case 's': functions[z].args[i].valstring = argval.valstring;
-                            functions[z].args[i].length = argval.length;
-                            break;
-                        case 'b': functions[z].args[i].val = argval.val;
-                            break;
-                        case 'i': functions[z].args[i].valint = argval.valint;
-                            break;
-                    }
+                    argval.name = *name;
+                    functions[z].args[i] = argval;
+                    delete name;
                 }
                 exec(new int(functions[z].linestarted), z, {}, {});
             }

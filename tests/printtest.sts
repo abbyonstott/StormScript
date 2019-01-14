@@ -1,5 +1,5 @@
 do{
-    str x: "string";
+    x: "string";
 
     printl "Single string printl.";
     printl "Multple ", x, " printl with variable.";

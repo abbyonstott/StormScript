@@ -1,9 +1,4 @@
-func f => str x, int y {
-    printl x;
-    printl y;
-}
-
 do{
-    int x: 3;
-    f => x: "hi", y: x;
+    x: 4;
+    x-: 3;
 }

@@ -1,8 +1,8 @@
 do{
-    str x: "hi";
-    str y: "hi";
-    int n: 3;
-    bool d: true;
+    x: "hi";
+    y: "hi";
+    n: 3;
+    d: true;
 
     if n is 3{
         printl "x is 3";

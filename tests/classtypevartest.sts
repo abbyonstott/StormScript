@@ -7,7 +7,7 @@ do{
     human p;
     p|age: 20;
     p|name: "Bob";
-    int x: p|age;
-    str y: p|name;
+    x: p|age;
+    y: p|name;
     printl "Human p's name is ", y, " and he is ", x, " years old.";
 }

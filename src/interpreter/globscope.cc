@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void sts::interp(string fname,int psize, char *argv[], int argc){
     prs = parse(prg);
@@ -8,14 +8,9 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
         globvars.back().type='l';
         globvars.back().vals.resize(globvars[globvars.size()-1].vals.size()+1);
         globvars.back().vals.back().type = 's';
-        globvars.back().vals.back().valstring=argv[x];
+        globvars.back().vals.back().val=argv[x];
         globvars.back().name="arg";
         globvars.back().glob=1;
-
-        // THIS IS NEEDED FOR src/math/math.sts TO FUNCTION
-        if (isint(globvars.back().vals.back().valstring))
-            globvars.back().valint = std::stoi(globvars.back().valstring); // make add valint for support of using integers
-        
     }
     
     for (int x = 0; x<prs.size(); x++){
@@ -24,25 +19,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x++;
             names[names.size()-1]=prs[x];
         }
-        else if ((prs[x]=="int") || (prs[x]=="str") || (prs[x]=="bool") || (prs[x]=="list")){
-            x++;
-            if (prs[x-1]=="int")
-                globvars.push_back(declare('i', &x, &globvars));
-            else if (prs[x-1]=="str") {
-                globvars.push_back(declare('s', &x, &globvars));
-                globvars[globvars.size()-2].glob = true;
-            }
-            else if (prs[x-1]=="bool")
-                globvars.push_back(declare('b', &x, &globvars));
-            else if (prs[x-1]=="list") {
 
-                globvars.push_back(declare('l', &x, &globvars));
-                globvars[globvars.size()-2].glob = true;
-            }
-            while (prs[x]!=";") 
-                x++;
-            globvars.back().glob=1;
-        }
 
         else if (prs[x]=="type") { // declares a class
             classes.resize(classes.size()+1);
@@ -60,11 +37,10 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             x+=2;
         }
         else if (prs[x]=="func"){
-            functions.resize(functions.size()+1);
+            functions.push_back(stsfunc());
             x++;
             functions.back().name=prs[x];
             x++;
-
             if (prs[x]=="=>") {
                 x++;
                 std::vector<stsvars> args;
@@ -72,32 +48,20 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                 while (prs[x]!="{") {
                     args.resize(args.size()+1);
 
-                    if (prs[x] == "bool") {
-                        args.back().type='b';
-                    }
-                    else if (prs[x] == "str") {
-                        args.back().type='s';
-                    }
-                    else if (prs[x] == "int") {
-                        args.back().type='i';
-                    }
-                    else {
-                        error(2, prs[x]);
-                    }
-                    x++;
                     args[args.size()-1].name = prs[x];
+                    
                     x++;
                 }
                 x++;
                 functions.back().args=args;
             }
             
-            functions[functions.size()-1].linestarted=x;
+            functions.back().linestarted=x;
             int endreq = 1;
             while (endreq != 0) {
                 if ((prs[x]=="}") || (prs[x]=="loop"))
                     endreq--;
-                else if (((prs[x]=="if") && (prs[x-1]!="else")) || (prs[x]=="else"))
+                else if (prs[x] == "{")
                     endreq++;
                 x++;
             }

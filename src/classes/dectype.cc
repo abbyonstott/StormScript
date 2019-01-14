@@ -1,4 +1,4 @@
-#include "../core/stsclasses.h"
+#include "../include/stormscript.h"
 
 void stsclass::declare(int *y, sts *inst) { //declare type
     int ln = *y;

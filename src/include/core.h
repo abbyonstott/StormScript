@@ -1,72 +1,11 @@
 #pragma once
-#ifndef STSCLASSES_H_
-#define STSCLASSES_H_
+#ifndef CORE_H_
+#define CORE_H_
 
-#if defined(_WIN32)
-#define PLATFORM "Windows"
-#else
-#define PLATFORM "other"
-#endif
-
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <vector>
-#include <cctype>
-#include <cstdlib>
-#include "../StormScriptconfig.h"
-
-using std::string;
-using std::cout;
-
-string striplit(string line);
-
-bool isint(string s);
-
-class sts;
-class stsvars;
-class stsfunc;
-
-class stsvars{
-public:
-	int valint = 0;
-	int length;
-	std::vector<stsvars> vals;
-	string valstring = "";
-	bool val, glob;
-	string name;
-	char type;
-
-	void assignlist(sts *script, std::vector<stsvars> vars, int *line);
-};
-
-class stsclass {
-public:
-	void declare(int *y, sts *inst);
-	void decmethod(sts *inst, int *ln);
-	std::vector<stsvars> variables;
-	std::vector<stsfunc> methods;
-	string name;
-};
-
-class stsclasstype:public stsvars{
-public:
-	stsclass tpe;
-	std::vector<int> indexes;
-};
-
-class stsfunc:public stsvars{
-public:
-	int linestarted; // line funcion code starts, not line "func" keyword is used
-	bool classmethod = false;
-	stsvars value;
-	string cof;
-	string modname = "main";
-	stsclasstype cval;
-	char valtype;
-	std::vector<stsvars> args;
-};
-
+#include "includes.h"
+#include "variables.h"
+#include "functions.h"
+#include "classes.h"
 
 class sts
 {
@@ -86,7 +25,7 @@ public:
 
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
-	stsvars declare(char type, int *line, std::vector<stsvars> *vars); //declare variables -
+	stsvars declare(int *line, std::vector<stsvars> *vars); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc, string filename); //read file
 	void print(int line, int *y, std::vector<stsvars> current_vars); //out function
@@ -104,7 +43,5 @@ public:
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	stsvars math(int *y, std::vector<stsvars> vars);
 };
-
-
 
 #endif

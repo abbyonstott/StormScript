@@ -1,4 +1,4 @@
-#include "stsclasses.h"
+#include "../include/stormscript.h"
 
 string sts::runlibfunc(string name, int *line, std::vector<stsvars> vars) {
     int y = *line;
@@ -21,7 +21,7 @@ string sts::runlibfunc(string name, int *line, std::vector<stsvars> vars) {
             cmd0+=" ";
             if (prs[y].back()!=':') {
                 cmd0+="\'";
-                cmd0+=getval(vars, &y).valstring;
+                cmd0+=getval(vars, &y).val;
                 cmd0+="\'";
             }
             else {

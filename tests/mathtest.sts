@@ -1,7 +1,7 @@
 do{
-    int n: 3;
+    n: 3;
     printl n;
     printl n-1;
-    int x: n*20;
+    x: n*20;
     printl x, " ", x/3;
 }
