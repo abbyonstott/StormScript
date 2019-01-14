@@ -2,7 +2,7 @@
 lib system;
 
 do{
-    str cmd: arg[1];
+    cmd: arg[1];
 
     if cmd is "out"{
         printl "Hello, World!";
