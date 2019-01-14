@@ -5,17 +5,18 @@
 #include "includes.h"
 #include "core.h"
 
-class stsvars{
+class stsvars {
 public:
-	int valint = 0;
-	int length;
-	std::vector<stsvars> vals;
-	string valstring = "";
-	bool val, glob;
-	string name;
 	char type;
+	string val;
+
+	std::vector<stsvars> vals;
+
+	int length;
+	bool glob;
+	string name;
 
 	void assignlist(sts *script, std::vector<stsvars> vars, int *line);
 };
 
-#endif
+#endif // VARIABLES_H_

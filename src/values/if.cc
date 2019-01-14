@@ -6,7 +6,7 @@ void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
     y++;
     *line = y;
 
-    if (!getval(vars, line).val){
+    if (!toBool(getval(vars, line).val)){
         y++;
         while (prs[y] != "}") {
             y++;

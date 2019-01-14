@@ -4,7 +4,6 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
-
     if ((prs[y+1]=="+") || (prs[y+1]=="-") || (prs[y+1]=="*") || (prs[y+1]=="/")) {
         /* 
         This is math. It can add, subtract, multiply, and divide numbers and use them in print, definitions, and if statements.
@@ -16,28 +15,27 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         stsvars v1, v2;
         v.type='i';
 
-        if (isint(prs[y])) {
-            v1.valint = std::stoi(prs[y]);
-        }
+        if (isint(prs[y]))
+            v1.val = prs[y];
         else {
             for (int x = 0; x<vars.size(); x++) {
                 if (vars[x].name==prs[y])
                     v1 = vars[x];
             }
         }
-        if (isint(prs[y+2])) {
-            v2.valint = std::stoi(prs[y+2]);
-        }
+
+        if (isint(prs[y+2]))
+            v2.val = prs[y+2];
         else {
             for (int x = 0; x<vars.size(); x++) {
                 if (vars[x].name==prs[y+2])
                     v2 = vars[x];
             }
         }
-        v.valint = (
-            (prs[y+1]=="+") ? v1.valint + v2.valint : (
-                (prs[y+1]=="-") ? v1.valint - v2.valint : (
-                    (prs[y+1]=="/") ? v1.valint / v2.valint : v1.valint * v2.valint)));
+        v.val = std::to_string((
+            (prs[y+1]=="+") ? std::stoi(v1.val) + std::stoi(v2.val) : (
+                (prs[y+1]=="-") ? std::stoi(v1.val) - std::stoi(v2.val) : (
+                    (prs[y+1]=="/") ? std::stoi(v1.val) / std::stoi(v2.val) : std::stoi(v1.val) * std::stoi(v2.val)))));
         y+=2;
         *line = y;
         return v;
@@ -62,35 +60,34 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         else {
             *line = y;
             v.type = 'b';
-            v.val = cond;
+            v.val = ((cond) ? "true" : "false");
             return v;
         }
     }
 
     else if (isint(prs[y])) {
         v.type = 'i';
-        v.valint = std::stoi(prs[y]);
+        v.val = prs[y];
     }
+
     else if (prs[y].front() == '"') {
         v.type = 's';
-        if (prs[y].back() == '"') {
-            v.valstring = striplit(prs[y]);
-            if (isint(v.valstring))
-                v.valint = std::stoi(v.valstring);
-        }
+
+        if (prs[y].back() == '"')
+            v.val = striplit(prs[y]);
         else
             error(14, prs[y]);
-
-        v.length = v.valstring.size();
+    
+        v.length = v.val.size();
     }
     else if ((prs[y] == "true") || (prs[y]=="false")) {
         v.type = 'b';
-        v.val = (prs[y]=="true");
+        v.val = prs[y];
     }
     else if (prs[y+1]=="[") {
         string name = prs[y];
         y+=2;
-        int index = getval(vars, new int(y)).valint;
+        int index = std::stoi(getval(vars, new int(y)).val);
 
         for (int i = 0; i<vars.size() && vars[i-1].name != name; i++) {
             if (vars[i].name == name) {
@@ -99,8 +96,8 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                         v = vars[i].vals[index];
                     else if (vars[i].type == 's') {
                         v.type = 's';
-                        v.valstring = vars[i].valstring[index];
-                        if (index>=vars[i].valstring.size())
+                        v.val = vars[i].val[index];
+                        if (index>=vars[i].val.size())
                             throw std::bad_alloc(); // throw bad alloc if string is out of range.
                     }
                     else
@@ -137,10 +134,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     y++;
                     string output = runlibfunc(names[z], &y, vars);
                     v.type = ((isint(output)) ? 'i' : 's');
-                    if (v.type == 's')
-                        v.valstring = output;
-                    else
-                        v.valint = std::stoi(output);
+                    v.val = output;
                     y--;
                 }
             }

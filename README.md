@@ -44,7 +44,7 @@ tests/ | Files for testing that core functionality is not messed up.
 
 file | Description
 ---- | -----------
-[src/core/stormscript.cpp](src/core/stormscript.cpp) | This is where files are read.
-[src/core/errors.cpp](src/core/errors.cpp) | This is where all new errors are added.
-[src/parser/parse.cpp](src/parser/parse.cpp) | This is the parser.
-[src/interpreter/exec.cpp](src/interpreter/exec.cpp) | This is the function that interprets functions
+[src/core/stormscript.cc](src/core/stormscript.cc) | This is where files are read.
+[src/core/errors.cc](src/core/errors.cc) | This is where all new errors are added.
+[src/parser/parse.cc](src/parser/parse.cc) | This is the parser.
+[src/interpreter/exec.cc](src/interpreter/exec.cc) | This is the function that interprets functions

@@ -1,6 +1,6 @@
 type test{
-    bool x;
-    str y;
+    x;
+    y;
 }
 
 do{

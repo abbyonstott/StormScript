@@ -1,26 +1,27 @@
 cmake_minimum_required (VERSION 2.6)
 project (StormScript)
-set (CMAKE_CXX_FLAGS "--std=c++11")
+set (CMAKE_CXX_FLAGS "--std=c++17")
 add_executable(stormscript
-    src/core/stormscript.cpp
-    src/core/set.cpp
-    src/core/errors.cpp
-    src/core/runlibfunc.cpp
-    src/parser/parse.cpp
-    src/parser/read.cpp
-    src/parser/modules.cpp
-    src/interpreter/globscope.cpp
-    src/interpreter/exec.cpp
-    src/stream/io.cpp
-    src/stream/stsstream.cpp
-    src/values/stsdec.cpp
-    src/values/man.cpp
-    src/values/if.cpp
-    src/values/getvals.cpp
-    src/values/runfunc.cpp
-    src/values/compare.cpp
-    src/classes/dectype.cpp
-    src/classes/decmethod.cpp)
+    src/core/stormscript.cc
+    src/core/set.cc
+    src/core/errors.cc
+    src/core/runlibfunc.cc
+    src/parser/parse.cc
+    src/parser/read.cc
+    src/parser/modules.cc
+    src/interpreter/globscope.cc
+    src/interpreter/exec.cc
+    src/stream/io.cc
+    src/stream/stsstream.cc
+    src/values/stsdec.cc
+    src/values/man.cc
+    src/values/if.cc
+    src/values/getvals.cc
+    src/values/runfunc.cc
+    src/values/compare.cc
+    src/values/operations.cc
+    src/classes/dectype.cc
+    src/classes/decmethod.cc)
 set (StormScript_VERSION_MAJOR 0)
 set (StormScript_VERSION_MINOR 4)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)

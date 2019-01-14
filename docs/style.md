@@ -58,7 +58,7 @@ if  ((prs[y].back()==':') || (prs[y+4]==":")) {
     ...
 }
 ```
-source: [man.cpp](/values/man.cpp)
+source: [man.cc](/values/man.cc)
 
 
 ## Keywords

@@ -25,7 +25,7 @@ public:
 
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
-	stsvars declare(char type, int *line, std::vector<stsvars> *vars); //declare variables -
+	stsvars declare(int *line, std::vector<stsvars> *vars); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc, string filename); //read file
 	void print(int line, int *y, std::vector<stsvars> current_vars); //out function

@@ -17,35 +17,15 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
     if (val1.type == val2.type) {
         // compare based on conditional operator
         if (prs[y+1] == "is") {
-            switch (val1.type) {
-                case 's':
-                    v = (val1.valstring == val2.valstring);
-                    break;
-                case 'i':
-                    v = (val1.valint == val2.valint);
-                    break;
-                case 'b':
-                    v = (val1.val == val2.val);
-                    break;
-            }
+            v = (val1.val == val2.val);
         }
         else if (prs[y+1] == "not") {
-            switch (val1.type) {
-                case 's':
-                    v = (val1.valstring != val2.valstring);
-                    break;
-                case 'i':
-                    v = (val1.valint != val2.valint);
-                    break;
-                case 'b':
-                    v = (val1.val != val2.val);
-                    break;
-            }
+            v = (val1.val != val2.val);
         }
         else if (prs[y+1] == "greater") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.valint > val2.valint);
+                    v = (val1.val > val2.val);
                     break;
                 case 's':
                 case 'b':
@@ -56,7 +36,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "greatereq") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.valint >= val2.valint);
+                    v = (val1.val >= val2.val);
                     break;
                 case 's':
                 case 'b':
@@ -66,7 +46,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "less") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.valint < val2.valint);
+                    v = (val1.val < val2.val);
                     break;
                 case 's':
                 case 'b':
@@ -77,7 +57,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "lesseq") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.valint <= val2.valint);
+                    v = (val1.val <= val2.val);
                     break;
                 case 's':
                 case 'b':
@@ -88,11 +68,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
     }
     else {
         // give error with value based on type
-        program->error(9, ((val2.type == 'i') ? std::to_string(val2.valint) : 
-            ((val2.type=='s') ? val2.valstring : 
-                ((val2.val == true) ? "true" : "false")
-            ))
-        );
+        program->error(9, val2.val);
     }
 
     return v;
