@@ -11,8 +11,8 @@ void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
         while (prs[y] != "}") {
             y++;
             if (prs[y+1] == "else") {
-                if (prs[y+1] == "if") {
-                    y++;
+                if (prs[y+2] == "if") {
+                    y+= 2;
                     ifs(&y, &endreq, vars);
                     break;
                 }
@@ -23,9 +23,8 @@ void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
             }
         }
     }
-    else{
+    else
         y+=3;
-    }
 
     *line = y;
     *endr = endreq;

@@ -14,7 +14,7 @@ C++ has the strictest rules when it comes to styling as it makes up the majority
 ## Includes
 **YOU MUST FOLLOW THIS**
 
-All includes must go at the top of [stsclasses.h](/core/stsclasses.h).
+All includes must go at the top of [includes.h](/src/include/includes.h).
 
 ## Formatting
 The general rule of formatting here is not to use more lines than you need to make it readable.
@@ -32,7 +32,7 @@ for (int i = 0; i<=number; i++) {
 }
 ```
 
-If you are using multiple lines in your scope, always include braces.
+If you are using multiple lines in your scope, always include an opening brace on the same line.
 
 ```cpp
 for (int i = 0; i<=number; i++) {
@@ -43,12 +43,14 @@ for (int i = 0; i<=number; i++) {
 rather than
 ```cpp
 for (int i = 0; i<=number; i++)
+{
     cout << "Hi there.\n";
     foo(bar);
+}
 ```
 **Always put braces on the same line as the statement with a space separating them**
 
-## SubScripts
+## Sub Scripts
 
 Use `string::back()` and `string::front()` when applicable
 
@@ -58,7 +60,7 @@ if  ((prs[y].back()==':') || (prs[y+4]==":")) {
     ...
 }
 ```
-source: [man.cc](/values/man.cc)
+source: [man.cc](/src/values/man.cc)
 
 
 ## Keywords

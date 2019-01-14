@@ -97,7 +97,6 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             while (prs[y] != "}") {
                 y++;
             }
-            y--;
         }
         else if (prs[y]=="sys")
             sys(&y, vars);

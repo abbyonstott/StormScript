@@ -1,4 +1,12 @@
 do{
     x: 4;
-    x-: 3;
+    printl "Hello, World!";
+
+    if x is 3 {
+        printl "hi";
+    }else if x is 4 {
+        printl "hi there";
+    }else {
+        printl "bye";
+    }
 }
