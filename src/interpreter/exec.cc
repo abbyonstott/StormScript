@@ -1,11 +1,12 @@
 #include "../include/stormscript.h"
 
-void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects) { // how each command is executed
+void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects, std::vector<stsvars> *variables) { // how each command is executed
     std::vector<stsvars> vars;
     std::vector<stsclasstype> classtypes;
     std::vector<string> originalnames;
     stsclasstype ct;
-    vars = globvars;
+    vars = *variables;
+    vars.insert(vars.end(), globvars.begin(), globvars.end());
     int y = ((prs[*x]=="do") ? *x+1 : *x);
     bool looped=0;
     int endreq = 1;
@@ -87,14 +88,45 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             vars.back().val = std::to_string(vars[vars.size()-2].length);
             vars.back().type = 'i';
         }
-        else if ((prs[y]=="if")) {
+        else if (prs[y] == "while") {
+            whileloop(this, vars, y);
+            y++;
+
+            // this will iterate over y until it is the end of the while scope
+
+            int e = 1;
+            while (e != 0) {
+                if ((prs[y] == "if") || (prs[y] == "while"))
+                    e++;
+                else if (prs[y] == "else") {
+                    e++;
+                    if (prs[y+1] == "if")
+                        y++;
+                }
+                else if (prs[y] == "}")
+                    e--;
+                y++;
+            }
+        }
+        else if (prs[y]=="if") {
             endreq+=1;
             ifs(&y, &endreq, vars);
             if (prs[y]!="else")
                 y--;
         }
         else if (prs[y] == "else") {
-            while (prs[y] != "}") {
+            y++;
+            int e = 1;
+            while (e != 0) {
+                if ((prs[y] == "if") || (prs[y] == "while"))
+                    e++;
+                else if (prs[y] == "else") {
+                    e++;
+                    if (prs[y+1] == "if")
+                        y++;
+                }
+                else if (prs[y] == "}")
+                    e--;
                 y++;
             }
         }
@@ -134,6 +166,8 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                     }
                 }
             }
+            for (int i = 0; i<variables->size(); i++)
+                variables->at(i) = vars[i];
 
             endreq--;
             if (endreq==0)
