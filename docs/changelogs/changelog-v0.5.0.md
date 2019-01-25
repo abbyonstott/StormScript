@@ -2,3 +2,4 @@
 
 ## What's New
 * `while` can be used to make while loops
+* New Escape Characters, `\t` and `\\`

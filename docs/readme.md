@@ -33,7 +33,7 @@ do{
   f => x: "hi";
 }
 ```
-Another example of this is the `|` symbol, which is usually used as a separator. In StormScript, the `|` symbol tells the intepreter to find a property. For example:
+Another example of this is the `|` symbol, which is usually used as a separator. In StormScript, the `|` symbol tells the interpreter to find a property. For example:
 
 ```
 type person{
@@ -54,4 +54,4 @@ do{
 }
 
 ```
-In  StormScript, the `is` keyword replaces the `==` symbol and `not` replaces the `!=` symbol.
+In StormScript, the `is` keyword replaces the `==` symbol and `not` replaces the `!=` symbol.
