@@ -36,12 +36,14 @@ public:
 	void addmodule(int *ln);
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
-	void exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects);
+	void exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects, std::vector<stsvars> *variables);
 	void runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	void set(string command, string setto, int x); // set command
 	string runlibfunc(string name, int *line, std::vector<stsvars> vars); // run library function
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	stsvars math(int *y, std::vector<stsvars> vars);
 };
+
+std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int y);
 
 #endif

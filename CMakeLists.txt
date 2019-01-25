@@ -13,6 +13,7 @@ add_executable(stormscript
     src/interpreter/exec.cc
     src/stream/io.cc
     src/stream/stsstream.cc
+    src/stream/loops.cc
     src/values/stsdec.cc
     src/values/man.cc
     src/values/if.cc
