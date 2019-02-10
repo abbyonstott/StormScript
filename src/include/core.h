@@ -14,7 +14,6 @@ public:
 	int lineon; //line the parser is on
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<stsfunc> functions; //functions
-	std::vector<string> names; //imported libraries
 	std::vector<string> prg; //unparsed program
 	std::vector<string> prs; //parsed program
 	std::vector<stsvars> globvars; //global variables
@@ -33,7 +32,6 @@ public:
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);
 	void interp(string fname, int psize, char *argv[], int argc);
-	void addmodule(int *ln);
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
 	void exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects, std::vector<stsvars> *variables);

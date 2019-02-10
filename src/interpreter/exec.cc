@@ -53,13 +53,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                 continue;
             }
             prs = parse(prg);
-
-            if (prs[y]=="lib") {
-                y++;
-                names.push_back(prs[y]);
-                y++;
-            }
-            else if (prs[y]=="set") {
+            if (prs[y]=="set") {
                 y++;
                 set(prs[y], prs[y+2], y);
             }
