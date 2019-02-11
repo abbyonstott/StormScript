@@ -77,22 +77,6 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         }
     }
 
-    // find in libfuncs
-    if (names.size()!=0){
-        for (int z = 0; z<=names.size()-1 && names[z-1]!=prs[y]; z++){
-            if (names[z]==prs[y]) {
-                y++;
-                runlibfunc(names[z], &y, vars);
-
-                *ln = y;
-                *classtypes = ct;
-                *pvars = vars;
-                
-                return true;
-            }
-        }
-    }
-
     if (functions.size()>0){
         bool isfunc = false;
 

@@ -5,10 +5,8 @@ add_executable(stormscript
     src/core/stormscript.cc
     src/core/set.cc
     src/core/errors.cc
-    src/core/runlibfunc.cc
     src/parser/parse.cc
     src/parser/read.cc
-    src/parser/modules.cc
     src/interpreter/globscope.cc
     src/interpreter/exec.cc
     src/stream/io.cc
