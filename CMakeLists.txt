@@ -1,6 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
 project (StormScript)
-set (CMAKE_CXX_FLAGS "--std=c++17")
 add_executable(stormscript
     src/core/stormscript.cc
     src/core/set.cc
@@ -22,5 +21,5 @@ add_executable(stormscript
     src/classes/dectype.cc
     src/classes/decmethod.cc)
 set (StormScript_VERSION_MAJOR 0)
-set (StormScript_VERSION_MINOR 4)
+set (StormScript_VERSION_MINOR 5)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)

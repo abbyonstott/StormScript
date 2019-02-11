@@ -6,3 +6,4 @@
 * Windows version
 * Modules have been removed due to compatibility issues
 * Libraries have been removed due to compatibility issues
+* New scripts folder for build scripts
