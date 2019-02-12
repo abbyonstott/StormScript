@@ -1,11 +1,12 @@
 #!/bin/bash
+cd ..
 rm -r release/*
 echo "What is the version number (Formatted M.m.p):"
 read vnum
 
 echo "Packaging stormscript v$vnum for release."
 
-cmake CMakeLists.txt
+cmake CMakeLists.txt -DCMAKE_CXX_COMPILER:STRING="g++"
 make
 install stormscript build/stormscript
 rm stormscript
@@ -42,7 +43,6 @@ cd stormscript_v$vnum
 
 cp ../../CMakeLists.txt .
 cp -r ../../src .
-cp -r ../../api .
 cp ../../build-scripts/* .
 
 echo "Compressing folder stormscript_v$vnum."

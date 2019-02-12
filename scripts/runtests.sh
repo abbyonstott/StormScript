@@ -1,4 +1,5 @@
 #!/bin/bash
+cd ..
 cmake CMakeLists.txt
 make
 install stormscript build/stormscript

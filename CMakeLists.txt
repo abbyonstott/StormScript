@@ -22,5 +22,5 @@ add_executable(stormscript
     src/classes/dectype.cc
     src/classes/decmethod.cc)
 set (StormScript_VERSION_MAJOR 0)
-set (StormScript_VERSION_MINOR 4)
+set (StormScript_VERSION_MINOR 5)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)
