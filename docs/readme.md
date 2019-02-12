@@ -1,13 +1,5 @@
 # About
 
-## Table of Contents
-* [Why is this special?](#why-is-this-special)
-* [How to Build](#how-to-build)
-* [Layout](#layout)
-* [Files You Should Know](#files-you-should-know)
-
-## Why is this special?
-
 StormScript is important not because it presents 1 or 2 revolutionary ideas that change your usual workflow, but because it changes almost everything about common programming syntax to make it easier to read and write. **This may seem more like a problem at first,** but I believe that StormScript changes programming syntax *for the better.* Here are a few examples:
 
 1. Keywords
