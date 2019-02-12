@@ -20,9 +20,11 @@ You can then add it to path or install it to /usr/bin.
 
 ## Windows
 
-Run CMake (GUI or CLI) output should be a MakeFile
+Make sure you have MinGW-make installed
 
-Make sure you have mingw-make installed and run that.
+Run CMake GUI, and configure for MinGW-make
+
+output should be a MakeFile, run mingw-make in that directory.
 
 ## Visual Studio Code
 
