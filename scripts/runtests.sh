@@ -1,4 +1,5 @@
 #!/bin/bash
+cd ..
 cmake CMakeLists.txt
 make
 install stormscript build/stormscript
@@ -29,7 +30,7 @@ for i in $( ls | grep .sts ); do
     else
         echo Test $B failed:
         echo expected$'\n'$(echo `cat outputs/$i.txt`)$'\n'got$'\n'$(echo `../build/stormscript $i`)
-        break
+        exit 1
     fi
     
     B=$(($B+1))

@@ -14,21 +14,10 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
     }
     
     for (int x = 0; x<prs.size(); x++){
-        if (prs[x]=="lib"){
-            names.resize(names.size()+1);
-            x++;
-            names[names.size()-1]=prs[x];
-        }
 
-
-        else if (prs[x]=="type") { // declares a class
+        if (prs[x]=="type") { // declares a class
             classes.resize(classes.size()+1);
             classes[classes.size()-1].declare(&x, this);
-        }
-
-        else if (prs[x]=="mod") {
-            x++;
-            addmodule(&x);
         }
 
         else if (prs[x]=="set") {
@@ -70,7 +59,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                 x+=2;
         }
         else if (prs[x]=="do"){
-            exec(&x, ((psize==-1) ? -2 : -1), {}, {});
+            exec(&x, ((psize==-1) ? -2 : -1), {}, {}, new std::vector<stsvars>({}));
         }
         else if ((prs[x]!=";") && (prs[x][0]!='\0')){
             error(1, prs[x]);

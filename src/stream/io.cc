@@ -6,9 +6,19 @@ void sts::print(int line, int *y, std::vector<stsvars> current_vars){ //handles 
     string value = v.val;
     
     for (int x = 0; x<=value.size(); x++) {
-        if ((value[x]=='\\') && (value[x+1]=='n')){
-            value.pop_back();
-            value[x]='\n';
+        if (value[x] == '\\') {
+            if (value[x+1]=='n') {
+                value.erase(value.begin() + x);
+                value[x]='\n';
+            }
+            else if (value[x+1] == '\\') {
+                value.erase(value.begin() + x);
+                value[x]='\\';
+            }
+            else if (value[x+1] == 't') {
+                value.erase(value.begin() + x);
+                value[x]='\t';
+            }
         }
     }
 
