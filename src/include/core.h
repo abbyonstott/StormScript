@@ -41,6 +41,7 @@ public:
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	stsvars math(int *y, std::vector<stsvars> vars);
 	void readfile(int y, stsvars *v); // file reading operations
+	void writefile(int y); // file writing operations
 };
 
 std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int y);

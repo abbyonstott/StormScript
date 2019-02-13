@@ -1,4 +1,5 @@
 do{
-    x: read "example.txt";
-    printl x;
+    write "example.txt" "hello, world";
+    printl read "example.txt";
+    write "example.txt" "";
 }

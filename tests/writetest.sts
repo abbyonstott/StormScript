@@ -1,0 +1,5 @@
+do{
+    write "etc/example.txt" "hello, world";
+    printl read "etc/example.txt";
+    write "etc/example.txt" "";
+}       

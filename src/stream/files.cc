@@ -24,3 +24,11 @@ void sts::readfile(int y, stsvars *v) {
 
     v->val = contents;
 }
+
+void sts::writefile(int y) {
+    std::ofstream file;
+    string name = striplit(prs[y]);
+    file.open(name);
+    file.write(striplit(prs[y+1]).c_str(), striplit(prs[y+1]).size());
+    file.close();
+}
