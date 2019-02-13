@@ -13,6 +13,8 @@ steps:
 - script: |
     cmake CMakeLists.txt;
     make;
+    mkdir build;
+    mv stormscript build;
     cd scripts;
     ./runtests.sh
   displayName: 'make'
