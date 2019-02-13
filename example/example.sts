@@ -1,8 +1,4 @@
 do{
-    x: 3;
-    y: 10;
-    while x not y {
-        x+: 1;
-        printl x;
-    }
+    x: read "example.txt";
+    printl x;
 }

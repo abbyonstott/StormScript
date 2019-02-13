@@ -1,0 +1,4 @@
+do{
+    x: read "etc/readtest.txt";
+    printl x;
+}
