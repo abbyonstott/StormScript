@@ -12,6 +12,7 @@ add_executable(stormscript
     src/stream/io.cc
     src/stream/stsstream.cc
     src/stream/loops.cc
+    src/stream/files.cc
     src/values/stsdec.cc
     src/values/man.cc
     src/values/if.cc
@@ -22,5 +23,5 @@ add_executable(stormscript
     src/classes/dectype.cc
     src/classes/decmethod.cc)
 set (StormScript_VERSION_MAJOR 0)
-set (StormScript_VERSION_MINOR 5)
+set (StormScript_VERSION_MINOR 6)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)

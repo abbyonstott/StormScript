@@ -65,6 +65,13 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         }
     }
 
+    else if (prs[y] == "read") {
+        y++;
+        readfile(y, &v);
+        *line = y;
+        return v;
+    }
+
     else if (isint(prs[y])) {
         v.type = 'i';
         v.val = prs[y];
