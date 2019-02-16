@@ -57,7 +57,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                     x++;
                     endreq++;
                 }
-                else if (prs[x] == "if") {
+                else if ((prs[x] == "if") || (prs[x] == "while")) {
                     x++;
                     endreq++;
                 }
