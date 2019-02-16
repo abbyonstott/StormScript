@@ -12,6 +12,7 @@ steps:
     rm stormscript
   displayName: 'Build'
 - script: |
+    cd tests;
     for i in $(ls); do
       touch outputs/$i.txt;
       echo $(../build/stormscript $i) > outputs/$i.txt;
