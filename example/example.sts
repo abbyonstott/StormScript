@@ -1,5 +1,13 @@
+func f {
+    if "hi" is "bye" {
+        printl "hi";
+    }
+    else {
+        printl "bye";
+    }
+}
+
+
 do{
-    write "example.txt" "hello, world";
-    printl read "example.txt";
-    write "example.txt" "";
+    f;
 }
