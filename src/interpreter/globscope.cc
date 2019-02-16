@@ -48,11 +48,21 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             functions.back().linestarted=x;
             int endreq = 1;
             while (endreq != 0) {
-                if ((prs[x]=="}") || (prs[x]=="loop"))
+                if (prs[x] == "}")
                     endreq--;
-                else if (prs[x] == "{")
+                    
+                if (prs[x] == "else") {
+                    if (prs[x+1] == "if")
+                        x++;
+                    x++;
                     endreq++;
-                x++;
+                }
+                else if ((prs[x] == "if") || (prs[x] == "while")) {
+                    x++;
+                    endreq++;
+                }
+                else
+                    x++;
             }
             x--;
             if (prs[x]=="loop")

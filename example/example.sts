@@ -1,5 +1,15 @@
-do{
-    write "example.txt" "hello, world";
-    printl read "example.txt";
-    write "example.txt" "";
+func converttolist => word {
+    wlist: [];
+    wlen: word|length;
+    x: 0;
+
+    while x less wlen {
+        printl word[x];
+        x+: 1;
+    }
+}
+
+do {
+    x: "hi";
+    converttolist => word: x;
 }
