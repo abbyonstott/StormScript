@@ -8,6 +8,7 @@ steps:
 - script: |
     cmake .;
     make;
+    mkdir build;
     install stormscript build/stormscript;
     rm stormscript
   displayName: 'Build'
