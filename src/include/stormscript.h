@@ -7,7 +7,10 @@
 #else
 #define PLATFORM "other"
 #endif
-
+/*
+NOTE:
+Place All StormScript headers here separated by 2 lines.
+*/
 #include "includes.h"
 
 
@@ -21,6 +24,9 @@
 
 
 #include "functions.h"
+
+
+#include "includes.h"
 
 using std::cout;
 

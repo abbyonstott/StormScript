@@ -7,6 +7,7 @@ add_executable(stormscript
     src/core/errors.cc
     src/parser/parse.cc
     src/parser/read.cc
+    src/parser/mods.cc
     src/interpreter/globscope.cc
     src/interpreter/exec.cc
     src/stream/io.cc

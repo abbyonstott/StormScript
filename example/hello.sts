@@ -1,0 +1,3 @@
+func hello {
+    printl "hello, world"
+}

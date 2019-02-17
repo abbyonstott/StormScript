@@ -1,4 +1,4 @@
-#include "../include/core.h"
+#include "../include/stormscript.h"
 
 void sts::readfile(int y, stsvars *v) {
     v->type = 's';

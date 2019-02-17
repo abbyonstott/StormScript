@@ -1,15 +1,5 @@
-func converttolist => word {
-    wlist: [];
-    wlen: word|length;
-    x: 0;
-
-    while x less wlen {
-        printl word[x];
-        x+: 1;
-    }
-}
+mod hello;
 
 do {
-    x: "hi";
-    converttolist => word: x;
+    hello;
 }
