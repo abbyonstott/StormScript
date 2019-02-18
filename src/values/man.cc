@@ -85,6 +85,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
 
         if (isfunc) {
             runfunc(&vars, &ct, &y);
+            y++;
             *ln = y;
             *classtypes = ct;
             *pvars = vars;

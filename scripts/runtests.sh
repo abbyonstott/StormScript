@@ -1,7 +1,7 @@
 #!/bin/bash
 cd ..
 cmake CMakeLists.txt
-make
+make $1
 install stormscript build/stormscript
 rm stormscript
 printf "\n \n \n"
