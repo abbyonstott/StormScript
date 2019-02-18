@@ -2,6 +2,7 @@
 
 ## What's new
 * StormScript can now read and write to files
+* StormScript now has modules, which allow you to run functions from other StormScript files.
 
 ## What's Fixed
 * else and else if statements were broken
