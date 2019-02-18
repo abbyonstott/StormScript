@@ -68,6 +68,13 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             if (prs[x]=="loop")
                 x+=2;
         }
+        else if (prs[x] == "mod") {
+            //cout << 
+            std::vector<string> mod = readmod(prs[x+1]);
+            std::vector<string>::iterator it = prs.begin();
+            prs.insert(it + 3, mod.begin(), mod.end());
+            x += 2;
+        }
         else if (prs[x]=="do"){
             exec(&x, ((psize==-1) ? -2 : -1), {}, {}, new std::vector<stsvars>({}));
         }
