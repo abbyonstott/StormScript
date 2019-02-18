@@ -83,9 +83,11 @@ do{
 }
 ```
 not:
+```
 do{
     y: 2;
     x: y less 3 ? "yes" : "no";
 
     printl x;
 }
+```
