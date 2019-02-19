@@ -121,7 +121,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             }
         }
 
-        y++;
+        y+= 3;
     }
 
     else {

@@ -74,9 +74,8 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             writefile(y);
             y+= 2;
         }
-        else if (prs[y]=="exit") {
+        else if (prs[y]=="exit")
             exit(0);
-        }  
         else if (prs[y]=="in") {
             vars.resize(vars.size()+1);
             y++;

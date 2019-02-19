@@ -75,14 +75,11 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
             prs.insert(it + 3, mod.begin(), mod.end());
             x += 2;
         }
-        else if (prs[x]=="do"){
+        else if (prs[x]=="do")
             exec(&x, ((psize==-1) ? -2 : -1), {}, {}, new std::vector<stsvars>({}));
-        }
-        else if (prs[x].back() == ':') {
+        else if (prs[x].back() == ':')
             globvars.push_back(declare(&x, &globvars));
-        }
-        else if ((prs[x]!=";") && (prs[x][0]!='\0')){
+        else if ((prs[x]!=";") && (prs[x][0]!='\0'))
             error(1, prs[x]);
-        }
     }
 }   

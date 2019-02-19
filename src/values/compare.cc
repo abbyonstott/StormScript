@@ -11,9 +11,15 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
 
     stsvars val1 = prg.getval(vars, new int(0));
 
-    prg.prs = { program->prs[y+2] };
-    stsvars val2 = prg.getval(vars, new int(0));
+    if (program->prs[y+3] != "[")
+        prg.prs = { program->prs[y+2] };
+    else {
+        prg.prs = { program->prs[y+2], program->prs[y+3], program->prs[y+4] };
+        y+=2;
+    }
 
+    stsvars val2 = prg.getval(vars, new int(0));
+    
     if (val1.type == val2.type) {
         // compare based on conditional operator
         if (prs[y+1] == "is") {
@@ -70,6 +76,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         // give error with value based on type
         program->error(9, val2.val);
     }
+    *ln = y;
 
     return v;
 }

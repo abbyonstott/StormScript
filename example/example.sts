@@ -1,7 +1,10 @@
-x: 3;
+word: "";
 
-do{
-    printl x;
-    x+: 2;
-    printl x;
+do {
+    word: "hi";
+    other: "h";
+
+    if other is word[0]{
+        printl other;
+    }
 }
