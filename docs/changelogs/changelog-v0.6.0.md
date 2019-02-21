@@ -11,3 +11,4 @@
 * Functions run at the end of other functions caused segmentation faults due to failing to parse a semicolon
 * Global variables couldn't be declared
 * comparisons using subscripts were broken
+* length did not change on modification

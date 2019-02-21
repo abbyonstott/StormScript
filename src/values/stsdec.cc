@@ -34,6 +34,10 @@ stsvars sts::declare(int *line, std::vector<stsvars> *vars) { //variable declara
         new_var.type = 'l';
         new_var.assignlist(this, *vars, line);
     }
+    else if (isint(prs[y]))
+        new_var.type = 'i';
+    else if ((prs[y] == "true") || (prs[y] == "false")) 
+        new_var.type = 'b';
     // bad idea to pop back the line, just pop back the var
 
     type = new_var.type;

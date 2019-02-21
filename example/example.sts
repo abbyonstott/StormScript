@@ -1,10 +1,6 @@
-word: "";
-
-do {
-    word: "hi";
-    other: "h";
-
-    if other is word[0]{
-        printl other;
-    }
+do{
+    x: "hi";
+    printl x|length;
+    x: "hello";
+    printl x|length;    
 }

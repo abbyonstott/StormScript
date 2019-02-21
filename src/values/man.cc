@@ -30,9 +30,20 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
 
         if (!isvar(pvars, *name, index))
             pvars->push_back(declare(ln, pvars));
-        else
+        else {
             pvars->at(*index).val = getval(vars, new int(y+1)).val;
-        
+            if ((pvars->at(*index).type == 's') || (pvars->at(*index).type == 'l')) {
+                int *ind = new int(0);
+
+                // change length value of variable
+                if (isvar(pvars, pvars->at(*index).name + "|length", ind)) {
+                    pvars->at(*index).length = ((pvars->at(*index).type == 's') ? 
+                        pvars->at(*index).val.size() : pvars->at(*index).vals.size());
+                    pvars->at(*ind).val = std::to_string(pvars->at(*index).length);
+                }
+            }
+        }
+
         while (prs[y]!=";")
             y++;
 
