@@ -1,6 +1,11 @@
+x: "";
+
+func getlength {
+    printl x|length, x;
+}
+
 do{
     x: "hi";
     printl x|length;
-    x: "hello";
-    printl x|length;    
+    getlength;
 }

@@ -156,7 +156,6 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                     }
                 }
             }
-
             for (int i = 0; i<ct.indexes.size(); i++) {
                 for (int z = 0; z<vars.size(); z++) {
                     if (vars[z].name == ct.tpe.variables[i].name) {

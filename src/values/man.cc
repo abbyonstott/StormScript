@@ -12,8 +12,10 @@ bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
 
     for (int i = 0; i < pvars->size() && !isvar; i++) {
         isvar = (pvars->at(i).name == query);
-        *num = i;
+        if (isvar)
+            *num = i;
     }
+
     return isvar;
 }
 
@@ -40,8 +42,14 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                     pvars->at(*index).length = ((pvars->at(*index).type == 's') ? 
                         pvars->at(*index).val.size() : pvars->at(*index).vals.size());
                     pvars->at(*ind).val = std::to_string(pvars->at(*index).length);
+                    
+                    if (pvars->at(*index).glob)
+                        globvars[*ind] = pvars->at(*ind);
                 }
+            
             }
+            if (pvars->at(*index).glob)
+                globvars[*index] = pvars->at(*index);
         }
 
         while (prs[y]!=";")
@@ -82,6 +90,15 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 else
                     error(9, prs[y]);
             }
+            if (pvars->at(*num).glob) {
+                int *size_num = new int(-1);
+
+                globvars[*num] = pvars->at(*num);
+
+                if (isvar(pvars, pvars->at(*num).name + "|length", size_num))
+                    globvars[*size_num] = pvars->at(*size_num);
+            }
+
             y += 3;
             *ln = y;
             return true;
