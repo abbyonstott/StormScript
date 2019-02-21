@@ -22,12 +22,10 @@ std::vector<string> readmod(string name) {
     s.prg.resize(s.prg.size() + 1);
 
     for (int i = 0; i < contents.size(); i++) {
-        if (contents[i] == '\n') {
+        if (contents[i] == '\n')
             s.prg.resize(s.prg.size() + 1);
-        }
-        else {
+        else
             s.prg.back() += contents[i];
-        }
     }
 
     return s.parse(s.prg);

@@ -1,5 +1,11 @@
-mod hello;
+x: "";
 
-do {
-    hello;
+func getlength {
+    printl x|length, x;
+}
+
+do{
+    x: "hi";
+    printl x|length;
+    getlength;
 }

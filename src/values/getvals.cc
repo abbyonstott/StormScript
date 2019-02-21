@@ -40,7 +40,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         *line = y;
         return v;
     }
-    else if ((prs[y+1] == "is") || (prs[y+1] == "not") || (prs[y+1] == "greater") || (prs[y+1] == "greatereq") || (prs[y+1] == "less") || (prs[y+1] == "lesseq")) {
+    else if (((prs[y+1] == "is") || (prs[y+1] == "not") || (prs[y+1] == "greater") || (prs[y+1] == "greatereq") || (prs[y+1] == "less") || (prs[y+1] == "lesseq")) || ((prs[y+1]=="[") && ((prs[y+4] == "is") || (prs[y+4] == "not") || (prs[y+4] == "greater") || (prs[y+4] == "greatereq") || (prs[y+4] == "less") || (prs[y+4] == "lesseq")))) {
         bool cond  = condition(this, &y, vars);
         // check if ternary;
         y+=2;
@@ -121,7 +121,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             }
         }
 
-        y++;
+        y+= 3;
     }
 
     else {

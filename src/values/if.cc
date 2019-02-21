@@ -7,6 +7,7 @@ void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
     *line = y;
 
     if (!toBool(getval(vars, line).val)){
+        y = *line;
         y++;
         while (prs[y] != "}") {
             y++;
@@ -23,8 +24,14 @@ void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
             }
         }
     }
-    else
-        y+=3;
+    else {
+        y = *line;
+        
+        if (prs[y-1] == "[")
+            y+= 2;
+        else
+            y++;
+    }
 
     *line = y;
     *endr = endreq;

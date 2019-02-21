@@ -74,9 +74,8 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             writefile(y);
             y+= 2;
         }
-        else if (prs[y]=="exit") {
+        else if (prs[y]=="exit")
             exit(0);
-        }  
         else if (prs[y]=="in") {
             vars.resize(vars.size()+1);
             y++;
@@ -157,7 +156,6 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                     }
                 }
             }
-
             for (int i = 0; i<ct.indexes.size(); i++) {
                 for (int z = 0; z<vars.size(); z++) {
                     if (vars[z].name == ct.tpe.variables[i].name) {
