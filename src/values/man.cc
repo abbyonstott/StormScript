@@ -19,7 +19,7 @@ bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
     return isvar;
 }
 
-bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
+bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int *ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
