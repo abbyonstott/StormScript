@@ -12,3 +12,4 @@
 * Global variables couldn't be declared
 * comparisons using subscripts were broken
 * length did not change on modification
+* `stsvars::glob` was considered to be true by some compilers, causing crash

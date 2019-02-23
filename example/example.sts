@@ -1,11 +1,8 @@
-x: "";
-
-func getlength {
-    printl x|length, x;
-}
-
 do{
-    x: "hi";
-    printl x|length;
-    getlength;
+    x: 3;
+    y: 10;
+    while x not y {
+        x+: 1;
+        printl x;
+    }
 }
