@@ -28,6 +28,9 @@ Place All StormScript headers here separated by 2 lines.
 
 #include "modules.h"
 
+
+#include "stsrand.h"
+
 using std::cout;
 
 // for the most part, it is a better idea to use functions outside of the sts class
