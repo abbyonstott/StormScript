@@ -73,10 +73,18 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     }
 
     else if (prs[y] == "randomrange") {
-        cout << genrandomintfromrange(prs, &y) << "\n";
+        v.type = 'i';
+        v.val = std::to_string(genrandomintfromrange(prs, &y));
+        *line = y;
         return v;
     }
 
+    else if (prs[y] == "random") {
+        v.type = 'b';
+        v.val = ((randombool()) ? "true" : "false");
+        return v;
+    }
+    
     else if (isint(prs[y])) {
         v.type = 'i';
         v.val = prs[y];

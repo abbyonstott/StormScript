@@ -3,6 +3,7 @@
 ## What's new
 * StormScript can now read and write to files
 * StormScript now has modules, which allow you to run functions from other StormScript files.
+* use `random` to generate a random bool
 * use `randomrange => min, max;` to generate a random integer in range min, max
 
 ## What's Fixed
