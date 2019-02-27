@@ -6,6 +6,7 @@
 
 #include "variables.h"
 
+
 int genrandomintfromrange(std::vector<string> prs, int *line);
 
 #endif

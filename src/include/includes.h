@@ -5,6 +5,8 @@
 #include <cctype>
 #include <cstdlib>
 #include <memory>
+#include <random>
+#include <time.h>
 
 /*
 Let's forward declare these classes for the files that use them
