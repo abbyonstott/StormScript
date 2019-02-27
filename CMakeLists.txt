@@ -21,6 +21,7 @@ add_executable(stormscript
     src/values/runfunc.cc
     src/values/compare.cc
     src/values/operations.cc
+    src/values/random.cc
     src/classes/dectype.cc
     src/classes/decmethod.cc)
 set (StormScript_VERSION_MAJOR 0)
