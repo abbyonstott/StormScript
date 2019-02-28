@@ -131,6 +131,12 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         }
         else if (prs[y]=="sys")
             sys(&y, vars);
+        else if (prs[y] == "wait") {
+            string cmd = "sleep ";
+            cmd += prs[y+1];
+            system(cmd.c_str());
+            y++;
+        }
         else if ((prs[y]=="}") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
