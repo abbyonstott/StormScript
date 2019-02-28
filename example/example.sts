@@ -1,3 +1,4 @@
 do{
-    printl random;
+    x: 50;
+    printl randomrange => min: 0, max: x;
 }
