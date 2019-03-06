@@ -2,7 +2,7 @@
 #ifndef STSCLASSES_H_
 #define STSCLASSES_H_
 
-#if defined(_WIN32)
+#if defined(__MINGW32__)
 #define PLATFORM "Windows"
 #include <windows.h>
 #else
