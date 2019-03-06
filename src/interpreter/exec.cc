@@ -132,7 +132,10 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         else if (prs[y]=="sys")
             sys(&y, vars);
         else if (prs[y] == "wait") {
-            sleep(std::stoi(getval(vars, new int(y+1)).val));
+            if (PLATFORM == "Windows")
+                Sleep(std::stoi(getval(vars, new int(y+1)).val));
+            else
+                sleep(std::stoi(getval(vars, new int(y+1)).val));
             y++;
         }
         else if ((prs[y]=="}") || (prs[y]=="loop")) {
