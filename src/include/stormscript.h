@@ -8,7 +8,7 @@
 
 void sleep(unsigned int seconds) {
     Sleep(seconds * 1000);
-} // define 2 different sleep functions for windows and POSIX systems
+} 
 #else
 #define PLATFORM "other"
 #include <unistd.h>
