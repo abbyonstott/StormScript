@@ -1,4 +1,5 @@
 do{
-    x: 50;
-    printl randomrange => min: 0, max: x;
+    printl "Waiting";
+    wait 10;
+    printl "I waited for 10 seconds";
 }
