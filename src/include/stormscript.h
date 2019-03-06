@@ -5,10 +5,6 @@
 #if defined(_WIN32)
 #define PLATFORM "Windows"
 #include <windows.h>
-
-void sleep(unsigned int seconds) {
-    Sleep(seconds * 1000);
-} 
 #else
 #define PLATFORM "other"
 #include <unistd.h>
