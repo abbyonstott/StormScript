@@ -5,6 +5,7 @@
 * StormScript now has modules, which allow you to run functions from other StormScript files.
 * use `random` to generate a random bool
 * use `randomrange => min, max;` to generate a random integer in range min, max
+* use `wait INT` to sleep for `INT` seconds
 
 ## What's Fixed
 * else and else if statements were broken
