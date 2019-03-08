@@ -19,7 +19,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             if (vars.back().type == 's') {
                 vars.push_back(stsvars());
                 vars.back().name = functions[function].args[i].name + "|length";
-                vars.back().val = functions[function].args[i].length;
+                vars.back().val = std::to_string(functions[function].args[i].length);
                 vars.back().type = 'i';
             }
         }
@@ -69,9 +69,13 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             if (l)
                 cout << "\n";
         }
-        else if (prs[y]=="exit") {
+        else if (prs[y]=="write") {
+            y++;
+            writefile(y);
+            y+= 2;
+        }
+        else if (prs[y]=="exit")
             exit(0);
-        }  
         else if (prs[y]=="in") {
             vars.resize(vars.size()+1);
             y++;
@@ -101,6 +105,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                     e--;
                 y++;
             }
+            y--;
         }
         else if (prs[y]=="if") {
             endreq+=1;
@@ -126,6 +131,14 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         }
         else if (prs[y]=="sys")
             sys(&y, vars);
+        else if (prs[y] == "wait") {
+            #if PLATFORM == 1
+                Sleep(std::stoi(getval(vars, new int(y+1)).val) * 1000);
+            #else
+                sleep(std::stoi(getval(vars, new int(y+1)).val));
+            #endif
+            y++;
+        }
         else if ((prs[y]=="}") || (prs[y]=="loop")) {
             if (prs[y]=="loop"){
                 if (looped==0){
@@ -151,7 +164,6 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                     }
                 }
             }
-
             for (int i = 0; i<ct.indexes.size(); i++) {
                 for (int z = 0; z<vars.size(); z++) {
                     if (vars[z].name == ct.tpe.variables[i].name) {

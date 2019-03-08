@@ -12,12 +12,14 @@ bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
 
     for (int i = 0; i < pvars->size() && !isvar; i++) {
         isvar = (pvars->at(i).name == query);
-        *num = i;
+        if (isvar)
+            *num = i;
     }
+
     return isvar;
 }
 
-bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln){ //changes the value of the stsvars list
+bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int *ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
     int y = *ln;
     std::vector<stsclasstype> ct = *classtypes;
@@ -30,9 +32,26 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
 
         if (!isvar(pvars, *name, index))
             pvars->push_back(declare(ln, pvars));
-        else
+        else {
             pvars->at(*index).val = getval(vars, new int(y+1)).val;
-        
+            if ((pvars->at(*index).type == 's') || (pvars->at(*index).type == 'l')) {
+                int *ind = new int(0);
+
+                // change length value of variable
+                if (isvar(pvars, pvars->at(*index).name + "|length", ind)) {
+                    pvars->at(*index).length = ((pvars->at(*index).type == 's') ? 
+                        pvars->at(*index).val.size() : pvars->at(*index).vals.size());
+                    pvars->at(*ind).val = std::to_string(pvars->at(*index).length);
+                    
+                    if (pvars->at(*index).glob)
+                        globvars[*ind] = pvars->at(*ind);
+                }
+            
+            }
+            if (pvars->at(*index).glob)
+                globvars[*index] = pvars->at(*index);
+        }
+
         while (prs[y]!=";")
             y++;
 
@@ -71,6 +90,15 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 else
                     error(9, prs[y]);
             }
+            if (pvars->at(*num).glob) {
+                int *size_num = new int(-1);
+
+                globvars[*num] = pvars->at(*num);
+
+                if (isvar(pvars, pvars->at(*num).name + "|length", size_num))
+                    globvars[*size_num] = pvars->at(*size_num);
+            }
+
             y += 3;
             *ln = y;
             return true;
@@ -85,6 +113,7 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
 
         if (isfunc) {
             runfunc(&vars, &ct, &y);
+            y++;
             *ln = y;
             *classtypes = ct;
             *pvars = vars;

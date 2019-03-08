@@ -57,7 +57,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 x.push_back( string(1,prg[y][z]) );
                 break;
             }
-            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || (prg[y][z]=='/') || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
+            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }

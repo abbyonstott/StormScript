@@ -34,7 +34,6 @@ stsvars sts::declare(int *line, std::vector<stsvars> *vars) { //variable declara
         new_var.type = 'l';
         new_var.assignlist(this, *vars, line);
     }
-    // bad idea to pop back the line, just pop back the var
 
     type = new_var.type;
     switch (type) {

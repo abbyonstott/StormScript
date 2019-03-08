@@ -2,12 +2,17 @@
 #ifndef STSCLASSES_H_
 #define STSCLASSES_H_
 
-#if defined(_WIN32)
-#define PLATFORM "Windows"
+#if (defined(_WIN32)) || (defined(__MINGW32__))
+#define PLATFORM 1
+#include <windows.h>
 #else
-#define PLATFORM "other"
+#define PLATFORM 0
+#include <unistd.h>
 #endif
-
+/*
+NOTE:
+Place All StormScript headers here separated by 2 lines.
+*/
 #include "includes.h"
 
 
@@ -21,6 +26,12 @@
 
 
 #include "functions.h"
+
+
+#include "modules.h"
+
+
+#include "stsrand.h"
 
 using std::cout;
 

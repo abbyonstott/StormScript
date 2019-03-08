@@ -7,11 +7,13 @@ add_executable(stormscript
     src/core/errors.cc
     src/parser/parse.cc
     src/parser/read.cc
+    src/parser/mods.cc
     src/interpreter/globscope.cc
     src/interpreter/exec.cc
     src/stream/io.cc
     src/stream/stsstream.cc
     src/stream/loops.cc
+    src/stream/files.cc
     src/values/stsdec.cc
     src/values/man.cc
     src/values/if.cc
@@ -19,8 +21,9 @@ add_executable(stormscript
     src/values/runfunc.cc
     src/values/compare.cc
     src/values/operations.cc
+    src/values/random.cc
     src/classes/dectype.cc
     src/classes/decmethod.cc)
 set (StormScript_VERSION_MAJOR 0)
-set (StormScript_VERSION_MINOR 5)
+set (StormScript_VERSION_MINOR 6)
 install(TARGETS stormscript RUNTIME DESTINATION bin/)

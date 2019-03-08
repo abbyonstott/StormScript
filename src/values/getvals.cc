@@ -40,7 +40,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         *line = y;
         return v;
     }
-    else if ((prs[y+1] == "is") || (prs[y+1] == "not") || (prs[y+1] == "greater") || (prs[y+1] == "greatereq") || (prs[y+1] == "less") || (prs[y+1] == "lesseq")) {
+    else if (((prs[y+1] == "is") || (prs[y+1] == "not") || (prs[y+1] == "greater") || (prs[y+1] == "greatereq") || (prs[y+1] == "less") || (prs[y+1] == "lesseq")) || ((prs[y+1]=="[") && ((prs[y+4] == "is") || (prs[y+4] == "not") || (prs[y+4] == "greater") || (prs[y+4] == "greatereq") || (prs[y+4] == "less") || (prs[y+4] == "lesseq")))) {
         bool cond  = condition(this, &y, vars);
         // check if ternary;
         y+=2;
@@ -65,6 +65,26 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         }
     }
 
+    else if (prs[y] == "read") {
+        y++;
+        readfile(y, &v);
+        *line = y;
+        return v;
+    }
+
+    else if (prs[y] == "randomrange") {
+        v.type = 'i';
+        v.val = std::to_string(genrandomintfromrange(this, vars, &y));
+        *line = y;
+        return v;
+    }
+
+    else if (prs[y] == "random") {
+        v.type = 'b';
+        v.val = ((randombool()) ? "true" : "false");
+        return v;
+    }
+    
     else if (isint(prs[y])) {
         v.type = 'i';
         v.val = prs[y];
@@ -114,7 +134,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             }
         }
 
-        y++;
+        y+= 3;
     }
 
     else {

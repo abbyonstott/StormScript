@@ -1,19 +1,63 @@
 #include "../include/stormscript.h"
 
+int subscript(std::vector<string> prs, int y) {
+    int n = 0;
+
+    /*
+    Prs should look like this if there is 2 subscripts
+    y+ | line
+    ---|-----
+    0: var1
+    1: [
+    2: n
+    3: ]
+    4: comparison operator
+    5: var2
+    6: [
+    7: n
+    8: ]
+    */
+
+    if (prs[y+1] == "[") {
+        n++;
+
+        if (prs[y+6] == "[")
+            n++;
+    }
+    else if (prs[y+2] == "[") {
+        n++;
+    }
+
+    return n;
+}
+
 bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
     std::vector<string> prs = program->prs;
     sts prg = *program;
     int y = *ln;
+    int sbs = subscript(program->prs, y);
     bool v;
 
-    prg.prs = { program->prs[y] };
+    if (sbs == 0)
+        prg.prs = { program->prs[y] };
+    else {
+        prg.prs = { program->prs[y], program->prs[y+1], program->prs[y+2], program->prs[y+3] };
+        y+= 3;
+    }
 
+    int sy = y + 2;
 
     stsvars val1 = prg.getval(vars, new int(0));
 
-    prg.prs = { program->prs[y+2] };
-    stsvars val2 = prg.getval(vars, new int(0));
+    if (sbs <= 1)
+        prg.prs = { program->prs[sy] };
+    else {
+        prg.prs = { program->prs[sy], program->prs[sy+1], program->prs[sy+2], program->prs[sy+3] };
+        y+=2;
+    }
 
+    stsvars val2 = prg.getval(vars, new int(0));
+    
     if (val1.type == val2.type) {
         // compare based on conditional operator
         if (prs[y+1] == "is") {
@@ -25,7 +69,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "greater") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.val > val2.val);
+                    v = (std::stoi(val1.val) > std::stoi(val2.val));
                     break;
                 case 's':
                 case 'b':
@@ -36,7 +80,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "greatereq") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.val >= val2.val);
+                    v = (std::stoi(val1.val) >= std::stoi(val2.val));
                     break;
                 case 's':
                 case 'b':
@@ -46,7 +90,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "less") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.val < val2.val);
+                    v = (std::stoi(val1.val) < std::stoi(val2.val));
                     break;
                 case 's':
                 case 'b':
@@ -57,7 +101,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         else if (prs[y+1] == "lesseq") {
             switch (val1.type) {
                 case 'i':
-                    v = (val1.val <= val2.val);
+                    v = (std::stoi(val1.val) <= std::stoi(val2.val));
                     break;
                 case 's':
                 case 'b':
@@ -70,6 +114,7 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
         // give error with value based on type
         program->error(9, val2.val);
     }
+    *ln = y;
 
     return v;
 }

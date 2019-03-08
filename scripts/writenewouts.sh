@@ -7,7 +7,9 @@ rm stormscript
 
 cd tests
 
-for i in $(ls); do
+rm -r outputs/*
+
+for i in $(ls | grep .sts); do
     touch outputs/$i.txt
     echo $(../build/stormscript $i) > outputs/$i.txt
 done
