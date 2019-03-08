@@ -3,10 +3,10 @@
 #define STSCLASSES_H_
 
 #if defined(__MINGW32__)
-#define PLATFORM "Windows"
+#define PLATFORM 1
 #include <windows.h>
 #else
-#define PLATFORM "other"
+#define PLATFORM 0
 #include <unistd.h>
 #endif
 /*
