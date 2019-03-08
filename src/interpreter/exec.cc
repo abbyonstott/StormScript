@@ -133,7 +133,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             sys(&y, vars);
         else if (prs[y] == "wait") {
             #if PLATFORM == 1
-                Sleep(std::stoi(getval(vars, new int(y+1)).val));
+                Sleep(std::stoi(getval(vars, new int(y+1)).val) * 1000);
             #else
                 sleep(std::stoi(getval(vars, new int(y+1)).val));
             #endif
