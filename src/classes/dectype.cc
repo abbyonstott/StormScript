@@ -11,26 +11,30 @@ void stsclass::declare(int *y, sts *inst) { //declare type
     ln++;
     // get type objects
     for (ln; ln<prs.size(); ln++) {
-        if (prs[ln]=="int") {
+        if (prs[ln] == "int") {
             variables.resize(variables.size()+1);
             variables.back().type = 'i'; 
             ln++;
             variables.back().name = prs[ln];  
             ln++;
         }
-        else if (prs[ln]=="str") {
+        else if (prs[ln] == "str") {
             variables.resize(variables.size()+1);
             variables.back().type = 's';
             ln++;
             variables.back().name = prs[ln];
             ln++;
         }
-        else if (prs[ln]=="bool") {
+        else if (prs[ln] == "bool") {
             variables.resize(variables.size()+1);
             variables.back().type = 'b';
             ln++;
             variables.back().name = prs[ln];
             ln++;
+        }
+        else if (prs[ln] == "def") {
+            constructors.push_back(variables.size());
+            // loop back around for declaration
         }
         else if (prs[ln]=="func") {
             decmethod(inst, &ln);

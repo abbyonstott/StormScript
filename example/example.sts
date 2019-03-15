@@ -1,5 +1,18 @@
+type person {
+    def str name;
+    def int age;
+
+    func birthday {
+        age+: 1;
+    }
+}
+
 do{
-    printl "Waiting";
-    wait 10;
-    printl "I waited for 10 seconds";
+    person p;
+    p|name: "bob";
+    p|age: 18;
+    
+    printl p|name, " is ", p|age, " years old.";
+    p|birthday;
+    printl p|name, " is ", p|age, " years old.";
 }

@@ -12,6 +12,7 @@ public:
 	void declare(int *y, sts *inst);
 	void decmethod(sts *inst, int *ln);
 	std::vector<stsvars> variables;
+	std::vector<int> constructors; // this is a vector that tells us the indexes of the constructors in the variables vector
 	std::vector<stsfunc> methods;
 	string name;
 };
