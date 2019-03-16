@@ -9,7 +9,8 @@ std::vector<string> sts::parse(std::vector<string> prg){
     while (y!=prg.size()){
         int z = 0;
         bool inquotes = false;
-        x.resize(x.size()+1);
+        if (x.size() > 0)
+            x.resize(x.size()+1);
         
         while (prg[y][0]==' ')
             prg[y].erase(prg[y].begin());
@@ -26,7 +27,8 @@ std::vector<string> sts::parse(std::vector<string> prg){
             }
             // this is what checks for chars to remove from prs version
             if (((prg[y][z]==' ') || (prg[y][z]==',') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
-                x.resize(x.size()+1);
+                if ((x.back().size() != 0))
+                    x.resize(x.size()+1);
                 z++;
                 continue;
             }
@@ -61,13 +63,15 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }
-            else if (((prg[y][z]=='\t') || (prg[y][z]=='{'))  && (inquotes==false)) {
+            else if ((prg[y][z]=='\t')  && (inquotes==false)) {
                 z++;
                 continue;
             }
-            else
+            else {
+                if (x.size() == 0)
+                    x.resize(x.size() + 1);
                 x[x.size()-1]+=prg[y][z];
-
+            }
             z++;
         }
         y++;

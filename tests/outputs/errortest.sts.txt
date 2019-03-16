@@ -1,1 +1,1 @@
-Error: "thisisnotacommand" is not a recognised command
+Error: thisisnotacommand is not a recognised command

@@ -96,7 +96,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         if (prs[y].back() == '"')
             v.val = striplit(prs[y]);
         else
-            error(14, prs[y]);
+            error(0, "");
     
         v.length = v.val.size();
     }

@@ -11,6 +11,7 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
         globvars.back().vals.back().val=argv[x];
         globvars.back().name="arg";
         globvars.back().glob=1;
+        globvars.back().length = argc-1;
     }
     
     for (int x = 0; x<prs.size(); x++){
@@ -69,7 +70,6 @@ void sts::interp(string fname,int psize, char *argv[], int argc){
                 x+=2;
         }
         else if (prs[x] == "mod") {
-            //cout << 
             std::vector<string> mod = readmod(prs[x+1]);
             std::vector<string>::iterator it = prs.begin();
             prs.insert(it + 3, mod.begin(), mod.end());
