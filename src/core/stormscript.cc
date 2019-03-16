@@ -11,13 +11,16 @@
                                                    |_|         
 */
 
+void printVersion() {
+	cout << "StormScript v0.7.0 \"Grape\"\n";
+}
+
 int main(int argc, char *argv[]) {
 	sts script;
 
 	if (argc != 1) {
-		if (string(argv[1])=="--version"){
-			cout << "StormScript v0.7.0 \"Grape\"\n";
-		}
+		if (string(argv[1])=="--version")
+			printVersion();
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
 			cout << "Usage: stormscript [file|options]\n";
 			cout << "StormScript is an open source scripting language for Linux.\n\n";
@@ -32,7 +35,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	else {
-		system("stormscript --version");
+		printVersion();
 		cout << "Try 'stormscript --help' for more information.\n\n";
 		script.prg.resize(script.prg.size()+1);
 		script.prg[script.prg.size()-1] = "do{\n";
