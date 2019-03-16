@@ -27,7 +27,7 @@ public:
 	stsvars declare(int *line, std::vector<stsvars> *vars); //declare variables -
 	void error(int num, string issue); //error
 	void read(char *argv[], int argc, string filename); //read file
-	void print(int line, int *y, std::vector<stsvars> current_vars); //out function
+	void print(int *y, std::vector<stsvars> current_vars); //out function
 	void sys(int *y, std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);

@@ -6,3 +6,4 @@
 
 ## What's Fixed
 * Version would only show at top if StormScript was running from PATH
+* Print function would crash when printing args
