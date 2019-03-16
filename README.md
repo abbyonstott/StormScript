@@ -11,3 +11,5 @@
 StormScript is a programming language made in C++
 
 Read [building.md](docs/building.md) for info on how to build
+
+[![View Website](https://stormscript.dev)]
