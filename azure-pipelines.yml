@@ -13,6 +13,7 @@ steps:
     rm stormscript
   displayName: 'Build'
 - script: |
+    ./build.sh
     cd scripts;
     ./runtests.sh
   displayName: 'Test'
