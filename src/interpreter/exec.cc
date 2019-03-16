@@ -64,7 +64,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             bool l = (prs[y]=="printl");
             y++;
             for (y; prs[y]!=";"; y++)
-                print(y, &y, vars);
+                print(&y, vars);
             
             if (l)
                 cout << "\n";

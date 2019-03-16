@@ -1,0 +1,5 @@
+#!/usr/bin/env stormscript
+
+do {
+    printl arg|length;
+}
