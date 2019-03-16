@@ -22,6 +22,9 @@ void sts::print(int *y, std::vector<stsvars> current_vars){ //handles both print
         }
     }
 
+    if (prs[ln-2] == "]")
+        ln-=2;
+
     *y = ln;
     cout << value;
 }

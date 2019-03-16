@@ -13,6 +13,7 @@ apps:
     command: bin/stormscript
   errors:
     command: bin/errors.sts
+    aliases:
 
 plugs:
   home:
@@ -27,7 +28,8 @@ parts:
     source: https://github.com/stormprograms/StormScript.git
     plugin: dump
     source-branch: errtosts
+    override-build: |
+      mkdir $SNAPCRAFT_PART_INSTALL/bin
+      install src/core/errors.sts $SNAPCRAFT_PART_INSTALL/bin
     stage:
-      - src/core/errors.sts
-    prime:
       - bin/errors.sts
