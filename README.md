@@ -14,4 +14,4 @@ Read [building.md](docs/building.md) for info on how to build
 
 [View  StormScript Website](https://stormscript.dev)
 
-Documentation: (stormprograms.com/stormscript)
+Documentation: (https://stormprograms.com/stormscript)
