@@ -11,6 +11,8 @@ confinement: strict
 apps:
   stormscript:
     command: bin/stormscript
+  errors:
+    command: scripts/errors.sts
 
 plugs:
   home:
@@ -20,4 +22,5 @@ parts:
   stormscript:
     source: https://github.com/stormprograms/StormScript.git
     source-type: git
+    branch: errtosts
     plugin: cmake
