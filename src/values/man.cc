@@ -129,10 +129,23 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
                 y++;
                 ct.back().name = prs[y];
 
+                if (prs[y].back() == ':')
+                    ct.back().name.pop_back();
+
                 for (int b = 0; b<ct[ct.size()-1].tpe.variables.size(); b++) {
                     vars.resize(vars.size()+1);
                     vars.back().name = ct[i].name + "|" + ct[i].tpe.variables[b].name;
                     vars.back().type = ct[i].tpe.variables[b].type;
+
+                    for (int c = 0; c < ct[i].tpe.constructors.size(); c++) {
+                        int currentind = ct[i].tpe.constructors[c];
+
+                        if (b == currentind) {
+                            y++;
+                            vars.back().val = getval(vars, new int(y)).val;
+                        }
+                    } 
+
                     ct[i].indexes.push_back(vars.size()-1); // dump index for reading during execution of method
                 }
 
