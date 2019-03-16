@@ -1,0 +1,43 @@
+#!/usr/bin/env stormscript
+
+do {
+    if arg[1] is "0" {
+        printl "Error: Missing end quote on literal";
+    }
+    else if arg[1] is "1" {
+        printl "Error: ", arg[2], " is not a recognised command";
+    }
+    else if arg[1] is "2" {
+        printl "Error: ", arg[2], " is not a recognised type";
+    }
+    else if arg[1] is "3" {
+        printl "Error: ", arg[2], " is not a valid expression";
+    }
+    else if arg[1] is "4" {
+        printl "Error: ", arg[2], " is an unsupported type";
+    }
+    else if arg[1] is "5" {
+        printl "Error: ", arg[2], " is a list and must use a subscript on print";
+    }
+    else if arg[1] is "6" {
+        printl "Error: ", arg[2], " is out of range";
+    }
+    else if arg[1] is "7" {
+        printl "Error: return is not allowed in do{ function";
+    }
+    else if arg[1] is "8" {
+        printl "Error: ", arg[2], " is not a value";
+    }
+    else if arg[1] is "9" {
+        printl "Error: ", arg[2], " is not the correct type";
+    }
+    else if arg[1] is "10" {
+        printl "Error: variable used in 'sys' command is of type ", arg[2], " and should be a string";
+    }
+    else if arg[1] is "11" {
+        printl "Error: failed to open ", arg[2], ". Couldn't find file";
+    }
+    else if arg[1] is "12" {
+        printl "Error: Variable ", arg[2], " not found";
+    }
+}

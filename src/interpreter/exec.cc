@@ -64,7 +64,8 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             bool l = (prs[y]=="printl");
             y++;
             for (y; prs[y]!=";"; y++)
-                print(y, &y, vars);
+                print(&y, vars);
+            y--;
             
             if (l)
                 cout << "\n";
@@ -128,6 +129,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                     e--;
                 y++;
             }
+            y--;
         }
         else if (prs[y]=="sys")
             sys(&y, vars);

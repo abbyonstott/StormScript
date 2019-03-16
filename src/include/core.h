@@ -25,9 +25,20 @@ public:
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
 	stsvars declare(int *line, std::vector<stsvars> *vars); //declare variables -
-	void error(int num, string issue); //error
+
+	void error(int num, string issue) {
+		string cmd = "errors.sts ";
+		cmd += std::to_string(num);
+		cmd += " ";
+		cmd += issue;
+		system(cmd.c_str());
+
+		if (term!=true)
+			exit(0);
+	}
+
 	void read(char *argv[], int argc, string filename); //read file
-	void print(int line, int *y, std::vector<stsvars> current_vars); //out function
+	void print(int *y, std::vector<stsvars> current_vars); //out function
 	void sys(int *y, std::vector<stsvars> vars);
 	stsvars in(int line);
 	std::vector<string> parse(std::vector<string> prg);

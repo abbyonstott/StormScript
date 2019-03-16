@@ -11,6 +11,9 @@ confinement: strict
 apps:
   stormscript:
     command: bin/stormscript
+  errors:
+    command: bin/errors.sts
+    aliases:
 
 plugs:
   home:
@@ -21,3 +24,12 @@ parts:
     source: https://github.com/stormprograms/StormScript.git
     source-type: git
     plugin: cmake
+  errors:
+    source: https://github.com/stormprograms/StormScript.git
+    plugin: dump
+    source-branch: errtosts
+    override-build: |
+      mkdir $SNAPCRAFT_PART_INSTALL/bin
+      install src/core/errors.sts $SNAPCRAFT_PART_INSTALL/bin
+    stage:
+      - bin/errors.sts
