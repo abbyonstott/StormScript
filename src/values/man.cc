@@ -60,6 +60,30 @@ bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *cla
         return true;
     }
 
+    if ((prs[y+1] == "[") && (prs[y+4] == ":")) {
+        int *index = new int(0);
+
+        string name = prs[y];
+        
+        if (isvar(pvars, name, index)) {
+            if (pvars->at(*index).type == 'l')
+                pvars->at(*index).vals[std::stoi(getval(vars, new int(y+2)).val)].val = getval(vars, new int(y+5)).val;
+            else
+                pvars->at(*index).val[std::stoi(getval(vars, new int(y+2)).val)] = getval(vars, new int(y+5)).val[0];
+
+            if (pvars->at(*index).glob)
+                globvars[*index] = pvars->at(*index);
+        }
+        else
+            error(12, prs[y]);
+
+        while (prs[y]!=";")
+            y++;
+        
+        *ln = y;
+        return true;
+    }
+
     if (prs[y+2].back() == ':') {
         int *num = new int(0);
 

@@ -104,7 +104,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         v.type = 'b';
         v.val = prs[y];
     }
-    else if (prs[y+1]=="[") {
+    else if ((prs[y+1]=="[") && (y+1 < prs.size())) {
         string name = prs[y];
         y+=2;
         int index = std::stoi(getval(vars, new int(y)).val);
