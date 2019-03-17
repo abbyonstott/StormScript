@@ -4,7 +4,7 @@ int subscript(std::vector<string> prs, int y) {
     int n = 0;
 
     /*
-    Prs should look like this if there is 2 subscripts
+    prs should look like this if there is 2 subscripts
     y+ | line
     ---|-----
     0: var1
@@ -16,6 +16,22 @@ int subscript(std::vector<string> prs, int y) {
     6: [
     7: n
     8: ]
+    
+    And if there is one on the left
+    0: var1
+    1: [
+    2: n
+    3: ]
+    4: comparison operator
+    5: var2
+
+    and if there is one on the right
+    0: var1
+    1: comparison operator
+    2: var2
+    3: [
+    4: n
+    5: ]
     */
 
     if (prs[y+1] == "[") {
@@ -24,9 +40,8 @@ int subscript(std::vector<string> prs, int y) {
         if (prs[y+6] == "[")
             n++;
     }
-    else if (prs[y+2] == "[") {
+    else if (prs[y+3] == "[")
         n++;
-    }
 
     return n;
 }
@@ -60,12 +75,10 @@ bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
     
     if (val1.type == val2.type) {
         // compare based on conditional operator
-        if (prs[y+1] == "is") {
+        if (prs[y+1] == "is")
             v = (val1.val == val2.val);
-        }
-        else if (prs[y+1] == "not") {
+        else if (prs[y+1] == "not")
             v = (val1.val != val2.val);
-        }
         else if (prs[y+1] == "greater") {
             switch (val1.type) {
                 case 'i':
