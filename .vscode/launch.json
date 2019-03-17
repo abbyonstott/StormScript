@@ -42,9 +42,7 @@
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
             "args": [
-                "example.sts",
-                "1",
-                "thisisnotacommand"
+                "example.sts"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/example",

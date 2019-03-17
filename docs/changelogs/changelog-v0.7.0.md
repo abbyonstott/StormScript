@@ -4,6 +4,7 @@
 * Mac install script
 * Class constructors with the `def` keyword
 * errors moved to `errors.sts` from `core/errors.cc`
+* you can now modify specific characters in a string or specific characters in a list using subscripts
 
 ## What's Fixed
 * Version would only show at top if StormScript was running from PATH
