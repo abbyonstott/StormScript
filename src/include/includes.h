@@ -1,3 +1,7 @@
+#pragma once
+#ifndef INCLUDES_H_
+#define INCLUDES_H_
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -22,3 +26,5 @@ using std::cout;
 // I have to include this for cmake
 
 #include "../StormScriptconfig.h"
+
+#endif

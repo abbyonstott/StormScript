@@ -123,7 +123,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     else
                         throw 3;
                 }
-                catch (std::bad_alloc x) { // if out of range throw error
+                catch (const std::bad_alloc& x) { // if out of range throw error
                     string message = prs[y-2] + prs[y-1] + prs[y] + prs[y+1];
                     error(6, message);
                 }
