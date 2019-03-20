@@ -41,6 +41,6 @@ do {
         printl "Error: Variable ", arg[2], " not found";
     }
     else if arg[1] is "13" {
-    	printl "Error: Expected module name";
+        printl "Error: Expected module name";
     }
 }
