@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 				system(cmd.c_str());
 			}
 			else {
-				script.error(13, "");
+				script.error(13, "none");
 			}
 		}
 		else {
