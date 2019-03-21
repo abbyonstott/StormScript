@@ -1,5 +1,6 @@
 .vscode/settings.json
-.vscode/c*
+.vscode/c_cpp_properties.json
+.vscode/ipch
 build/
 release/
 CMakeFiles/

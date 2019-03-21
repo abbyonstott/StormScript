@@ -34,7 +34,7 @@ public:
 		system(cmd.c_str());
 
 		if (term!=true)
-			exit(0);
+			exit(1); // exit with error status
 	}
 
 	void read(char *argv[], int argc, string filename); //read file
