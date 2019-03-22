@@ -70,7 +70,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                 v+= print(&y, vars); // add print expression to string v that will be printed
             
 	    if (y == prs.size())
-		error(15, "");
+		error(15, "print");
 	    
 	    cout << v;
 
