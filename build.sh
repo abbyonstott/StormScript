@@ -1,6 +1,6 @@
 #!/bin/bash
 cmake .
-make
+make -j $(nproc)
 sudo mv stormscript /usr/bin/stormscript
 
 sudo cp src/core/errors.sts /usr/local/bin
