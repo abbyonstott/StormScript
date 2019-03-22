@@ -1,7 +1,3 @@
-func returntest {
-    return 3;
-}
-
-do {
-    printl returntest;
+do{
+	printl "hi"
 }

@@ -62,14 +62,23 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
 
         if ((prs[y]=="print") || (prs[y]=="printl")){
             bool l = (prs[y]=="printl");
-            y++;
-            for (y; prs[y]!=";"; y++)
-                print(&y, vars);
-            y--;
+            string v;
+
+	    y++;
+	    
+	    for (y; prs[y]!=";" && y < prs.size(); y++)
+                v+= print(&y, vars); // add print expression to string v that will be printed
             
+	    if (y == prs.size())
+		error(15, "");
+	    
+	    cout << v;
+
+	    y--;
+
             if (l)
                 cout << "\n";
-        }
+	}
         else if (prs[y]=="write") {
             y++;
             writefile(y);
@@ -204,3 +213,4 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
     if (function==-1)
         *x = y;
 }
+
