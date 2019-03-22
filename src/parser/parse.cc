@@ -81,5 +81,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
         if ((x[i]=="\0") || (x[i]=="") || (x[i]=="\n"))
             x.erase(x.begin() + i);
     }
+    
     return x;
 }

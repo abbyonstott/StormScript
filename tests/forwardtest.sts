@@ -1,0 +1,15 @@
+func hello;
+func args => a;
+
+do {
+    hello;
+    args => a: "test";
+}
+
+args => a {
+    printl a;
+}
+
+hello {
+    printl "Hello, World!";
+}
