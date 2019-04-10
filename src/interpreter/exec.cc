@@ -64,21 +64,21 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             bool l = (prs[y]=="printl");
             string v;
 
-	    y++;
-	    
-	    for (y; prs[y]!=";" && y < prs.size(); y++)
-                v+= print(&y, vars); // add print expression to string v that will be printed
+            y++;
             
-	    if (y == prs.size())
-		error(15, "print");
-	    
-	    cout << v;
+            for (y; prs[y]!=";" && y < prs.size(); y++)
+                    v+= print(&y, vars); // add print expression to string v that will be printed
+                
+            if (y == prs.size())
+                error(15, "print");
+            
+            cout << v;
 
-	    y--;
+            y--;
 
             if (l)
                 cout << "\n";
-	}
+        }
         else if (prs[y]=="write") {
             y++;
             writefile(y);
