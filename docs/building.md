@@ -9,14 +9,19 @@ You must have gcc installed (MinGW for Windows) and CMake
 Terminal:
 
 To build StormScript clone this repository and cd into it. Run 
-```
+```sh
 $ cmake CMakeLists.txt
 ```
 and
-```
+```sh
 $ make
 ```
 You can then add it to path or install it to /usr/bin.
+move src/core/errors.sts to /usr/local/bin with 
+```sh
+$ mv src/core/errors.sts /usr/local/bin
+```
+
 
 ## Windows
 
@@ -25,6 +30,7 @@ Make sure you have MinGW-make installed
 Run CMake GUI, and configure for MinGW-make
 
 output should be a MakeFile, run mingw-make in that directory.
+
 
 ## Visual Studio Code
 

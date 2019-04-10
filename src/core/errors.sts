@@ -47,6 +47,6 @@ do {
         printl "Error: Function ", arg[2], " declared but not defined.";
     }
     else if arg[1] is "15" {
-	printl "Error: Missing semicolon at end of ", arg[2], ".";
+	    printl "Error: Missing semicolon at end of ", arg[2], ".";
     }
 }
