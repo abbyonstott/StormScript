@@ -32,6 +32,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     v2 = vars[x];
             }
         }
+
         v.val = std::to_string((
             (prs[y+1]=="+") ? std::stoi(v1.val) + std::stoi(v2.val) : (
                 (prs[y+1]=="-") ? std::stoi(v1.val) - std::stoi(v2.val) : (
@@ -93,8 +94,31 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     else if (prs[y].front() == '"') {
         v.type = 's';
 
-        if (prs[y].back() == '"')
-            v.val = striplit(prs[y]);
+        if (prs[y].back() == '"') {
+            string lit = striplit(prs[y]);
+
+            for (int i = 0; i < lit.size(); i++) {
+                if (lit[i] == '$') { // note that this is static and will not change with the value of the variable.
+                    string name;
+                    lit[i] = '\0';
+
+                    int n = i + 1;
+
+                    while ((lit[n] != ' ') && (n < lit.size())) {
+                        name += lit[n];
+                        lit[n] = '\0';
+                        n++;
+                    }
+
+                    sts newscr;
+                    newscr.prs = {name, ""}; // add blank string to end of vector so that program doesn't crash due to missing prs[y+1]
+
+                    lit.insert(i, newscr.getval(vars, new int(0)).val);
+                }
+            }
+
+            v.val = lit;
+        }
         else
             error(0, "");
     
