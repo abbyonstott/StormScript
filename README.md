@@ -1,9 +1,12 @@
 ![](images/logo.png)
 
-[![GitHub license](https://img.shields.io/github/license/stormprograms/stormscript.svg)](https://github.com/stormprograms/StormScript/blob/master/LICENSE)
 ![GitHub (pre-)release](https://img.shields.io/github/release-pre/stormprograms/stormscript.svg)
 ![GitHub All Releases](https://img.shields.io/github/downloads/stormprograms/stormscript/total.svg)
+
+![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/stormprograms.stormscript.svg)
+
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/stormprograms/stormscript.svg)
+
 [![Build Status](https://dev.azure.com/alegosdude/stormscript/_apis/build/status/stormprograms.StormScript%20(1)?branchName=dev)](https://dev.azure.com/alegosdude/stormscript/_build/latest?definitionId=2?branchName=dev)
 
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/stormprograms/StormScript.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/stormprograms/StormScript/alerts/)
