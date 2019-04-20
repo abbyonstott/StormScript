@@ -37,6 +37,12 @@ public:
 			exit(1); // exit with error status
 	}
 
+	void live(string filename) {
+		string cmd = "live.sts ";
+		cmd += filename;
+		system(cmd.c_str());
+	}
+
 	void read(char *argv[], int argc, string filename); //read file
 	string print(int *y, std::vector<stsvars> current_vars); //out function
 	void sys(int *y, std::vector<stsvars> vars);
@@ -51,8 +57,8 @@ public:
 	string runlibfunc(string name, int *line, std::vector<stsvars> vars); // run library function
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	stsvars math(int *y, std::vector<stsvars> vars);
-	void readfile(int y, stsvars *v); // file reading operations
-	void writefile(int y); // file writing operations
+	void readfile(int y, stsvars *v, std::vector<stsvars> vars); // file reading operations
+	void writefile(int y, std::vector<stsvars> vars); // file writing operations
 };
 
 std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int y);

@@ -43,6 +43,7 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [
                 "example.sts",
+                "example.sts"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/example",

@@ -81,7 +81,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         }
         else if (prs[y]=="write") {
             y++;
-            writefile(y);
+            writefile(y, vars);
             y+= 2;
         }
         else if (prs[y]=="exit")

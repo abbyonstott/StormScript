@@ -1,12 +1,12 @@
 #include "../include/stormscript.h"
 
-void sts::readfile(int y, stsvars *v) {
+void sts::readfile(int y, stsvars *v, std::vector<stsvars> vars) {
     v->type = 's';
     v->glob = false;
 
     std::ifstream file;
     string contents;
-    string name = striplit(prs[y]);
+    string name = getval(vars, new int(y)).val;
 
     file.open(name);
 
@@ -25,9 +25,9 @@ void sts::readfile(int y, stsvars *v) {
     v->val = contents;
 }
 
-void sts::writefile(int y) {
+void sts::writefile(int y, std::vector<stsvars> vars) {
     std::ofstream file;
-    string name = striplit(prs[y]);
+    string name = getval(vars, new int(y)).val;
     file.open(name);
     file.write(striplit(prs[y+1]).c_str(), striplit(prs[y+1]).size());
     file.close();
