@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
 			cout << "StormScript is an open source scripting language for Linux.\n\n";
 			cout <<  "  -h, --help: display help\n";
 			cout << "  --version: show version\n";
-			cout << "  install: install a module\n\n";
+			cout << "  install: install a module\n";
+			cout << "  test FILENAME: Live interpret file of FILENAME\n\n";
 			system("stormscript --version");
 			cout << "git: https://github.com/stormprograms/StormScript\n";
 			cout << "For documentation, go to https://stormprograms.com/stormscript/docs\n";
@@ -38,13 +39,19 @@ int main(int argc, char *argv[]) {
 				cmd+= ".sts";
 				system(cmd.c_str());
 			}
-			else {
+			else
 				script.error(13, "none");
+		}
+		else if (string(argv[1]) == "test") {
+			if (argc > 2) {
+				string filename = string(argv[2]);
+				script.live(filename);
 			}
+			else
+				script.error(16, "");
 		}
-		else {
+		else
 			script.read(argv, argc, argv[1]);
-		}
 	}
 	else {
 		printVersion();
