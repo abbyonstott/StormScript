@@ -29,6 +29,9 @@ void sts::writefile(int y, std::vector<stsvars> vars) {
     std::ofstream file;
     string name = getval(vars, new int(y)).val;
     file.open(name);
-    file.write(striplit(prs[y+1]).c_str(), striplit(prs[y+1]).size());
+
+    string contents = getval(vars, new int(y+1)).val;
+
+    file.write(contents.c_str(), contents.size());
     file.close();
 }
