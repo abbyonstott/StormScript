@@ -65,26 +65,7 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
 
                 for (n; n < prs.size() && prs[n] != functions.back().name; n++) { // iterate over prs until definition is found
                     if ((prs[n] == "func" && !checkifforward(this, n)) || prs[n] == "do" || prs[n] == "type") {
-                        int endreq = 1;
-
-                        while (endreq != 0) {
-                            if (prs[n] == "}")
-                                endreq--;
-                                
-                            if (prs[n] == "else") {
-                                if (prs[n+1] == "if")
-                                    n++;
-                                n++;
-                                endreq++;
-                            }
-                            else if ((prs[n] == "if") || (prs[n] == "while")) {
-                                n++;
-                                endreq++;
-                            }
-                            else
-                                n++;
-                        }
-                        n--;
+                        scopedown(&n, prs);
                     }
                 }
 

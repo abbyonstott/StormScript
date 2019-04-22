@@ -61,6 +61,15 @@ public:
 	void writefile(int y, std::vector<stsvars> vars); // file writing operations
 };
 
+
+/*
+Loop functions are defined here.
+A vector of variables is returned so that modifications will be saved to actual values.
+*/
 std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int y);
+std::vector<stsvars> forloop(sts *script, std::vector<stsvars> varaibles, int y);
+
+// this will iterate over y until it is the end of the while scope
+void scopedown(int *x, std::vector<string> prs);
 
 #endif

@@ -98,24 +98,11 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
         }
         else if (prs[y] == "while") {
             whileloop(this, vars, y);
-            y++;
-
-            // this will iterate over y until it is the end of the while scope
-
-            int e = 1;
-            while (e != 0) {
-                if ((prs[y] == "if") || (prs[y] == "while"))
-                    e++;
-                else if (prs[y] == "else") {
-                    e++;
-                    if (prs[y+1] == "if")
-                        y++;
-                }
-                else if (prs[y] == "}")
-                    e--;
-                y++;
-            }
-            y--;
+            scopedown(&y, prs);
+        }
+        else if (prs[y] == "for") {
+            forloop(this, vars, y);
+            scopedown(&y, prs);
         }
         else if (prs[y]=="if") {
             endreq+=1;
@@ -124,21 +111,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                 y--;
         }
         else if (prs[y] == "else") {
-            y++;
-            int e = 1;
-            while (e != 0) {
-                if ((prs[y] == "if") || (prs[y] == "while"))
-                    e++;
-                else if (prs[y] == "else") {
-                    e++;
-                    if (prs[y+1] == "if")
-                        y++;
-                }
-                else if (prs[y] == "}")
-                    e--;
-                y++;
-            }
-            y--;
+            scopedown(&y, prs);
         }
         else if (prs[y]=="sys")
             sys(&y, vars);
