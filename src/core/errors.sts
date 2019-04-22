@@ -52,4 +52,7 @@ do {
     else if arg[1] is "16" {
         printl "Error: Expected filename";
     }
+    else if arg[1] is "17" {
+        printl "Error: Number ", arg[2], " in for loop should not be less than or equal to 0";
+    }
 }

@@ -14,8 +14,7 @@ void stsclass::decmethod(sts *inst, int *ln) {
     y++;
     methods.back().linestarted = y;
 
-    while (inst->prs[y]!="}")
-        y++;
+    scopedown(&y, inst->prs);
         
     *ln = y;
 }
