@@ -1,1 +1,1 @@
-Provide the feature name, what it does, why you added it, and why it is important.
+Provide the feature name, what it does, why you added it and why it is important.
