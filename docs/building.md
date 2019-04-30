@@ -17,9 +17,9 @@ and
 $ make
 ```
 You can then add it to path or install it to /usr/bin.
-move src/core/errors.sts to /usr/local/bin with 
+move src/core/errors.sts to /usr/bin with 
 ```sh
-$ mv src/core/errors.sts /usr/local/bin
+$ mv src/core/errors.sts /usr/bin
 ```
 
 
