@@ -115,7 +115,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
 
                     lit.insert(i, newscr.getval(vars, new int(0)).val);
                 }
-                else if (lit[i] == $)
+                else if (lit[i-1] == '$')
                     lit.erase(lit.begin() + i - 1);
             }
 
