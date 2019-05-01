@@ -98,7 +98,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             string lit = striplit(prs[y]);
 
             for (int i = 0; i < lit.size(); i++) {
-                if (lit[i] == '$') { // note that this is static and will not change with the value of the variable.
+                if (lit[i-1] != '\\' && lit[i] == '$') { // note that this is static and will not change with the value of the variable.
                     string name;
                     lit[i] = '\0';
 
@@ -115,6 +115,8 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
 
                     lit.insert(i, newscr.getval(vars, new int(0)).val);
                 }
+                else if (lit[i] == '$')
+                    lit.erase(lit.begin() + i - 1);
             }
 
             v.val = lit;

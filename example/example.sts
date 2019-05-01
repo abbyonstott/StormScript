@@ -1,13 +1,3 @@
 do{
-	a: 0;
-	b: 1;
-	c: 0;
-
-	for 25 {
-		printl c;
-		
-		c: a + b;
-		a: b;	
-		b: c;
-	}	
+	printl "Your total is \$20.00";
 }
