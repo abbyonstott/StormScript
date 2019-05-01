@@ -22,7 +22,7 @@ string sts::print(int *y, std::vector<stsvars> current_vars){ //handles both pri
         }
     }
 
-    if (prs[ln-2] == "]")
+    if (ln-2 >= 0 && prs[ln-2] == "]")
         ln-=2;
 
     *y = ln;
