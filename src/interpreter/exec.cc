@@ -104,6 +104,10 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
             forloop(this, vars, y);
             scopedown(&y, prs);
         }
+        else if (prs[y] == "foreach") {
+            foreach(this, vars, y);
+            scopedown(&y, prs);
+        }
         else if (prs[y]=="if") {
             endreq+=1;
             ifs(&y, &endreq, vars);
