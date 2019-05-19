@@ -22,3 +22,32 @@ std::vector<stsvars> forloop(sts *script, std::vector<stsvars> variables, int y)
 
     return variables;
 }
+
+std::vector<stsvars> foreach(sts *script, std::vector<stsvars> variables, int y) {
+    string placeholder = script->prs[y+1];
+    stsvars val = script->getval(variables, new int(y+3));
+
+    if ((val.type != 's') && (val.type != 'l')) // throw error if not list or string
+        script->error(4, val.name);
+
+    for (int i = 0; i < ((val.type == 'l') ? val.vals.size() : val.val.size()); i++) {
+        std::vector<stsvars> variables_copy = variables;
+        stsvars v;
+
+        if (val.type == 's')
+            v.val = string(1, val.val[i]);
+        else
+            v = val.vals[i];
+    
+        v.name = placeholder;
+
+        variables_copy.push_back(v);
+        
+        script->exec(new int(y+4), -1, {}, {}, &variables_copy);
+
+        for (int x = 0; x < variables.size(); x++)
+            variables[x] = variables_copy[x];
+    }
+
+    return variables;
+}
