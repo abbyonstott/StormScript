@@ -1,5 +1,49 @@
 #include "../include/stormscript.h"
 
+void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars) {
+    switch (expressions[*y].btn) {
+        case PRINT: 
+            while (expressions[*y].t != ENDEXPR) {
+                cout << print(y, *scpvars);
+            }
+            break;
+        case PRINTL: 
+            while (expressions[*y].t != ENDEXPR) {
+                cout << print(y, *scpvars);
+            }
+            cout << '\n';
+            break;
+        case IN: scpvars->push_back(in(*y));
+            break;
+    }
+}
+
+void sts::interp(string fname, int psize, char *argv[], int argc){
+    parse(prg);
+
+    globvars.resize(globvars.size()+1);
+    for (int x = 1; x<=argc-1; x++){
+        globvars.back().type='l';
+        globvars.back().vals.resize(globvars[globvars.size()-1].vals.size()+1);
+        globvars.back().vals.back().type = 's';
+        globvars.back().vals.back().val=argv[x];
+        globvars.back().name="arg";
+        globvars.back().glob=1;
+        globvars.back().length = argc-1;
+    }
+    
+    for (int x = 0; x<expressions.size(); x++){
+        
+        switch(expressions[x].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
+            case BUILTIN: runBuiltin(&x, &globvars);
+                break;
+            case UNKNOWN: break;
+        }
+    
+    }
+}   
+
+/*
 bool checkifforward(sts *script, int y) {
     if (script->prs[y+2] == ";") 
         return 1;
@@ -13,25 +57,9 @@ bool checkifforward(sts *script, int y) {
     }
     else
         return 0;
-}
+}*/
 
-void sts::interp(string fname, int psize, char *argv[], int argc){
-    prs = parse(prg);
-
-    globvars.resize(globvars.size()+1);
-    for (int x = 1; x<=argc-1; x++){
-        globvars.back().type='l';
-        globvars.back().vals.resize(globvars[globvars.size()-1].vals.size()+1);
-        globvars.back().vals.back().type = 's';
-        globvars.back().vals.back().val=argv[x];
-        globvars.back().name="arg";
-        globvars.back().glob=1;
-        globvars.back().length = argc-1;
-    }
-    
-    for (int x = 0; x<prs.size(); x++){
-
-        if (prs[x]=="type") { // declares a class
+    /*    if (prs[x]=="type") { // declares a class
             classes.resize(classes.size()+1);
             classes[classes.size()-1].declare(&x, this);
         }
@@ -128,5 +156,4 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
         else if ((prs[x]!=";") && (prs[x][0]!='\0')) {
             error(1, prs[x]);
         }
-    }
-}   
+    }*/

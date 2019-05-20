@@ -4,7 +4,8 @@ std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int 
     std::vector<string> prs = script->prs;
     y++;
     while (condition(script, new int(y), variables))
-        script->exec(new int(y+3), -1, {}, {}, &variables);
+        ;
+        //script->exec(new int(y+3), -1, {}, {}, &variables);
 
     return variables;
 }
@@ -18,7 +19,8 @@ std::vector<stsvars> forloop(sts *script, std::vector<stsvars> variables, int y)
         script->error(17, std::to_string(r));
 
     for (int i = 0; i < r; i++)
-        script->exec(new int(y+1), -1, {}, {}, &variables);
+        ;
+        //script->exec(new int(y+1), -1, {}, {}, &variables);
 
     return variables;
 }
@@ -43,7 +45,7 @@ std::vector<stsvars> foreach(sts *script, std::vector<stsvars> variables, int y)
 
         variables_copy.push_back(v);
         
-        script->exec(new int(y+4), -1, {}, {}, &variables_copy);
+        //script->exec(new int(y+4), -1, {}, {}, &variables_copy);
 
         for (int x = 0; x < variables.size(); x++)
             variables[x] = variables_copy[x];

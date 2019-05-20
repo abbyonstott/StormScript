@@ -17,7 +17,7 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
                     functions[z].args[i] = argval;
                     delete name;
                 }
-                exec(new int(functions[z].linestarted), z, {}, {}, new std::vector<stsvars>({}));
+                //exec(new int(functions[z].linestarted), z, {}, {}, new std::vector<stsvars>({}));
             }
             else {
                 std::vector<stsvars*> o;
@@ -31,7 +31,7 @@ void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *class
                     }
                 }
 
-                exec(new int(functions[z].linestarted), z, classtypes, o, new std::vector<stsvars>({}));
+                //exec(new int(functions[z].linestarted), z, classtypes, o, new std::vector<stsvars>({}));
 
             }
             *ln = y;

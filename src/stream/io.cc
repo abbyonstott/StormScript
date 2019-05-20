@@ -2,10 +2,11 @@
 
 string sts::print(int *y, std::vector<stsvars> current_vars){ //handles both print and printl.
     int ln = *y;
+    ln++;
     stsvars v = getval(current_vars, &ln);
     string value = v.val;
     
-    for (int x = 0; x<=value.size(); x++) {
+    /*for (int x = 0; x<=value.size(); x++) {
         if (value[x] == '\\') {
             if (value[x+1]=='n') {
                 value.erase(value.begin() + x);
@@ -23,8 +24,7 @@ string sts::print(int *y, std::vector<stsvars> current_vars){ //handles both pri
     }
 
     if (ln-2 >= 0 && prs[ln-2] == "]")
-        ln-=2;
-
+       ln-=2;*/
     *y = ln;
     return value;
 }
@@ -32,7 +32,7 @@ string sts::print(int *y, std::vector<stsvars> current_vars){ //handles both pri
 stsvars sts::in(int line){
     stsvars input;
 
-    input.name = prs[line];
+    input.name = expressions[line+1].contents;
     input.type = 's';
 
     char valstring[256]; // allocate a 256 bit char array for value storage

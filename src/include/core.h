@@ -6,6 +6,7 @@
 #include "variables.h"
 #include "functions.h"
 #include "classes.h"
+#include "parser.h"
 
 class sts
 {
@@ -18,8 +19,10 @@ public:
 	std::vector<string> prs; //parsed program
 	std::vector<stsvars> globvars; //global variables
 	std::vector<stsclass> classes;
+	std::vector<expression> expressions;
 	bool term;
 
+	void runBuiltin(int *y, std::vector<stsvars> *scpvars);
 
 
 	//functions
@@ -43,15 +46,16 @@ public:
 		system(cmd.c_str());
 	}
 
+	void evaluateProgram();
+
 	void read(char *argv[], int argc, string filename); //read file
 	string print(int *y, std::vector<stsvars> current_vars); //out function
 	void sys(int *y, std::vector<stsvars> vars);
 	stsvars in(int line);
-	std::vector<string> parse(std::vector<string> prg);
+	void parse(std::vector<string> prg);
 	void interp(string fname, int psize, char *argv[], int argc);
 	bool compare(int *y, std::vector<stsvars> current_vars);
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
-	void exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std::vector<stsvars*> objects, std::vector<stsvars> *variables);
 	void runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 	void set(string command, string setto, int x); // set command
 	string runlibfunc(string name, int *line, std::vector<stsvars> vars); // run library function

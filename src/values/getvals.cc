@@ -1,17 +1,41 @@
 #include "../include/stormscript.h"
 
+stsvars findVar(std::vector<stsvars> vars, string query) {
+    for (int i = 0; i < vars.size(); i++) {
+        if (vars[i].name == query)
+            return vars[i];
+    }
+}
+
 stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
-    if ((prs[y+1]=="+") || (prs[y+1]=="-") || (prs[y+1]=="*") || (prs[y+1]=="/")) {
+
+    if (expressions[y].contents[0] == '\"') {
+        v.type = 's';
+        string lit = striplit(expressions[y].contents);
+        
+        v.val = lit;
+        v.length = lit.size();
+    }
+    else {
+        if (expressions[y].t == UNKNOWN) {
+            v = findVar(vars, expressions[y].contents);
+        }
+    }
+
+    *line = y;
+    return v;
+}
+    /*if ((prs[y+1]=="+") || (prs[y+1]=="-") || (prs[y+1]=="*") || (prs[y+1]=="/")) {
         /* 
         This is math. It can add, subtract, multiply, and divide numbers and use them in print, definitions, and if statements.
         ex:
         if x+1 is 3 {
             printl "It's ", x+1, "!";
         }
-        */
+        //
         stsvars v1, v2;
         v.type='i';
 
@@ -177,8 +201,5 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     }
 
     if (v.type=='\000')
-        error(12, prs[*line]);
-
-    *line = y;
-    return v;
-}
+        error(12, prs[*line]); 
+}*/

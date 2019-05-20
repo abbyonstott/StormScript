@@ -52,7 +52,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                 y++;
                 continue;
             }
-            prs = parse(prg);
+            parse(prg);
             if (prs[y]=="set") {
                 y++;
                 set(prs[y], prs[y+2], y);
@@ -138,7 +138,7 @@ void sts::exec(int *x, int function, std::vector<stsclasstype> *pclasstypes, std
                         endreq=2;
                 }
                 vars = globvars;
-                prs=parse(prg);
+                parse(prg);
                 y = ((function>-1) ? *x-1 : *x); //set y equal to x to rerun from start of scope
                 if (function>-1) {
                     for (int i = 0; i<functions[function].args.size(); i++)  {

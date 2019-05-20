@@ -28,5 +28,6 @@ std::vector<string> readmod(string name) {
             s.prg.back() += contents[i];
     }
 
-    return s.parse(s.prg);
+    s.parse(s.prg);
+    return s.prs;
 }

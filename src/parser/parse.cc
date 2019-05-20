@@ -3,7 +3,7 @@
 the interpreter parses the file and calls functions in other files
 */
 
-std::vector<string> sts::parse(std::vector<string> prg){ 
+void sts::parse(std::vector<string> prg){ 
     std::vector<string> x;
     int y = 0;
     while (y!=prg.size()){
@@ -59,7 +59,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 x.push_back( string(1,prg[y][z]) );
                 break;
             }
-            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
+            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z] == ':')) && (inquotes==false)) {
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }
@@ -82,5 +82,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
             x.erase(x.begin() + i);
     }
     
-    return x;
+    prs = x;
+    evaluateProgram();
 }

@@ -1,8 +1,3 @@
-do{
-	x: "Hello, World!";
-
-	foreach ltr in x {
-		print ltr;
-	}
-	printl;
-}
+print "What's your name? ";
+in x;
+printl "hi ", x;

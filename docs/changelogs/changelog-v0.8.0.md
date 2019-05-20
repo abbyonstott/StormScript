@@ -5,6 +5,8 @@
 * Use `stormscript test filename` to run a live interpretation of filename.sts 
 * `for INT` runs a for loop starting at 0 and ending on INT
 * `foreach PLACEHOLDER in (list/str)` runs through every item in a list or string 
+* `do` is no longer required
+* using switch statements to run interpreter
 
 ## What's Fixed
 * Removed snapcraft files
