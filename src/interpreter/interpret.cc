@@ -3,14 +3,14 @@
 void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars) {
     switch (expressions[*y].btn) {
         case PRINT: 
-            while (expressions[*y].t != ENDEXPR) {
+            while (expressions[*y].t != ENDEXPR)
                 cout << print(y, *scpvars);
-            }
+                
             break;
         case PRINTL: 
-            while (expressions[*y].t != ENDEXPR) {
+            while (expressions[*y].t != ENDEXPR)
                 cout << print(y, *scpvars);
-            }
+
             cout << '\n';
             break;
         case IN: scpvars->push_back(in(*y));
@@ -18,11 +18,25 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars) {
     }
 }
 
+void sts::runUnknown(int *y, std::vector<stsvars> *scpvars) {
+    // first, check for definitions of variables
+
+    if (expressions[*y+1].t == TOKEN) {
+        switch (expressions[*y+1].tktype) {
+            case COLON: // definition
+                define(y, scpvars);
+                break;
+        }
+    }
+    else
+        error(1, expressions[*y].contents);
+}
+
 void sts::interp(string fname, int psize, char *argv[], int argc){
     parse(prg);
 
     globvars.resize(globvars.size()+1);
-    for (int x = 1; x<=argc-1; x++){
+    for (int x = 1; x<=argc-1; x++) {
         globvars.back().type='l';
         globvars.back().vals.resize(globvars[globvars.size()-1].vals.size()+1);
         globvars.back().vals.back().type = 's';
@@ -32,12 +46,15 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
         globvars.back().length = argc-1;
     }
     
-    for (int x = 0; x<expressions.size(); x++){
+    for (int x = 0; x < expressions.size(); x++) {
         
         switch(expressions[x].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
-            case BUILTIN: runBuiltin(&x, &globvars);
+            case BUILTIN: 
+                runBuiltin(&x, &globvars);
                 break;
-            case UNKNOWN: break;
+            case UNKNOWN: 
+                runUnknown(&x, &globvars);
+                break;
         }
     
     }
@@ -144,16 +161,5 @@ bool checkifforward(sts *script, int y) {
             prs.insert(it + 3, mod.begin(), mod.end());
             x += 2;
         }
-        else if (prs[x]=="do") {
-            exec(&x, ((psize==-1) ? -2 : -1), {}, {}, new std::vector<stsvars>({}));
-            exit(0);
-        }
-        else if (prs[x].back() == ':') {
-            globvars.push_back(declare(&x, &globvars));
-            for (int i = 0; i<globvars.size(); i++)
-                globvars[i].glob = true;
-        }
-        else if ((prs[x]!=";") && (prs[x][0]!='\0')) {
-            error(1, prs[x]);
-        }
+
     }*/

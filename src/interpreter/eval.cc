@@ -16,13 +16,26 @@ bool evaluateBuiltin(string kwd) {
     return 0;
 }
 
+bool evalLiteral(string ctn) {
+    if ((ctn.front() == '\"') || (isint(ctn)) || (ctn == "true") || (ctn == "false")) return 1;
+
+    return 0;
+}
+
 
 ExprType determinetype(string contents) {
     if (evaluateToken(contents)) return TOKEN;
     else if (evaluateBuiltin(contents)) return BUILTIN;
+    else if (evalLiteral(contents)) return VALUE;
     else if (contents == ";") return ENDEXPR;
 
     return UNKNOWN;
+}
+
+Value getValue(string ctn) {
+    if (ctn.front() == '\"') return STRING;
+    else if (isint(ctn)) return INTEGER;
+    else if ((ctn == "true") || (ctn == "false")) return BOOLEAN;
 }
 
 TokenType gettktype(string tkn) {
@@ -76,12 +89,12 @@ void sts::evaluateProgram() {
         expression e = prs[i];
         e.t = determinetype(e.contents);
 
-        if (e.t == TOKEN) {
+        if (e.t == TOKEN)
             e.tktype = gettktype(e.contents);
-        }
-        else if (e.t == BUILTIN) {
+        else if (e.t == BUILTIN)
             e.btn = getBuiltincmd(e.contents);
-        }
+        else if (e.t == VALUE)
+            e.literalType = getValue(e.contents);
 
         expressions.push_back(e);
 

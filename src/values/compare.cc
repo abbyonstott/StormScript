@@ -1,133 +1,44 @@
 #include "../include/stormscript.h"
 
-int subscript(std::vector<string> prs, int y) {
-    int n = 0;
+bool condition(sts *program, int *y, std::vector<stsvars> vars) {
+    TokenType comparisonType;
+    int opLocation;
 
-    /*
-    prs should look like this if there is 2 subscripts
-    y+ | line
-    ---|-----
-    0: var1
-    1: [
-    2: n
-    3: ]
-    4: comparison operator
-    5: var2
-    6: [
-    7: n
-    8: ]
+    if ((program->expressions[*y+1].tktype == IS) || (program->expressions[*y+1].tktype == NOT) || (program->expressions[*y+1].tktype == GREATER) || (program->expressions[*y+1].tktype == GREATEREQ) || (program->expressions[*y+1].tktype == LESS) || (program->expressions[*y+1].tktype == LESSEQ))
+        comparisonType = program->expressions[*y+1].tktype; // set comparison type to condition
+    else {
+        int i = *y;
+        
+        while ((program->expressions[i].tktype != IS) && (program->expressions[i].tktype != NOT) && (program->expressions[i].tktype != GREATER) && (program->expressions[i].tktype != GREATEREQ) && (program->expressions[i].tktype != LESS) && (program->expressions[i].tktype != LESSEQ))
+            i++;
+
+        comparisonType = program->expressions[i].tktype;
+        opLocation = i;
+    }
+
+    sts prg; // create more isolated expressions to get the value to compare
     
-    And if there is one on the left
-    0: var1
-    1: [
-    2: n
-    3: ]
-    4: comparison operator
-    5: var2
+    for (int i = *y; i < opLocation; i++)
+        prg.expressions.push_back(program->expressions[i]);
 
-    and if there is one on the right
-    0: var1
-    1: comparison operator
-    2: var2
-    3: [
-    4: n
-    5: ]
-    */
+    stsvars comp1 = prg.getval(vars, new int(0));
 
-    if (prs[y+1] == "[") {
-        n++;
+    prg.expressions = {};
+    int l = opLocation;
 
-        if (prs[y+6] == "[")
-            n++;
-    }
-    else if (prs[y+3] == "[")
-        n++;
-
-    return n;
-}
-
-bool condition(sts *program, int *ln, std::vector<stsvars> vars) {
-    std::vector<string> prs = program->prs;
-    sts prg = *program;
-    int y = *ln;
-    int sbs = subscript(program->prs, y);
-    bool v;
-
-    if (sbs == 0)
-        prg.prs = { program->prs[y] };
-    else {
-        prg.prs = { program->prs[y], program->prs[y+1], program->prs[y+2], program->prs[y+3] };
-        y+= 3;
-    }
-
-    int sy = y + 2;
-
-    stsvars val1 = prg.getval(vars, new int(0));
-
-    if (sbs <= 1)
-        prg.prs = { program->prs[sy] };
-    else {
-        prg.prs = { program->prs[sy], program->prs[sy+1], program->prs[sy+2], program->prs[sy+3] };
-        y+=2;
-    }
-
-    stsvars val2 = prg.getval(vars, new int(0));
+    for (l = opLocation; (program->expressions[l+1].t != ENDEXPR) && (program->expressions[l+1].tktype != OPENCURL) && (program->expressions[l+1].tktype != TERNARY1); l++)
+        prg.expressions.push_back(program->expressions[l]);
     
-    if (val1.type == val2.type) {
-        // compare based on conditional operator
-        if (prs[y+1] == "is")
-            v = (val1.val == val2.val);
-        else if (prs[y+1] == "not")
-            v = (val1.val != val2.val);
-        else if (prs[y+1] == "greater") {
-            switch (val1.type) {
-                case 'i':
-                    v = (std::stoi(val1.val) > std::stoi(val2.val));
-                    break;
-                case 's':
-                case 'b':
-                    program->error(3, prs[y] + " " + prs[y+1] + " " + prs[y+2]);
-                    
-            }
-        }
-        else if (prs[y+1] == "greatereq") {
-            switch (val1.type) {
-                case 'i':
-                    v = (std::stoi(val1.val) >= std::stoi(val2.val));
-                    break;
-                case 's':
-                case 'b':
-                    program->error(3, prs[y] + " " + prs[y+1] + " " + prs[y+2]);
-            }
-        }
-        else if (prs[y+1] == "less") {
-            switch (val1.type) {
-                case 'i':
-                    v = (std::stoi(val1.val) < std::stoi(val2.val));
-                    break;
-                case 's':
-                case 'b':
-                    program->error(3, prs[y] + " " + prs[y+1] + " " + prs[y+2]);
-                    
-            }
-        }
-        else if (prs[y+1] == "lesseq") {
-            switch (val1.type) {
-                case 'i':
-                    v = (std::stoi(val1.val) <= std::stoi(val2.val));
-                    break;
-                case 's':
-                case 'b':
-                    program->error(3, prs[y] + prs[y+1] + prs[y+2]);
-                    
-            }
-        }
-    }
-    else {
-        // give error with value based on type
-        program->error(9, val2.val);
-    }
-    *ln = y;
+    *y = l;
 
-    return v;
+    stsvars comp2 = prg.getval(vars, new int(0));
+    
+    if (comp1.type == comp2.type) {
+        switch (program->expressions[*y].tktype) {
+            case IS:
+                return (comp1.val == comp2.val);
+        }
+    }
+    else
+        program->error(9, program->expressions[opLocation+1].contents);
 }

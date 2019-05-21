@@ -14,7 +14,6 @@ add_executable(stormscript
     src/stream/loops.cc
     src/stream/files.cc
     src/values/stsdec.cc
-    src/values/man.cc
     src/values/if.cc
     src/values/getvals.cc
     src/values/runfunc.cc

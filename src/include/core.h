@@ -16,18 +16,19 @@ public:
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<stsfunc> functions; //functions
 	std::vector<string> prg; //unparsed program
-	std::vector<string> prs; //parsed program
+	std::vector<string> prs; //parsed program. FINALLY WILL BE REMOVED!!!!!111!!!!1!!!
 	std::vector<stsvars> globvars; //global variables
 	std::vector<stsclass> classes;
-	std::vector<expression> expressions;
+	std::vector<expression> expressions; // Replacing prs. Same thing with more info
 	bool term;
 
-	void runBuiltin(int *y, std::vector<stsvars> *scpvars);
-
+	void runBuiltin(int *y, std::vector<stsvars> *scpvars); // built in
+	void runUnknown(int *y, std::vector<stsvars> *scpvars); // user defined, declarations of variables, etc.
 
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
-	stsvars declare(int *line, std::vector<stsvars> *vars); //declare variables -
+
+	void define(int *line, std::vector<stsvars> *vars); //declare variables
 
 	void error(int num, string issue) {
 		string cmd = "errors.sts ";
@@ -48,20 +49,28 @@ public:
 
 	void evaluateProgram();
 
-	void read(char *argv[], int argc, string filename); //read file
-	string print(int *y, std::vector<stsvars> current_vars); //out function
-	void sys(int *y, std::vector<stsvars> vars);
+	void read(char *argv[], int argc, string filename); // read stormscript programs
+
+	string print(int *y, std::vector<stsvars> current_vars); // print function
 	stsvars in(int line);
+
+	void sys(int *y, std::vector<stsvars> vars);
+
+
 	void parse(std::vector<string> prg);
+
 	void interp(string fname, int psize, char *argv[], int argc);
-	bool compare(int *y, std::vector<stsvars> current_vars);
+
 	void ifs(int *line, int *endr, std::vector<stsvars> vars);
+
 	void runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
+
 	void set(string command, string setto, int x); // set command
-	string runlibfunc(string name, int *line, std::vector<stsvars> vars); // run library function
+
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
-	stsvars math(int *y, std::vector<stsvars> vars);
-	void readfile(int y, stsvars *v, std::vector<stsvars> vars); // file reading operations
+
+	void readfile(int y, stsvars *v, std::vector<stsvars> vars); // file reading operations; not to be confused with the language's reader, sts::read
+	
 	void writefile(int y, std::vector<stsvars> vars); // file writing operations
 };
 

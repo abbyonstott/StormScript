@@ -22,36 +22,27 @@ void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
 }
 
 
-stsvars sts::declare(int *line, std::vector<stsvars> *vars) { //variable declarations
-    char type;
-    int y = *line+1;
-    stsvars new_var = ((prs[y]!="[") ? getval(*vars, new int(y)) : stsvars());
-
-    new_var.name = prs[*line];
-    new_var.name.pop_back();
-
-    if (prs[y]=="[") {
-        new_var.type = 'l';
-        new_var.assignlist(this, *vars, line);
+void sts::define(int *line, std::vector<stsvars> *vars) { //variable declarations
+    int num = vars->size();
+    if (isvar(vars, expressions[*line].contents, &num)) {
+        *line += 2;
+        vars->at(num) = getval(*vars, line);
+    }
+    else {
+        vars->push_back(stsvars());
+        *line += 2;
+        vars->back() = getval(*vars, line);
+        vars->back().name = expressions[*line-2].contents;
     }
 
-    type = new_var.type;
-    switch (type) {
-        case 's':   new_var.length = new_var.val.size();
-            vars->push_back(stsvars());
-            vars->back().name = new_var.name + "|length";
-            vars->back().val = std::to_string(new_var.length);
-            vars->back().type = 'i';
+    switch (vars->at(num).type) {
+        case 's':
+            vars->at(num).length = vars->at(num).val.size();
             break;
-        case 'l':   new_var.assignlist(this, *vars, &y);
-            new_var.length = new_var.vals.size();
-            vars->push_back(stsvars());
-            vars->back().name = new_var.name + "|length";
-            vars->back().val = std::to_string(new_var.length);
-            vars->back().type = 'i';
+        case 'l':
+            vars->at(num).length = vars->at(num).vals.size();
             break;
     }
-    *line = y;
-    
-    return new_var;
+
+    *line += 1;
 }

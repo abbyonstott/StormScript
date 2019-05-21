@@ -7,7 +7,7 @@
 
 class stsvars {
 public:
-	char type;
+	char type; // Later on, this "type" value should be replaced with a Value enum type so that it can be set to INTEGER, STRING, BOOL
 	string val;
 
 	std::vector<stsvars> vals;
@@ -19,4 +19,4 @@ public:
 	void assignlist(sts *script, std::vector<stsvars> vars, int *line);
 };
 
-#endif // VARIABLES_H_
+#endif

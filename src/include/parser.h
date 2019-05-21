@@ -10,11 +10,13 @@
 enum ExprType {
 	BUILTIN,
 	UNKNOWN, // user defined things
+	VALUE,
 	TOKEN,
 	ENDEXPR
 };
 
 enum TokenType { // tokens
+	NOTOKEN,
 	IS,
 	NOT,
 	LESS,
@@ -35,6 +37,7 @@ enum TokenType { // tokens
 };
 
 enum Builtin { // these are built in commands
+	NONE,
     PRINT,
     PRINTL,
     IN,
@@ -60,6 +63,12 @@ enum Builtin { // these are built in commands
     READ
 };
 
+enum Value { // these are types
+	INTEGER,
+	STRING,
+	BOOLEAN
+};
+
 class expression {
 public:
 	string contents;
@@ -69,8 +78,9 @@ public:
 	}
 
 	ExprType t; // give type of expression
-	TokenType tktype;
-    Builtin btn;
+	TokenType tktype = NOTOKEN;
+    Builtin btn = NONE;
+	Value literalType;
 };
 
 #endif

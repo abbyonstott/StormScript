@@ -7,17 +7,6 @@ This file deals with non-keyword commands like:
     class type declarations
 */
 
-bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
-    bool isvar = false;
-
-    for (int i = 0; i < pvars->size() && !isvar; i++) {
-        isvar = (pvars->at(i).name == query);
-        if (isvar)
-            *num = i;
-    }
-
-    return isvar;
-}
 
 bool sts::valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int *ln){ //changes the value of the stsvars list
     std::vector<stsvars> vars = *pvars;
