@@ -15,6 +15,9 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars) {
             break;
         case IN: scpvars->push_back(in(*y));
             break;
+        case IF:
+            ifs(globvars, y);
+            break;
     }
 }
 
@@ -60,106 +63,64 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
     }
 }   
 
-/*
-bool checkifforward(sts *script, int y) {
-    if (script->prs[y+2] == ";") 
-        return 1;
-    else if (script->prs[y+2] == "=>") {
-        y+= 3;
-
-        while (script->prs[y]!="{" && script->prs[y]!=";")
-            y++;
-        
-        return (script->prs[y] == ";");
+/*    
+if (prs[x]=="type") { // declares a class
+        classes.resize(classes.size()+1);
+        classes[classes.size()-1].declare(&x, this);
     }
-    else
-        return 0;
-}*/
 
-    /*    if (prs[x]=="type") { // declares a class
-            classes.resize(classes.size()+1);
-            classes[classes.size()-1].declare(&x, this);
-        }
+    else if (prs[x]=="set") {
+        x++;
+        set(prs[x], prs[x+2], x);
+        x+=2;
+    }
+    else if (prs[x]=="func"){
+        functions.push_back(stsfunc());
+        x++;
+        functions.back().name=prs[x];
+        x++;
+        if (prs[x]=="=>") {
+            x++;
+            std::vector<stsvars> args;
 
-        else if (prs[x]=="set") {
-            x++;
-            set(prs[x], prs[x+2], x);
-            x+=2;
-        }
-        else if (prs[x]=="func"){
-            functions.push_back(stsfunc());
-            x++;
-            functions.back().name=prs[x];
-            x++;
-            if (prs[x]=="=>") {
+            while ((prs[x]!="{") && (prs[x]!=";")) {
+                args.resize(args.size()+1);
+
+                args[args.size()-1].name = prs[x];
+                
                 x++;
-                std::vector<stsvars> args;
-
-                while ((prs[x]!="{") && (prs[x]!=";")) {
-                    args.resize(args.size()+1);
-
-                    args[args.size()-1].name = prs[x];
-                    
-                    x++;
-                }
-                functions.back().args=args;
             }
-            
-            if (prs[x] == ";") {
-                int n = x; // searches for actual declaration of function
+            functions.back().args=args;
+        }
+        
+        if (prs[x] == ";") {
+            int n = x; // searches for actual declaration of function
 
-                for (n; n < prs.size() && prs[n] != functions.back().name; n++) { // iterate over prs until definition is found
-                    if ((prs[n] == "func" && !checkifforward(this, n)) || prs[n] == "do" || prs[n] == "type") {
-                        scopedown(&n, prs);
-                    }
+            for (n; n < prs.size() && prs[n] != functions.back().name; n++) { // iterate over prs until definition is found
+                if ((prs[n] == "func" && !checkifforward(this, n)) || prs[n] == "do" || prs[n] == "type") {
+                    scopedown(&n, prs);
                 }
+            }
 
-                if (n == prs.size()) // if n is equal to the size of prs, then it could not find the function so it will give an error
-                    error(14, functions.back().name);
+            if (n == prs.size()) // if n is equal to the size of prs, then it could not find the function so it will give an error
+                error(14, functions.back().name);
 
-                n++;
+            n++;
 
-                if (prs[n] == "=>") {
-                    while (prs[n] != "{")
-                        n++;
+            if (prs[n] == "=>") {
+                while (prs[n] != "{")
                     n++;
-                }
-
-                functions.back().linestarted = n; // sets linestarted to the actual code of the forward declared function
+                n++;
             }
-            else {
-                if (functions.back().args.size() > 0)
-                    x++;
 
-                functions.back().linestarted = x;
-                int endreq = 1;
-                while (endreq != 0) {
-                    if (prs[x] == "}")
-                        endreq--;
-                        
-                    if (prs[x] == "else") {
-                        if (prs[x+1] == "if")
-                            x++;
-                        x++;
-                        endreq++;
-                    }
-                    else if ((prs[x] == "if") || (prs[x] == "while")) {
-                        x++;
-                        endreq++;
-                    }
-                    else
-                        x++;
-                }
-                x--;
-                if (prs[x]=="loop")
-                    x+=2;
-            }
+            functions.back().linestarted = n; // sets linestarted to the actual code of the forward declared function
         }
-        else if (prs[x] == "mod") {
-            std::vector<string> mod = readmod(prs[x+1]);
-            std::vector<string>::iterator it = prs.begin();
-            prs.insert(it + 3, mod.begin(), mod.end());
-            x += 2;
-        }
+    }
+    else if (prs[x] == "mod") {
+        std::vector<string> mod = readmod(prs[x+1]);
+        std::vector<string>::iterator it = prs.begin();
+        prs.insert(it + 3, mod.begin(), mod.end());
+        x += 2;
+    }
 
-    }*/
+}*/

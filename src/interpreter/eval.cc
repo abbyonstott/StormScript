@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-bool evaluateToken(string tkn) {
+bool evaluateToken(string tkn) { // tokens are different types of operators and symbols
     if ((tkn == "is") || (tkn == "not") || (tkn == "less") || (tkn == "lesseq") || (tkn == "greater") || (tkn == "greatereq")) return 1; // comparison operators
     else if ((tkn == "?") || (tkn == ":") || (tkn == "=>") || (tkn == "{") || (tkn == "}") || (tkn == "[") || (tkn == "]")) return 1; // symbols
     else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*")) return 1; // math
@@ -10,7 +10,7 @@ bool evaluateToken(string tkn) {
 
 bool evaluateBuiltin(string kwd) {
     if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "def") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "set") || (kwd == "return")) return 1;
-    else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
+    else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "sys") || (kwd == "wait")) return 1;
     else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
 
     return 0;
@@ -81,7 +81,6 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "sys") return SYSTEM;
     else if (kwd == "wait") return WAIT;
     else if (kwd == "write") return WRITE;
-    else if (kwd == "read") return READ;
 }
 
 void sts::evaluateProgram() {

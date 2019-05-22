@@ -61,7 +61,7 @@ public:
 
 	void interp(string fname, int psize, char *argv[], int argc);
 
-	void ifs(int *line, int *endr, std::vector<stsvars> vars);
+	void ifs(std::vector<stsvars> vars, int *y);
 
 	void runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 

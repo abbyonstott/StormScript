@@ -12,7 +12,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     stsvars v;
     int y = *line;
 
-    bool operation = ((expressions[y+1].t == TOKEN) && (expressions.size() > y+1));
+    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL) && (expressions.size() > y+1));
 
     switch (operation) {
         case 0: // if raw value
@@ -20,7 +20,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                 string lit;
 
                 switch (expressions[y].literalType) {
-                    case STRING:
+                    case STRING: // TODO: allow concatenation
                         lit = striplit(expressions[y].contents);
                         v.type = 's';
                         v.length = lit.size();
@@ -78,7 +78,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
             }
 
             switch (t) { // perform based on token type
-                case PLUS: // START MATH
+                case PLUS: // I'm sure there is an easier way to do this...
                     v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, new int(0)).val) + std::stoi(placeholders.at(1).getval(vars, new int(0)).val));
                     break;
                 case MINUS:
@@ -89,7 +89,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     break;
                 case MULTIPLICATION:
                     v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, new int(0)).val) * std::stoi(placeholders.at(1).getval(vars, new int(0)).val));
-                    break; // END MATH
+                    break; 
                 case OPENBRACKET:
                     plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
                     if ((expressions[placeholders[0].expressions.size() + y + 1].t != TOKEN) && ((plus1 != IS) || (plus1 != NOT) || (plus1 != GREATER) || (plus1 != GREATEREQ) || (plus1 != LESS) || (plus1 != LESSEQ))) {
@@ -145,8 +145,28 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                 case GREATEREQ:
                 case LESS:
                 case LESSEQ:
-                    v.type = 'b';
                     v.val = ((condition(this, &y, vars)) ? "true" : "false");
+                    if (expressions[y].tktype == TERNARY1) {
+                        /* 
+                        For ternary, we can assume that it is structured like this:
+                           TOKEN   | VALUE/UNKNOWN |   TOKEN   | VALUE/UNKNOWN
+                        -----------|---------------------------|--------------
+                            ?      |     var       |     :     |     var
+
+                        as usual, these values can be anything, but getval() automatically fills in the gap so we don't have to do much here with different cases
+                        */
+                        bool _val = toBool(v.val);
+                        stsvars primary, secondary;
+
+                        primary = getval(vars, new int(y+1));
+
+                        while (expressions[y].tktype != COLON) y++; 
+                        y++;
+                        secondary = getval(vars, new int(y));
+
+                        v.val = ((_val) ? primary.val : secondary.val);
+                        v.type = ((_val) ? primary.type : secondary.type);
+                    }
                     break;
             }
 
@@ -156,31 +176,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
     *line = y;
     return v;
 }
-    /*
-    else if (((prs[y+1] == "is") || (prs[y+1] == "not") || (prs[y+1] == "greater") || (prs[y+1] == "greatereq") || (prs[y+1] == "less") || (prs[y+1] == "lesseq")) || ((prs[y+1]=="[") && ((prs[y+4] == "is") || (prs[y+4] == "not") || (prs[y+4] == "greater") || (prs[y+4] == "greatereq") || (prs[y+4] == "less") || (prs[y+4] == "lesseq")))) {
-        bool cond  = condition(this, &y, vars);
-        // check if ternary;
-        y+=2;
-        if (prs[y+1] == "?") {
-            y+=2;
-            if (cond) {
-                v = getval(vars, &y);
-                y+=2;
-            }
-            else {
-                y+=2;
-                v = getval(vars, &y);
-            }
-            *line = y;
-            return v;
-        }
-        else {
-            *line = y;
-            v.type = 'b';
-            v.val = ((cond) ? "true" : "false");
-            return v;
-        }
-    }
+/* 
 
     else if (prs[y] == "read") {
         y++;

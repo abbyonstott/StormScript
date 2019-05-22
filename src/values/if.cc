@@ -1,38 +1,14 @@
 #include "../include/stormscript.h"
 
-void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
-    int y = *line;
-    int endreq = *endr;
-    y++;
-    *line = y;
-
-    if (!toBool(getval(vars, line).val)){
-        y = *line;
-        y++;
-        while (prs[y] != "}") {
-            y++;
-            if (prs[y+1] == "else") {
-                if (prs[y+2] == "if") {
-                    y+= 2;
-                    ifs(&y, &endreq, vars);
-                    break;
-                }
-                else {
-                    y++;
-                    break;
-                }
-            }
-        }
-    }
-    else {
-        y = *line;
-        
-        if (prs[y-1] == "[")
-            y+= 2;
-        else
-            y++;
+void sts::ifs(std::vector<stsvars> vars, int *y) {
+    sts getexpr; // TODO: add else and else if
+    
+    while (expressions[*y].tktype != OPENCURL) {
+        getexpr.expressions.push_back(expressions[*y]);
+        *y += 1;
     }
 
-    *line = y;
-    *endr = endreq;
+    if (toBool(getval(vars, new int(0)).val)) {
+        ; // TODO: add new scope method
+    }
 }

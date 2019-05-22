@@ -1,11 +1,26 @@
 #include "../include/stormscript.h"
 
 bool condition(sts *program, int *y, std::vector<stsvars> vars) {
+    /*
+    Comparisons are formatted like this:
+    VALUE/UNKNOWN |               TOKEN                  |VALUE/UNKNOWN
+    -----------------------------------------------------|-------------
+    var           | is/not/greater/less/greatereq/lesseq | var
+    
+    The right and left hand values can also contain subscripts, in which case they would look more like this:
+    UNKNOWN | TOKEN | VALUE/UNKNOWN | TOKEN
+    var     |  [    |     INTEGER   |   ]
+    */
+
     TokenType comparisonType;
     int opLocation;
+    int oldy = *y;
 
-    if ((program->expressions[*y+1].tktype == IS) || (program->expressions[*y+1].tktype == NOT) || (program->expressions[*y+1].tktype == GREATER) || (program->expressions[*y+1].tktype == GREATEREQ) || (program->expressions[*y+1].tktype == LESS) || (program->expressions[*y+1].tktype == LESSEQ))
+    // The below if statement checks if the value contains a subscript or not by determining the location of the comparison operator
+    if ((program->expressions[*y+1].tktype == IS) || (program->expressions[*y+1].tktype == NOT) || (program->expressions[*y+1].tktype == GREATER) || (program->expressions[*y+1].tktype == GREATEREQ) || (program->expressions[*y+1].tktype == LESS) || (program->expressions[*y+1].tktype == LESSEQ)) {
         comparisonType = program->expressions[*y+1].tktype; // set comparison type to condition
+        opLocation = *y+1;
+    }
     else {
         int i = *y;
         
@@ -26,7 +41,7 @@ bool condition(sts *program, int *y, std::vector<stsvars> vars) {
     prg.expressions = {};
     int l = opLocation;
 
-    for (l = opLocation; (program->expressions[l+1].t != ENDEXPR) && (program->expressions[l+1].tktype != OPENCURL) && (program->expressions[l+1].tktype != TERNARY1); l++)
+    for (l = opLocation+1; (program->expressions[l].t != ENDEXPR) && (program->expressions[l].tktype != OPENCURL) && (program->expressions[l].tktype != TERNARY1); l++)
         prg.expressions.push_back(program->expressions[l]);
     
     *y = l;
@@ -34,9 +49,29 @@ bool condition(sts *program, int *y, std::vector<stsvars> vars) {
     stsvars comp2 = prg.getval(vars, new int(0));
     
     if (comp1.type == comp2.type) {
-        switch (program->expressions[*y].tktype) {
-            case IS:
-                return (comp1.val == comp2.val);
+        switch (comparisonType) {
+            case IS: return (comp1.val == comp2.val);
+            case NOT: return (comp1.val != comp2.val);
+            case GREATER: 
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val > comp2.val);
+                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                break;
+            case LESS:
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val < comp2.val);
+                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                break;
+            case GREATEREQ: 
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val >= comp2.val);
+                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                break;
+            case LESSEQ:
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val <= comp2.val);
+                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                break;
         }
     }
     else
