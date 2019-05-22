@@ -41,24 +41,13 @@ bool isint(string s) {
     return false;
 }
 
-void scopedown(int *x, std::vector<string> prs) {
-    int y = *x;
-    int e = 1;
-    y++;
+void scopedown(int *x, std::vector<expression> expressions) {
+    int endreq = 1;
 
-    while (e != 0) {
-        if ((prs[y] == "if") || (prs[y] == "while") || (prs[y] == "for"))
-            e++;
-        else if (prs[y] == "else") {
-            e++;
-            if (prs[y+1] == "if")
-                y++;
-        }
-        else if (prs[y] == "}")
-            e--;
-        y++;
+    while (endreq != 0)  {
+        if (expressions[*x].tktype == OPENCURL) endreq += 1;
+        else if (expressions[*x].tktype == CLOSEDCURL) endreq -= 1;
+
+        *x += 1;
     }
-    y--;
-
-    *x = y;
 }

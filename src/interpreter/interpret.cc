@@ -49,18 +49,7 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
         globvars.back().length = argc-1;
     }
     
-    for (int x = 0; x < expressions.size(); x++) {
-        
-        switch(expressions[x].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
-            case BUILTIN: 
-                runBuiltin(&x, &globvars);
-                break;
-            case UNKNOWN: 
-                runUnknown(&x, &globvars);
-                break;
-        }
-    
-    }
+    newScope(new int(0), globvars);
 }   
 
 /*    

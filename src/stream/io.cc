@@ -24,7 +24,8 @@ string sts::print(int *y, std::vector<stsvars> current_vars){ //handles both pri
     }
 
     if (ln-2 >= 0 && prs[ln-2] == "]")
-       ln-=2;*/
+       ln-=2;*/ // TODO: add back escapes
+
     *y = ln;
     return value;
 }

@@ -1,3 +1,6 @@
-if true is true {
+if false {
     printl "Hello, World!";
+}
+else {
+    printl "NO";
 }

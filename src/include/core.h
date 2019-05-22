@@ -56,6 +56,7 @@ public:
 
 	void sys(int *y, std::vector<stsvars> vars);
 
+	void newScope(int *y, std::vector<stsvars> vars);
 
 	void parse(std::vector<string> prg);
 
@@ -84,6 +85,6 @@ std::vector<stsvars> forloop(sts *script, std::vector<stsvars> variables, int y)
 std::vector<stsvars> foreach(sts *script, std::vector<stsvars>, int y);
 
 // this will iterate over y until it is the end of the while scope
-void scopedown(int *x, std::vector<string> prs);
+void scopedown(int *x, std::vector<expression> expressions);
 
 #endif
