@@ -14,7 +14,6 @@ public:
 	//variables
 	int lineon; //line the parser is on
 	unsigned int sizeoff = 0; //size of the program
-	std::vector<stsfunc> functions; //functions
 	std::vector<string> prg; //unparsed program
 	std::vector<string> prs; //parsed program. FINALLY WILL BE REMOVED!!!!!111!!!!1!!!
 	std::vector<stsvars> globvars; //global variables
@@ -22,8 +21,8 @@ public:
 	std::vector<expression> expressions; // Replacing prs. Same thing with more info
 	bool term;
 
-	void runBuiltin(int *y, std::vector<stsvars> *scpvars); // built in
-	void runUnknown(int *y, std::vector<stsvars> *scpvars); // user defined, declarations of variables, etc.
+	void runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // built in
+	void runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> functions); // user defined, declarations of variables, etc.
 
 	//functions
 	stsvars getval(std::vector<stsvars> vars, int *line);
@@ -56,23 +55,25 @@ public:
 
 	void sys(int *y, std::vector<stsvars> vars);
 
-	void newScope(int *y, std::vector<stsvars> vars);
+	void newScope(int *y, std::vector<stsvars> vars, std::vector<stsfunc> functions);
 
 	void parse(std::vector<string> prg);
 
 	void interp(string fname, int psize, char *argv[], int argc);
 
-	void ifs(std::vector<stsvars> vars, int *y);
+	void ifs(std::vector<stsvars> vars, std::vector<stsfunc> functions, int *y);
 
-	void runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
+	void runfunc(int *y, std::vector<stsfunc> functions, int num);
 
-	void set(string command, string setto, int x); // set command
+	void set(int *y);
 
 	bool valchange(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln);
 
 	void readfile(int y, stsvars *v, std::vector<stsvars> vars); // file reading operations; not to be confused with the language's reader, sts::read
 	
 	void writefile(int y, std::vector<stsvars> vars); // file writing operations
+
+	void declareFunc(int *y, std::vector<stsfunc> *functions);
 };
 
 

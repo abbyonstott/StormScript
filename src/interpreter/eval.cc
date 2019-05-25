@@ -83,7 +83,7 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "write") return WRITE;
 }
 
-void sts::evaluateProgram() {
+void sts::evaluateProgram() { // TODO: use a vector in arguments rather than prs
     for (int i = 0; i < prs.size(); i++) {
         expression e = prs[i];
         e.t = determinetype(e.contents);

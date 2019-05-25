@@ -1,6 +1,8 @@
-if false {
-    printl "Hello, World!";
+func hello {
+    x: 3;
+    if x is 3 {
+        printl "Hello, World!";
+    }
 }
-else {
-    printl "NO";
-}
+
+hello;

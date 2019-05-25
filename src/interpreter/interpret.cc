@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars) {
+void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions) {
     switch (expressions[*y].btn) {
         case PRINT: 
             while (expressions[*y].t != ENDEXPR)
@@ -13,30 +13,54 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars) {
 
             cout << '\n';
             break;
+        case SET:
+            set(y);
+            break;
         case IN: scpvars->push_back(in(*y));
             break;
         case IF:
-            ifs(globvars, y);
+            ifs(*scpvars, *functions, y);
+            break;
+        case FUNCTION:
+            declareFunc(y, functions);
             break;
     }
 }
 
-void sts::runUnknown(int *y, std::vector<stsvars> *scpvars) {
-    // first, check for definitions of variables
+void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> functions) {
+    int fnum;
+    bool shouldbreak;
 
-    if (expressions[*y+1].t == TOKEN) {
-        switch (expressions[*y+1].tktype) {
-            case COLON: // definition
-                define(y, scpvars);
-                break;
-        }
+    switch (expressions[*y+1].t) {
+        case TOKEN:
+            shouldbreak = 0;
+
+            switch (expressions[*y+1].tktype) {
+                case COLON: // definition
+                    define(y, scpvars);
+                    shouldbreak = 1;
+                    break;
+                case ARROW: break;
+            }
+
+            if (shouldbreak) break;
+        case ENDEXPR:
+            switch (isFunc(functions, expressions[*y].contents, &fnum)) { // if there is a semicolon directly after, it is either a function or not a command
+                case 0: 
+                    error(1, expressions[*y].contents);
+                    break;
+                case 1: 
+                    runfunc(y, functions, fnum);
+                    break;
+            }
+            break;
     }
-    else
-        error(1, expressions[*y].contents);
 }
 
 void sts::interp(string fname, int psize, char *argv[], int argc){
     parse(prg);
+
+    std::vector<stsfunc> functions;
 
     globvars.resize(globvars.size()+1);
     for (int x = 1; x<=argc-1; x++) {
@@ -49,7 +73,7 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
         globvars.back().length = argc-1;
     }
     
-    newScope(new int(0), globvars);
+    newScope(new int(0), globvars, functions);
 }   
 
 /*    

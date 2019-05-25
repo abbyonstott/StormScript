@@ -41,6 +41,17 @@ bool isint(string s) {
     return false;
 }
 
+bool isFunc(std::vector<stsfunc> functions, string query, int *num) {
+    for (int i = 0; i < functions.size(); i++) {
+        if (functions[i].name == query) {
+            *num = i;
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 void scopedown(int *x, std::vector<expression> expressions) {
     int endreq = 1;
 
@@ -50,4 +61,5 @@ void scopedown(int *x, std::vector<expression> expressions) {
 
         *x += 1;
     }
+    *x -= 1;
 }
