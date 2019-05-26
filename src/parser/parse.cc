@@ -26,7 +26,7 @@ void sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from prs version
-            if (((prg[y][z]==' ') || (prg[y][z]==',') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 if ((x.back().size() != 0))
                     x.resize(x.size()+1);
                 z++;
@@ -39,7 +39,7 @@ void sts::parse(std::vector<string> prg){
                 x.push_back( string(1,prg[y][z]) );
                 break;
             }
-            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==']') || (prg[y][z] == ':')) && (inquotes==false)) {
+            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==',') || (prg[y][z]==']') || (prg[y][z] == ':')) && (inquotes==false)) {
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }
@@ -61,7 +61,6 @@ void sts::parse(std::vector<string> prg){
         if ((x[i]=="\0") || (x[i]=="") || (x[i]=="\n"))
             x.erase(x.begin() + i);
     }
-    
-    prs = x;
-    evaluateProgram();
+
+    evaluateProgram(x);
 }

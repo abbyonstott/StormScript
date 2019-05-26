@@ -33,7 +33,8 @@ enum TokenType { // tokens
 	PLUS,
 	MINUS,
 	DIVISION,
-	MULTIPLICATION
+	MULTIPLICATION,
+	COMMA
 };
 
 enum Builtin { // these are built in commands
@@ -43,7 +44,6 @@ enum Builtin { // these are built in commands
     IN,
     IF,
     ELSE,
-    SET,
     FUNCTION,
     TYPE,
     TYPE_INTEGER,
@@ -60,7 +60,9 @@ enum Builtin { // these are built in commands
     SYSTEM,
     WAIT,
     WRITE,
-    READ
+    READ,
+	RANDOM,
+	RANDOMRANGE
 };
 
 enum Value { // these are types

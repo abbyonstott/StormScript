@@ -13,7 +13,6 @@ public:
 	std::vector<stsvars> vals;
 
 	int length;
-	bool glob = false;
 	string name;
 
 	void assignlist(sts *script, std::vector<stsvars> vars, int *line);

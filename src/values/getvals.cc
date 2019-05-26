@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, int *line) {
+stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *line) {
     /*
     THIS FILE IS VERY IMPORTANT!!!!!
     When Modifying this function be sure that:
@@ -12,7 +12,7 @@ stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, i
     stsvars v;
     int y = *line;
 
-    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL) && (expressions.size() > y+1));
+    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && (expressions.size() > y+1));
 
     switch (operation) {
         case 0: // if raw value
@@ -34,12 +34,27 @@ stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, i
 
                 v.val = lit;
             }
+            else if (expressions[y].t == BUILTIN) { 
+                // read just reads the file, but it is always used as a value because it returns a value
+                switch (expressions[y].btn) { 
+                    case READ:
+                        v = readfile(&y, vars, functions);
+                        break;
+                    case RANDOM:
+                        v.val = ((randombool()) ? "true" : "false");
+                        v.type = 'b';
+                        break;
+                    case RANDOMRANGE:
+                        v.val = std::to_string(genrandomintfromrange(this, vars, functions, &y));
+                        v.type = 'i';
+                }
+            }
             else if (expressions[y].t == UNKNOWN) {
                 int index;
 
-                if (isvar(&vars, expressions[y].contents, &index)) v = vars[index]; // use index to find variable if the expression refers to a variable
+                if (isvar(vars, expressions[y].contents, &index)) v = vars->at(index); // use index to find variable if the expression refers to a variable
                 else if (isFunc(functions, expressions[y].contents, &index)) {
-                    runfunc(&y, &functions, index);
+                    runfunc(&y, &functions, vars, index);
                     v = functions[index]; // if expression refers to function
                 }
             }
@@ -100,7 +115,7 @@ stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, i
                 case OPENBRACKET:
                     plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
                     if ((expressions[placeholders[0].expressions.size() + y + 1].t != TOKEN) && ((plus1 != IS) || (plus1 != NOT) || (plus1 != GREATER) || (plus1 != GREATEREQ) || (plus1 != LESS) || (plus1 != LESSEQ))) {
-                        sbsvar = findVar(vars, expressions[y-2].contents);
+                        sbsvar = findVar(*vars, expressions[y-2].contents);
 
                         switch(sbsvar.type) {
                             case 's':
@@ -121,7 +136,7 @@ stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, i
                                 break;
 
                             case 'l':
-                                if ((index >= sbsvar.vals.size()) || (index < 0)) {
+                                if ((index >= sbsvar.vals.size()) || (index < 0)) { // out of range error
                                     string fullexpr = sbsvar.name + "[";
 
                                     for (int n = 0; n < placeholders[0].expressions.size(); n++) // add full subscript to error details
@@ -183,25 +198,3 @@ stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, i
     *line = y;
     return v;
 }
-/* 
-
-    else if (prs[y] == "read") {
-        y++;
-        readfile(y, &v, vars);
-        *line = y;
-        return v;
-    }
-
-    else if (prs[y] == "randomrange") {
-        v.type = 'i';
-        v.val = std::to_string(genrandomintfromrange(this, vars, &y));
-        *line = y;
-        return v;
-    }
-
-    else if (prs[y] == "random") {
-        v.type = 'b';
-        v.val = ((randombool()) ? "true" : "false");
-        return v;
-    }
-}*/

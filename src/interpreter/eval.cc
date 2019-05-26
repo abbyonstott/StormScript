@@ -3,16 +3,16 @@
 bool evaluateToken(string tkn) { // tokens are different types of operators and symbols
     if ((tkn == "is") || (tkn == "not") || (tkn == "less") || (tkn == "lesseq") || (tkn == "greater") || (tkn == "greatereq")) return 1; // comparison operators
     else if ((tkn == "?") || (tkn == ":") || (tkn == "=>") || (tkn == "{") || (tkn == "}") || (tkn == "[") || (tkn == "]")) return 1; // symbols
-    else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*")) return 1; // math
+    else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*") || (tkn == ",")) return 1;
     
     return 0;
 }
 
 bool evaluateBuiltin(string kwd) {
-    if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "def") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "set") || (kwd == "return")) return 1;
-    else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "sys") || (kwd == "wait")) return 1;
+    if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "def") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "return")) return 1;
+    else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
     else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
-
+    else if ((kwd == "random") || (kwd == "randomrange")) return 1;
     return 0;
 }
 
@@ -56,6 +56,7 @@ TokenType gettktype(string tkn) {
     else if (tkn == "-") return MINUS;
     else if (tkn == "/") return DIVISION;
     else if (tkn == "*") return MULTIPLICATION;
+    else if (tkn == ",") return COMMA;
 }
 
 Builtin getBuiltincmd(string kwd) {
@@ -64,7 +65,6 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "in") return IN;
     else if (kwd == "if") return IF;
     else if (kwd == "else") return ELSE;
-    else if (kwd == "set") return SET;
     else if (kwd == "func") return FUNCTION;
     else if (kwd == "type") return TYPE;
     else if (kwd == "int") return TYPE_INTEGER;
@@ -81,9 +81,12 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "sys") return SYSTEM;
     else if (kwd == "wait") return WAIT;
     else if (kwd == "write") return WRITE;
+    else if (kwd == "read") return READ;
+    else if (kwd == "random") return RANDOM;
+    else if (kwd == "randomrange") return RANDOMRANGE;
 }
 
-void sts::evaluateProgram() { // TODO: use a vector in arguments rather than prs
+void sts::evaluateProgram(std::vector<string> prs) { // TODO: use a vector in arguments rather than prs
     for (int i = 0; i < prs.size(); i++) {
         expression e = prs[i];
         e.t = determinetype(e.contents);

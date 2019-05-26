@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-bool condition(sts *program, int *y, std::vector<stsvars> vars, std::vector<stsfunc> functions) {
+bool condition(sts *program, int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
     /*
     Comparisons are formatted like this:
     VALUE/UNKNOWN |               TOKEN                  |VALUE/UNKNOWN
@@ -53,22 +53,22 @@ bool condition(sts *program, int *y, std::vector<stsvars> vars, std::vector<stsf
             case IS: return (comp1.val == comp2.val);
             case NOT: return (comp1.val != comp2.val);
             case GREATER: 
-                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val > comp2.val);
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) > std::stoi(comp2.val));
                 else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
                 else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
             case LESS:
-                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val < comp2.val);
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) < std::stoi(comp2.val));
                 else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
                 else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
             case GREATEREQ: 
-                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val >= comp2.val);
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) >= std::stoi(comp2.val));
                 else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
                 else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
             case LESSEQ:
-                if ((comp1.type == 'i') && (comp2.type == 'i')) return (comp1.val <= comp2.val);
+                if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) <= std::stoi(comp2.val));
                 else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
                 else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
                 break;

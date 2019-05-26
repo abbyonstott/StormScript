@@ -2,13 +2,12 @@
 
 ## What's New
 * Use the `$` symbol followed by a variable name inside of a string literal to concatenate that variable into the string
-* Use `stormscript test filename` to run a live interpretation of filename.sts 
 * `for INT` runs a for loop starting at 0 and ending on INT
-* `foreach PLACEHOLDER in (list/str)` runs through every item in a list or string 
 * `do` is no longer required
 * rewrote interpreter to use switch statements
 * using enumerations to determine statements rather than string literal
 * functions can be declared in any scope
+* moved errors.sts from /usr/bin to /usr/share/stormscript
 
 ## What's Fixed
 * Removed snapcraft files
@@ -16,3 +15,11 @@
 * StormScript doesn't mess up when if statements are nested
 * boolean variables and literals now work in `if` statements
 * Comparisons always work out to booleans, meaning that they are now interchangeable
+* Random no longer generates integers outside of range
+* Scoped variable inheritance now works, so variables defined inside of a scope are accessible to the scope and any child scopes
+
+# Beta 1
+
+## What's changed
+* Removed `type`: Will be added back later
+* Removed modules: Will be added back later

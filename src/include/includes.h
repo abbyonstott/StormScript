@@ -17,8 +17,6 @@ Let's forward declare these classes for the files that use them
 */
 class sts;
 class stsvars;
-class stsclass;
-class stsclasstype;
 class stsfunc;
 
 using std::string;

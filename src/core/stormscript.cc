@@ -12,7 +12,18 @@
 */
 
 void printVersion() {
-	cout << "StormScript 1.0.0 Beta 1";
+	cout << "StormScript 1.0.0 Beta 1\n";
+}
+
+void showhelp() {
+	cout << "Usage: stormscript [file|options]\n";
+	cout << "StormScript is an open source scripting language for Linux.\n\n";
+	cout <<  "  -h, --help: display help\n";
+	cout << "  --version: show version\n";
+	cout << "  install: install a module\n";
+	printVersion();
+	cout << "git: https://github.com/stormprograms/StormScript\n";
+	cout << "For documentation, go to https://stormprograms.com/stormscript\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -21,17 +32,8 @@ int main(int argc, char *argv[]) {
 	if (argc != 1) {
 		if (string(argv[1])=="--version")
 			printVersion();
-		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h")) {
-			cout << "Usage: stormscript [file|options]\n";
-			cout << "StormScript is an open source scripting language for Linux.\n\n";
-			cout <<  "  -h, --help: display help\n";
-			cout << "  --version: show version\n";
-			cout << "  install: install a module\n";
-			cout << "  test FILENAME: Live interpret file of FILENAME\n\n";
-			system("stormscript --version");
-			cout << "git: https://github.com/stormprograms/StormScript\n";
-			cout << "For documentation, go to https://stormprograms.com/stormscript/docs\n";
-		}
+		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h"))
+			showhelp();
 		else if (string(argv[1])=="install") {
 			string cmd = "wget https://storage.googleapis.com/stormscript/";
 			if (argc > 2) {
@@ -42,24 +44,11 @@ int main(int argc, char *argv[]) {
 			else
 				script.error(13, "none");
 		}
-		else if (string(argv[1]) == "test") {
-			if (argc > 2) {
-				string filename = string(argv[2]);
-				script.live(filename);
-			}
-			else
-				script.error(16, "");
-		}
 		else
 			script.read(argv, argc, argv[1]);
 	}
-	else {
-		printVersion();
-		cout << "Try 'stormscript --help' for more information.\n\n";
-		script.prg.resize(script.prg.size()+1);
-		script.prg[script.prg.size()-1] = "do{\n";
-		script.term = true;
-		script.interp("", -1, argv, argc);
-	}
+	else
+		showhelp();
+
 	return 0;
 }

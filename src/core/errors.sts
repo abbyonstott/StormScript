@@ -1,5 +1,3 @@
-#!/usr/bin/env stormscript
-
 if arg[1] is "0" {
     printl "Error: Missing end quote on literal";
 }

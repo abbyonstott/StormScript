@@ -1,6 +1,1 @@
-func hello {
-    x: 3;
-    return x;
-}
-
-printl hello;
+sys "echo hello world";
