@@ -70,7 +70,8 @@ enum Builtin { // these are built in commands
 enum Value { // these are types
 	INTEGER,
 	STRING,
-	BOOLEAN
+	BOOLEAN,
+	LIST
 };
 
 class expression {

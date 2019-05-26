@@ -4,7 +4,7 @@ void sts::newScope(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> *fun
     int oldfsize = functions->size();
     int oldvsize = vars->size();
 
-    for (*y; *y < expressions.size() && expressions[*y].tktype != CLOSEDCURL; *y += 1) {
+    while (expressions[*y].tktype != CLOSEDCURL) {
         
         switch(expressions[*y].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
             case BUILTIN: 
@@ -14,7 +14,7 @@ void sts::newScope(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> *fun
                 runUnknown(y, vars, functions);
                 break;
         }
-    
+        *y++;
     }
 
     if (oldfsize > 0)

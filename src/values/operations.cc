@@ -9,6 +9,7 @@ stsvars findVar(std::vector<stsvars> vars, string query) {
         if (vars[i].name == query)
             return vars[i];
     }
+    return stsvars();
 }
 
 bool isvar(std::vector<stsvars> * pvars, string query, int *num) {

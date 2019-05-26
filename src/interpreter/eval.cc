@@ -36,6 +36,7 @@ Value getValue(string ctn) {
     if (ctn.front() == '\"') return STRING;
     else if (isint(ctn)) return INTEGER;
     else if ((ctn == "true") || (ctn == "false")) return BOOLEAN;
+    return LIST;
 }
 
 TokenType gettktype(string tkn) {
@@ -58,6 +59,7 @@ TokenType gettktype(string tkn) {
     else if (tkn == "*") return MULTIPLICATION;
     else if (tkn == ",") return COMMA;
     else if (tkn == "|") return BAR;
+    return NOTOKEN;
 }
 
 Builtin getBuiltincmd(string kwd) {
@@ -86,6 +88,7 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "random") return RANDOM;
     else if (kwd == "randomrange") return RANDOMRANGE;
     else if (kwd == "length") return SIZE;
+    return NONE;
 }
 
 void sts::evaluateProgram(std::vector<string> prs) {
