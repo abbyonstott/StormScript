@@ -13,6 +13,7 @@ class sts
 public:
 	//variables
 	int lineon; //line the parser is on
+	int function = -1;
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<string> prg; //unparsed program
 	std::vector<string> prs; //parsed program. FINALLY WILL BE REMOVED!!!!!111!!!!1!!!
@@ -22,12 +23,12 @@ public:
 	bool term;
 
 	void runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // built in
-	void runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> functions); // user defined, declarations of variables, etc.
+	void runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // user defined, declarations of variables, etc.
 
 	//functions
-	stsvars getval(std::vector<stsvars> vars, int *line);
+	stsvars getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, int *line);
 
-	void define(int *line, std::vector<stsvars> *vars); //declare variables
+	void define(int *line, std::vector<stsvars> *vars, std::vector<stsfunc> functions); //declare variables
 
 	void error(int num, string issue) {
 		string cmd = "errors.sts ";
@@ -50,12 +51,12 @@ public:
 
 	void read(char *argv[], int argc, string filename); // read stormscript programs
 
-	string print(int *y, std::vector<stsvars> current_vars); // print function
+	string print(int *y, std::vector<stsvars> current_var, std::vector<stsfunc> functions); // print function
 	stsvars in(int line);
 
 	void sys(int *y, std::vector<stsvars> vars);
 
-	void newScope(int *y, std::vector<stsvars> vars, std::vector<stsfunc> functions);
+	void newScope(int *y, std::vector<stsvars> vars, std::vector<stsfunc> *functions);
 
 	void parse(std::vector<string> prg);
 
@@ -63,7 +64,7 @@ public:
 
 	void ifs(std::vector<stsvars> vars, std::vector<stsfunc> functions, int *y);
 
-	void runfunc(int *y, std::vector<stsfunc> functions, int num);
+	void runfunc(int *y, std::vector<stsfunc> *functions, int num);
 
 	void set(int *y);
 

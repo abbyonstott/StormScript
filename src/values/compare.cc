@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-bool condition(sts *program, int *y, std::vector<stsvars> vars) {
+bool condition(sts *program, int *y, std::vector<stsvars> vars, std::vector<stsfunc> functions) {
     /*
     Comparisons are formatted like this:
     VALUE/UNKNOWN |               TOKEN                  |VALUE/UNKNOWN
@@ -36,7 +36,7 @@ bool condition(sts *program, int *y, std::vector<stsvars> vars) {
     for (int i = *y; i < opLocation; i++)
         prg.expressions.push_back(program->expressions[i]);
 
-    stsvars comp1 = prg.getval(vars, new int(0));
+    stsvars comp1 = prg.getval(vars, functions, new int(0));
 
     prg.expressions = {};
     int l = opLocation;
@@ -46,7 +46,7 @@ bool condition(sts *program, int *y, std::vector<stsvars> vars) {
     
     *y = l;
 
-    stsvars comp2 = prg.getval(vars, new int(0));
+    stsvars comp2 = prg.getval(vars, functions, new int(0));
     
     if (comp1.type == comp2.type) {
         switch (comparisonType) {

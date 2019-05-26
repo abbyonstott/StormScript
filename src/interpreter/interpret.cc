@@ -4,12 +4,12 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
     switch (expressions[*y].btn) {
         case PRINT: 
             while (expressions[*y].t != ENDEXPR)
-                cout << print(y, *scpvars);
+                cout << print(y, *scpvars, *functions);
                 
             break;
         case PRINTL: 
             while (expressions[*y].t != ENDEXPR)
-                cout << print(y, *scpvars);
+                cout << print(y, *scpvars, *functions);
 
             cout << '\n';
             break;
@@ -24,10 +24,21 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
         case FUNCTION:
             declareFunc(y, functions);
             break;
+        case RETURN:
+            if (function > -1) {
+                functions->at(function).val = getval(*scpvars, *functions, new int(*y+1)).val;
+                functions->at(function).type = getval(*scpvars, *functions, new int(*y+1)).type;
+                *y = expressions.size(); // return always exits scope
+            } 
+            else error(7, "");
+            
+            break;
+        case EXIT:
+            exit(0);
     }
 }
 
-void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> functions) {
+void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions) {
     int fnum;
     bool shouldbreak;
 
@@ -37,7 +48,7 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 
             switch (expressions[*y+1].tktype) {
                 case COLON: // definition
-                    define(y, scpvars);
+                    define(y, scpvars, *functions);
                     shouldbreak = 1;
                     break;
                 case ARROW: break;
@@ -45,7 +56,7 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 
             if (shouldbreak) break;
         case ENDEXPR:
-            switch (isFunc(functions, expressions[*y].contents, &fnum)) { // if there is a semicolon directly after, it is either a function or not a command
+            switch (isFunc(*functions, expressions[*y].contents, &fnum)) { // if there is a semicolon directly after, it is either a function or not a command
                 case 0: 
                     error(1, expressions[*y].contents);
                     break;
@@ -73,7 +84,7 @@ void sts::interp(string fname, int psize, char *argv[], int argc){
         globvars.back().length = argc-1;
     }
     
-    newScope(new int(0), globvars, functions);
+    newScope(new int(0), globvars, &functions);
 }   
 
 /*    

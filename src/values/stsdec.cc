@@ -27,7 +27,7 @@ void sts::declareFunc(int *y, std::vector<stsfunc> *functions) {
     *y -= 1;
 }
 
-void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
+/*void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
     sts script = *stsscript;
     int y = *line;
     std::vector<string> prs = script.prs;
@@ -35,26 +35,26 @@ void stsvars::assignlist(sts *stsscript, std::vector<stsvars> vars, int *line) {
     vals.erase(vals.begin(), vals.end());
     y++;
     while (prs[y]!="]") { // add variables to list
-        vals.push_back(script.getval(vars, &y));
+        vals.push_back(script.getval(vars, functions,  &y));
         y++;
     }
     y++;
 
     *line = y;
     *stsscript = script;
-}
+}*/
 
 
-void sts::define(int *line, std::vector<stsvars> *vars) { //variable declarations
+void sts::define(int *line, std::vector<stsvars> *vars, std::vector<stsfunc> functions) { //variable declarations
     int num = vars->size();
     if (isvar(vars, expressions[*line].contents, &num)) {
         *line += 2;
-        vars->at(num) = getval(*vars, line);
+        vars->at(num) = getval(*vars, functions, line);
     }
     else {
         vars->push_back(stsvars());
         *line += 2;
-        vars->back() = getval(*vars, line);
+        vars->back() = getval(*vars, functions,  line);
         vars->back().name = expressions[*line-2].contents;
     }
 

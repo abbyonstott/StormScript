@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-void sts::readfile(int y, stsvars *v, std::vector<stsvars> vars) {
+/*void sts::readfile(int y, stsvars *v, std::vector<stsvars> vars) {
     v->type = 's';
     v->glob = false;
 
@@ -34,4 +34,4 @@ void sts::writefile(int y, std::vector<stsvars> vars) {
 
     file.write(contents.c_str(), contents.size());
     file.close();
-}
+}*/

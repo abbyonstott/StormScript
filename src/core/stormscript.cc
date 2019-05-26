@@ -12,7 +12,7 @@
 */
 
 void printVersion() {
-	cout << "StormScript v0.8.0 \"Honeydew\"\n";
+	cout << "StormScript 1.0.0 Beta 1";
 }
 
 int main(int argc, char *argv[]) {

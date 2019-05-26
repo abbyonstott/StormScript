@@ -1,9 +1,9 @@
 #include "../include/stormscript.h"
 
-string sts::print(int *y, std::vector<stsvars> current_vars){ //handles both print and printl.
+string sts::print(int *y, std::vector<stsvars> current_vars, std::vector<stsfunc> functions){ //handles both print and printl.
     int ln = *y;
     ln++;
-    stsvars v = getval(current_vars, &ln);
+    stsvars v = getval(current_vars, functions,  &ln);
     string value = v.val;
     
     /*for (int x = 0; x<=value.size(); x++) {

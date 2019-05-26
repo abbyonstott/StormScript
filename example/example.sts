@@ -1,8 +1,6 @@
 func hello {
     x: 3;
-    if x is 3 {
-        printl "Hello, World!";
-    }
+    return x;
 }
 
-hello;
+printl hello;

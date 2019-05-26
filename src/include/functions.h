@@ -12,7 +12,6 @@ class stsfunc:public stsvars{
 public:
 	int linestarted;
 	bool classmethod = false;
-	stsvars value;
 	string cof;
 	string modname = "main";
 	stsclasstype cval;

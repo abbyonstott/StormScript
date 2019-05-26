@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int y) {
+/*std::vector<stsvars> whileloop(sts *script, std::vector<stsvars> variables, int y) {
     std::vector<string> prs = script->prs;
     y++;
     while (condition(script, new int(y), variables))
@@ -52,4 +52,4 @@ std::vector<stsvars> foreach(sts *script, std::vector<stsvars> variables, int y)
     }
 
     return variables;
-}
+}*/

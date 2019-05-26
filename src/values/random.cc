@@ -1,5 +1,5 @@
 #include "../include/stormscript.h"
-
+/*
 int genrandomintfromrange(sts *s, std::vector<stsvars> vars, int *line) {
     long int ut = static_cast<long int> (time(0)); // cast unix epoch to long int
     int y = *line;
@@ -36,3 +36,4 @@ bool randombool() {
     return rand() % 2;
 }
 
+*/

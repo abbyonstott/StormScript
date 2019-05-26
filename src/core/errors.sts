@@ -22,7 +22,7 @@ else if arg[1] is "6" {
     printl "Error: ", arg[2], " is out of range";
 }
 else if arg[1] is "7" {
-    printl "Error: return is not allowed in do{ function";
+    printl "Error: return outside function";
 }
 else if arg[1] is "8" {
     printl "Error: ", arg[2], " is not a value";

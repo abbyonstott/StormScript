@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-stsvars sts::getval(std::vector<stsvars> vars, int *line) {
+stsvars sts::getval(std::vector<stsvars> vars, std::vector<stsfunc> functions, int *line) {
     /*
     THIS FILE IS VERY IMPORTANT!!!!!
     When Modifying this function be sure that:
@@ -34,8 +34,15 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
 
                 v.val = lit;
             }
-            else if (expressions[y].t == UNKNOWN)
-                    v = findVar(vars, expressions[y].contents); // otherwise get value from variable
+            else if (expressions[y].t == UNKNOWN) {
+                int index;
+
+                if (isvar(&vars, expressions[y].contents, &index)) v = vars[index]; // use index to find variable if the expression refers to a variable
+                else if (isFunc(functions, expressions[y].contents, &index)) {
+                    runfunc(&y, &functions, index);
+                    v = functions[index]; // if expression refers to function
+                }
+            }
 
             break;
         case 1: // if operation
@@ -74,21 +81,21 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                     
                     i++;
                 }
-                index = std::stoi(placeholders[0].getval(vars, new int(0)).val);
+                index = std::stoi(placeholders[0].getval(vars, functions, new int(0)).val);
             }
 
             switch (t) { // perform based on token type
                 case PLUS: // I'm sure there is an easier way to do this...
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, new int(0)).val) + std::stoi(placeholders.at(1).getval(vars, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) + std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
                     break;
                 case MINUS:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, new int(0)).val) - std::stoi(placeholders.at(1).getval(vars, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) - std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
                     break;
                 case DIVISION:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, new int(0)).val) / std::stoi(placeholders.at(1).getval(vars, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) / std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
                     break;
                 case MULTIPLICATION:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, new int(0)).val) * std::stoi(placeholders.at(1).getval(vars, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) * std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
                     break; 
                 case OPENBRACKET:
                     plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
@@ -145,7 +152,7 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                 case GREATEREQ:
                 case LESS:
                 case LESSEQ:
-                    v.val = ((condition(this, &y, vars)) ? "true" : "false");
+                    v.val = ((condition(this, &y, vars,  functions)) ? "true" : "false");
                     if (expressions[y].tktype == TERNARY1) {
                         /* 
                         For ternary, we can assume that it is structured like this:
@@ -158,11 +165,11 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
                         bool _val = toBool(v.val);
                         stsvars primary, secondary;
 
-                        primary = getval(vars, new int(y+1));
+                        primary = getval(vars, functions, new int(y+1));
 
                         while (expressions[y].tktype != COLON) y++; 
                         y++;
-                        secondary = getval(vars, new int(y));
+                        secondary = getval(vars, functions, new int(y));
 
                         v.val = ((_val) ? primary.val : secondary.val);
                         v.type = ((_val) ? primary.type : secondary.type);
@@ -197,20 +204,4 @@ stsvars sts::getval(std::vector<stsvars> vars, int *line) {
         v.val = ((randombool()) ? "true" : "false");
         return v;
     }
-
-    else {
-        for (int x = 0; x<vars.size(); x++) {
-            if (vars[x].name==prs[y])
-                v = vars[x];
-        }
-        for (int x = 0; x<functions.size(); x++) {
-            if (functions[x].name==prs[y]) {
-                runfunc(&vars, new std::vector<stsclasstype>, &y);
-                v = functions[x].value;
-            }
-        }
-    }
-
-    if (v.type=='\000')
-        error(12, prs[*line]); 
 }*/

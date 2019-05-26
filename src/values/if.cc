@@ -19,10 +19,10 @@ void sts::ifs(std::vector<stsvars> vars, std::vector<stsfunc> functions, int *y)
     }
 
     getexpr.expressions.push_back(expressions[*y]);
-    bool expr = toBool(getexpr.getval(vars, new int(0)).val);
+    bool expr = toBool(getexpr.getval(vars, functions, new int(0)).val);
 
     if (expr) {
-        newScope(y, vars, {});
+        newScope(y, vars, &functions);
         *y += 1; // get out of scope to check for else
     }
     else { 
