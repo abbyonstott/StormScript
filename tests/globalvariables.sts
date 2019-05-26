@@ -1,7 +1,0 @@
-x: 3;
-
-do{
-    printl x;
-    x+: 2;
-    printl x;
-}

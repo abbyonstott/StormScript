@@ -5,26 +5,6 @@ string sts::print(int *y, std::vector<stsvars> *current_vars, std::vector<stsfun
     ln++;
     stsvars v = getval(current_vars, functions,  &ln);
     string value = v.val;
-    
-    /*for (int x = 0; x<=value.size(); x++) {
-        if (value[x] == '\\') {
-            if (value[x+1]=='n') {
-                value.erase(value.begin() + x);
-                value[x]='\n';
-            }
-            else if (value[x+1] == '\\') {
-                value.erase(value.begin() + x);
-                value[x]='\\';
-            }
-            else if (value[x+1] == 't') {
-                value.erase(value.begin() + x);
-                value[x]='\t';
-            }
-        }
-    }
-
-    if (ln-2 >= 0 && prs[ln-2] == "]")
-       ln-=2;*/ // TODO: add back escapes
 
     *y = ln;
     return value;

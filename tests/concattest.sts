@@ -1,13 +1,3 @@
-type person {
-	def str name;
-	int age;
-}
+x: 200;
 
-do{
-	person p: "bob";
-	p|age: 20;
-
-	x: "Hi";
-
-	printl "$x $p|name";
-}
+printl "$x is my favorite number";

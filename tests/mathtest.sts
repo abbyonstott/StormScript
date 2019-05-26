@@ -1,7 +1,5 @@
-do{
-    n: 3;
-    printl n;
-    printl n-1;
-    x: n*20;
-    printl x, " ", x/3;
-}
+n: 3;
+printl n;
+printl n-1;
+x: n*20;
+printl x, " ", x/3;

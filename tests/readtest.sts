@@ -1,4 +1,2 @@
-do{
-    x: read "etc/readtest.txt";
-    printl x;
-}
+x: read "etc/readtest.txt";
+printl x;

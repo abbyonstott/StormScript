@@ -1,8 +1,7 @@
 #even though it changes nothing about the output, I think that it is smarter to use parentheses around ternary operations
-do{
-    y: 0;
-    x: 4;
-    if y is 0 {
-        printl (x greatereq 4) ? 10 : 3;
-    }
+
+y: 0;
+x: 4;
+if y is 0 {
+    printl (x greatereq 4) ? 10 : 3;
 }

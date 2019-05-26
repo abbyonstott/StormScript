@@ -3,7 +3,7 @@
 bool evaluateToken(string tkn) { // tokens are different types of operators and symbols
     if ((tkn == "is") || (tkn == "not") || (tkn == "less") || (tkn == "lesseq") || (tkn == "greater") || (tkn == "greatereq")) return 1; // comparison operators
     else if ((tkn == "?") || (tkn == ":") || (tkn == "=>") || (tkn == "{") || (tkn == "}") || (tkn == "[") || (tkn == "]")) return 1; // symbols
-    else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*") || (tkn == ",")) return 1;
+    else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*") || (tkn == ",") || (tkn == "|")) return 1;
     
     return 0;
 }
@@ -12,7 +12,7 @@ bool evaluateBuiltin(string kwd) {
     if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "def") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "return")) return 1;
     else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
     else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
-    else if ((kwd == "random") || (kwd == "randomrange")) return 1;
+    else if ((kwd == "random") || (kwd == "randomrange") || (kwd == "length")) return 1;
     return 0;
 }
 
@@ -57,6 +57,7 @@ TokenType gettktype(string tkn) {
     else if (tkn == "/") return DIVISION;
     else if (tkn == "*") return MULTIPLICATION;
     else if (tkn == ",") return COMMA;
+    else if (tkn == "|") return BAR;
 }
 
 Builtin getBuiltincmd(string kwd) {
@@ -84,9 +85,10 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "read") return READ;
     else if (kwd == "random") return RANDOM;
     else if (kwd == "randomrange") return RANDOMRANGE;
+    else if (kwd == "length") return SIZE;
 }
 
-void sts::evaluateProgram(std::vector<string> prs) { // TODO: use a vector in arguments rather than prs
+void sts::evaluateProgram(std::vector<string> prs) {
     for (int i = 0; i < prs.size(); i++) {
         expression e = prs[i];
         e.t = determinetype(e.contents);

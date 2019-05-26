@@ -1,13 +1,28 @@
 #include "../include/stormscript.h"
 
-// TODO: Add arguments
 void sts::declareFunc(int *y, std::vector<stsfunc> *functions) {
     functions->push_back(stsfunc());
 
     *y += 1;
+
     functions->back().name = expressions[*y].contents;
 
-    *y += 2;
+    *y += 1;
+
+    if (expressions[*y].tktype == ARROW) {
+        *y += 1;
+
+        while (true) {
+            functions->back().args.push_back(stsvars());
+            functions->back().args.back().name = expressions[*y].contents;
+            *y += 1;
+
+            if (expressions[*y].tktype == OPENCURL) break;
+            else if (expressions[*y].tktype == COMMA) *y += 1;
+        }
+        
+    }
+    *y += 1;
 
     int endreq = 1;
 

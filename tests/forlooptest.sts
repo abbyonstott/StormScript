@@ -1,13 +1,11 @@
-do{
-	a: 0;
-	b: 1;
-	c: 0;
+a: 0;
+b: 1;
+c: 0;
 
-	for 25 {
-		printl c;
-		
-		c: a + b;
-		a: b;	
-		b: c;
-	}	
+for 25 {
+	printl c;
+	
+	c: a + b;
+	a: b;	
+	b: c;
 }

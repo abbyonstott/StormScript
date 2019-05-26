@@ -1,5 +1,47 @@
 #include "../include/stormscript.h"
 
+void replaceEscapes(string *lit, std::vector<stsvars> vars) { // escapes
+    string newl;
+
+    for (int i = 0; i < lit->size(); i++) {
+        if (lit->at(i) == '\\') {
+            i++;
+            
+            switch (lit->at(i)) {
+                case 'n':
+                    newl += '\n';
+                    break;
+                case 't':
+                    newl += '\t';
+                    break;
+                case '\\':
+                    newl += '\\';
+                    break;
+                case '$':
+                    newl += '$';
+                    break;
+            }
+        }
+        else if (lit->at(i) == '$') {
+            string q;
+
+            i++;
+            while (lit->at(i) != ' ') {
+                q += lit->at(i);
+                i++;
+            }
+
+            newl += findVar(vars, q).val;
+            newl += ' ';
+        }
+        else {
+            newl += lit->at(i);
+        }
+    }
+
+    *lit = newl;
+}
+
 stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *line) {
     /*
     THIS FILE IS VERY IMPORTANT!!!!!
@@ -12,7 +54,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
     stsvars v;
     int y = *line;
 
-    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && (expressions.size() > y+1));
+    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && (expressions[y+1].tktype != BAR) && (expressions.size() > y+1));
 
     switch (operation) {
         case 0: // if raw value
@@ -20,10 +62,11 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                 string lit;
 
                 switch (expressions[y].literalType) {
-                    case STRING: // TODO: allow concatenation
+                    case STRING:
                         lit = striplit(expressions[y].contents);
                         v.type = 's';
                         v.length = lit.size();
+                        replaceEscapes(&lit, *vars);
                         break;
                     case INTEGER:
                     case BOOLEAN:
@@ -52,7 +95,19 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
             else if (expressions[y].t == UNKNOWN) {
                 int index;
 
-                if (isvar(vars, expressions[y].contents, &index)) v = vars->at(index); // use index to find variable if the expression refers to a variable
+                if (isvar(vars, expressions[y].contents, &index)) {                    
+                    if (expressions[y+1].tktype != BAR) v = vars->at(index); // get value
+                    else if (expressions[y+2].btn == SIZE) { // get length
+                        y+= 3;
+
+                        v.type = 'i';
+
+                        if ((vars->at(index).type == 's') || (vars->at(index).type == 'l'))
+                            v.val = std::to_string(vars->at(index).length);
+
+                        else error(9, vars->at(index).name);
+                    }
+                }
                 else if (isFunc(functions, expressions[y].contents, &index)) {
                     runfunc(&y, &functions, vars, index);
                     v = functions[index]; // if expression refers to function
@@ -114,7 +169,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                     break; 
                 case OPENBRACKET:
                     plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
-                    if ((expressions[placeholders[0].expressions.size() + y + 1].t != TOKEN) && ((plus1 != IS) || (plus1 != NOT) || (plus1 != GREATER) || (plus1 != GREATEREQ) || (plus1 != LESS) || (plus1 != LESSEQ))) {
+                    if ((plus1 != IS) && (plus1 != NOT) && (plus1 != GREATER) && (plus1 != GREATEREQ) && (plus1 != LESS) && (plus1 != LESSEQ)) {
                         sbsvar = findVar(*vars, expressions[y-2].contents);
 
                         switch(sbsvar.type) {

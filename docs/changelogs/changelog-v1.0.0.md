@@ -8,6 +8,7 @@
 * using enumerations to determine statements rather than string literal
 * functions can be declared in any scope
 * moved errors.sts from /usr/bin to /usr/share/stormscript
+* Function arguments no longer require you to specify the name
 
 ## What's Fixed
 * Removed snapcraft files

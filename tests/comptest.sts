@@ -1,22 +1,22 @@
-do{
-    x: "hi";
-    y: "hi";
-    n: 3;
-    d: true;
+x: "hi";
+y: "hi";
+n: 3;
+d: true;
 
-    if n is 3{
-        printl "x is 3";
-    }
+if n is 3{
+    printl "x is 3";
+}
 
-    if d is false{
-        printl "Hi";    
-    }else if n is 4{
-        printl "d is true";
-    }else{
-        printl n;
-    }
+if d is false{
+    printl "Hi";    
+}
+else if n is 4{
+    printl "d is true";
+}
+else{
+    printl n;
+}
 
-    if x is y{
-        printl x, " is ", y;
-    }
+if x is y{
+    printl x, " is ", y;
 }

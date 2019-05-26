@@ -1,9 +1,7 @@
-do{
-    x: "string";
+x: "string";
 
-    printl "Single string printl.";
-    printl "Multple ", x, " printl with variable.";
+printl "Single string printl.";
+printl "Multple ", x, " printl with variable.";
 
-    print "Single string print.\n";
-    print "Multiple ", x, " print with variable.\n";
-}
+print "Single string print.\n";
+print "Multiple ", x, " print with variable.\n";

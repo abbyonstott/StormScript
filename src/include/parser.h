@@ -34,7 +34,8 @@ enum TokenType { // tokens
 	MINUS,
 	DIVISION,
 	MULTIPLICATION,
-	COMMA
+	COMMA,
+	BAR
 };
 
 enum Builtin { // these are built in commands
@@ -62,7 +63,8 @@ enum Builtin { // these are built in commands
     WRITE,
     READ,
 	RANDOM,
-	RANDOMRANGE
+	RANDOMRANGE,
+	SIZE
 };
 
 enum Value { // these are types
