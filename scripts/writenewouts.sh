@@ -1,7 +1,7 @@
 #!/bin/bash
 cd ..
 cmake CMakeLists.txt
-make
+make -j $(nproc)
 install stormscript build/stormscript
 rm stormscript
 

@@ -7,7 +7,7 @@ read vnum
 echo "Packaging stormscript v$vnum for release."
 
 cmake CMakeLists.txt -DCMAKE_CXX_COMPILER:STRING="g++"
-make
+make -j $(nproc)
 install stormscript build/stormscript
 rm stormscript
 
