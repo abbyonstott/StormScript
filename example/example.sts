@@ -1,2 +1,8 @@
-x: 3;
-printl x|length;
+func f => x, y {
+    printl x;
+    printl y;
+}
+
+
+n: 3;
+f => "hi", n;
