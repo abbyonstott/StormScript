@@ -11,7 +11,6 @@ bool condition(sts *program, int *y, std::vector<stsvars> *vars, std::vector<sts
     UNKNOWN | TOKEN | VALUE/UNKNOWN | TOKEN
     var     |  [    |     INTEGER   |   ]
     */
-
     TokenType comparisonType;
     int opLocation;
     int oldy = *y;
