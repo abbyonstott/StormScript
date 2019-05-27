@@ -21,7 +21,6 @@ bool evalLiteral(string ctn) {
 
     return 0;
 }
-
 ExprType determinetype(string contents) {
     if (evaluateToken(contents)) return TOKEN;
     else if (evaluateBuiltin(contents)) return BUILTIN;
