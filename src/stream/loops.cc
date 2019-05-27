@@ -17,7 +17,7 @@ void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc
 
 void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
     *y += 1;
-    bool foreach = (script->expressions[*y+1].btn == IN);
+    bool foreach = (script->expressions[*y+1].btn == STSIN);
 
 
     if (foreach) {
