@@ -1,0 +1,3 @@
+x: 200;
+
+printl "$x is my favorite number";

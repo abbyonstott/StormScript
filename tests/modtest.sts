@@ -1,5 +1,0 @@
-mod etc/examplemod;
-
-do {
-    hello;
-}

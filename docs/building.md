@@ -7,20 +7,7 @@ You must have gcc installed (MinGW for Windows) and CMake
 ## Linux
 
 Terminal:
-
-To build StormScript clone this repository and cd into it. Run 
-```sh
-$ cmake CMakeLists.txt
-```
-and
-```sh
-$ make
-```
-You can then add it to path or install it to /usr/bin.
-move src/core/errors.sts to /usr/local/bin with 
-```sh
-$ mv src/core/errors.sts /usr/local/bin
-```
+`sh build.sh`
 
 
 ## Windows

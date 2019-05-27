@@ -1,3 +1,8 @@
-do{
-	printl "hi";
+func f => x, y {
+    printl x;
+    printl y;
 }
+
+
+n: 3;
+f => "hi", n;

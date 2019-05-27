@@ -1,46 +1,37 @@
 #include "../include/stormscript.h"
 
-void sts::runfunc(std::vector<stsvars> * pvars, std::vector<stsclasstype> *classtypes, int * ln) {
-    std::vector<stsvars> vars = *pvars;
-    int y = *ln;
-    std::vector<stsclasstype> ct = *classtypes;
+void sts::runfunc(int *y, std::vector<stsfunc> *functions, std::vector<stsvars> *variables, int num) {
+    sts functionsts;
+    std::vector<stsvars> fvars = *variables;
 
-    for (int z = 0; z<=functions.size()-1; z++){
-        if (functions[z].name==prs[y]){
-            if (prs[y+1]=="=>"){
-                y++;
-                for (int i = 0; i < functions[z].args.size(); i++) {
-                    y+= 2;
-                    string *name = new string(functions[z].args[i].name);
-                    stsvars argval = getval(vars, new int(y));
-                    argval.name = *name;
-                    functions[z].args[i] = argval;
-                    delete name;
+    functionsts.function = num;
+    functionsts.expressions = functions->at(num).contents;
+
+    fvars.insert(fvars.end(), functions->at(num).args.begin(), functions->at(num).args.end());
+
+    int argbegin = variables->size(); 
+
+    if (functions->at(num).args.size() > 0) {
+        if (expressions[*y+1].tktype != ARROW)
+            error(18, functions->at(num).name);
+        else {
+            *y += 2;
+
+            int argon = 0;
+            
+            while (true) {
+                fvars[argbegin + argon] = getval(variables, *functions, y);
+                fvars[argbegin + argon].name = functions->at(num).args[argon].name;
+
+                *y += 1;
+                if (expressions[*y].t == ENDEXPR) break;
+                else if (expressions[*y].tktype == COMMA) {
+                    *y += 1;
+                    argon += 1;
                 }
-                exec(new int(functions[z].linestarted), z, {}, {}, new std::vector<stsvars>({}));
-            }
-            else {
-                std::vector<stsvars*> o;
-
-                if (functions[z].classmethod) {
-                    for (int i = 0; i<ct.size(); i++) {
-                        if (ct[i].name==functions[z].cof) {
-                            for (int x = 0; x<ct[i].indexes.size(); x++)
-                                o.push_back(&vars[ct[i].indexes[x]]);
-                        }
-                    }
-                }
-
-                exec(new int(functions[z].linestarted), z, classtypes, o, new std::vector<stsvars>({}));
-
-            }
-            *ln = y;
-            *classtypes = ct;
-            *pvars = vars;
-
-            for (int i = 0; i<globvars.size(); i++) {
-                pvars->at(i) = globvars[i];
             }
         }
     }
+
+    functionsts.newScope(new int(0), &fvars, functions);
 }

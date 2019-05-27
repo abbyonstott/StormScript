@@ -1,8 +1,6 @@
-do{
-    x: 3;
-    y: 10;
-    while x not y {
-        x+: 1;
-        printl x;
-    }
+x: 3;
+y: 10;
+while x not y {
+    x: x + 1;
+    printl x;
 }

@@ -1,38 +1,51 @@
 #include "../include/stormscript.h"
 
-void sts::ifs(int *line, int *endr, std::vector<stsvars> vars) {
-    int y = *line;
-    int endreq = *endr;
-    y++;
-    *line = y;
+void sts::ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y) {
+    /*
+    if statements are pretty easy to parse as they are always formated like this
+    BUILTIN |    VALUE/COMPARISON*    |   TOKEN
+    --------|-------------------------|-----------
+       if   |          var            |    {
+    
+    *The VALUE/EXPRESSION can be a bool literal, a variable, or a comparison. This is not determined here, but later in getval()
+    */
 
-    if (!toBool(getval(vars, line).val)){
-        y = *line;
-        y++;
-        while (prs[y] != "}") {
-            y++;
-            if (prs[y+1] == "else") {
-                if (prs[y+2] == "if") {
-                    y+= 2;
-                    ifs(&y, &endreq, vars);
-                    break;
-                }
-                else {
-                    y++;
-                    break;
-                }
-            }
+    sts getexpr;
+    *y += 1;
+    
+    while (expressions[*y].tktype != OPENCURL) {
+        getexpr.expressions.push_back(expressions[*y]);
+        *y += 1;
+    }
+
+    getexpr.expressions.push_back(expressions[*y]);
+    bool expr = toBool(getexpr.getval(vars, functions, new int(0)).val);
+
+    if (expr) {
+        newScope(y, vars, &functions);
+        *y += 1; // get out of scope to check for else
+    }
+    else { 
+        *y += 1;
+        scopedown(y, expressions);
+
+        if (expressions[*y+1].btn == ELSE) {
+            /* 
+            This works because it parses the expression after else. 
+            This would be { or OPENCURL if it is a standard else statement and IF it it were an else if statement.
+            */
+            *y += 2;
+            newScope(y, vars, &functions);
         }
     }
-    else {
-        y = *line;
-        
-        if (prs[y-1] == "[")
-            y+= 2;
-        else
-            y++;
-    }
 
-    *line = y;
-    *endr = endreq;
+    if (expressions[*y].btn == ELSE) {
+        if (expressions[*y+1].btn == IF)
+            while (expressions[*y-1].tktype != OPENCURL) *y += 1;
+        else *y += 2;
+        
+        scopedown(y, expressions);
+    }
+    else if (expr) // subtract one if expression is true to compensate for next line of program
+        *y -= 1;
 }
