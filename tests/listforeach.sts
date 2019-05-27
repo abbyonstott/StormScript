@@ -1,8 +1,0 @@
-do{
-	x: [13, 14, 15, 16];
-	y: 3;
-
-	foreach num in x {
-		printl "$num + $y = ", num + y;
-	}
-}

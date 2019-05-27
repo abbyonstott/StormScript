@@ -1,5 +1,3 @@
-do{
-    if "this" is "this"{
-        printl "Test Succeded";
-    }
+if "this" is "this"{
+    printl "Test Succeded";
 }

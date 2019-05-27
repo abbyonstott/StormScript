@@ -3,7 +3,6 @@ func f => x, y {
     printl y;
 }
 
-do{
-    x: 3;
-    f => x: "hi", y: x;
-}
+
+n: 3;
+f => "hi", n;

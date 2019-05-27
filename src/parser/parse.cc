@@ -2,8 +2,7 @@
 /*
 the interpreter parses the file and calls functions in other files
 */
-
-std::vector<string> sts::parse(std::vector<string> prg){ 
+void sts::parse(std::vector<string> prg){ 
     std::vector<string> x;
     int y = 0;
     while (y!=prg.size()){
@@ -26,7 +25,7 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 }
             }
             // this is what checks for chars to remove from prs version
-            if (((prg[y][z]==' ') || (prg[y][z]==',') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
                 if ((x.back().size() != 0))
                     x.resize(x.size()+1);
                 z++;
@@ -36,30 +35,10 @@ std::vector<string> sts::parse(std::vector<string> prg){
                 break;
             }
             else if  (((prg[y][z]==';') || (prg[y][z]=='}') || (prg[y][z]=='{')) && (inquotes==false)) {
-                if (prg[y][z]=='}') {
-                    if ((prg[y].find("else")==string::npos) && (prg[y].find("loop")==string::npos)) {
-                        x.push_back( string(1,prg[y][z]) );
-                        break;
-                    }
-                    else{
-                        z++;
-                        continue;
-                    }
-                }
-                else if (prg[y][z]=='{') {
-                    if (prg[y].find("=>")!=string::npos) {
-                        x.push_back( string(1,prg[y][z]) );
-                        break;
-                    }
-                    else {
-                        z++;
-                        continue;
-                    }
-                }
                 x.push_back( string(1,prg[y][z]) );
                 break;
             }
-            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==']')) && (inquotes==false)) {
+            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (x[x.size()-2]!="mod")) || (prg[y][z]=='[') || (prg[y][z]==',') || (prg[y][z]==']') || (prg[y][z] == ':') || (prg[y][z] == '|')) && (inquotes==false)) {
                 x.push_back( string(1,prg[y][z]) );
                 x.resize(x.size()+1);
             }
@@ -81,6 +60,6 @@ std::vector<string> sts::parse(std::vector<string> prg){
         if ((x[i]=="\0") || (x[i]=="") || (x[i]=="\n"))
             x.erase(x.begin() + i);
     }
-    
-    return x;
+
+    evaluateProgram(x);
 }

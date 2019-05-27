@@ -1,7 +1,5 @@
-do{
-    x: "hi";
-    y: ["hi", "there"];
+x: "hi";
+y: ["hi", "there"];
 
-    printl x|length;
-    printl y|length;
-}
+printl x|length;
+printl y|length;

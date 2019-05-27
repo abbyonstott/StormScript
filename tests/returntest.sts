@@ -2,6 +2,4 @@ func returntest {
     return 3;
 }
 
-do {
-    printl returntest;
-}
+printl returntest;

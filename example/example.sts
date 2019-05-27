@@ -1,8 +1,8 @@
-do{
-	x: "Hello, World!";
-
-	foreach ltr in x {
-		print ltr;
-	}
-	printl;
+func f => x, y {
+    printl x;
+    printl y;
 }
+
+
+n: 3;
+f => "hi", n;
