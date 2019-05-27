@@ -14,7 +14,7 @@ if [ ! -e /usr/share/stormscript ]; then
     sudo mkdir /usr/share/stormscript
 fi;
 
-sudo mv src/core/errors.sts /usr/share/stormscript
+sudo cp src/core/errors.sts /usr/share/stormscript
 
 printf "\n"
 
