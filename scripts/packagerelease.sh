@@ -8,8 +8,15 @@ echo "Packaging stormscript v$vnum for release."
 
 cmake CMakeLists.txt -DCMAKE_CXX_COMPILER:STRING="g++"
 make -j $(nproc)
-install stormscript build/stormscript
-rm stormscript
+sudo mv stormscript /usr/bin/stormscript
+
+if [ ! -e /usr/share/stormscript ]; then
+    sudo mkdir /usr/share/stormscript
+fi;
+
+sudo mv src/core/errors.sts /usr/share/stormscript
+
+exec bash
 
 printf "\n"
 
@@ -20,11 +27,11 @@ printf "\n"
 B=0
 for i in $( ls | grep .sts ); do
     # put the expected output to test
-    if [[ $(echo `cat outputs/$i.txt`) = "$(echo `../build/stormscript $i`)" ]]; then
+    if [[ $(echo `cat outputs/$i.txt`) = "$(echo `stormscript $i`)" ]]; then
         echo $B: Test Successful
     else
         echo Test $B failed:
-        echo expected$'\n'$(echo `cat outputs/$i.txt`)$'\n'got$'\n'$(echo `../build/stormscript $i`)
+        echo expected$'\n'$(echo `cat outputs/$i.txt`)$'\n'got$'\n'$(echo `stormscript $i`)
         echo "Failed to package stormscript v$vnum"
         exit 1
     fi

@@ -26,13 +26,17 @@ void replaceEscapes(string *lit, std::vector<stsvars> vars) { // escapes
             string q;
 
             i++;
+
             while (lit->at(i) != ' ') {
                 q += lit->at(i);
-                i++;
+
+
+                if (i == lit->size() - 1 ) break;
+                else i++;
             }
 
             newl += findVar(vars, q).val;
-            newl += ' ';
+            if (lit->at(i) == ' ') newl += ' ';
         }
         else {
             newl += lit->at(i);
