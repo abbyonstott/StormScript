@@ -74,7 +74,6 @@ public:
 		#endif
 	}
 };
-
 /*
 Loop functions are defined here.
 A vector of variables is returned so that modifications will be saved to actual values.
