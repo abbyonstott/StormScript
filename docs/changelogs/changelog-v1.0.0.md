@@ -1,4 +1,4 @@
-# StormScript 1.0.0
+# StormScript v1.0.0
 
 ## What's New
 * Use the `$` symbol followed by a variable name inside of a string literal to concatenate that variable into the string
@@ -18,6 +18,7 @@
 * Comparisons always work out to booleans, meaning that they are now interchangeable
 * Random no longer generates integers outside of range
 * Scoped variable inheritance now works, so variables defined inside of a scope are accessible to the scope and any child scopes
+* Install script now uses all available processor cores
 
 # Beta 1
 
