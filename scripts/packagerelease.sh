@@ -16,8 +16,6 @@ fi;
 
 sudo mv src/core/errors.sts /usr/share/stormscript
 
-exec bash
-
 printf "\n"
 
 echo Running tests:
