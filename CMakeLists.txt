@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 project (StormScript)
 set (CMAKE_CXX_FLAGS "--std=c++17")
+if (MINGW)
+set (CMAKE_CXX_FLAGS "--std=c++17 -static -static-libgcc -static-libstdc++")
+endif (MINGW)
 add_executable(stormscript
     src/core/stormscript.cc
     src/parser/parse.cc

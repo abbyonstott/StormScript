@@ -7,7 +7,7 @@
 
 class stsvars {
 public:
-	char type; // Later on, this "type" value should be replaced with a Value enum type so that it can be set to INTEGER, STRING, BOOL
+	char type; // Later on, this "type" value should be replaced with a Value enum type so that it can be set to INTEGER, STRING, STS_BOOL
 	string val;
 
 	std::vector<stsvars> vals;
