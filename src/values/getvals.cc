@@ -26,13 +26,17 @@ void replaceEscapes(string *lit, std::vector<stsvars> vars) { // escapes
             string q;
 
             i++;
+
             while (lit->at(i) != ' ') {
                 q += lit->at(i);
-                i++;
+
+
+                if (i == lit->size() - 1 ) break;
+                else i++;
             }
 
             newl += findVar(vars, q).val;
-            newl += ' ';
+            if (lit->at(i) == ' ') newl += ' ';
         }
         else {
             newl += lit->at(i);
@@ -69,7 +73,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                         replaceEscapes(&lit, *vars);
                         break;
                     case INTEGER:
-                    case BOOLEAN:
+                    case STS_BOOL:
                         v.type = ((expressions[y].literalType == INTEGER) ? 'i' : 'b');
                         lit = expressions[y].contents;
                         break;
@@ -97,7 +101,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
 
                 if (isvar(vars, expressions[y].contents, &index)) {                    
                     if (expressions[y+1].tktype != BAR) v = vars->at(index); // get value
-                    else if (expressions[y+2].btn == SIZE) { // get length
+                    else if (expressions[y+2].btn == LENGTH) { // get length
                         y+= 3;
 
                         v.type = 'i';
@@ -116,11 +120,11 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
 
             break;
         case 1: // if operation
-            TokenType t = expressions[y+1].tktype;
+            tokenType t = expressions[y+1].tktype;
             std::vector<sts> placeholders;
             int index;
             stsvars sbsvar;
-            TokenType plus1;
+            tokenType plus1;
 
             if ((t == PLUS) || (t == MINUS) || (t == DIVISION) || (t == MULTIPLICATION)) { 
                 // all math operations will return an integer, so we can set that first

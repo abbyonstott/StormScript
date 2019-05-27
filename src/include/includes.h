@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <vector>
 #include <cctype>
@@ -11,6 +12,7 @@
 #include <memory>
 #include <random>
 #include <time.h>
+#include <stdio.h>
 
 /*
 Let's forward declare these classes for the files that use them

@@ -15,7 +15,7 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 
             if (l) cout << '\n';
             break;
-        case IN: 
+        case STSIN: 
             scpvars->push_back(in(*y));
             break;
         case IF:

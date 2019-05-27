@@ -6,8 +6,7 @@ bool toBool(string s) {
 
 stsvars findVar(std::vector<stsvars> vars, string query) {
     for (int i = 0; i < vars.size(); i++) {
-        if (vars[i].name == query)
-            return vars[i];
+        if (vars[i].name == query) return vars[i];
     }
     return stsvars();
 }

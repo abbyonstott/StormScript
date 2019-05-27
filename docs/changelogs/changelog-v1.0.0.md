@@ -9,6 +9,7 @@
 * functions can be declared in any scope
 * moved errors.sts from /usr/bin to /usr/share/stormscript
 * Function arguments no longer require you to specify the name
+* `for PLACEHOLDER in LIST/STR` creates a foreach loop
 
 ## What's Fixed
 * Removed snapcraft files
@@ -19,9 +20,9 @@
 * Random no longer generates integers outside of range
 * Scoped variable inheritance now works, so variables defined inside of a scope are accessible to the scope and any child scopes
 * Install script now uses all available processor cores
+* packagerelease.sh now installs stormscript to run tests
 
-# Beta 1
+# Beta 2
 
-## What's changed
-* Removed `type`: Will be added back later
-* Removed modules: Will be added back later
+## What's fixed
+* Concatenation would break if there was no space at the end of value

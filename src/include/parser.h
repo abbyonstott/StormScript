@@ -15,7 +15,7 @@ enum ExprType {
 	ENDEXPR
 };
 
-enum TokenType { // tokens
+enum tokenType { // tokens
 	NOTOKEN,
 	IS,
 	NOT,
@@ -42,14 +42,14 @@ enum Builtin { // these are built in commands
 	NONE,
     PRINT,
     PRINTL,
-    IN,
+    STSIN,
     IF,
     ELSE,
     FUNCTION,
     TYPE,
     TYPE_INTEGER,
     TYPE_STRING,
-    TYPE_BOOL,
+    TYPE_STS_BOOL,
     TYPE_LIST,
     TYPE_CONSTRUCTOR,
     MODULE,
@@ -64,13 +64,13 @@ enum Builtin { // these are built in commands
     READ,
 	RANDOM,
 	RANDOMRANGE,
-	SIZE
+	LENGTH
 };
 
 enum Value { // these are types
 	INTEGER,
 	STRING,
-	BOOLEAN,
+	STS_BOOL,
 	LIST
 };
 
@@ -83,7 +83,7 @@ public:
 	}
 
 	ExprType t; // give type of expression
-	TokenType tktype = NOTOKEN;
+	tokenType tktype = NOTOKEN;
     Builtin btn = NONE;
 	Value literalType;
 };
