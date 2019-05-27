@@ -14,7 +14,7 @@ void sts::newScope(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> *fun
                 runUnknown(y, vars, functions);
                 break;
         }
-        *y++;
+        *y += 1;
     }
 
     if (oldfsize > 0)

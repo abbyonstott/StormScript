@@ -17,7 +17,7 @@ void printVersion() {
 
 void showhelp() {
 	cout << "Usage: stormscript [file|options]\n";
-	cout << "StormScript is an open source scripting language for Linux.\n\n";
+	cout << "StormScript is a powerful, open source scripting language for many operating systems.\n\n";
 	cout <<  "  -h, --help: display help\n";
 	cout << "  --version: show version\n\n";
 	// cout << "  install: install a module\n\n";
