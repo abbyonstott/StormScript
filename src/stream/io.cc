@@ -6,6 +6,9 @@ string sts::print(int *y, std::vector<stsvars> *current_vars, std::vector<stsfun
     stsvars v = getval(current_vars, functions,  &ln);
     string value = v.val;
 
+    if (prs[ln-2] == "]")
+        ln-=2;
+
     *y = ln;
     return value;
 }
