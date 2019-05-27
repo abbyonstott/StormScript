@@ -2,7 +2,6 @@
 /*
 the interpreter parses the file and calls functions in other files
 */
-
 void sts::parse(std::vector<string> prg){ 
     std::vector<string> x;
     int y = 0;
