@@ -33,11 +33,11 @@ ExprType determinetype(string contents) {
 Value getValue(string ctn) {
     if (ctn.front() == '\"') return STRING;
     else if (isint(ctn)) return INTEGER;
-    else if ((ctn == "true") || (ctn == "false")) return BOOLEAN;
+    else if ((ctn == "true") || (ctn == "false")) return STS_BOOL;
     return LIST;
 }
 
-TokenType gettktype(string tkn) {
+tokenType gettktype(string tkn) {
     if (tkn == "is") return IS;
     else if (tkn == "not") return NOT;
     else if (tkn == "less") return LESS;
@@ -63,14 +63,14 @@ TokenType gettktype(string tkn) {
 Builtin getBuiltincmd(string kwd) {
     if (kwd == "print") return PRINT;
     else if (kwd == "printl") return PRINTL;
-    else if (kwd == "in") return IN;
+    else if (kwd == "in") return STSIN;
     else if (kwd == "if") return IF;
     else if (kwd == "else") return ELSE;
     else if (kwd == "func") return FUNCTION;
     else if (kwd == "type") return TYPE;
     else if (kwd == "int") return TYPE_INTEGER;
     else if (kwd == "str") return TYPE_STRING;
-    else if (kwd == "bool") return TYPE_BOOL;
+    else if (kwd == "bool") return TYPE_STS_BOOL;
     else if (kwd == "list") return TYPE_LIST;
     else if (kwd == "def") return TYPE_CONSTRUCTOR;
     else if (kwd == "mod") return MODULE;
@@ -85,7 +85,7 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "read") return READ;
     else if (kwd == "random") return RANDOM;
     else if (kwd == "randomrange") return RANDOMRANGE;
-    else if (kwd == "length") return SIZE;
+    else if (kwd == "length") return LENGTH;
     return NONE;
 }
 
