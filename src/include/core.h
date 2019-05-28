@@ -27,7 +27,14 @@ public:
 
 	void error(int num, string issue) { 
 		// in order for errors to work stormscript has to be in PATH, but we can assume that it is installed to usr/bin
-		string cmd = "stormscript /usr/share/stormscript/errors.sts ";
+		string cmd;
+
+		#if (PLATFORM == 1)
+		cmd = "stormscript ";
+		#else
+		cmd = "stormscript /usr/share/stormscript/errors.sts ";
+		#endif
+		
 		cmd += std::to_string(num);
 		cmd += " ";
 		cmd += issue;
