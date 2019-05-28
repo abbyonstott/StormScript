@@ -16,7 +16,7 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
             if (l) cout << '\n';
             break;
         case STSIN: 
-            scpvars->push_back(in(*y));
+            scpvars->push_back(in(y));
             break;
         case IF:
             ifs(scpvars, *functions, y);
@@ -67,6 +67,31 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
                     shouldbreak = 1;
                     break;
                 case ARROW: break;
+                case PLUS:
+                    if (expressions[*y+2].tktype == COLON) {
+                        *y += 3;
+                        int n = 0;
+                        
+                        if (isvar(scpvars, expressions[*y-3].contents, &n)) {
+                            switch (scpvars->at(n).type) {
+                                case 'i':
+                                    scpvars->at(n).val = std::to_string(std::stoi(scpvars->at(n).val) + std::stoi(getval(scpvars, *functions, new int(*y)).val));
+                                    break;
+                                case 'l':
+                                    scpvars->at(n).vals.push_back(getval(scpvars, *functions, new int(*y)));
+                                    scpvars->at(n).length = scpvars->at(n).vals.size();
+                                    break;
+                                case 's':
+                                    scpvars->at(n).val += getval(scpvars, *functions, new int(*y)).val;
+                                    break;
+                                case 'b': error(4, scpvars->at(n).name);
+                            }
+                        }
+                        else error(12, expressions[*y-3].contents);
+
+                        shouldbreak = 1;
+                    }
+                    break;
             }
 
             if (shouldbreak) break;

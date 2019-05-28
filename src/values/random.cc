@@ -9,7 +9,9 @@ int genrandomintfromrange(sts *s, std::vector<stsvars> *vars, std::vector<stsfun
 
     std::vector<expression> expressions = s->expressions;
 
-    srand(ut); // seed rand() with unix epoch
+    std::random_device randomd;
+
+    std::mt19937_64 generate(randomd());
 
     range[0] = std::stoi(s->getval(vars, functions, &y).val);
     y++;
@@ -17,7 +19,9 @@ int genrandomintfromrange(sts *s, std::vector<stsvars> *vars, std::vector<stsfun
 
     *line = y;
 
-    return rand() % (range[1] + 1 - range[0]) + range[0];
+    std::uniform_int_distribution<> dis(range[0], range[1]);
+
+    return dis(generate);
 }
 
 bool randombool() {

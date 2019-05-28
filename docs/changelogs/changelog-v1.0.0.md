@@ -10,6 +10,7 @@
 * moved errors.sts from /usr/bin to /usr/share/stormscript
 * Function arguments no longer require you to specify the name
 * `for PLACEHOLDER in LIST/STR` creates a foreach loop
+* `randomrange` now uses Mersenne Twister generation rather than cpp  `rand()` function
 
 ## What's Fixed
 * Removed snapcraft files
@@ -26,3 +27,6 @@
 
 ## What's fixed
 * Concatenation would break if there was no space at the end of value
+* `in` would always give error with name variable
+* `+:` operator now works
+* Fixed for loop running `getvals()` with `new int(*y)`, causing the interpreter to be off

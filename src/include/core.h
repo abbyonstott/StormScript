@@ -27,7 +27,14 @@ public:
 
 	void error(int num, string issue) { 
 		// in order for errors to work stormscript has to be in PATH, but we can assume that it is installed to usr/bin
-		string cmd = "stormscript /usr/share/stormscript/errors.sts ";
+		string cmd;
+
+		#if (PLATFORM == 1)
+		cmd = "stormscript ";
+		#else
+		cmd = "stormscript /usr/share/stormscript/errors.sts ";
+		#endif
+		
 		cmd += std::to_string(num);
 		cmd += " ";
 		cmd += issue;
@@ -40,7 +47,7 @@ public:
 	void read(char *argv[], int argc, string filename); // read stormscript programs
 
 	string print(int *y, std::vector<stsvars> *current_var, std::vector<stsfunc> functions); // print function
-	stsvars in(int line);
+	stsvars in(int *line);
 
 	void sys(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
 		*y += 1;
