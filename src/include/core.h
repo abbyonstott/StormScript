@@ -40,7 +40,7 @@ public:
 	void read(char *argv[], int argc, string filename); // read stormscript programs
 
 	string print(int *y, std::vector<stsvars> *current_var, std::vector<stsfunc> functions); // print function
-	stsvars in(int line);
+	stsvars in(int *line);
 
 	void sys(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
 		*y += 1;

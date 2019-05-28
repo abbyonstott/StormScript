@@ -60,6 +60,10 @@ void sts::define(int *line, std::vector<stsvars> *vars, std::vector<stsfunc> fun
     string name = expressions[*line].contents;
 
     if (isvar(vars, name, &num)) {
+        /*
+        * If already defined this changes the value of 
+        * the variable
+        */
         *line += 2;
         if (vars->at(num).type != 'l')
             vars->at(num) = getval(vars, functions, line);
@@ -88,6 +92,5 @@ void sts::define(int *line, std::vector<stsvars> *vars, std::vector<stsfunc> fun
             vars->at(num).length = vars->at(num).vals.size();
             break;
     }
-
-    *line += 1;
+    while (expressions[*line].t != ENDEXPR) *line += 1;
 }

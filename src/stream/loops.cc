@@ -61,7 +61,7 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
 
     }
     else {
-        int r = std::stoi(script->getval(variables, functions, new int(*y)).val);
+        int r = std::stoi(script->getval(variables, functions, y).val);
         *y += 1;
         
         if (r <= 0)
