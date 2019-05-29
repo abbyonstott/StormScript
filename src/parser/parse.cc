@@ -63,3 +63,5 @@ void sts::parse(std::vector<string> prg){
 
     evaluateProgram(x);
 }
+
+// TODO: Add error and line parsing here

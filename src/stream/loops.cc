@@ -3,14 +3,20 @@
 void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
     *y += 1;
     int n = *y;
+    script->looping = true;
 
-    while (condition(script, &n, variables, functions)) {
+    while (toBool(script->getval(variables, functions, &n).val)) {
         script->newScope(new int(n), variables, &functions);
+
+        if (!script->looping) break;
+
         n = *y; // set n back to y to repeat
     }
 
     while (script->expressions[*y].tktype != OPENCURL) *y += 1;
     *y += 1;
+
+    script->looping = false;
     scopedown(y, script->expressions);
 }
 
@@ -18,7 +24,7 @@ void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc
 void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
     *y += 1;
     bool foreach = (script->expressions[*y+1].btn == STSIN);
-
+    script->looping = true;
 
     if (foreach) {
         stsvars root;
@@ -56,7 +62,10 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
             newvars.push_back(placeholder);
 
             script->newScope(new int(*y), &newvars, &functions);
+
+            if (!script->looping) break;
         }
+
         *y += 1;
 
     }
@@ -67,11 +76,14 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
         if (r <= 0)
             script->error(17, std::to_string(r));
 
-        for (int i = 0; i < r; i++)
+        for (int i = 0; i < r; i++) {
             script->newScope(new int(*y), variables, &functions);   
+            if (!script->looping) break;
+        }
 
         *y += 1;
     }
 
+    script->looping = false;
     scopedown(y, script->expressions);
 }

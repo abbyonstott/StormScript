@@ -55,3 +55,6 @@ else if arg[1] is "17" {
 else if arg[1] is "18" {
     printl "Error: Function ", arg[2], " requires arguments"; 
 }
+else if arg[1] is "19" {
+    printl "Error: break ouside loop";
+}

@@ -13,6 +13,13 @@ public:
 	//variables
 	int lineon; //line the parser is on
 	int function = -1;
+	/*
+	 * What the function numbers mean:
+	 * -1: Not a function
+	 * -2: A loop
+	 * > 1: The number of the function that is running
+	*/
+	bool looping = false;
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<string> prg; //unparsed program
 	std::vector<expression> expressions; // Replacing prs. Same thing with more info
