@@ -1,3 +1,8 @@
-for 20 {
-        break; 
+colors: ["green", "yellow", "black", "blue", "black"];
+animals: ["cat", "dog", "cow", "sheep"];
+
+for color in colors {
+        for animal in animals {
+                printl "$color $animal";
+        }
 }

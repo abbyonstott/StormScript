@@ -53,9 +53,7 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
                 scopedown(y, expressions);
                 looping = false;
             }
-            else {
-                error(19, "");
-            }
+            else error(19, "");
             break;
         case EXIT:
             exit(0);
