@@ -48,6 +48,13 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
         case SYSTEM:
             sys(y, scpvars, *functions);
             break;
+        case BREAK:
+            if (looping) {
+                scopedown(y, expressions);
+                looping = false;
+            }
+            else error(19, "");
+            break;
         case EXIT:
             exit(0);
     }

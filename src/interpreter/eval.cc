@@ -12,7 +12,7 @@ bool evaluateBuiltin(string kwd) {
     if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "def") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "return")) return 1;
     else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
     else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
-    else if ((kwd == "random") || (kwd == "randomrange") || (kwd == "length")) return 1;
+    else if ((kwd == "random") || (kwd == "randomrange") || (kwd == "length") || (kwd == "break")) return 1;
     return 0;
 }
 
@@ -86,6 +86,7 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "random") return RANDOM;
     else if (kwd == "randomrange") return RANDOMRANGE;
     else if (kwd == "length") return LENGTH;
+    else if (kwd == "break") return BREAK;
     return NONE;
 }
 

@@ -2,33 +2,41 @@
 
 void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
     *y += 1;
+    sts s = *script;
     int n = *y;
+    s.looping = true;
 
-    while (condition(script, &n, variables, functions)) {
-        script->newScope(new int(n), variables, &functions);
+    while (toBool(s.getval(variables, functions, &n).val)) {
+        s.newScope(new int(n), variables, &functions);
+
+        if (!s.looping) break;
+
         n = *y; // set n back to y to repeat
     }
 
-    while (script->expressions[*y].tktype != OPENCURL) *y += 1;
+    while (s.expressions[*y].tktype != OPENCURL) *y += 1;
     *y += 1;
-    scopedown(y, script->expressions);
+
+    s.looping = false;
+    scopedown(y, s.expressions);
 }
 
 
 void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
     *y += 1;
-    bool foreach = (script->expressions[*y+1].btn == STSIN);
-
+    sts s = *script;
+    bool foreach = (s.expressions[*y+1].btn == STSIN);
+    s.looping = true;
 
     if (foreach) {
         stsvars root;
         string name;
         int rootsize;
-        name = script->expressions[*y].contents;
+        name = s.expressions[*y].contents;
         
         *y += 2;
 
-        root = findVar(*variables, script->expressions[*y].contents); // grab variable listed on 3rd argument of for loop
+        root = findVar(*variables, s.expressions[*y].contents); // grab variable listed on 3rd argument of for loop
         *y += 1;
 
         switch (root.type) {
@@ -37,7 +45,7 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
                 break;
             case 'i':
             case 'b':
-                script->error(9, root.name);
+                s.error(9, root.name);
         }
 
         for (int i = 0; i < rootsize; i++) {
@@ -55,23 +63,31 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
 
             newvars.push_back(placeholder);
 
-            script->newScope(new int(*y), &newvars, &functions);
+            s.newScope(new int(*y), &newvars, &functions);
+
+            variables->insert(variables->begin(), newvars.begin(), newvars.end()-1);
+
+            if (!s.looping) break;
         }
+
         *y += 1;
 
     }
     else {
-        int r = std::stoi(script->getval(variables, functions, y).val);
+        int r = std::stoi(s.getval(variables, functions, y).val);
         *y += 1;
         
         if (r <= 0)
-            script->error(17, std::to_string(r));
+            s.error(17, std::to_string(r));
 
-        for (int i = 0; i < r; i++)
-            script->newScope(new int(*y), variables, &functions);   
+        for (int i = 0; i < r; i++) {
+            s.newScope(new int(*y), variables, &functions);   
+            if (!s.looping) break;
+        }
 
         *y += 1;
     }
 
-    scopedown(y, script->expressions);
+    s.looping = false;
+    scopedown(y, s.expressions);
 }

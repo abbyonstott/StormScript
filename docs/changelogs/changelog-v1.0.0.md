@@ -10,7 +10,8 @@
 * moved errors.sts from /usr/bin to /usr/share/stormscript
 * Function arguments no longer require you to specify the name
 * `for PLACEHOLDER in LIST/STR` creates a foreach loop
-* `randomrange` now uses Mersenne Twister generation rather than cpp  `rand()` function
+* `randomrange and rand` now uses Mersenne Twister generation rather than cpp  `rand()` function
+* added `break` for loops
 
 ## What's Fixed
 * Removed snapcraft files

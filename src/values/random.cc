@@ -25,7 +25,9 @@ int genrandomintfromrange(sts *s, std::vector<stsvars> *vars, std::vector<stsfun
 }
 
 bool randombool() {
-    long int ut = static_cast<long int> (time(0));
-    srand(ut);
-    return rand() % 2;
+    std::random_device randomd;
+
+    std::mt19937_64 generate(randomd());
+    std::uniform_int_distribution<> dis(0, 1);
+    return dis(generate);
 }
