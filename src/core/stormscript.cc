@@ -12,7 +12,7 @@
 */
 
 void printVersion() {
-	cout << "StormScript 1.0.0 Beta 2\n";
+	cout << "StormScript 1.0.0 Beta 3\n";
 }
 
 void showhelp() {
