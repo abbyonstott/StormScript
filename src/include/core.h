@@ -37,7 +37,7 @@ public:
 		string cmd;
 
 		#if (PLATFORM == 1)
-		cmd = "stormscript ";
+		cmd = "stormscript errors.sts ";
 		#else
 		cmd = "stormscript /usr/share/stormscript/errors.sts ";
 		#endif

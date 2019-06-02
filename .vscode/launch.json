@@ -55,6 +55,27 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "(gdb) Launch on Windows",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [
+                "example.sts",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/example",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
         }
     ]
 }

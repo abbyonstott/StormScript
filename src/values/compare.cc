@@ -75,4 +75,6 @@ bool condition(sts *program, int *y, std::vector<stsvars> *vars, std::vector<sts
     }
     else
         program->error(9, program->expressions[opLocation+1].contents);
+
+    return 0;
 }
