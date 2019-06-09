@@ -79,7 +79,7 @@ class expression {
 public:
 	string contents;
 
-	expression(string c) {
+	expression(string c = "") {
 		contents = c;
 	}
 
@@ -87,6 +87,7 @@ public:
 	tokenType tktype = NOTOKEN;
     Builtin btn = NONE;
 	Value literalType;
+	int line;
 };
 
 #endif

@@ -53,28 +53,28 @@ bool condition(sts *program, int *y, std::vector<stsvars> *vars, std::vector<sts
             case NOT: return (comp1.val != comp2.val);
             case GREATER: 
                 if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) > std::stoi(comp2.val));
-                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
-                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                else if (comp1.type != 'i') program->error(2, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(2, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
             case LESS:
                 if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) < std::stoi(comp2.val));
-                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
-                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                else if (comp1.type != 'i') program->error(2, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(2, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
             case GREATEREQ: 
                 if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) >= std::stoi(comp2.val));
-                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
-                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                else if (comp1.type != 'i') program->error(2, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(2, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
             case LESSEQ:
                 if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) <= std::stoi(comp2.val));
-                else if (comp1.type != 'i') program->error(9, program->expressions[oldy].contents); // give error with first expression
-                else if (comp2.type != 'i') program->error(9, program->expressions[opLocation+1].contents); // give error with second expression
+                else if (comp1.type != 'i') program->error(2, program->expressions[oldy].contents); // give error with first expression
+                else if (comp2.type != 'i') program->error(2, program->expressions[opLocation+1].contents); // give error with second expression
                 break;
         }
     }
     else
-        program->error(9, program->expressions[opLocation+1].contents);
+        program->error(2, program->expressions[opLocation+1].contents);
 
     return 0;
 }

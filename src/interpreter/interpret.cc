@@ -53,7 +53,7 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
                 scopedown(y, expressions);
                 looping = false;
             }
-            else error(19, "");
+            else error(6, "");
             break;
         case EXIT:
             exit(0);
@@ -94,7 +94,7 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
                                 case 'b': error(4, scpvars->at(n).name);
                             }
                         }
-                        else error(12, expressions[*y-3].contents);
+                        else error(8, expressions[*y-3].contents);
 
                         shouldbreak = 1;
                     }
@@ -103,14 +103,8 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 
             if (shouldbreak) break;
         case ENDEXPR:
-            switch (isFunc(*functions, expressions[*y].contents, &fnum)) { // if there is a semicolon directly after, it is either a function or not a command
-                case 0: 
-                    error(1, expressions[*y].contents);
-                    break;
-                case 1: 
-                    runfunc(y, functions, scpvars, fnum);
-                    break;
-            }
+            isFunc(*functions, expressions[*y].contents, &fnum); // run isFunc to get function number
+            runfunc(y, functions, scpvars, fnum);
             break;
     }
 }

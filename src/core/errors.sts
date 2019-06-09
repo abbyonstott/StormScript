@@ -1,60 +1,30 @@
-if arg[1] is "0" {
-    printl "Error: Missing end quote on literal";
+else if arg[1] is "0" {
+    printl "Error: failed to open ", arg[2], ". Couldn't find file";
 }
-else if arg[1] is "1" {
-    printl "Error: ", arg[2], " is not a recognised command";
+if arg[1] is "1" {
+    printl "Error: Missing expression ending token at end of line ", arg[2], ".";
 }
 else if arg[1] is "2" {
-    printl "Error: ", arg[2], " is not a recognised type";
+    printl "Error: ", arg[2], " is not the correct type";
 }
 else if arg[1] is "3" {
-    printl "Error: ", arg[2], " is not a valid expression";
+    printl "Error: ", arg[2], " is not a recognized command";
 }
 else if arg[1] is "4" {
-    printl "Error: ", arg[2], " is an unsupported type";
+    printl "Error: ", arg[2], " is out of range";
 }
 else if arg[1] is "5" {
-    printl "Error: ", arg[2], " is a list and must use a subscript on print";
+    printl "Error: Function ", arg[2], " requires arguments"; 
 }
 else if arg[1] is "6" {
-    printl "Error: ", arg[2], " is out of range";
+    printl "Error: break ouside loop";
 }
 else if arg[1] is "7" {
     printl "Error: return outside function";
 }
 else if arg[1] is "8" {
-    printl "Error: ", arg[2], " is not a value";
-}
-else if arg[1] is "9" {
-    printl "Error: ", arg[2], " is not the correct type";
-}
-else if arg[1] is "10" {
-    printl "Error: variable used in 'sys' command is of type ", arg[2], " and should be a string";
-}
-else if arg[1] is "11" {
-    printl "Error: failed to open ", arg[2], ". Couldn't find file";
-}
-else if arg[1] is "12" {
     printl "Error: Variable ", arg[2], " not found";
 }
-else if arg[1] is "13" {
+else if arg[1] is "9" {
     printl "Error: Expected module name";
-}
-else if arg[1] is "14" {
-    printl "Error: Function ", arg[2], " declared but not defined.";
-}
-else if arg[1] is "15" {
-    printl "Error: Missing semicolon at end of ", arg[2], ".";
-}
-else if arg[1] is "16" {
-    printl "Error: Expected filename";
-}
-else if arg[1] is "17" {
-    printl "Error: Number ", arg[2], " in for loop should not be less than or equal to 0";
-}
-else if arg[1] is "18" {
-    printl "Error: Function ", arg[2], " requires arguments"; 
-}
-else if arg[1] is "19" {
-    printl "Error: break ouside loop";
 }

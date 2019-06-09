@@ -12,6 +12,7 @@
 * `for PLACEHOLDER in LIST/STR` creates a foreach loop
 * `randomrange and rand` now uses Mersenne Twister generation rather than cpp  `rand()` function
 * added `break` for loops
+* errors are now parsed before runtime
 
 ## What's Fixed
 * Removed snapcraft files

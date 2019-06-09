@@ -109,7 +109,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                         if ((vars->at(index).type == 's') || (vars->at(index).type == 'l'))
                             v.val = std::to_string(vars->at(index).length);
 
-                        else error(9, vars->at(index).name);
+                        else error(2, vars->at(index).name);
                     }
                 }
                 else if (isFunc(functions, expressions[y].contents, &index)) {
@@ -186,7 +186,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
 
                                     fullexpr += "]"; // add brackets for complete statement
 
-                                    error(6, fullexpr);
+                                    error(4, fullexpr);
                                 }
 
                                 v.type = 's';
@@ -203,7 +203,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
 
                                     fullexpr += "]"; // add brackets for complete statement
 
-                                    error(6, fullexpr);
+                                    error(4, fullexpr);
                                 }
 
                                 v = sbsvar.vals[index];
@@ -212,7 +212,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
 
                             case 'i': // subscripts don't work on int or bool, so give error
                             case 'b':
-                                error(9, sbsvar.name);
+                                error(2, sbsvar.name);
                                 break;
                         }
 

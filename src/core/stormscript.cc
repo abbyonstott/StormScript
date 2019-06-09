@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 				system(cmd.c_str());
 			}
 			else
-				script.error(13, "none");
+				script.error(9, "none");
 		}
 		else
 			script.read(argv, argc, argv[1]);

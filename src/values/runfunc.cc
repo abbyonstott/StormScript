@@ -13,7 +13,7 @@ void sts::runfunc(int *y, std::vector<stsfunc> *functions, std::vector<stsvars> 
 
     if (functions->at(num).args.size() > 0) {
         if (expressions[*y+1].tktype != ARROW)
-            error(18, functions->at(num).name);
+            error(5, functions->at(num).name);
         else {
             *y += 2;
 
