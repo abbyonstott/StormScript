@@ -45,7 +45,7 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
                 break;
             case 'i':
             case 'b':
-                s.error(9, root.name);
+                s.error(2, root.name);
         }
 
         for (int i = 0; i < rootsize; i++) {
@@ -78,7 +78,7 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
         *y += 1;
         
         if (r <= 0)
-            s.error(17, std::to_string(r));
+            s.error(4, std::to_string(r));
 
         for (int i = 0; i < r; i++) {
             s.newScope(new int(*y), variables, &functions);   

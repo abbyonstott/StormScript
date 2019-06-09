@@ -7,7 +7,7 @@ void sts::read(char *argv[], int argc, string filename) {
 	file.open(filename.c_str());
 
 	if (file.fail()) 
-		error(11, filename);
+		error(0, filename);
 
 	char c = file.get();
 	

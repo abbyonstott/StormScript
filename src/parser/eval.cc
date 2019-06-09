@@ -90,19 +90,17 @@ Builtin getBuiltincmd(string kwd) {
     return NONE;
 }
 
-void sts::evaluateProgram(std::vector<string> prs) {
-    for (int i = 0; i < prs.size(); i++) {
-        expression e = prs[i];
-        e.t = determinetype(e.contents);
+void sts::evaluateProgram() {
+    for (int i = 0; i < expressions.size(); i++) {
+        expressions[i].t = determinetype(expressions[i].contents);
 
-        if (e.t == TOKEN)
-            e.tktype = gettktype(e.contents);
-        else if (e.t == BUILTIN)
-            e.btn = getBuiltincmd(e.contents);
-        else if (e.t == VALUE)
-            e.literalType = getValue(e.contents);
-
-        expressions.push_back(e);
-
+        if (expressions[i].t == TOKEN)
+            expressions[i].tktype = gettktype(expressions[i].contents);
+        else if (expressions[i].t == BUILTIN)
+            expressions[i].btn = getBuiltincmd(expressions[i].contents);
+        else if (expressions[i].t == VALUE)
+            expressions[i].literalType = getValue(expressions[i].contents);
     }
+
+    parseErrors();
 }

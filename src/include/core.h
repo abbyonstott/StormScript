@@ -22,7 +22,7 @@ public:
 	bool looping = false;
 	unsigned int sizeoff = 0; //size of the program
 	std::vector<string> prg; //unparsed program
-	std::vector<expression> expressions; // Replacing prs. Same thing with more info
+	std::vector<expression> expressions;
 
 	void runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // built in
 	void runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // user defined, declarations of variables, etc.
@@ -49,7 +49,7 @@ public:
 		exit(0);
 	}
 
-	void evaluateProgram(std::vector<string> prs);
+	void evaluateProgram();
 
 	void read(char *argv[], int argc, string filename); // read stormscript programs
 
@@ -63,6 +63,8 @@ public:
 
 		*y += 1;
 	}
+
+	void parseErrors();
 
 	void newScope(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> *functions);
 

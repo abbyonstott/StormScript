@@ -13,7 +13,7 @@ stsvars sts::readfile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> f
     file.open(name);
 
     if (file.fail()) 
-		error(11, name);
+		error(0, name);
 
     char c = file.get();
 
