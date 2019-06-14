@@ -25,10 +25,7 @@
 * Install script now uses all available processor cores
 * packagerelease.sh now installs stormscript to run tests
 
-# Beta 2
+# Beta 3
 
 ## What's fixed
-* Concatenation would break if there was no space at the end of value
-* `in` would always give error with name variable
-* `+:` operator now works
-* Fixed for loop running `getvals()` with `new int(*y)`, causing the interpreter to be off
+* Newline at end of program threw error
