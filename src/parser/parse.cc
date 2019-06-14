@@ -63,11 +63,12 @@ void sts::parse(std::vector<string> prg){
     }
 
     for (int i = 0; i<expressions.size(); i++) {
-        if ((expressions[i].contents=="\0") || (expressions[i].contents.size() == 0) || (expressions[i].contents=="\n")) {
+        if ((expressions[i].contents=="\0") || (expressions[i].contents.size() == 0) || (expressions[i].contents=="\n") || 
+            (expressions[i].contents.size() == 1 && expressions[i].contents[0] == 0)) { //this part makes sure that the last empty line is not parsed at all
             expressions.erase(expressions.begin() + i);
             i--; // we want to subtract one so that the parser does leave one of two consecutive blank expressions
         }
-    }
+     }
 
     evaluateProgram();
 }

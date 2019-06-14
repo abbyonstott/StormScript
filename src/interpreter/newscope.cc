@@ -7,10 +7,10 @@ void sts::newScope(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> *fun
     while ((expressions[*y].tktype != CLOSEDCURL) && (*y < expressions.size())) {
         
         switch(expressions[*y].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
-            case BUILTIN: 
+            case BUILTIN:
                 runBuiltin(y, vars, functions);
                 break;
-            case UNKNOWN: 
+            case UNKNOWN:
                 runUnknown(y, vars, functions);
                 break;
         }
