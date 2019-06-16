@@ -55,6 +55,13 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
             }
             else error(6, "");
             break;
+        case MODULE:
+            /*
+            * modules are automatically imported during the error check before runtime
+            * all we need to do here is to move on to the next expression
+            */
+            while (expressions[*y].t != ENDEXPR) *y += 1;
+            break;
         case EXIT:
             exit(0);
     }
@@ -109,7 +116,7 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
     }
 }
 
-void sts::interp(string fname, int psize, char *argv[], int argc){
+void sts::interp(int psize, char *argv[], int argc){
     parse(prg);
 
     std::vector<stsfunc> functions;

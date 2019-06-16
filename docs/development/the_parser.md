@@ -15,3 +15,9 @@ Expressions are "sorted" into 5 different enumerations:
 `TOKEN`: Any symbol that isn't a semicolon
 
 `ENDEXPR`: A semicolon
+
+## Characters that are left out
+
+Needless to say, whitespace and empty newlines are left out of the parsed program as they serve no purpose to the actual execution of the program.
+
+Less obviously, parentheses are completely left out of the program (for now) because they currently would only change the look of the program

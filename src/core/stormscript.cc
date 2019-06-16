@@ -17,13 +17,13 @@ void printVersion() {
 
 void showhelp() {
 	cout << "Usage: stormscript [file|options]\n";
-	cout << "StormScript is a powerful, open source scripting language for many operating systems.\n\n";
+	cout << "StormScript is a powerful, open source programming language for many operating systems.\n\n";
 	cout <<  "  -h, --help: display help\n";
 	cout << "  --version: show version\n\n";
-	// cout << "  install: install a module\n\n";
+	cout << "  install: install a module\n\n";
 	printVersion();
 	cout << "git: https://github.com/stormprograms/StormScript\n";
-	cout << "For documentation, go to https://stormprograms.com/stormscript\n";
+	cout << "For documentation, go to https://stormscript.dev/docs\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -44,8 +44,10 @@ int main(int argc, char *argv[]) {
 			else
 				script.error(9, "none");
 		}
-		else
-			script.read(argv, argc, argv[1]);
+		else {
+			script.filename = argv[1];
+			script.read(argv, argc);
+		}
 	}
 	else
 		showhelp();

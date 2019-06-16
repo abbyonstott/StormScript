@@ -1,49 +1,23 @@
 # About
 
-StormScript is important not because it presents 1 or 2 revolutionary ideas that change your usual workflow, but because it changes almost everything about common programming syntax to make it easier to read and write. **This may seem more like a problem at first,** but I believe that StormScript changes programming syntax *for the better.* Here are a few examples:
+StormScript is a lightweight, object oriented, fully interpreted programming language for every platform.
 
-1. Keywords
-For most people, keywords make no sense when learning programming languages, and a large portion of what StormScript changes has to do with keywords.
-In most languages in order to declare custom types, you would use the `class` keyword. The word class kind of has a connection with the word type, but at that point why not just use the word `type`. This is something StormScript addresses.
-```
-type person{
-  int age;
-  str name;
-  bool gender;
-}
-```
-In StormScript the keyword `do` replaces the `main` function.
+The primary goal of stormscript is to allow fast execution of small programs.
 
-2. Symbols
-StormScript's second major difference is in symbols. Symbols are almost, if not as important as keywords in programming. In StormScript, this is just as true as in any other language. The largest change with symbols in StormScript is in meaning. An example is the `=>` symbol, which in most programming language means *define.* In StormScript, `=>` means *with.* In a function with arguments, you would put the `=>` symbol followed by the arguments.
-```
-func f => str x {
-  printl x;
-}
+## Syntax
 
-do{
-  f => x: "hi";
-}
-```
-Another example of this is the `|` symbol, which is usually used as a separator. In StormScript, the `|` symbol tells the interpreter to find a property. For example:
+## Keywords
 
-```
-type person{
-  int age;
-  str name;
-  bool gender;
-}
+StormScript keywords are designed to be easily understandable, for example:
 
-do{
-  person p;
-  p|name: "Bob";
-  p|age: 24;
-  p|gender: true;
-  
-  str name: p|name;
-  
-  printl name;
-}
+`printl` and `print` print to the console with and without a newline respectively 
 
-```
-In StormScript, the `is` keyword replaces the `==` symbol and `not` replaces the `!=` symbol.
+`in` takes input from stdin
+
+`read` reads files
+
+`func` declares a function
+
+## Symbols
+
+StormScript symbols are designed to be familier to any C family programmer while still easy to understand for new programmers.

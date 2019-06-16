@@ -39,6 +39,15 @@ void sts::parseErrors() {
                 glob = 0;
             } 
         }
+        else if (expressions[i-1].btn == MODULE) {
+            /*
+            * It's easier to import modules before runtime because it allows
+            * for checks to be run on the modules at the same time that they are
+            * run on the original program
+            */
+            i--;
+            importModules(&i);
+        }
         else if // written like this to make it more clear what is happening
             (
             (expressions[i].t == UNKNOWN && (expressions[i+1].t == ENDEXPR || expressions[i+1].tktype == ARROW || expressions[i+1].tktype == COMMA)) && 

@@ -1,1 +1,3 @@
-printl "hello, world!";
+mod hello;
+
+hello;
