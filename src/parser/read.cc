@@ -1,8 +1,9 @@
 #include "../include/stormscript.h"
 
-void sts::read(char *argv[], int argc, string filename) {
+void sts::read(char *argv[], int argc) {
 	std::ifstream file;
 	string contents;
+	
 
 	file.open(filename.c_str());
 
@@ -39,5 +40,5 @@ void sts::read(char *argv[], int argc, string filename) {
 	for (int x = loc; x <= contents.size(); x++)
 		prg[prg.size() - 1] += contents[x];  //add last line to vector
 
-	interp(filename, sizeoff, argv, argc);
+	interp(sizeoff, argv, argc);
 }

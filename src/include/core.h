@@ -12,6 +12,7 @@ class sts
 public:
 	//variables
 	int lineon; //line the parser is on
+	string filename; // filename
 	int function = -1;
 	/*
 	 * What the function numbers mean:
@@ -51,7 +52,7 @@ public:
 
 	void evaluateProgram();
 
-	void read(char *argv[], int argc, string filename); // read stormscript programs
+	void read(char *argv[], int argc); // read stormscript programs
 
 	string print(int *y, std::vector<stsvars> *current_var, std::vector<stsfunc> functions); // print function
 	stsvars in(int *line);
@@ -70,7 +71,7 @@ public:
 
 	void parse(std::vector<string> prg);
 
-	void interp(string fname, int psize, char *argv[], int argc);
+	void interp(int psize, char *argv[], int argc);
 
 	void ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y);
 
@@ -89,6 +90,8 @@ public:
 			sleep(std::stoi(getval(vars, functions, new int(y+1)).val));
 		#endif
 	}
+
+	void importModules(int *y);
 };
 /*
 Loop functions are defined here.

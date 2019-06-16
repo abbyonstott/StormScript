@@ -4,6 +4,7 @@ the interpreter parses the file and calls functions in other files
 */
 void sts::parse(std::vector<string> prg){
     int y = 0;
+    
     while (y!=prg.size()){
         int z = 0;
         bool inquotes = false;

@@ -13,6 +13,8 @@
 * `randomrange and rand` now uses Mersenne Twister generation rather than cpp  `rand()` function
 * added `break` for loops
 * errors are now parsed before runtime
+* modules are added to the file before runtime
+* modules are now scoped
 
 ## What's Fixed
 * Removed snapcraft files
@@ -24,8 +26,10 @@
 * Scoped variable inheritance now works, so variables defined inside of a scope are accessible to the scope and any child scopes
 * Install script now uses all available processor cores
 * packagerelease.sh now installs stormscript to run tests
+* Better development documentation
 
 # Beta 3
 
 ## What's fixed
 * Newline at end of program threw error
+* Modules are back
