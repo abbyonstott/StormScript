@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-stsvars sts::readfile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
+stsvars sts::readfile(int *y) {
     stsvars v;
     v.type = 's';
 
@@ -8,7 +8,7 @@ stsvars sts::readfile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> f
 
     std::ifstream file;
     string contents;
-    string name = getval(vars, functions, y).val;
+    string name = getval(y).val;
 
     file.open(name);
 
@@ -29,15 +29,15 @@ stsvars sts::readfile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> f
     return v;
 }
 
-void sts::writefile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
+void sts::writefile(int *y) {
     *y += 1;
     std::ofstream file;
-    string name = getval(vars, functions, y).val;
+    string name = getval(y).val;
 
     file.open(name);
 
     *y += 1;
-    string contents = getval(vars, functions, y).val;
+    string contents = getval(y).val;
 
     file.write(contents.c_str(), contents.size());
     file.close();

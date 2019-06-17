@@ -3,13 +3,13 @@
 bool evaluateToken(string tkn) { // tokens are different types of operators and symbols
     if ((tkn == "is") || (tkn == "not") || (tkn == "less") || (tkn == "lesseq") || (tkn == "greater") || (tkn == "greatereq")) return 1; // comparison operators
     else if ((tkn == "?") || (tkn == ":") || (tkn == "=>") || (tkn == "{") || (tkn == "}") || (tkn == "[") || (tkn == "]")) return 1; // symbols
-    else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*") || (tkn == ",") || (tkn == "|")) return 1;
+    else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*") || (tkn == ",") || (tkn == ".")) return 1;
     
     return 0;
 }
 
 bool evaluateBuiltin(string kwd) {
-    if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "def") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "return")) return 1;
+    if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "init") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "return")) return 1;
     else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
     else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
     else if ((kwd == "random") || (kwd == "randomrange") || (kwd == "length") || (kwd == "break")) return 1;
@@ -56,7 +56,7 @@ tokenType gettktype(string tkn) {
     else if (tkn == "/") return DIVISION;
     else if (tkn == "*") return MULTIPLICATION;
     else if (tkn == ",") return COMMA;
-    else if (tkn == "|") return BAR;
+    else if (tkn == ".") return DOT;
     return NOTOKEN;
 }
 
@@ -72,7 +72,7 @@ Builtin getBuiltincmd(string kwd) {
     else if (kwd == "str") return TYPE_STRING;
     else if (kwd == "bool") return TYPE_STS_BOOL;
     else if (kwd == "list") return TYPE_LIST;
-    else if (kwd == "def") return TYPE_CONSTRUCTOR;
+    else if (kwd == "init") return CONSTRUCTOR_SCOPE;
     else if (kwd == "mod") return MODULE;
     else if (kwd == "return") return RETURN;
     else if (kwd == "while") return WHILE;

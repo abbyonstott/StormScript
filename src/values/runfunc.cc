@@ -1,27 +1,29 @@
 #include "../include/stormscript.h"
 
-void sts::runfunc(int *y, std::vector<stsfunc> *functions, std::vector<stsvars> *variables, int num) {
+void sts::runfunc(int *y, int num) {
     sts functionsts;
-    std::vector<stsvars> fvars = *variables;
+
+    std::vector<stsvars> _variables = thisScope->variables;
+
+    thisScope->variables.insert(thisScope->variables.end(), 
+        thisScope->functions.at(num).args.begin(), thisScope->functions.at(num).args.end());
 
     functionsts.function = num;
-    functionsts.expressions = functions->at(num).contents;
+    functionsts.expressions = thisScope->functions.at(num).contents;
 
-    fvars.insert(fvars.end(), functions->at(num).args.begin(), functions->at(num).args.end());
+    int argbegin = _variables.size(); 
 
-    int argbegin = variables->size(); 
-
-    if (functions->at(num).args.size() > 0) {
+    if (thisScope->functions.at(num).args.size() > 0) {
         if (expressions[*y+1].tktype != ARROW)
-            error(5, functions->at(num).name);
+            error(5, thisScope->functions.at(num).name);
         else {
             *y += 2;
 
             int argon = 0;
             
             while (true) {
-                fvars[argbegin + argon] = getval(variables, *functions, y);
-                fvars[argbegin + argon].name = functions->at(num).args[argon].name;
+                thisScope->variables[argbegin + argon] = getval(y);
+                thisScope->variables[argbegin + argon].name = thisScope->functions.at(num).args[argon].name;
 
                 *y += 1;
                 if (expressions[*y].t == ENDEXPR) break;
@@ -33,5 +35,11 @@ void sts::runfunc(int *y, std::vector<stsfunc> *functions, std::vector<stsvars> 
         }
     }
 
-    functionsts.newScope(new int(0), &fvars, functions);
+    functionsts.thisScope = thisScope;
+    functionsts.newScope(new int(0));
+
+    _variables.insert(_variables.begin(), 
+        thisScope->variables.begin(), thisScope->variables.begin() + _variables.size());
+
+    thisScope->variables = _variables;
 }

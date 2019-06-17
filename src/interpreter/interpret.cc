@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions) {
+void sts::runBuiltin(int *y) {
     bool l;
 
     switch (expressions[*y].btn) {
@@ -8,7 +8,7 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
         case PRINTL:
             l = (expressions[*y].btn == PRINTL); // if printl
             while (expressions[*y].t != ENDEXPR) {
-                cout << print(y, scpvars, *functions);
+                cout << print(y);
 
                 if (expressions[*y+1].tktype == COMMA) *y += 1; // we don't need to add 2 because print() automatically adds 1 to the line counter
             }
@@ -16,37 +16,37 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
             if (l) cout << '\n';
             break;
         case STSIN: 
-            scpvars->push_back(in(y));
+            thisScope->variables.push_back(in(y));
             break;
         case IF:
-            ifs(scpvars, *functions, y);
+            ifs(y);
             break;
         case FUNCTION:
-            declareFunc(y, functions);
+            declareFunc(y);
             break;
         case RETURN:
             if (function > -1) {
-                functions->at(function).val = getval(scpvars, *functions, new int(*y+1)).val;
-                functions->at(function).type = getval(scpvars, *functions, new int(*y+1)).type;
+                thisScope->functions.at(function).val = getval(new int(*y+1)).val;
+                thisScope->functions.at(function).type = getval(new int(*y+1)).type;
                 *y = expressions.size(); // return always exits scope
             } 
             else error(7, "");
             
             break;
         case WAIT:
-            wait(scpvars, *functions, *y);
+            wait(*y);
             break;
         case WRITE:
-            writefile(y, scpvars, *functions);
+            writefile(y);
             break;
         case WHILE:
-            whileloop(this, scpvars, *functions, y);
+            whileloop(this, thisScope, y);
             break;
         case FOR:
-            forloop(this, scpvars, *functions, y);
+            forloop(this, thisScope, y);
             break;
         case SYSTEM:
-            sys(y, scpvars, *functions);
+            sys(y);
             break;
         case BREAK:
             if (looping) {
@@ -67,7 +67,7 @@ void sts::runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
     }
 }
 
-void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions) {
+void sts::runUnknown(int *y) {
     int fnum;
     bool shouldbreak;
 
@@ -77,7 +77,7 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 
             switch (expressions[*y+1].tktype) {
                 case COLON: // definition
-                    define(y, scpvars, *functions);
+                    define(y);
                     shouldbreak = 1;
                     break;
                 case ARROW: break;
@@ -86,19 +86,19 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
                         *y += 3;
                         int n = 0;
                         
-                        if (isvar(scpvars, expressions[*y-3].contents, &n)) {
-                            switch (scpvars->at(n).type) {
+                        if (isvar(&thisScope->variables, expressions[*y-3].contents, &n)) {
+                            switch (thisScope->variables.at(n).type) {
                                 case 'i':
-                                    scpvars->at(n).val = std::to_string(std::stoi(scpvars->at(n).val) + std::stoi(getval(scpvars, *functions, new int(*y)).val));
+                                    thisScope->variables.at(n).val = std::to_string(std::stoi(thisScope->variables.at(n).val) + std::stoi(getval(new int(*y)).val));
                                     break;
                                 case 'l':
-                                    scpvars->at(n).vals.push_back(getval(scpvars, *functions, new int(*y)));
-                                    scpvars->at(n).length = scpvars->at(n).vals.size();
+                                    thisScope->variables.at(n).vals.push_back(getval(new int(*y)));
+                                    thisScope->variables.at(n).length = thisScope->variables.at(n).vals.size();
                                     break;
                                 case 's':
-                                    scpvars->at(n).val += getval(scpvars, *functions, new int(*y)).val;
+                                    thisScope->variables.at(n).val += getval(new int(*y)).val;
                                     break;
-                                case 'b': error(4, scpvars->at(n).name);
+                                case 'b': error(4, thisScope->variables.at(n).name);
                             }
                         }
                         else error(8, expressions[*y-3].contents);
@@ -110,8 +110,8 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 
             if (shouldbreak) break;
         case ENDEXPR:
-            isFunc(*functions, expressions[*y].contents, &fnum); // run isFunc to get function number
-            runfunc(y, functions, scpvars, fnum);
+            isFunc(thisScope->functions, expressions[*y].contents, &fnum); // run isFunc to get function number
+            runfunc(y, fnum);
             break;
     }
 }
@@ -119,18 +119,16 @@ void sts::runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc>
 void sts::interp(int psize, char *argv[], int argc){
     parse(prg);
 
-    std::vector<stsfunc> functions;
-    std::vector<stsvars> variables;
-
-    variables.resize(variables.size()+1);
+    thisScope->variables.resize(thisScope->variables.size()+1);
     for (int x = 1; x<=argc-1; x++) {
-        variables.back().type='l';
-        variables.back().vals.resize(variables.back().vals.size()+1);
-        variables.back().vals.back().type = 's';
-        variables.back().vals.back().val=argv[x];
-        variables.back().name="arg";
-        variables.back().length = argc-1;
+        thisScope->variables.back().type='l';
+        thisScope->variables.back().vals.resize(thisScope->variables.back().vals.size()+1);
+        thisScope->variables.back().vals.back().type = 's';
+        thisScope->variables.back().vals.back().val=argv[x];
+        thisScope->variables.back().name="arg";
+        thisScope->variables.back().length = argc-1;
     }
     
-    newScope(new int(0), &variables, &functions);
+    
+    newScope(new int(0));
 }

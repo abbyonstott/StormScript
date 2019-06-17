@@ -22,7 +22,7 @@ void replaceEscapes(string *lit, std::vector<stsvars> vars) { // escapes
                     break;
             }
         }
-        else if (lit->at(i) == '$') {
+        else if (lit->at(i) == '$') { // dollar sign for concatenation
             string q;
 
             i++;
@@ -46,7 +46,7 @@ void replaceEscapes(string *lit, std::vector<stsvars> vars) { // escapes
     *lit = newl;
 }
 
-stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *line) {
+stsvars sts::getval(int *line) {
     /*
     THIS FILE IS VERY IMPORTANT!!!!!
     When Modifying this function be sure that:
@@ -58,7 +58,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
     stsvars v;
     int y = *line;
 
-    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && (expressions[y+1].tktype != BAR) && (expressions.size() > y+1));
+    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && (expressions[y+1].tktype != DOT) && (expressions.size() > y+1));
 
     switch (operation) {
         case 0: // if raw value
@@ -70,7 +70,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                         lit = striplit(expressions[y].contents);
                         v.type = 's';
                         v.length = lit.size();
-                        replaceEscapes(&lit, *vars);
+                        replaceEscapes(&lit, thisScope->variables);
                         break;
                     case INTEGER:
                     case STS_BOOL:
@@ -85,36 +85,36 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                 // read just reads the file, but it is always used as a value because it returns a value
                 switch (expressions[y].btn) { 
                     case READ:
-                        v = readfile(&y, vars, functions);
+                        v = readfile(&y);
                         break;
                     case RANDOM:
                         v.val = ((randombool()) ? "true" : "false");
                         v.type = 'b';
                         break;
                     case RANDOMRANGE:
-                        v.val = std::to_string(genrandomintfromrange(this, vars, functions, &y));
+                        v.val = std::to_string(genrandomintfromrange(this, &y));
                         v.type = 'i';
                 }
             }
             else if (expressions[y].t == UNKNOWN) {
                 int index;
 
-                if (isvar(vars, expressions[y].contents, &index)) {                    
-                    if (expressions[y+1].tktype != BAR) v = vars->at(index); // get value
+                if (isvar(&thisScope->variables, expressions[y].contents, &index)) {                    
+                    if (expressions[y+1].tktype != DOT) v = thisScope->variables.at(index); // get value
                     else if (expressions[y+2].btn == LENGTH) { // get length
                         y+= 3;
 
                         v.type = 'i';
 
-                        if ((vars->at(index).type == 's') || (vars->at(index).type == 'l'))
-                            v.val = std::to_string(vars->at(index).length);
+                        if ((thisScope->variables.at(index).type == 's') || (thisScope->variables.at(index).type == 'l'))
+                            v.val = std::to_string(thisScope->variables.at(index).length);
 
-                        else error(2, vars->at(index).name);
+                        else error(2, thisScope->variables.at(index).name);
                     }
                 }
-                else if (isFunc(functions, expressions[y].contents, &index)) {
-                    runfunc(&y, &functions, vars, index);
-                    v = functions[index]; // if expression refers to function
+                else if (isFunc(thisScope->functions, expressions[y].contents, &index)) {
+                    runfunc(&y, index);
+                    v = thisScope->functions[index]; // if expression refers to function
                 }
             }
 
@@ -133,7 +133,9 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                 placeholders.resize(2);
 
                 placeholders.at(0).expressions = {expressions[y]};
+                placeholders.at(0).thisScope = thisScope;
                 placeholders.at(1).expressions = {expressions[y+2]};
+                placeholders.at(1).thisScope = thisScope;
 
                 y+= 2;
             }
@@ -143,6 +145,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                 int i = y;
 
                 placeholders.resize(1);
+                placeholders.back().thisScope = thisScope;
 
                 while (er != 0) {
                     if ((expressions[i].t == TOKEN) && (expressions[i].tktype == CLOSEDBRACKET))
@@ -155,26 +158,26 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                     
                     i++;
                 }
-                index = std::stoi(placeholders[0].getval(vars, functions, new int(0)).val);
+                index = std::stoi(placeholders[0].getval(new int(0)).val);
             }
 
             switch (t) { // perform based on token type
                 case PLUS: // I'm sure there is an easier way to do this...
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) + std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) + std::stoi(placeholders.at(1).getval(new int(0)).val));
                     break;
                 case MINUS:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) - std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) - std::stoi(placeholders.at(1).getval(new int(0)).val));
                     break;
                 case DIVISION:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) / std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) / std::stoi(placeholders.at(1).getval(new int(0)).val));
                     break;
                 case MULTIPLICATION:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(vars, functions, new int(0)).val) * std::stoi(placeholders.at(1).getval(vars, functions, new int(0)).val));
+                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) * std::stoi(placeholders.at(1).getval(new int(0)).val));
                     break; 
                 case OPENBRACKET:
                     plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
                     if ((plus1 != IS) && (plus1 != NOT) && (plus1 != GREATER) && (plus1 != GREATEREQ) && (plus1 != LESS) && (plus1 != LESSEQ)) {
-                        sbsvar = findVar(*vars, expressions[y-2].contents);
+                        sbsvar = findVar(thisScope->variables, expressions[y-2].contents);
 
                         switch(sbsvar.type) {
                             case 's':
@@ -226,7 +229,7 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                 case GREATEREQ:
                 case LESS:
                 case LESSEQ:
-                    v.val = ((condition(this, &y, vars,  functions)) ? "true" : "false");
+                    v.val = ((condition(this, &y)) ? "true" : "false");
                     if (expressions[y].tktype == TERNARY1) {
                         /* 
                         For ternary, we can assume that it is structured like this:
@@ -239,11 +242,11 @@ stsvars sts::getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, 
                         bool _val = toBool(v.val);
                         stsvars primary, secondary;
 
-                        primary = getval(vars, functions, new int(y+1));
+                        primary = getval(new int(y+1));
 
                         while (expressions[y].tktype != COLON) y++; 
                         y++;
-                        secondary = getval(vars, functions, new int(y));
+                        secondary = getval(new int(y));
 
                         v.val = ((_val) ? primary.val : secondary.val);
                         v.type = ((_val) ? primary.type : secondary.type);
