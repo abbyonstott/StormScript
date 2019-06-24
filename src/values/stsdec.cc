@@ -59,7 +59,7 @@ void sts::define(int *line) { //variable declarations
     int num = thisScope->variables.size();
     string name = expressions[*line].contents;
 
-    if (isvar(&thisScope->variables, name, &num)) {
+    if (find(&thisScope->variables, name, &num)) {
         /*
         * If already defined this changes the value of 
         * the variable

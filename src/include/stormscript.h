@@ -30,6 +30,7 @@ Place All StormScript headers here separated by 2 lines.
 
 #include "stsrand.h"
 
+
 #include "scope.h"
 
 using std::cout;
@@ -40,8 +41,13 @@ string striplit(string line);
 bool condition(sts *program, int *y);
 bool isint(string s);
 bool toBool(string s);
-bool isvar(std::vector<stsvars> * pvars, string query, int *num);
-bool isFunc(std::vector<stsfunc> functions, string query, int *num);
+
+// find is overloaded to allow finding any of the main types easily
+bool find(std::vector<stsvars> * pvars, string query, int *num);
+bool find(std::vector<stsfunc> functions, string query, int *num);
+bool find(std::vector<type> types, string query, int *num);
+bool find(std::vector<typedvar> vars, string query, int *num);
+
 stsvars findVar(std::vector<stsvars> vars, string query);
 
 #endif

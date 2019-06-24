@@ -6,6 +6,7 @@ set (CMAKE_CXX_FLAGS "--std=c++17 -static -static-libgcc -static-libstdc++")
 endif (MINGW)
 add_executable(stormscript
     src/core/stormscript.cc
+    src/core/operations.cc
     src/parser/parse.cc
     src/parser/read.cc
     src/parser/eval.cc
@@ -22,7 +23,6 @@ add_executable(stormscript
     src/values/getvals.cc
     src/values/runfunc.cc
     src/values/compare.cc
-    src/values/operations.cc
     src/values/random.cc)
 set (StormScript_VERSION_MAJOR 1)
 set (StormScript_VERSION_MINOR 0)

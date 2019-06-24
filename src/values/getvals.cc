@@ -99,7 +99,7 @@ stsvars sts::getval(int *line) {
             else if (expressions[y].t == UNKNOWN) {
                 int index;
 
-                if (isvar(&thisScope->variables, expressions[y].contents, &index)) {                    
+                if (find(&thisScope->variables, expressions[y].contents, &index)) {                    
                     if (expressions[y+1].tktype != DOT) v = thisScope->variables.at(index); // get value
                     else if (expressions[y+2].btn == LENGTH) { // get length
                         y+= 3;
@@ -112,7 +112,7 @@ stsvars sts::getval(int *line) {
                         else error(2, thisScope->variables.at(index).name);
                     }
                 }
-                else if (isFunc(thisScope->functions, expressions[y].contents, &index)) {
+                else if (find(thisScope->functions, expressions[y].contents, &index)) {
                     runfunc(&y, index);
                     v = thisScope->functions[index]; // if expression refers to function
                 }

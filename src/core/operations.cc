@@ -11,7 +11,7 @@ stsvars findVar(std::vector<stsvars> vars, string query) {
     return stsvars();
 }
 
-bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
+bool find(std::vector<stsvars> * pvars, string query, int *num) {
     bool isvar = false;
 
     for (int i = 0; i < pvars->size() && !isvar; i++) {
@@ -21,6 +21,39 @@ bool isvar(std::vector<stsvars> * pvars, string query, int *num) {
     }
 
     return isvar;
+}
+
+bool find(std::vector<stsfunc> functions, string query, int *num) {
+    for (int i = 0; i < functions.size(); i++) {
+        if (functions[i].name == query) {
+            *num = i;
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+bool find(std::vector<type> types, string query, int *num) {
+    for (int i = 0; i < types.size(); i++) {
+        if (types[i].name == query) {
+            *num = i;
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+bool find(std::vector<typedvar> vars, string query, int *num) {
+    for (int i = 0; i < vars.size(); i++) {
+        if (vars[i].name == query) {
+            *num = i;
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 string striplit(string line) {
@@ -39,17 +72,6 @@ bool isint(string s) {
     }
 
     return false;
-}
-
-bool isFunc(std::vector<stsfunc> functions, string query, int *num) {
-    for (int i = 0; i < functions.size(); i++) {
-        if (functions[i].name == query) {
-            *num = i;
-            return 1;
-        }
-    }
-
-    return 0;
 }
 
 void scopedown(int *x, std::vector<expression> expressions) {

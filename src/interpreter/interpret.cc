@@ -48,6 +48,9 @@ void sts::runBuiltin(int *y) {
         case SYSTEM:
             sys(y);
             break;
+        case TYPE:
+            declareType(y);
+            break;
         case BREAK:
             if (looping) {
                 scopedown(y, expressions);
@@ -86,7 +89,7 @@ void sts::runUnknown(int *y) {
                         *y += 3;
                         int n = 0;
                         
-                        if (isvar(&thisScope->variables, expressions[*y-3].contents, &n)) {
+                        if (find(&thisScope->variables, expressions[*y-3].contents, &n)) {
                             switch (thisScope->variables.at(n).type) {
                                 case 'i':
                                     thisScope->variables.at(n).val = std::to_string(std::stoi(thisScope->variables.at(n).val) + std::stoi(getval(new int(*y)).val));
@@ -110,8 +113,31 @@ void sts::runUnknown(int *y) {
 
             if (shouldbreak) break;
         case ENDEXPR:
-            isFunc(thisScope->functions, expressions[*y].contents, &fnum); // run isFunc to get function number
+            find(thisScope->functions, expressions[*y].contents, &fnum); // run isFunc to get function number
             runfunc(y, fnum);
+            break;
+        case UNKNOWN:
+            int num;
+            find(thisScope->types, expressions[*y].contents, &num);
+
+            typedvar t;
+            t = thisScope->types[num];
+
+            t.name = expressions[++(*y)].contents;
+
+            if (t.Parent.methods.size() > 0 && t.Parent.methods[0].name == "init") {
+                sts typests;
+
+                typests.thisScope->functions.push_back(t.Parent.methods[0]);
+
+                typests.expressions.resize(2);
+
+                typests.expressions[0].contents = "init";
+                typests.expressions[1].contents = ";";
+
+                typests.runfunc(new int(0), 0);
+            }
+
             break;
     }
 }

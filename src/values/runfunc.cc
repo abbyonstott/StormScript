@@ -38,8 +38,5 @@ void sts::runfunc(int *y, int num) {
     functionsts.thisScope = thisScope;
     functionsts.newScope(new int(0));
 
-    _variables.insert(_variables.begin(), 
-        thisScope->variables.begin(), thisScope->variables.begin() + _variables.size());
-
-    thisScope->variables = _variables;
+    thisScope->variables.erase(thisScope->variables.begin() + _variables.size(), thisScope->variables.end());
 }

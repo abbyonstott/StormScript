@@ -15,6 +15,7 @@ void sts::newScope(int *y) {
                 runUnknown(y);
                 break;
         }
+
         *y += 1;
     }
 

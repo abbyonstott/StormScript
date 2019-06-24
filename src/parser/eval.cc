@@ -9,7 +9,7 @@ bool evaluateToken(string tkn) { // tokens are different types of operators and 
 }
 
 bool evaluateBuiltin(string kwd) {
-    if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "init") ||(kwd == "list") || (kwd == "func") || (kwd == "class") || (kwd == "mod") || (kwd == "return")) return 1;
+    if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "init") ||(kwd == "list") || (kwd == "func") || (kwd == "type") || (kwd == "mod") || (kwd == "return")) return 1;
     else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
     else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
     else if ((kwd == "random") || (kwd == "randomrange") || (kwd == "length") || (kwd == "break")) return 1;
