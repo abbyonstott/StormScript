@@ -46,7 +46,7 @@ bool toBool(string s);
 bool find(std::vector<stsvars> * pvars, string query, int *num);
 bool find(std::vector<stsfunc> functions, string query, int *num);
 bool find(std::vector<type> types, string query, int *num);
-bool find(std::vector<typedvar> vars, string query, int *num);
+bool find(std::vector<stsObject> vars, string query, int *num);
 
 stsvars findVar(std::vector<stsvars> vars, string query);
 

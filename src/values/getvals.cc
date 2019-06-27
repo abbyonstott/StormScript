@@ -99,7 +99,7 @@ stsvars sts::getval(int *line) {
             else if (expressions[y].t == UNKNOWN) {
                 int index;
 
-                if (find(&thisScope->variables, expressions[y].contents, &index)) {                    
+                if (find(&thisScope->variables, expressions[y].contents, &index) || find(thisScope->objects, expressions[y].contents, &index)) {                    
                     if (expressions[y+1].tktype != DOT) v = thisScope->variables.at(index); // get value
                     else if (expressions[y+2].btn == LENGTH) { // get length
                         y+= 3;
@@ -110,6 +110,15 @@ stsvars sts::getval(int *line) {
                             v.val = std::to_string(thisScope->variables.at(index).length);
 
                         else error(2, thisScope->variables.at(index).name);
+                    }
+                    else { // look for class members
+                        int MemberLoc;
+                        y += 2;
+
+                        find(&thisScope->objects[index].members, expressions[y].contents, &MemberLoc);
+                        v = thisScope->objects[index].members[MemberLoc]; // return member
+                        
+                        y++;
                     }
                 }
                 else if (find(thisScope->functions, expressions[y].contents, &index)) {

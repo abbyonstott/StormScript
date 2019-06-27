@@ -9,18 +9,18 @@ class type {
 public:
     string name;
 
-    std::vector<stsvars> objects;
+    std::vector<stsvars> members;
     std::vector<stsfunc> methods;
 };
 
-class typedvar {
+class stsObject: public type {
 public:
-    string name;
+    string Parentname;
 
-    type Parent;
-
-    typedvar(type _Parent = type()) {
-        Parent = _Parent;
+    stsObject(type _Parent = type()) {
+        Parentname = _Parent.name;
+        members = _Parent.members;
+        methods = _Parent.methods;
     }
 };
 

@@ -9,13 +9,13 @@ struct scope {
     std::vector<type> types;
     std::vector<stsfunc> functions;
     std::vector<stsvars> variables;
-    std::vector<typedvar> typedvars;
+    std::vector<stsObject> objects;
 
-    scope(std::vector<stsfunc> f = {}, std::vector<stsvars> v = {}, std::vector<type> t = {}, std::vector<typedvar> V = {}) {
+    scope(std::vector<stsfunc> f = {}, std::vector<stsvars> v = {}, std::vector<type> t = {}, std::vector<stsObject> V = {}) {
         types = t;
         functions = f;
         variables = v;
-        typedvars = V;
+        objects = V;
     }
 };
 

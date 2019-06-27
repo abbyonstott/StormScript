@@ -1,7 +1,12 @@
 type person {
+    str name;
+
     init {
         printl "test";
     }
 }
 
 person p;
+p.name: "bob";
+
+printl p.name;

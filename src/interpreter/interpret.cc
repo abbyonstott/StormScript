@@ -109,6 +109,29 @@ void sts::runUnknown(int *y) {
                         shouldbreak = 1;
                     }
                     break;
+                case DOT:
+                    int ObjNum, MemberNum;
+                    
+                    // find object
+                    find(thisScope->objects, expressions[*y].contents, &ObjNum);
+                    
+                    *y += 2;
+
+                    // find member
+                    find(&thisScope->objects[ObjNum].members, expressions[*y].contents, &MemberNum);
+
+                    if (expressions[*y+1].tktype == COLON) {
+                        *y += 2;
+                        stsvars newval = getval(y);
+
+                        if (thisScope->objects[ObjNum].members[MemberNum].type == newval.type) 
+                            thisScope->objects[ObjNum].members[MemberNum].val = newval.val;
+                        else error(2, expressions[*y].contents);
+                    }
+                    
+                    shouldbreak = true;
+
+                    break;
             }
 
             if (shouldbreak) break;
@@ -120,15 +143,14 @@ void sts::runUnknown(int *y) {
             int num;
             find(thisScope->types, expressions[*y].contents, &num);
 
-            typedvar t;
-            t = thisScope->types[num];
+            stsObject t = thisScope->types[num];
 
             t.name = expressions[++(*y)].contents;
 
-            if (t.Parent.methods.size() > 0 && t.Parent.methods[0].name == "init") {
+            if (t.methods.size() > 0 && t.methods[0].name == "init") {
                 sts typests;
 
-                typests.thisScope->functions.push_back(t.Parent.methods[0]);
+                typests.thisScope->functions.push_back(t.methods[0]);
 
                 typests.expressions.resize(2);
 
@@ -137,7 +159,8 @@ void sts::runUnknown(int *y) {
 
                 typests.runfunc(new int(0), 0);
             }
-
+            
+            thisScope->objects.push_back(t);
             break;
     }
 }

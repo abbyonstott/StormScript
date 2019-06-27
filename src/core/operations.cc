@@ -45,7 +45,7 @@ bool find(std::vector<type> types, string query, int *num) {
     return 0;
 }
 
-bool find(std::vector<typedvar> vars, string query, int *num) {
+bool find(std::vector<stsObject> vars, string query, int *num) {
     for (int i = 0; i < vars.size(); i++) {
         if (vars[i].name == query) {
             *num = i;

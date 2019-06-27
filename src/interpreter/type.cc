@@ -26,7 +26,7 @@ void sts::declareType(int *y) {
                 obj.name = expressions[++(*y)].contents;
                 *y += 1;
 
-                t.objects.push_back(obj);
+                t.members.push_back(obj);
                 break;
 
             case CONSTRUCTOR_SCOPE:
