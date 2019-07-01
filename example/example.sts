@@ -1,12 +1,13 @@
 type person {
     str name;
+    int age;
 
-    init {
-        printl "test";
+    init => nm, _age {
+        name: nm;
+        age: _age;
     }
 }
 
-person p;
-p.name: "bob";
+person p => "bob", 30;
 
-printl p.name;
+printl p.name, " is " p.age;

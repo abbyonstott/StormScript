@@ -34,7 +34,17 @@ void sts::declareType(int *y) {
                 c.name = "init";
                 
                 if (expressions[*y].tktype == ARROW) {
-                    ;
+                    *y += 1;
+
+                    while (true) {
+
+                        if (expressions[*y].tktype == OPENCURL) break;
+                        else if (expressions[*y].tktype != COMMA) {
+                            c.args.push_back(stsvars());
+                            c.args.back().name = expressions[*y].contents;
+                        }
+                        *y += 1;
+                    }
                 }
 
                 *y += 1;
@@ -60,4 +70,49 @@ void sts::declareType(int *y) {
     }
 
     thisScope->types.push_back(t);
+}
+
+void sts::declareObject(int *y) {
+    int num;
+    find(thisScope->types, expressions[*y].contents, &num);
+
+    stsObject t = thisScope->types[num];
+
+    t.name = expressions[++(*y)].contents;
+
+    if (t.methods.size() > 0 && t.methods[0].name == "init") {
+        sts typests;
+
+        typests.thisScope->functions.push_back(t.methods[0]);
+        typests.thisScope->variables.insert(typests.thisScope->variables.begin(), t.members.begin(), t.members.end());
+
+        typests.expressions.push_back(expression());
+        typests.expressions[0].contents = "init";
+        typests.expressions[0].line = 1;
+        // if there are arguments
+        if (expressions[*y + 1].tktype == ARROW && thisScope->types[num].methods[0].args.size() > 0) {
+            *y += 1;
+            
+            while (expressions[*y].t != ENDEXPR) {
+                typests.expressions.push_back(expression());
+                typests.expressions.back().contents = expressions[*y].contents;
+                typests.expressions.back().line = 1;
+
+                *y += 1;
+            }
+        }
+        else if (expressions[*y + 1].tktype == ARROW) // if user gives arguments when there are none
+            error(10, t.Parentname);
+
+        typests.expressions.push_back(expression());
+        typests.expressions.back().line = 1;
+        typests.expressions.back().contents = ";";
+
+        typests.evaluateProgram();
+        typests.runfunc(new int(0), 0);
+
+        t.members = typests.thisScope->variables;
+    }
+
+    thisScope->objects.push_back(t);
 }

@@ -30,6 +30,7 @@
 * Better development documentation
 * The `|` operator is now `.`
 * scopes now work as a class, making development around scopes easier
+* constructors now use the arrow operator (`=>`) to declare constructors
 
 # Beta 3
 

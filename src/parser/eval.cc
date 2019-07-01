@@ -101,6 +101,4 @@ void sts::evaluateProgram() {
         else if (expressions[i].t == VALUE)
             expressions[i].literalType = getValue(expressions[i].contents);
     }
-
-    parseErrors();
 }

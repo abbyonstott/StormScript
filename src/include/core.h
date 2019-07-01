@@ -89,6 +89,8 @@ public:
 
 	void declareType(int *y);
 
+	void declareObject(int *y);
+
 	void wait(int y) {
 		#if PLATFORM == 1
 			Sleep(std::stoi(getval(new int(y+1)).val) * 1000);

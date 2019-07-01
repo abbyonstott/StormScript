@@ -140,33 +140,14 @@ void sts::runUnknown(int *y) {
             runfunc(y, fnum);
             break;
         case UNKNOWN:
-            int num;
-            find(thisScope->types, expressions[*y].contents, &num);
-
-            stsObject t = thisScope->types[num];
-
-            t.name = expressions[++(*y)].contents;
-
-            if (t.methods.size() > 0 && t.methods[0].name == "init") {
-                sts typests;
-
-                typests.thisScope->functions.push_back(t.methods[0]);
-
-                typests.expressions.resize(2);
-
-                typests.expressions[0].contents = "init";
-                typests.expressions[1].contents = ";";
-
-                typests.runfunc(new int(0), 0);
-            }
-            
-            thisScope->objects.push_back(t);
+            declareObject(y);
             break;
     }
 }
 
 void sts::interp(int psize, char *argv[], int argc){
     parse(prg);
+    parseErrors();
 
     thisScope->variables.resize(thisScope->variables.size()+1);
     for (int x = 1; x<=argc-1; x++) {

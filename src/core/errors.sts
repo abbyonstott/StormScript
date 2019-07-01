@@ -28,3 +28,6 @@ else if arg[1] is "8" {
 else if arg[1] is "9" {
     printl "Error: Expected module name";
 }
+else if arg[1] is "10" {
+    printl "Error: Type ", arg[2], " has no constructor";
+}
