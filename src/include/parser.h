@@ -35,7 +35,7 @@ enum tokenType { // tokens
 	DIVISION,
 	MULTIPLICATION,
 	COMMA,
-	BAR
+	DOT
 };
 
 enum Builtin { // these are built in commands
@@ -51,7 +51,7 @@ enum Builtin { // these are built in commands
     TYPE_STRING,
     TYPE_STS_BOOL,
     TYPE_LIST,
-    TYPE_CONSTRUCTOR,
+    CONSTRUCTOR_SCOPE,
     MODULE,
     RETURN,
     WHILE,

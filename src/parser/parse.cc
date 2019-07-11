@@ -26,7 +26,7 @@ void sts::parse(std::vector<string> prg){
             }
 
             // this is what checks for chars to remove from prs version
-            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')') || (prg[y][z]=='.')) && (inquotes==false)){
+            if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')')) && (inquotes==false)){
                 if ((expressions.back().contents.size() != 0))
                     expressions.resize(expressions.size()+1);
                 z++;
@@ -42,7 +42,7 @@ void sts::parse(std::vector<string> prg){
                 expressions.back().line = y;
                 break;
             }
-            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (expressions[expressions.size()-2].contents!="mod")) || (prg[y][z]=='[') || (prg[y][z]==',') || (prg[y][z]==']') || (prg[y][z] == ':') || (prg[y][z] == '|')) && (inquotes==false)) {
+            else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (expressions[expressions.size()-2].contents!="mod")) || (prg[y][z]=='[') || (prg[y][z]==',') || (prg[y][z]==']') || (prg[y][z] == ':') || (prg[y][z] == '.')) && (inquotes==false)) {
                 expressions.push_back( string(1,prg[y][z]) );
                 expressions.back().line = y;
                 expressions.resize(expressions.size()+1);

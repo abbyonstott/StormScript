@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-void sts::ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y) {
+void sts::ifs(int *y) {
     /*
     if statements are pretty easy to parse as they are always formated like this
     BUILTIN |    VALUE/COMPARISON*    |   TOKEN
@@ -11,6 +11,7 @@ void sts::ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y
     */
 
     sts getexpr;
+    getexpr.thisScope = thisScope;
     *y += 1;
     
     while (expressions[*y].tktype != OPENCURL) {
@@ -19,10 +20,10 @@ void sts::ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y
     }
 
     getexpr.expressions.push_back(expressions[*y]);
-    bool expr = toBool(getexpr.getval(vars, functions, new int(0)).val);
+    bool expr = toBool(getexpr.getval(new int(0)).val);
 
     if (expr) {
-        newScope(y, vars, &functions);
+        newScope(y);
         *y += 1; // get out of scope to check for else
     }
     else { 
@@ -35,7 +36,7 @@ void sts::ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y
             This would be { or OPENCURL if it is a standard else statement and IF it it were an else if statement.
             */
             *y += 2;
-            newScope(y, vars, &functions);
+            newScope(y);
         }
     }
 

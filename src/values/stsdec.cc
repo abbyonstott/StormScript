@@ -1,11 +1,11 @@
 #include "../include/stormscript.h"
 
-void sts::declareFunc(int *y, std::vector<stsfunc> *functions) {
-    functions->push_back(stsfunc());
+void sts::declareFunc(int *y) {
+    thisScope->functions.push_back(stsfunc());
 
     *y += 1;
 
-    functions->back().name = expressions[*y].contents;
+    thisScope->functions.back().name = expressions[*y].contents;
 
     *y += 1;
 
@@ -13,8 +13,8 @@ void sts::declareFunc(int *y, std::vector<stsfunc> *functions) {
         *y += 1;
 
         while (true) {
-            functions->back().args.push_back(stsvars());
-            functions->back().args.back().name = expressions[*y].contents;
+            thisScope->functions.back().args.push_back(stsvars());
+            thisScope->functions.back().args.back().name = expressions[*y].contents;
             *y += 1;
 
             if (expressions[*y].tktype == OPENCURL) break;
@@ -30,22 +30,22 @@ void sts::declareFunc(int *y, std::vector<stsfunc> *functions) {
         if (expressions[*y].tktype == OPENCURL) endreq += 1;
         else if (expressions[*y].tktype == CLOSEDCURL) endreq -= 1;
 
-        functions->back().contents.push_back(expressions[*y]);
+        thisScope->functions.back().contents.push_back(expressions[*y]);
 
         *y += 1;
     }
 
-    functions->back().contents.pop_back(); // remove last line as it is just a closed curl
+    thisScope->functions.back().contents.pop_back(); // remove last line as it is just a closed curl
     *y -= 1;
 }
 
 std::vector<stsvars> 
-listgen(sts *script, int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
+listgen(sts *script, int *y) {
     std::vector<stsvars> values;
     *y += 1;
 
     while (script->expressions[*y-1].tktype != CLOSEDBRACKET) {
-        values.push_back(script->getval(vars, functions, y));
+        values.push_back(script->getval(y));
         *y+= 2;
     }
     
@@ -55,41 +55,41 @@ listgen(sts *script, int *y, std::vector<stsvars> *vars, std::vector<stsfunc> fu
 }
 
 
-void sts::define(int *line, std::vector<stsvars> *vars, std::vector<stsfunc> functions) { //variable declarations
-    int num = vars->size();
+void sts::define(int *line) { //variable declarations
+    int num = thisScope->variables.size();
     string name = expressions[*line].contents;
 
-    if (isvar(vars, name, &num)) {
+    if (find(&thisScope->variables, name, &num)) {
         /*
         * If already defined this changes the value of 
         * the variable
         */
         *line += 2;
-        if (vars->at(num).type != 'l')
-            vars->at(num) = getval(vars, functions, line);
+        if (thisScope->variables.at(num).type != 'l')
+            thisScope->variables.at(num) = getval(line);
         else 
-            vars->at(num).vals = listgen(this, line, vars, functions);
-        vars->at(num).name = name;
+            thisScope->variables.at(num).vals = listgen(this, line);
+        thisScope->variables.at(num).name = name;
     }
     else {
-        vars->push_back(stsvars());
+        thisScope->variables.push_back(stsvars());
         *line += 2;
         if (expressions[*line].tktype != OPENBRACKET)
-            vars->back() = getval(vars, functions,  line);
+            thisScope->variables.back() = getval(line);
         else {
-            vars->back().type = 'l';
-            vars->back().vals = listgen(this, line, vars, functions);
+            thisScope->variables.back().type = 'l';
+            thisScope->variables.back().vals = listgen(this, line);
         }
 
-        vars->back().name = name;
+        thisScope->variables.back().name = name;
     }
 
-    switch (vars->at(num).type) {
+    switch (thisScope->variables.at(num).type) {
         case 's':
-            vars->at(num).length = vars->at(num).val.size();
+            thisScope->variables.at(num).length = thisScope->variables.at(num).val.size();
             break;
         case 'l':
-            vars->at(num).length = vars->at(num).vals.size();
+            thisScope->variables.at(num).length = thisScope->variables.at(num).vals.size();
             break;
     }
     while (expressions[*line].t != ENDEXPR) *line += 1;

@@ -15,6 +15,7 @@
 * errors are now parsed before runtime
 * modules are added to the file before runtime
 * modules are now scoped
+* `def` has been changed to a scope called `init`
 
 ## What's Fixed
 * Removed snapcraft files
@@ -27,9 +28,13 @@
 * Install script now uses all available processor cores
 * packagerelease.sh now installs stormscript to run tests
 * Better development documentation
+* The `|` operator is now `.`
+* scopes now work as a class, making development around scopes easier
+* constructors now use the arrow operator (`=>`) to declare constructors
 
 # Beta 3
 
 ## What's fixed
 * Newline at end of program threw error
 * Modules are back
+* `type` declarations are back

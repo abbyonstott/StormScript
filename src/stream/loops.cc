@@ -1,13 +1,13 @@
 #include "../include/stormscript.h"
 
-void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
+void whileloop(sts *script, scope *current, int *y) {
     *y += 1;
     sts s = *script;
     int n = *y;
     s.looping = true;
 
-    while (toBool(s.getval(variables, functions, &n).val)) {
-        s.newScope(new int(n), variables, &functions);
+    while (toBool(s.getval(&n).val)) {
+        s.newScope(new int(n));
 
         if (!s.looping) break;
 
@@ -22,7 +22,7 @@ void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc
 }
 
 
-void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y) {
+void forloop(sts *script, scope *current, int *y) {
     *y += 1;
     sts s = *script;
     bool foreach = (s.expressions[*y+1].btn == STSIN);
@@ -36,7 +36,7 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
         
         *y += 2;
 
-        root = findVar(*variables, s.expressions[*y].contents); // grab variable listed on 3rd argument of for loop
+        root = findVar(current->variables, s.expressions[*y].contents); // grab variable listed on 3rd argument of for loop
         *y += 1;
 
         switch (root.type) {
@@ -48,8 +48,8 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
                 s.error(2, root.name);
         }
 
+
         for (int i = 0; i < rootsize; i++) {
-            std::vector<stsvars> newvars = *variables;
             stsvars placeholder;
 
             if (root.type == 'l')
@@ -61,11 +61,13 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
             }
             placeholder.name = name;
 
-            newvars.push_back(placeholder);
+            current->variables.push_back(placeholder);
 
-            s.newScope(new int(*y), &newvars, &functions);
+            s.newScope(new int(*y));
 
-            variables->insert(variables->begin(), newvars.begin(), newvars.end()-1);
+            current->variables.pop_back();
+
+            s.thisScope = current;
 
             if (!s.looping) break;
         }
@@ -74,14 +76,14 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
 
     }
     else {
-        int r = std::stoi(s.getval(variables, functions, y).val);
+        int r = std::stoi(s.getval(y).val);
         *y += 1;
         
         if (r <= 0)
             s.error(4, std::to_string(r));
 
         for (int i = 0; i < r; i++) {
-            s.newScope(new int(*y), variables, &functions);   
+            s.newScope(new int(*y));   
             if (!s.looping) break;
         }
 
@@ -90,4 +92,6 @@ void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> 
 
     s.looping = false;
     scopedown(y, s.expressions);
+
+    script->thisScope = s.thisScope;
 }

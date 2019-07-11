@@ -6,7 +6,7 @@
 
 #include "variables.h"
 
-int genrandomintfromrange(sts *s, std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *line);
+int genrandomintfromrange(sts *s, int *line);
 bool randombool();
 
 #endif

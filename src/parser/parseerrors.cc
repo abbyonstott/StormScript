@@ -24,7 +24,12 @@ void sts::parseErrors() {
             glob = 1;
             localnames = globnames;
         }
-        else if (expressions[i].t == UNKNOWN && (expressions[i-1].btn == FUNCTION || expressions[i+1].tktype == COLON)) { // names vector allows names to be "marked" as known expressions
+        else if ((expressions[i].t == UNKNOWN && 
+            (expressions[i-1].btn == FUNCTION || expressions[i+1].tktype == COLON || 
+            expressions[i-1].btn == TYPE ||
+            expressions[i-1].btn == TYPE_INTEGER || expressions[i-1].btn == TYPE_STRING || expressions[i-1].btn == TYPE_LIST || expressions[i-1].btn == TYPE_STS_BOOL)) || 
+            expressions[i].btn == CONSTRUCTOR_SCOPE)
+        { // names vector allows names to be "marked" as known expressions
             localnames.push_back(expressions[i].contents);
             if (expressions[i+1].tktype == ARROW) {
                 i+= 2;
@@ -38,6 +43,11 @@ void sts::parseErrors() {
                 i--;
                 glob = 0;
             } 
+        }
+        else if (expressions[i].t == UNKNOWN && expressions[i+1].t == UNKNOWN &&  
+            std::find(localnames.begin(), localnames.end(), expressions[i].contents) != localnames.end()) 
+        {
+            localnames.push_back(expressions[++i].contents);
         }
         else if (expressions[i-1].btn == MODULE) {
             /*

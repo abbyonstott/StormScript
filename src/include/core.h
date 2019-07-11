@@ -6,6 +6,8 @@
 #include "variables.h"
 #include "functions.h"
 #include "parser.h"
+#include "type.h"
+#include "scope.h"
 
 class sts
 {
@@ -25,13 +27,15 @@ public:
 	std::vector<string> prg; //unparsed program
 	std::vector<expression> expressions;
 
-	void runBuiltin(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // built in
-	void runUnknown(int *y, std::vector<stsvars> *scpvars, std::vector<stsfunc> *functions); // user defined, declarations of variables, etc.
+	scope *thisScope = new scope(); // this is the current scope, and it is initialized with the global scope
+
+	void runBuiltin(int *y); // built in
+	void runUnknown(int *y); // user defined, declarations of variables, etc.
 
 	//functions
-	stsvars getval(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *line);
+	stsvars getval(int *line);
 
-	void define(int *line, std::vector<stsvars> *vars, std::vector<stsfunc> functions); //declare variables
+	void define(int *line); //declare variables
 
 	void error(int num, string issue) { 
 		// in order for errors to work stormscript has to be in PATH, but we can assume that it is installed to usr/bin
@@ -54,40 +58,44 @@ public:
 
 	void read(char *argv[], int argc); // read stormscript programs
 
-	string print(int *y, std::vector<stsvars> *current_var, std::vector<stsfunc> functions); // print function
+	string print(int *y); // print function
 	stsvars in(int *line);
 
-	void sys(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions) {
+	void sys(int *y) {
 		*y += 1;
 
-		system(getval(vars, functions, y).val.c_str());
+		system(getval(y).val.c_str());
 
 		*y += 1;
 	}
 
 	void parseErrors();
 
-	void newScope(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> *functions);
+	void newScope(int *y);
 
 	void parse(std::vector<string> prg);
 
 	void interp(int psize, char *argv[], int argc);
 
-	void ifs(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int *y);
+	void ifs(int *y);
 
-	void runfunc(int *y, std::vector<stsfunc> *functions, std::vector<stsvars> *variables, int num);
+	void runfunc(int *y, int num);
 
-	stsvars readfile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions); // file reading operations; not to be confused with the language's reader, sts::read
+	stsvars readfile(int *y); // file reading operations; not to be confused with the language's reader, sts::read
 	
-	void writefile(int *y, std::vector<stsvars> *vars, std::vector<stsfunc> functions); // file writing operations
+	void writefile(int *y); // file writing operations
 
-	void declareFunc(int *y, std::vector<stsfunc> *functions);
+	void declareFunc(int *y);
 
-	void wait(std::vector<stsvars> *vars, std::vector<stsfunc> functions, int y) {
+	void declareType(int *y);
+
+	void declareObject(int *y);
+
+	void wait(int y) {
 		#if PLATFORM == 1
-			Sleep(std::stoi(getval(vars, functions, new int(y+1)).val) * 1000);
+			Sleep(std::stoi(getval(new int(y+1)).val) * 1000);
 		#else
-			sleep(std::stoi(getval(vars, functions, new int(y+1)).val));
+			sleep(std::stoi(getval(new int(y+1)).val));
 		#endif
 	}
 
@@ -95,10 +103,9 @@ public:
 };
 /*
 Loop functions are defined here.
-A vector of variables is returned so that modifications will be saved to actual values.
 */
-void whileloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y);
-void forloop(sts *script, std::vector<stsvars> *variables, std::vector<stsfunc> functions, int *y);
+void whileloop(sts *script, scope *current, int *y);
+void forloop(sts *script, scope *current, int *y);
 
 // this will iterate over y until it is the end of the while scope
 void scopedown(int *x, std::vector<expression> expressions);
