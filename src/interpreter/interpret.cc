@@ -117,18 +117,36 @@ void sts::runUnknown(int *y) {
                     
                     *y += 2;
 
-                    // find member
-                    find(&thisScope->objects[ObjNum].members, expressions[*y].contents, &MemberNum);
+                    // find member or method
 
                     if (expressions[*y+1].tktype == COLON) {
-                        *y += 2;
+
+                        find(&thisScope->objects[ObjNum].members, expressions[*y].contents, &MemberNum);
+
                         stsvars newval = getval(y);
 
                         if (thisScope->objects[ObjNum].members[MemberNum].type == newval.type) 
                             thisScope->objects[ObjNum].members[MemberNum].val = newval.val;
                         else error(2, expressions[*y].contents);
                     }
-                    
+                    else {
+                        find(thisScope->objects[ObjNum].methods, expressions[*y].contents, &MemberNum);
+
+                        sts typests;
+
+                        typests.expressions.push_back(expression());
+                        typests.expressions[0] = expressions[*y];
+                        typests.expressions.push_back(expression());
+                        typests.expressions[1] = expressions[*y+1];
+                        
+                        typests.thisScope->functions.push_back(thisScope->objects[ObjNum].methods[MemberNum]);
+                        typests.thisScope->variables.insert(typests.thisScope->variables.begin(), thisScope->objects[ObjNum].members.begin(), thisScope->objects[ObjNum].members.end());
+
+                        typests.runfunc(new int(0), 0);
+
+                        thisScope->objects[ObjNum].members = typests.thisScope->variables;
+                    }
+
                     shouldbreak = true;
 
                     break;

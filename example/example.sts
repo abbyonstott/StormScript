@@ -2,6 +2,10 @@ type person {
     str name;
     int age;
 
+    func birthday {
+        age +: 1;
+    }
+
     init => nm, _age {
         name: nm;
         age: _age;
@@ -9,5 +13,9 @@ type person {
 }
 
 person p => "bob", 30;
+
+printl p.name, " is " p.age;
+
+p.birthday;
 
 printl p.name, " is " p.age;

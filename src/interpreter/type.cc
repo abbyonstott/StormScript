@@ -28,11 +28,13 @@ void sts::declareType(int *y) {
 
                 t.members.push_back(obj);
                 break;
-
             case CONSTRUCTOR_SCOPE:
+            case FUNCTION:
                 *y += 1;
-                c.name = "init";
-                
+
+                if (expressions[*y -1].btn == FUNCTION) c.name = expressions[(*y)++].contents;
+                else c.name = "init";
+
                 if (expressions[*y].tktype == ARROW) {
                     *y += 1;
 
@@ -59,13 +61,11 @@ void sts::declareType(int *y) {
 
                     *y += 1;
                 }
-                
-                *y -= 1;
+                *y -= 1; // subtract 1 because the previous scope automatically adds 1 at the end
 
                 t.methods.push_back(c);
                 break;
         }
-
         *y += 1;
     }
 
@@ -74,23 +74,26 @@ void sts::declareType(int *y) {
 
 void sts::declareObject(int *y) {
     int num;
+    int initnum;
+    
     find(thisScope->types, expressions[*y].contents, &num);
+    bool init = find(thisScope->types[num].methods, "init", &initnum); // find the init method
 
     stsObject t = thisScope->types[num];
 
     t.name = expressions[++(*y)].contents;
 
-    if (t.methods.size() > 0 && t.methods[0].name == "init") {
+    if (t.methods.size() > 0 && init) {
         sts typests;
 
-        typests.thisScope->functions.push_back(t.methods[0]);
+        typests.thisScope->functions.push_back(t.methods[initnum]);
         typests.thisScope->variables.insert(typests.thisScope->variables.begin(), t.members.begin(), t.members.end());
 
         typests.expressions.push_back(expression());
         typests.expressions[0].contents = "init";
         typests.expressions[0].line = 1;
         // if there are arguments
-        if (expressions[*y + 1].tktype == ARROW && thisScope->types[num].methods[0].args.size() > 0) {
+        if (expressions[*y + 1].tktype == ARROW && thisScope->types[num].methods[initnum].args.size() > 0) {
             *y += 1;
             
             while (expressions[*y].t != ENDEXPR) {
