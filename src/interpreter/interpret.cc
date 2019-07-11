@@ -136,8 +136,20 @@ void sts::runUnknown(int *y) {
 
                         typests.expressions.push_back(expression());
                         typests.expressions[0] = expressions[*y];
+
+                        *y += 1;
+
+                        if (expressions[*y].tktype == ARROW) {
+                            while (expressions[*y].t != ENDEXPR) {
+                                typests.expressions.push_back(expression());
+                                typests.expressions.back() = expressions[*y];
+
+                                *y += 1;
+                            }
+                        }
+
                         typests.expressions.push_back(expression());
-                        typests.expressions[1] = expressions[*y+1];
+                        typests.expressions.back() = expressions[*y];
                         
                         typests.thisScope->functions.push_back(thisScope->objects[ObjNum].methods[MemberNum]);
                         typests.thisScope->variables.insert(typests.thisScope->variables.begin(), thisScope->objects[ObjNum].members.begin(), thisScope->objects[ObjNum].members.end());
