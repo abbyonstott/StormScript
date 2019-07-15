@@ -58,6 +58,14 @@ void sts::parseErrors() {
             i--;
             importModules(&i);
         }
+        else if (expressions[i].btn == STSSOCKET) {
+            if (expressions[++i].t != UNKNOWN) 
+                error(11, std::to_string(expressions[i].line));
+            
+            localnames.push_back(expressions[i].contents);
+
+            i += 6;
+        }
         else if // written like this to make it more clear what is happening
             (
             (expressions[i].t == UNKNOWN && (expressions[i+1].t == ENDEXPR || expressions[i+1].tktype == ARROW || expressions[i+1].tktype == COMMA)) && 

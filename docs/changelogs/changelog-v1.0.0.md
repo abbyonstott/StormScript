@@ -16,6 +16,7 @@
 * modules are added to the file before runtime
 * modules are now scoped
 * `def` has been changed to a scope called `init`
+* sockets can be created with `socket name => "FAMILY", "127.0.0.1", "9999"`
 
 ## What's Fixed
 * Removed snapcraft files

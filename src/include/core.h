@@ -69,6 +69,11 @@ public:
 		*y += 1;
 	}
 
+	// socket stuff:
+	stsObject createSocket(string family, string hostname, uint16_t port, stsObject socketObject);
+	type socketClass();
+	struct sockaddr_in addr;
+
 	void parseErrors();
 
 	void newScope(int *y);

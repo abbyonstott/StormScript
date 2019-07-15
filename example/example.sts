@@ -1,22 +1,6 @@
-type person {
-    str name;
-    int age;
+socket s => "AF_INET", "127.0.0.1", 9999;
 
-    func birthday => years, div {
-        y: years / div;
-        age +: y;
-    }
-
-    init => nm, _age {
-        name: nm;
-        age: _age;
-    }
+if s.success is false {
+    printl "Socket Error";
+    exit;
 }
-
-person p => "bob", 30;
-
-printl p.name, " is " p.age;
-
-p.birthday => 20, 2;
-
-printl p.name, " is " p.age;

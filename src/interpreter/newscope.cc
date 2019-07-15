@@ -10,8 +10,10 @@ void sts::newScope(int *y) {
         
         switch(expressions[*y].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
             case BUILTIN:
-                runBuiltin(y);
-                break;
+                if (expressions[*y].btn != STSSOCKET) {
+                    runBuiltin(y);
+                    break;
+                }
             case UNKNOWN:
                 runUnknown(y);
                 break;

@@ -83,7 +83,20 @@ void sts::declareObject(int *y) {
 
     t.name = expressions[++(*y)].contents;
 
-    if (t.methods.size() > 0 && init) {
+    if (thisScope->types[num].name == "socket") {
+        // socket works as class
+        *y += 2;
+
+        string familyval = getval(y).val, address;
+
+        *y += 2;
+        address = getval(y).val;
+
+        *y += 2;
+        t = createSocket(familyval, address, (in_port_t)std::stoi(getval(y).val), t);
+        *y += 1;
+    }
+    else if (t.methods.size() > 0 && init) {
         sts typests;
 
         typests.thisScope->functions.push_back(t.methods[initnum]);

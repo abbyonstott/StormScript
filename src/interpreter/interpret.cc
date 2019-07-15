@@ -188,6 +188,7 @@ void sts::interp(int psize, char *argv[], int argc){
         thisScope->variables.back().name="arg";
         thisScope->variables.back().length = argc-1;
     }
+    thisScope->types.push_back(socketClass());
     
     
     newScope(new int(0));
