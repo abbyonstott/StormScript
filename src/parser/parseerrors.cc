@@ -63,6 +63,12 @@ void sts::parseErrors() {
                 error(11, std::to_string(expressions[i].line));
             
             localnames.push_back(expressions[i].contents);
+            localnames.push_back("family");
+            localnames.push_back("address");
+            localnames.push_back("port");
+            localnames.push_back("success");
+            localnames.push_back("sockval");
+            localnames.push_back("await");
 
             i += 6;
         }

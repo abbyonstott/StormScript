@@ -1,6 +1,13 @@
-socket s => "AF_INET", "127.0.0.1", 9999;
+socket s => "AF_INET", "127.0.0.1", 8000;
 
 if s.success is false {
     printl "Socket Error";
+    exit;
+}
+
+s.await => "Hello, World!", true;
+
+if s.success is false {
+    printl "Await Error";
     exit;
 }

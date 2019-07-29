@@ -24,7 +24,7 @@ void sts::importModules(int *y) {
             sts mod;
 
             mod.filename = _filename;
-            mod.read({}, 0); // read() is run without argv
+            mod.stsread({}, 0); // stsread() is run without argv
 
             expressions.insert(expressions.begin() + endexprloc + 1,
                 mod.expressions.begin(), mod.expressions.end());

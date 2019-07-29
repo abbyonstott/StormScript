@@ -58,7 +58,14 @@ stsvars sts::getval(int *line) {
     stsvars v;
     int y = *line;
 
-    bool operation = ((expressions[y+1].t == TOKEN) && (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && (expressions[y+1].tktype != DOT) && (expressions.size() > y+1));
+    bool operation = ((expressions[y+1].t == TOKEN) && 
+            (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && 
+            (expressions[y+1].tktype != DOT || (
+                (expressions[y+3].tktype == IS) || (expressions[y+3].tktype == NOT) || // DOT and operation
+                (expressions[y+3].tktype == LESS) || expressions[y+3].tktype == LESSEQ || 
+                expressions[y+3].tktype == GREATER || expressions[y+3].tktype == GREATEREQ)
+            ) && 
+        (expressions.size() > y+1));
 
     switch (operation) {
         case 0: // if raw value
@@ -82,7 +89,7 @@ stsvars sts::getval(int *line) {
                 v.val = lit;
             }
             else if (expressions[y].t == BUILTIN) { 
-                // read just reads the file, but it is always used as a value because it returns a value
+                // stsread just reads the file, but it is always used as a value because it returns a value
                 switch (expressions[y].btn) { 
                     case READ:
                         v = readfile(&y);

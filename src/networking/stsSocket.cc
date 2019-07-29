@@ -39,12 +39,12 @@ type sts::socketClass() {
 
 stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, stsObject socketObject) {
     /*
-    Socket Object Guide:
-    socketObject.members[0]: Family (AF_INET or AF_INET6)
-    socketObject.members[1]: address (ip or hostname)
-    socketObject.members[2]: port
-    socketObject.members[3]: success (Always should be true if successful)
-    socketObject.members[4]: socket val: error or success state of socket
+    * Socket Object Guide:
+    * socketObject.members[0]: Family (AF_INET or AF_INET6)
+    * socketObject.members[1]: address (ip or hostname)
+    * socketObject.members[2]: port
+    * socketObject.members[3]: success (Always should be true if successful)
+    * socketObject.members[4]: socket val: error or success state of socket
     */
 
     socketObject.members[0].val = strfamily;
@@ -71,6 +71,27 @@ stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, st
         listen(state, 3) < 0) 
     {
         socketObject.members[3].val = "false"; // some sort of error occured
+    }
+
+    return socketObject;
+}
+
+stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
+    int socketval = std::stoi(socketObject.members[4].val);
+    int addrsize = sizeof(addr);
+    int acc = accept(socketval,(struct sockaddr *)&addr, (socklen_t *)&addrsize);
+
+    if (acc < 0) {
+        socketObject.members[4].val = "false";
+    }
+    else {
+        char buffer[1024] = {0};
+
+        int r = read(acc, buffer, 1024);
+        if (output == true)
+            cout << buffer << "\n";
+        
+        send(acc, msg.c_str(), msg.size(), 0);
     }
 
     return socketObject;

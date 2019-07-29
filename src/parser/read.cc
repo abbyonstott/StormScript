@@ -1,6 +1,6 @@
 #include "../include/stormscript.h"
 
-void sts::read(char *argv[], int argc) {
+void sts::stsread(char *argv[], int argc) {
 	std::ifstream file;
 	string contents;
 	

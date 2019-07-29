@@ -33,9 +33,5 @@
 * scopes now work as a class, making development around scopes easier
 * constructors now use the arrow operator (`=>`) to declare constructors
 
-# Beta 3
-
-## What's fixed
-* Newline at end of program threw error
-* Modules are back
-* `type` declarations are back
+# Release Candidate 1
+* Fixed class members not working in comparison operations

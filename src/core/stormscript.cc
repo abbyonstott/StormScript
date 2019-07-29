@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 		}
 		else {
 			script.filename = argv[1];
-			script.read(argv, argc);
+			script.stsread(argv, argc);
 		}
 	}
 	else
