@@ -7,7 +7,6 @@
 #include <windows.h>
 #else
 #define PLATFORM 0
-#include <unistd.h>
 #endif
 /*
 NOTE:

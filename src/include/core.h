@@ -56,7 +56,7 @@ public:
 
 	void evaluateProgram();
 
-	void read(char *argv[], int argc); // read stormscript programs
+	void stsread(char *argv[], int argc); // read stormscript programs
 
 	string print(int *y); // print function
 	stsvars in(int *line);
@@ -68,6 +68,12 @@ public:
 
 		*y += 1;
 	}
+
+	// socket stuff:
+	stsObject createSocket(string family, string hostname, uint16_t port, stsObject socketObject);
+	stsObject awaitSocket(stsObject socketObject, string msg, bool output);
+	type socketClass();
+	struct sockaddr_in addr;
 
 	void parseErrors();
 
@@ -81,7 +87,7 @@ public:
 
 	void runfunc(int *y, int num);
 
-	stsvars readfile(int *y); // file reading operations; not to be confused with the language's reader, sts::read
+	stsvars readfile(int *y); // file reading operations; not to be confused with the language's reader, sts::stsread
 	
 	void writefile(int *y); // file writing operations
 

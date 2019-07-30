@@ -36,6 +36,7 @@ bool condition(sts *program, int *y) {
     for (int i = *y; i < opLocation; i++)
         prg.expressions.push_back(program->expressions[i]);
 
+
     stsvars comp1 = prg.getval(new int(0));
 
     prg.expressions = {};

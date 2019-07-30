@@ -16,6 +16,7 @@
 * modules are added to the file before runtime
 * modules are now scoped
 * `def` has been changed to a scope called `init`
+* sockets can be created with `socket name => "FAMILY", "127.0.0.1", "9999"`
 
 ## What's Fixed
 * Removed snapcraft files
@@ -32,9 +33,5 @@
 * scopes now work as a class, making development around scopes easier
 * constructors now use the arrow operator (`=>`) to declare constructors
 
-# Beta 3
-
-## What's fixed
-* Newline at end of program threw error
-* Modules are back
-* `type` declarations are back
+# Release Candidate 1
+* Fixed class members not working in comparison operations

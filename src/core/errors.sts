@@ -31,3 +31,6 @@ else if arg[1] is "9" {
 else if arg[1] is "10" {
     printl "Error: Type ", arg[2], " has no constructor";
 }
+else if arg[1] is "11" {
+    printl "Error: Object requires name on line ", arg[2];
+}

@@ -14,6 +14,10 @@
 #include <random>
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h> 
+#include <arpa/inet.h> 
 
 /*
 Let's forward declare these classes for the files that use them

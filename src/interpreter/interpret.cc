@@ -114,6 +114,23 @@ void sts::runUnknown(int *y) {
                     
                     // find object
                     find(thisScope->objects, expressions[*y].contents, &ObjNum);
+
+                    if (expressions[*y+3].tktype == ARROW && thisScope->objects[ObjNum].Parentname == "socket") { // socket functions are handled by c++, not stormscript
+                        if (expressions[*y+2].contents == "await") {
+                            *y += 4;
+                            if (expressions[*y].t != VALUE && expressions[*y].t != UNKNOWN) 
+                                error(5, "await"); // generic "function requires args error"
+                            
+                            string msg = getval(y).val; // message to be sent to client
+
+                            *y += 2;
+                            bool output = toBool(getval(y).val); // determines whether to output connection or not
+
+                            awaitSocket(thisScope->objects[ObjNum], msg, output);
+                        }
+                        shouldbreak = true;
+                        break;
+                    }
                     
                     *y += 2;
 
@@ -188,6 +205,7 @@ void sts::interp(int psize, char *argv[], int argc){
         thisScope->variables.back().name="arg";
         thisScope->variables.back().length = argc-1;
     }
+    thisScope->types.push_back(socketClass());
     
     
     newScope(new int(0));

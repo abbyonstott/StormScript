@@ -65,7 +65,8 @@ enum Builtin { // these are built in commands
 	RANDOM,
 	RANDOMRANGE,
 	LENGTH,
-	BREAK
+	BREAK,
+	STSSOCKET
 };
 
 enum Value { // these are types
