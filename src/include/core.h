@@ -58,8 +58,9 @@ public:
 
 	void stsread(char *argv[], int argc); // read stormscript programs
 
-	string print(int *y); // print function
-	stsvars in(int *line);
+	// console I/O
+	string print(int *y); // print and printf
+	stsvars in(int *line); // in
 
 	void sys(int *y) {
 		*y += 1;
@@ -72,8 +73,11 @@ public:
 	// socket stuff:
 	stsObject createSocket(string family, string hostname, uint16_t port, stsObject socketObject);
 	stsObject awaitSocket(stsObject socketObject, string msg, bool output);
+	stsObject connectSocket(stsObject socketObject, string msg);
 	type socketClass();
 	struct sockaddr_in addr;
+
+	// misc.
 
 	void parseErrors();
 

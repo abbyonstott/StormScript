@@ -69,6 +69,7 @@ void sts::parseErrors() {
             localnames.push_back("success");
             localnames.push_back("sockval");
             localnames.push_back("await");
+            localnames.push_back("connect");
 
             i += 6;
         }

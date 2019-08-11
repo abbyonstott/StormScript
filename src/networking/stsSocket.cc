@@ -11,7 +11,7 @@ type sts::socketClass() {
     family.name = "family";
     family.type = 's';
     family.val = "AF_INET";
-    
+
     address.name = "address";
     address.type = 's';
     address.val = "127.0.0.1";
@@ -66,9 +66,9 @@ stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, st
 
     state = std::stoi(socketObject.members[4].val);
 
-    if (std::stoi(socketObject.members[4].val) < 0 || 
-        bind(state, (struct sockaddr *)&addr, (socklen_t)sizeof(addr)) < 0 || 
-        listen(state, 3) < 0) 
+    if (std::stoi(socketObject.members[4].val) < 0 ||
+        bind(state, (struct sockaddr *)&addr, (socklen_t)sizeof(addr)) < 0 ||
+        listen(state, 3) < 0)
     {
         socketObject.members[3].val = "false"; // some sort of error occured
     }
@@ -76,22 +76,52 @@ stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, st
     return socketObject;
 }
 
+
+/*
+* awaiting a connection and connecting work very similarly
+* It would make sense to combine the commands needed to connect to client/server
+* into only a socket.await or socket.connect method respectively
+*/
 stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
     int socketval = std::stoi(socketObject.members[4].val);
     int addrsize = sizeof(addr);
     int acc = accept(socketval,(struct sockaddr *)&addr, (socklen_t *)&addrsize);
 
-    if (acc < 0) {
-        socketObject.members[4].val = "false";
-    }
+    if (acc < 0)
+        socketObject.members[3].val = "false";
     else {
         char buffer[1024] = {0};
 
         int r = read(acc, buffer, 1024);
         if (output == true)
             cout << buffer << "\n";
-        
+
         send(acc, msg.c_str(), msg.size(), 0);
+    }
+
+    return socketObject;
+}
+
+stsObject sts::connectSocket(stsObject socketObject, string msg) {
+    int socketval = std::stoi(socketObject.members[4].val);
+    int addrsize = sizeof(addr);
+
+    sa_family_t family;
+
+    if (socketObject.members[0].val == "AF_INET") family = AF_INET;
+    else if (socketObject.members[0].val == "AF_INET6") family = AF_INET6;
+
+    int pres = inet_pton(family, socketObject.members[1].val.c_str(), &addr.sin_addr);
+    int connects = connect(socketval, (struct sockaddr *)&addr, addrsize);
+
+    if (pres <= 0 || connects < 0)
+        socketObject.members[3].val = "false";
+    else {
+        send(socketval, msg.c_str(), msg.size(), 0);
+
+        char buffer[1024] = {0};
+        int val = read(socketval, buffer, 1024);
+        cout << buffer << '\n';
     }
 
     return socketObject;
