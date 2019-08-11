@@ -96,3 +96,29 @@ stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
 
     return socketObject;
 }
+
+stsObject sts::connectSocket(stsObject socketObject, string msg) {
+    int socketval = std::stoi(socketObject.members[4].val);
+    int addrsize = sizeof(addr);
+
+    sa_family_t family;
+
+    if (socketObject.members[0].val == "AF_INET") family = AF_INET;
+    else if (socketObject.members[0].val == "AF_INET6") family = AF_INET6;
+
+    int pres = inet_pton(family, socketObject.members[1].val.c_str(), &addr.sin_addr);
+    int connects = connect(socketval, (struct sockaddr *)&addr, addrsize);
+
+    if (pres <= 0 || connects <= 0)
+        socketObject.members[3].val = "false";
+    else {
+        cout << msg.c_str() << "\ntest\n";
+        send(socketval, msg.c_str(), msg.size(), 0);
+
+        char buffer[1024] = {0};
+        int val = read(socketval, buffer, 1024);
+        cout << buffer << '\n';
+    }
+
+    return socketObject;
+}

@@ -128,6 +128,15 @@ void sts::runUnknown(int *y) {
 
                             awaitSocket(thisScope->objects[ObjNum], msg, output);
                         }
+                        else if (expressions[*y+2].contents == "connect") {
+                            *y += 4;
+                            if (expressions[*y].t != VALUE && expressions[*y].t == UNKNOWN)
+                                error(5, "connect");
+                            
+                            string msg = getval(y).val; // message to be sent to server
+
+                            connectSocket(thisScope->objects[ObjNum], msg);
+                        }
                         shouldbreak = true;
                         break;
                     }
