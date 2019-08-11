@@ -88,7 +88,7 @@ void sts::runUnknown(int *y) {
                     if (expressions[*y+2].tktype == COLON) {
                         *y += 3;
                         int n = 0;
-                        
+
                         if (find(&thisScope->variables, expressions[*y-3].contents, &n)) {
                             switch (thisScope->variables.at(n).type) {
                                 case 'i':
@@ -111,7 +111,7 @@ void sts::runUnknown(int *y) {
                     break;
                 case DOT:
                     int ObjNum, MemberNum;
-                    
+
                     // find object
                     find(thisScope->objects, expressions[*y].contents, &ObjNum);
 
@@ -126,7 +126,7 @@ void sts::runUnknown(int *y) {
                             *y += 2;
                             bool output = toBool(getval(y).val); // determines whether to output connection or not
 
-                            awaitSocket(thisScope->objects[ObjNum], msg, output);
+                            thisScope->objects[ObjNum] = awaitSocket(thisScope->objects[ObjNum], msg, output);
                         }
                         else if (expressions[*y+2].contents == "connect") {
                             *y += 4;
@@ -135,7 +135,7 @@ void sts::runUnknown(int *y) {
                             
                             string msg = getval(y).val; // message to be sent to server
 
-                            connectSocket(thisScope->objects[ObjNum], msg);
+                            thisScope->objects[ObjNum] = connectSocket(thisScope->objects[ObjNum], msg);
                         }
                         shouldbreak = true;
                         break;
