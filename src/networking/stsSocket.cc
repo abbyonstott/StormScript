@@ -104,7 +104,8 @@ if (std::stoi(socketObject.members[4].val) < 0 ||
 stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
 	int socketval = std::stoi(socketObject.members[4].val);
 #if defined(PLATFORM) && PLATFORM == 0
-socklen_t *addrsize = (socklen_t *)&sizeof(addr);
+int addrsizei = sizeof(addr); // integer form of addrsize
+socklen_t *addrsize = (socklen_t *)&addrsizei;
 #else
 int *addrsize = (int *)new unsigned long(sizeof(addr));
 #endif
