@@ -4,19 +4,19 @@ n: 3;
 d: true;
 
 if n is 3{
-    printl "x is 3";
+	printl "x is 3";
 }
 
 if d is false{
-    printl "Hi";    
+	printl "Hi";    
 }
 else if n is 4{
-    printl "d is true";
+	printl "d is true";
 }
 else{
-    printl n;
+	printl n;
 }
 
 if x is y{
-    printl x, " is ", y;
+	printl x, " is ", y;
 }

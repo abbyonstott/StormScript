@@ -7,21 +7,21 @@
 
 class type {
 public:
-    string name;
+	string name;
 
-    std::vector<stsvars> members;
-    std::vector<stsfunc> methods;
+	std::vector<stsvars> members;
+	std::vector<stsfunc> methods;
 };
 
 class stsObject: public type {
 public:
-    string Parentname;
+	string Parentname;
 
-    stsObject(type _Parent = type()) {
-        Parentname = _Parent.name;
-        members = _Parent.members;
-        methods = _Parent.methods;
-    }
+	stsObject(type _Parent = type()) {
+		Parentname = _Parent.name;
+		members = _Parent.members;
+		methods = _Parent.methods;
+	}
 };
 
 #endif

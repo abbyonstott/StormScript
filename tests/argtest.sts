@@ -1,6 +1,6 @@
 func f => x, y {
-    printl x;
-    printl y;
+	printl x;
+	printl y;
 }
 
 

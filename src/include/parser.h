@@ -40,28 +40,28 @@ enum tokenType { // tokens
 
 enum Builtin { // these are built in commands
 	NONE,
-    PRINT,
-    PRINTL,
-    STSIN,
-    IF,
-    ELSE,
-    FUNCTION,
-    TYPE,
-    TYPE_INTEGER,
-    TYPE_STRING,
-    TYPE_STS_BOOL,
-    TYPE_LIST,
-    CONSTRUCTOR_SCOPE,
-    MODULE,
-    RETURN,
-    WHILE,
-    FOR,
-    FOREACH,
-    EXIT,
-    SYSTEM,
-    WAIT,
-    WRITE,
-    READ,
+	PRINT,
+	PRINTL,
+	STSIN,
+	IF,
+	ELSE,
+	FUNCTION,
+	TYPE,
+	TYPE_INTEGER,
+	TYPE_STRING,
+	TYPE_STS_BOOL,
+	TYPE_LIST,
+	CONSTRUCTOR_SCOPE,
+	MODULE,
+	RETURN,
+	WHILE,
+	FOR,
+	FOREACH,
+	EXIT,
+	SYSTEM,
+	WAIT,
+	WRITE,
+	READ,
 	RANDOM,
 	RANDOMRANGE,
 	LENGTH,
@@ -86,7 +86,7 @@ public:
 
 	ExprType t; // give type of expression
 	tokenType tktype = NOTOKEN;
-    Builtin btn = NONE;
+	Builtin btn = NONE;
 	Value literalType;
 	int line;
 };

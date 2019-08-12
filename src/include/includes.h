@@ -2,6 +2,20 @@
 #ifndef INCLUDES_H_
 #define INCLUDES_H_
 
+#if (defined(_WIN32)) || (defined(__MINGW32__))
+#define PLATFORM 1
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
+#else
+#define PLATFORM 0
+#include <sys/socket.h>
+#include <netinet/in.h> 
+#include <arpa/inet.h> 
+#endif
+
+
+
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -15,9 +29,6 @@
 #include <time.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h> 
-#include <arpa/inet.h> 
 
 /*
 Let's forward declare these classes for the files that use them

@@ -1,278 +1,278 @@
 #include "../include/stormscript.h"
 
 void replaceEscapes(string *lit, std::vector<stsvars> vars) { // escapes
-    string newl;
+	string newl;
 
-    for (int i = 0; i < lit->size(); i++) {
-        if (lit->at(i) == '\\') {
-            i++;
-            
-            switch (lit->at(i)) {
-                case 'n':
-                    newl += '\n';
-                    break;
-                case 't':
-                    newl += '\t';
-                    break;
-                case '\\':
-                    newl += '\\';
-                    break;
-                case '$':
-                    newl += '$';
-                    break;
-            }
-        }
-        else if (lit->at(i) == '$') { // dollar sign for concatenation
-            string q;
+	for (int i = 0; i < lit->size(); i++) {
+		if (lit->at(i) == '\\') {
+			i++;
+			
+			switch (lit->at(i)) {
+				case 'n':
+					newl += '\n';
+					break;
+				case 't':
+					newl += '\t';
+					break;
+				case '\\':
+					newl += '\\';
+					break;
+				case '$':
+					newl += '$';
+					break;
+			}
+		}
+		else if (lit->at(i) == '$') { // dollar sign for concatenation
+			string q;
 
-            i++;
+			i++;
 
-            while (lit->at(i) != ' ') {
-                q += lit->at(i);
+			while (lit->at(i) != ' ') {
+				q += lit->at(i);
 
 
-                if (i == lit->size() - 1 ) break;
-                else i++;
-            }
+				if (i == lit->size() - 1 ) break;
+				else i++;
+			}
 
-            newl += findVar(vars, q).val;
-            if (lit->at(i) == ' ') newl += ' ';
-        }
-        else {
-            newl += lit->at(i);
-        }
-    }
+			newl += findVar(vars, q).val;
+			if (lit->at(i) == ' ') newl += ' ';
+		}
+		else {
+			newl += lit->at(i);
+		}
+	}
 
-    *lit = newl;
+	*lit = newl;
 }
 
 stsvars sts::getval(int *line) {
-    /*
-    THIS FILE IS VERY IMPORTANT!!!!!
-    When Modifying this function be sure that:
-        a. The code works in every circumstance where a value would be needed (act as though any value is grabbed with one expression; add to y until it reaches the end of the expression)
-        b. The code uses returns a value with a type. Under no circumstance should the variable "v" have an empty type.
-        c. This should go without saying, but please document your code. I don't want to remove anything important because I can't figure out what it does
-    */
+	/*
+	THIS FILE IS VERY IMPORTANT!!!!!
+	When Modifying this function be sure that:
+		a. The code works in every circumstance where a value would be needed (act as though any value is grabbed with one expression; add to y until it reaches the end of the expression)
+		b. The code uses returns a value with a type. Under no circumstance should the variable "v" have an empty type.
+		c. This should go without saying, but please document your code. I don't want to remove anything important because I can't figure out what it does
+	*/
 
-    stsvars v;
-    int y = *line;
+	stsvars v;
+	int y = *line;
 
-    bool operation = ((expressions[y+1].t == TOKEN) && 
-            (expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && 
-            (expressions[y+1].tktype != DOT || (
-                (expressions[y+3].tktype == IS) || (expressions[y+3].tktype == NOT) || // DOT and operation
-                (expressions[y+3].tktype == LESS) || expressions[y+3].tktype == LESSEQ || 
-                expressions[y+3].tktype == GREATER || expressions[y+3].tktype == GREATEREQ)
-            ) && 
-        (expressions.size() > y+1));
+	bool operation = ((expressions[y+1].t == TOKEN) && 
+			(expressions[y+1].tktype != COMMA) && (expressions[y+1].tktype != COLON) && (expressions[y+1].tktype != OPENCURL)  && (expressions[y+1].tktype != CLOSEDBRACKET) && 
+			(expressions[y+1].tktype != DOT || (
+				(expressions[y+3].tktype == IS) || (expressions[y+3].tktype == NOT) || // DOT and operation
+				(expressions[y+3].tktype == LESS) || expressions[y+3].tktype == LESSEQ || 
+				expressions[y+3].tktype == GREATER || expressions[y+3].tktype == GREATEREQ)
+			) && 
+		(expressions.size() > y+1));
 
-    switch (operation) {
-        case 0: // if raw value
-            if (expressions[y].t == VALUE) { // returns literals with proper types
-                string lit;
+	switch (operation) {
+		case 0: // if raw value
+			if (expressions[y].t == VALUE) { // returns literals with proper types
+				string lit;
 
-                switch (expressions[y].literalType) {
-                    case STRING:
-                        lit = striplit(expressions[y].contents);
-                        v.type = 's';
-                        v.length = lit.size();
-                        replaceEscapes(&lit, thisScope->variables);
-                        break;
-                    case INTEGER:
-                    case STS_BOOL:
-                        v.type = ((expressions[y].literalType == INTEGER) ? 'i' : 'b');
-                        lit = expressions[y].contents;
-                        break;
-                }
+				switch (expressions[y].literalType) {
+					case STRING:
+						lit = striplit(expressions[y].contents);
+						v.type = 's';
+						v.length = lit.size();
+						replaceEscapes(&lit, thisScope->variables);
+						break;
+					case INTEGER:
+					case STS_BOOL:
+						v.type = ((expressions[y].literalType == INTEGER) ? 'i' : 'b');
+						lit = expressions[y].contents;
+						break;
+				}
 
-                v.val = lit;
-            }
-            else if (expressions[y].t == BUILTIN) { 
-                // stsread just reads the file, but it is always used as a value because it returns a value
-                switch (expressions[y].btn) { 
-                    case READ:
-                        v = readfile(&y);
-                        break;
-                    case RANDOM:
-                        v.val = ((randombool()) ? "true" : "false");
-                        v.type = 'b';
-                        break;
-                    case RANDOMRANGE:
-                        v.val = std::to_string(genrandomintfromrange(this, &y));
-                        v.type = 'i';
-                }
-            }
-            else if (expressions[y].t == UNKNOWN) {
-                int index;
+				v.val = lit;
+			}
+			else if (expressions[y].t == BUILTIN) { 
+				// stsread just reads the file, but it is always used as a value because it returns a value
+				switch (expressions[y].btn) { 
+					case READ:
+						v = readfile(&y);
+						break;
+					case RANDOM:
+						v.val = ((randombool()) ? "true" : "false");
+						v.type = 'b';
+						break;
+					case RANDOMRANGE:
+						v.val = std::to_string(genrandomintfromrange(this, &y));
+						v.type = 'i';
+				}
+			}
+			else if (expressions[y].t == UNKNOWN) {
+				int index;
 
-                if (find(&thisScope->variables, expressions[y].contents, &index) || find(thisScope->objects, expressions[y].contents, &index)) {                    
-                    if (expressions[y+1].tktype != DOT) v = thisScope->variables.at(index); // get value
-                    else if (expressions[y+2].btn == LENGTH) { // get length
-                        y+= 3;
+				if (find(&thisScope->variables, expressions[y].contents, &index) || find(thisScope->objects, expressions[y].contents, &index)) {                    
+					if (expressions[y+1].tktype != DOT) v = thisScope->variables.at(index); // get value
+					else if (expressions[y+2].btn == LENGTH) { // get length
+						y+= 3;
 
-                        v.type = 'i';
+						v.type = 'i';
 
-                        if ((thisScope->variables.at(index).type == 's') || (thisScope->variables.at(index).type == 'l'))
-                            v.val = std::to_string(thisScope->variables.at(index).length);
+						if ((thisScope->variables.at(index).type == 's') || (thisScope->variables.at(index).type == 'l'))
+							v.val = std::to_string(thisScope->variables.at(index).length);
 
-                        else error(2, thisScope->variables.at(index).name);
-                    }
-                    else { // look for class members
-                        int MemberLoc;
-                        y += 2;
+						else error(2, thisScope->variables.at(index).name);
+					}
+					else { // look for class members
+						int MemberLoc;
+						y += 2;
 
-                        find(&thisScope->objects[index].members, expressions[y].contents, &MemberLoc);
-                        v = thisScope->objects[index].members[MemberLoc]; // return member
-                        
-                        y++;
-                    }
-                }
-                else if (find(thisScope->functions, expressions[y].contents, &index)) {
-                    runfunc(&y, index);
-                    v = thisScope->functions[index]; // if expression refers to function
-                }
-            }
+						find(&thisScope->objects[index].members, expressions[y].contents, &MemberLoc);
+						v = thisScope->objects[index].members[MemberLoc]; // return member
+						
+						y++;
+					}
+				}
+				else if (find(thisScope->functions, expressions[y].contents, &index)) {
+					runfunc(&y, index);
+					v = thisScope->functions[index]; // if expression refers to function
+				}
+			}
 
-            break;
-        case 1: // if operation
-            tokenType t = expressions[y+1].tktype;
-            std::vector<sts> placeholders;
-            int index;
-            stsvars sbsvar;
-            tokenType plus1;
+			break;
+		case 1: // if operation
+			tokenType t = expressions[y+1].tktype;
+			std::vector<sts> placeholders;
+			int index;
+			stsvars sbsvar;
+			tokenType plus1;
 
-            if ((t == PLUS) || (t == MINUS) || (t == DIVISION) || (t == MULTIPLICATION)) { 
-                // all math operations will return an integer, so we can set that first
-                v.type = 'i';
+			if ((t == PLUS) || (t == MINUS) || (t == DIVISION) || (t == MULTIPLICATION)) { 
+				// all math operations will return an integer, so we can set that first
+				v.type = 'i';
 
-                placeholders.resize(2);
+				placeholders.resize(2);
 
-                placeholders.at(0).expressions = {expressions[y]};
-                placeholders.at(0).thisScope = thisScope;
-                placeholders.at(1).expressions = {expressions[y+2]};
-                placeholders.at(1).thisScope = thisScope;
+				placeholders.at(0).expressions = {expressions[y]};
+				placeholders.at(0).thisScope = thisScope;
+				placeholders.at(1).expressions = {expressions[y+2]};
+				placeholders.at(1).thisScope = thisScope;
 
-                y+= 2;
-            }
-            else if (t == OPENBRACKET) {
-                y += 2;
-                int er = 1;
-                int i = y;
+				y+= 2;
+			}
+			else if (t == OPENBRACKET) {
+				y += 2;
+				int er = 1;
+				int i = y;
 
-                placeholders.resize(1);
-                placeholders.back().thisScope = thisScope;
+				placeholders.resize(1);
+				placeholders.back().thisScope = thisScope;
 
-                while (er != 0) {
-                    if ((expressions[i].t == TOKEN) && (expressions[i].tktype == CLOSEDBRACKET))
-                        er--;
-                    else if ((expressions[i].t == TOKEN) && (expressions[i].tktype == OPENBRACKET))
-                        er++;
+				while (er != 0) {
+					if ((expressions[i].t == TOKEN) && (expressions[i].tktype == CLOSEDBRACKET))
+						er--;
+					else if ((expressions[i].t == TOKEN) && (expressions[i].tktype == OPENBRACKET))
+						er++;
 
-                    if (er != 0)
-                        placeholders.back().expressions.push_back(expressions[i]);
-                    
-                    i++;
-                }
-                index = std::stoi(placeholders[0].getval(new int(0)).val);
-            }
+					if (er != 0)
+						placeholders.back().expressions.push_back(expressions[i]);
+					
+					i++;
+				}
+				index = std::stoi(placeholders[0].getval(new int(0)).val);
+			}
 
-            switch (t) { // perform based on token type
-                case PLUS: // I'm sure there is an easier way to do this...
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) + std::stoi(placeholders.at(1).getval(new int(0)).val));
-                    break;
-                case MINUS:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) - std::stoi(placeholders.at(1).getval(new int(0)).val));
-                    break;
-                case DIVISION:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) / std::stoi(placeholders.at(1).getval(new int(0)).val));
-                    break;
-                case MULTIPLICATION:
-                    v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) * std::stoi(placeholders.at(1).getval(new int(0)).val));
-                    break; 
-                case OPENBRACKET:
-                    plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
-                    if ((plus1 != IS) && (plus1 != NOT) && (plus1 != GREATER) && (plus1 != GREATEREQ) && (plus1 != LESS) && (plus1 != LESSEQ)) {
-                        sbsvar = findVar(thisScope->variables, expressions[y-2].contents);
+			switch (t) { // perform based on token type
+				case PLUS: // I'm sure there is an easier way to do this...
+					v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) + std::stoi(placeholders.at(1).getval(new int(0)).val));
+					break;
+				case MINUS:
+					v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) - std::stoi(placeholders.at(1).getval(new int(0)).val));
+					break;
+				case DIVISION:
+					v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) / std::stoi(placeholders.at(1).getval(new int(0)).val));
+					break;
+				case MULTIPLICATION:
+					v.val = std::to_string(std::stoi(placeholders.at(0).getval(new int(0)).val) * std::stoi(placeholders.at(1).getval(new int(0)).val));
+					break; 
+				case OPENBRACKET:
+					plus1 = expressions[placeholders[0].expressions.size() + y + 1].tktype;
+					if ((plus1 != IS) && (plus1 != NOT) && (plus1 != GREATER) && (plus1 != GREATEREQ) && (plus1 != LESS) && (plus1 != LESSEQ)) {
+						sbsvar = findVar(thisScope->variables, expressions[y-2].contents);
 
-                        switch(sbsvar.type) {
-                            case 's':
-                                if ((index >= sbsvar.val.size()) || (index < 0)) {
-                                    string fullexpr = sbsvar.name + "[";
+						switch(sbsvar.type) {
+							case 's':
+								if ((index >= sbsvar.val.size()) || (index < 0)) {
+									string fullexpr = sbsvar.name + "[";
 
-                                    for (int n = 0; n < placeholders[0].expressions.size(); n++) // add full subscript to error details
-                                        fullexpr += placeholders[0].expressions[n].contents;
+									for (int n = 0; n < placeholders[0].expressions.size(); n++) // add full subscript to error details
+										fullexpr += placeholders[0].expressions[n].contents;
 
-                                    fullexpr += "]"; // add brackets for complete statement
+									fullexpr += "]"; // add brackets for complete statement
 
-                                    error(4, fullexpr);
-                                }
+									error(4, fullexpr);
+								}
 
-                                v.type = 's';
-                                v.val = sbsvar.val[index];
+								v.type = 's';
+								v.val = sbsvar.val[index];
 
-                                break;
+								break;
 
-                            case 'l':
-                                if ((index >= sbsvar.vals.size()) || (index < 0)) { // out of range error
-                                    string fullexpr = sbsvar.name + "[";
+							case 'l':
+								if ((index >= sbsvar.vals.size()) || (index < 0)) { // out of range error
+									string fullexpr = sbsvar.name + "[";
 
-                                    for (int n = 0; n < placeholders[0].expressions.size(); n++) // add full subscript to error details
-                                        fullexpr += placeholders[0].expressions[n].contents;
+									for (int n = 0; n < placeholders[0].expressions.size(); n++) // add full subscript to error details
+										fullexpr += placeholders[0].expressions[n].contents;
 
-                                    fullexpr += "]"; // add brackets for complete statement
+									fullexpr += "]"; // add brackets for complete statement
 
-                                    error(4, fullexpr);
-                                }
+									error(4, fullexpr);
+								}
 
-                                v = sbsvar.vals[index];
+								v = sbsvar.vals[index];
 
-                                break;
+								break;
 
-                            case 'i': // subscripts don't work on int or bool, so give error
-                            case 'b':
-                                error(2, sbsvar.name);
-                                break;
-                        }
+							case 'i': // subscripts don't work on int or bool, so give error
+							case 'b':
+								error(2, sbsvar.name);
+								break;
+						}
 
-                        break;
-                    }
-                    else
-                        y -= 2;
-                case IS:
-                case NOT:
-                case GREATER:
-                case GREATEREQ:
-                case LESS:
-                case LESSEQ:
-                    v.val = ((condition(this, &y)) ? "true" : "false");
-                    if (expressions[y].tktype == TERNARY1) {
-                        /* 
-                        For ternary, we can assume that it is structured like this:
-                           TOKEN   | VALUE/UNKNOWN |   TOKEN   | VALUE/UNKNOWN
-                        -----------|---------------------------|--------------
-                            ?      |     var       |     :     |     var
+						break;
+					}
+					else
+						y -= 2;
+				case IS:
+				case NOT:
+				case GREATER:
+				case GREATEREQ:
+				case LESS:
+				case LESSEQ:
+					v.val = ((condition(this, &y)) ? "true" : "false");
+					if (expressions[y].tktype == TERNARY1) {
+						/* 
+						For ternary, we can assume that it is structured like this:
+							 TOKEN   | VALUE/UNKNOWN |   TOKEN   | VALUE/UNKNOWN
+						-----------|---------------------------|--------------
+							?      |     var       |     :     |     var
 
-                        as usual, these values can be anything, but getval() automatically fills in the gap so we don't have to do much here with different cases
-                        */
-                        bool _val = toBool(v.val);
-                        stsvars primary, secondary;
+						as usual, these values can be anything, but getval() automatically fills in the gap so we don't have to do much here with different cases
+						*/
+						bool _val = toBool(v.val);
+						stsvars primary, secondary;
 
-                        primary = getval(new int(y+1));
+						primary = getval(new int(y+1));
 
-                        while (expressions[y].tktype != COLON) y++; 
-                        y++;
-                        secondary = getval(new int(y));
+						while (expressions[y].tktype != COLON) y++; 
+						y++;
+						secondary = getval(new int(y));
 
-                        v.val = ((_val) ? primary.val : secondary.val);
-                        v.type = ((_val) ? primary.type : secondary.type);
-                    }
-                    break;
-            }
+						v.val = ((_val) ? primary.val : secondary.val);
+						v.type = ((_val) ? primary.type : secondary.type);
+					}
+					break;
+			}
 
-            break;
-    }
+			break;
+	}
 
-    *line = y;
-    return v;
+	*line = y;
+	return v;
 }

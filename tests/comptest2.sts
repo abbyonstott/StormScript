@@ -3,5 +3,5 @@
 y: 0;
 x: 4;
 if y is 0 {
-    printl (x greatereq 4) ? 10 : 3;
+	printl (x greatereq 4) ? 10 : 3;
 }
