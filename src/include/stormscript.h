@@ -1,13 +1,6 @@
 #pragma once
 #ifndef STSCLASSES_H_
 #define STSCLASSES_H_
-
-#if (defined(_WIN32)) || (defined(__MINGW32__))
-#define PLATFORM 1
-#include <windows.h>
-#else
-#define PLATFORM 0
-#endif
 /*
 NOTE:
 Place All StormScript headers here separated by 2 lines.

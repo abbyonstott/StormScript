@@ -1,15 +1,16 @@
 .vscode/settings.json
 .vscode/c_cpp_properties.json
 .vscode/ipch
-build/
 release/
 CMakeFiles/
 CMakeCache.txt
-*.cmake
+cmake_install.cmake
 Makefile
+build/stormscript
 
 *.code-workspace
 
+compile_commands.json
 
 *.exe
 *.tar*

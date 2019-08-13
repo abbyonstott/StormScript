@@ -6,14 +6,8 @@ pool:
 
 steps:
 - script: |
-    cmake .;
-    make;
-    mkdir build;
-    install stormscript build/stormscript;
-    rm stormscript
-  displayName: 'Build'
-- script: |
+    cd build
     ./build.sh
-    cd scripts;
+    cd ../scripts
     ./runtests.sh
   displayName: 'Test'

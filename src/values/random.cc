@@ -1,33 +1,33 @@
 #include "../include/stormscript.h"
 
 int genrandomintfromrange(sts *s, int *line) {
-    long int ut = static_cast<long int> (time(NULL)); // cast unix epoch to long int
-    int y = *line;
-    int range[2]; // range will store the min and max values
+	long int ut = static_cast<long int> (time(NULL)); // cast unix epoch to long int
+	int y = *line;
+	int range[2]; // range will store the min and max values
 
-    y++;
+	y++;
 
-    std::vector<expression> expressions = s->expressions;
+	std::vector<expression> expressions = s->expressions;
 
-    std::random_device randomd;
+	std::random_device randomd;
 
-    std::mt19937_64 generate(randomd());
+	std::mt19937_64 generate(randomd());
 
-    range[0] = std::stoi(s->getval(&y).val);
-    y++;
-    range[1] = std::stoi(s->getval(&y).val);
+	range[0] = std::stoi(s->getval(&y).val);
+	y++;
+	range[1] = std::stoi(s->getval(&y).val);
 
-    *line = y;
+	*line = y;
 
-    std::uniform_int_distribution<> dis(range[0], range[1]);
+	std::uniform_int_distribution<> dis(range[0], range[1]);
 
-    return dis(generate);
+	return dis(generate);
 }
 
 bool randombool() {
-    std::random_device randomd;
+	std::random_device randomd;
 
-    std::mt19937_64 generate(randomd());
-    std::uniform_int_distribution<> dis(0, 1);
-    return dis(generate);
+	std::mt19937_64 generate(randomd());
+	std::uniform_int_distribution<> dis(0, 1);
+	return dis(generate);
 }

@@ -1,16 +1,16 @@
 type person {
-    str name;
-    int age;
+	str name;
+	int age;
 
-    func birthday => years, div {
-        y: years / div;
-        age +: y;
-    }
+	func birthday => years, div {
+		y: years / div;
+		age +: y;
+	}
 
-    init => nm, _age {
-        name: nm;
-        age: _age;
-    }
+	init => nm, _age {
+		name: nm;
+		age: _age;
+	}
 }
 
 person p => "bob", 30;
