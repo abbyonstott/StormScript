@@ -35,4 +35,3 @@ endif (MINGW)
 
 set (StormScript_VERSION_MAJOR 1)
 set (StormScript_VERSION_MINOR 0)
-install(TARGETS stormscript RUNTIME DESTINATION bin/)
