@@ -102,7 +102,7 @@ stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
 	bindval = bind(socketval, (struct sockaddr *)&addr, (socklen_t)sizeof(addr));
 	#else
 	int *addrsize = (int *)new unsigned long(sizeof(addr));
-	bindval = bind(socketval, (struct sockaddr *)&addr, sizeof(addr))
+	bindval = bind(socketval, (struct sockaddr *)&addr, sizeof(addr));
 	#endif
 
 	int listenval = listen(socketval, 3);
