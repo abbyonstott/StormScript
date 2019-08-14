@@ -1,12 +1,4 @@
-socket s => "AF_INET", "127.0.0.1", 7000;
-
-success: s.success;
-
-in test;
-
-if success is false {
-	printl "Socket Error";
-}
+socket s => "AF_INET", "127.0.0.1", 8000;
 
 s.connect => "Hello, World";
 

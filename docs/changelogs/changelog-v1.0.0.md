@@ -36,4 +36,7 @@
 
 # Release Candidate 2
 
-* fixed `in` not giving unknown command errors
+## What's Fixed
+
+* `in` gave unknown command errors
+* socket clients wouldn't connect to servers on linux

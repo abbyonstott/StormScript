@@ -37,6 +37,12 @@ type sts::socketClass() {
 	return t;
 }
 
+
+
+
+
+
+
 stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, stsObject socketObject) {
 	/*
 	* Socket Object Guide:
@@ -53,16 +59,16 @@ stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, st
 	socketObject.members[3].val = "true";
 
 
-// porting to winsock2 requires some changes
-#if defined(PLATFORM) && PLATFORM == 0
-sa_family_t family;
-if (strfamily == "AF_INET") family = AF_INET;
-else if (strfamily == "AF_INET6") family = AF_INET6;
-#else
-int family;
-if (strfamily == "AF_INET") family = 2;
-else if (strfamily == "AF_INET6") family = 23;
-#endif
+	// porting to winsock2 requires some changes
+	#if (PLATFORM == 0)
+	sa_family_t family;
+	if (strfamily == "AF_INET") family = AF_INET;
+	else if (strfamily == "AF_INET6") family = AF_INET6;
+	#else
+	int family;
+	if (strfamily == "AF_INET") family = 2;
+	else if (strfamily == "AF_INET6") family = 23;
+	#endif
 
 	int state = 0;
 
@@ -74,23 +80,8 @@ else if (strfamily == "AF_INET6") family = 23;
 
 	state = std::stoi(socketObject.members[4].val);
 
-
-
-#if defined(PLATFORM) && PLATFORM == 0
-if (std::stoi(socketObject.members[4].val) < 0 ||
-	bind(state, (struct sockaddr *)&addr, (socklen_t)sizeof(addr)) < 0 ||
-	listen(state, 3) < 0)
-{
-	socketObject.members[3].val = "false"; // some sort of error occured
-}
-#else
-if (std::stoi(socketObject.members[4].val) < 0 ||
-	bind(state, (struct sockaddr *)&addr, sizeof(addr)) < 0 ||
-	listen(state, 3) < 0)
-{
-	socketObject.members[3].val = "false"; // some sort of error occured
-}
-#endif
+	if (std::stoi(socketObject.members[4].val) < 0)
+		socketObject.members[3].val = "false"; // some sort of error occured
 
 	return socketObject;
 }
@@ -103,16 +94,21 @@ if (std::stoi(socketObject.members[4].val) < 0 ||
 */
 stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
 	int socketval = std::stoi(socketObject.members[4].val);
-#if defined(PLATFORM) && PLATFORM == 0
-int addrsizei = sizeof(addr); // integer form of addrsize
-socklen_t *addrsize = (socklen_t *)&addrsizei;
-#else
-int *addrsize = (int *)new unsigned long(sizeof(addr));
-#endif
+	int bindval;
 
+	#if (PLATFORM == 0)
+	int addrsizei = sizeof(addr); // integer form of addrsize
+	socklen_t *addrsize = (socklen_t *)&addrsizei;
+	bindval = bind(socketval, (struct sockaddr *)&addr, (socklen_t)sizeof(addr));
+	#else
+	int *addrsize = (int *)new unsigned long(sizeof(addr));
+	bindval = bind(socketval, (struct sockaddr *)&addr, sizeof(addr))
+	#endif
+
+	int listenval = listen(socketval, 3);
 	int acc = accept(socketval,(struct sockaddr *)&addr, addrsize);
 
-	if (acc < 0)
+	if (acc < 0 || listenval < 0 || bindval < 0)
 		socketObject.members[3].val = "false";
 	else {
 		char buffer[1024] = {0};
@@ -127,27 +123,34 @@ int *addrsize = (int *)new unsigned long(sizeof(addr));
 	return socketObject;
 }
 
+
+
+
+
+
+
 stsObject sts::connectSocket(stsObject socketObject, string msg) {
 	int socketval = std::stoi(socketObject.members[4].val);
 	int addrsize = sizeof(addr);
 
-#if defined(PLATFORM) && PLATFORM == 0
-sa_family_t family;
-int pres = inet_pton(family, socketObject.members[1].val.c_str(), &addr.sin_addr);
+	#if (PLATFORM == 0)
+	sa_family_t family;
 
-if (pres <= 0) {
-	socketObject.members[3].val = "false";
-	return socketObject;
-}
+	if (socketObject.members[0].val == "AF_INET") family = AF_INET;
+	else if (socketObject.members[0].val == "AF_INET6") family = AF_INET6;
 
-if (socketObject.members[0].val == "AF_INET") family = AF_INET;
-else if (socketObject.members[0].val == "AF_INET6") family = AF_INET6;
-#else
-int family;
+	int pres = inet_pton(family, socketObject.members[1].val.c_str(), &addr.sin_addr);
 
-if (socketObject.members[0].val == "AF_INET") family = 2;
-else if (socketObject.members[0].val == "AF_INET6") family = 23;
-#endif
+	if (pres <= 0) {
+		socketObject.members[3].val = "false";
+		return socketObject;
+	}
+	#else
+	int family;
+
+	if (socketObject.members[0].val == "AF_INET") family = 2;
+	else if (socketObject.members[0].val == "AF_INET6") family = 23;
+	#endif
 
 	int connects = connect(socketval, (struct sockaddr *)&addr, addrsize);
 
