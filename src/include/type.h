@@ -17,10 +17,10 @@ class stsObject: public type {
 public:
 	string Parentname;
 
-	stsObject(type *_Parent = new type()) {
-		Parentname = _Parent->name;
-		members = _Parent->members;
-		methods = _Parent->methods;
+	stsObject(const type &_Parent = type()) {
+		Parentname = _Parent.name;
+		members = _Parent.members;
+		methods = _Parent.methods;
 	}
 };
 

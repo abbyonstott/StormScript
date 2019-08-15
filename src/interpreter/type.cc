@@ -79,7 +79,7 @@ void sts::declareObject(int *y) {
 	find(thisScope->types, expressions[*y].contents, &num);
 	bool init = find(thisScope->types[num].methods, "init", &initnum); // find the init method
 
-	stsObject t = &thisScope->types[num];
+	stsObject t = thisScope->types[num];
 
 	t.name = expressions[++(*y)].contents;
 
