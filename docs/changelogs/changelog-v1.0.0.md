@@ -16,7 +16,7 @@
 * modules are added to the file before runtime
 * modules are now scoped
 * `def` has been changed to a scope called `init`
-* sockets can be created with `socket name => "FAMILY", "127.0.0.1", "9999"`
+* sockets can be created with `socket name => "FAMILY", "127.0.0.1", 9999`
 
 ## What's Fixed
 * Removed snapcraft files
@@ -33,6 +33,7 @@
 * scopes now work as a class, making development around scopes easier
 * constructors now use the arrow operator (`=>`) to declare constructors
 * using tabs instead of spaces
+* moved contents out of src/core and into root of src directory
 
 # Release Candidate 2
 
@@ -40,3 +41,5 @@
 
 * `in` gave unknown command errors
 * socket clients wouldn't connect to servers on linux
+* changed `stsObject` constructor arg from value to const reference for memory savings
+* fixed comparisons using class members

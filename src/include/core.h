@@ -100,6 +100,7 @@ public:
 	void declareType(int *y);
 
 	void declareObject(int *y);
+	void objectMember(int *y);
 
 	void wait(int y) {
 		#if PLATFORM == 1

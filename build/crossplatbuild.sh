@@ -11,7 +11,7 @@ if [ ! -e /usr/share/stormscript ]; then
 	sudo mkdir /usr/share/stormscript
 fi
 
-sudo cp ../src/core/errors.sts /usr/share/stormscript
+sudo cp ../src/errors.sts /usr/share/stormscript
 
 cmake -DCMAKE_TOOLCHAIN_FILE=mingw32_toolchain.cmake ..
 make -j $(nproc)

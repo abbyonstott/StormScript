@@ -1,4 +1,4 @@
-#include "../include/stormscript.h"
+#include "include/stormscript.h"
 
 bool toBool(string s) {
 	return (s == "true");

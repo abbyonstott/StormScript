@@ -7,8 +7,8 @@ if (MINGW)
 endif (MINGW)
 
 add_executable(stormscript
-	src/core/stormscript.cc
-	src/core/operations.cc
+	src/stormscript.cc
+	src/operations.cc
 	src/parser/parse.cc
 	src/parser/read.cc
 	src/parser/eval.cc
@@ -18,6 +18,7 @@ add_executable(stormscript
 	src/interpreter/interpret.cc
 	src/interpreter/newscope.cc
 	src/interpreter/type.cc
+	src/interpreter/objectmember.cc
 	src/stream/io.cc
 	src/stream/loops.cc
 	src/stream/files.cc
