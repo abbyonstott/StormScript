@@ -8,6 +8,7 @@ void sts::parseErrors() {
 	*/
 	std::vector<string> globnames;
 
+	// Stores the names of the local variables in the current scope
 	std::vector<string> localnames = globnames;
 
 	bool glob = 1;
@@ -73,6 +74,22 @@ void sts::parseErrors() {
 
 			i += 6;
 		}
+		else if (expressions[i].btn == STSIN) {
+			i++;
+			// in followed by a variable should be accounted for, as it is currently the only unordinary way to define a variable
+			switch (expressions[i].t) {
+				case UNKNOWN:
+					localnames.push_back(expressions[i].contents);
+					break;
+				case ENDEXPR:
+					error(12, std::to_string(expressions[i-1].line));
+					break;
+				default:
+					error(13, expressions[i].contents);
+					break;	
+			}
+
+		}
 		else if // written like this to make it more clear what is happening
 			(
 			(expressions[i].t == UNKNOWN && (expressions[i+1].t == ENDEXPR || expressions[i+1].tktype == ARROW || expressions[i+1].tktype == COMMA)) && 
@@ -84,6 +101,6 @@ void sts::parseErrors() {
 			error(3, expressions[i].contents);
 		}
 		
-		if (glob) globnames = localnames;
+		if (glob) globnames = localnames; // every scope change keeps the previous scope's variables
 	}
 }

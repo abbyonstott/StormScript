@@ -1,4 +1,4 @@
-socket s => "AF_INET", "127.0.0.1", 7000;
+socket s => "AF_INET", "127.0.0.1", 8000;
 
 s.connect => "Hello, World";
 

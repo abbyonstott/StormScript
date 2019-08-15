@@ -34,3 +34,9 @@ else if arg[1] is "10" {
 else if arg[1] is "11" {
     printl "Error: Object requires name on line ", arg[2];
 }
+else if arg[1] is "12" {
+    printl "Error: In statement on line ", arg[2], "requires variable name";
+}
+else if arg[1] is "13" {
+    printl "Error: In statement expected variable name, got", arg[2], "instead";
+}
