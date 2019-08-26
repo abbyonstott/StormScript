@@ -1,4 +1,5 @@
-#include "include/stormscript.h"
+#include "stormscript.h"
+#include "sts_files.h"
 
 /*
    _____ _                        _____           _       _   
@@ -27,8 +28,6 @@ void showhelp() {
 }
 
 int main(int argc, char *argv[]) {
-	sts script;
-
 	if (argc != 1) {
 		if (string(argv[1])=="--version")
 			printVersion();
@@ -42,11 +41,11 @@ int main(int argc, char *argv[]) {
 				system(cmd.c_str());
 			}
 			else
-				script.error(9, "none");
+				error(9, "none");
 		}
 		else {
-			script.filename = argv[1];
-			script.stsread(argv, argc);
+			program.filename = argv[1];
+			stsread(argv, argc);
 		}
 	}
 	else

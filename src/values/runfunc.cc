@@ -1,42 +1,54 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "../interpreter/sts_interpreter.h"
 
-void sts::runfunc(int *y, int num) {
-	sts functionsts;
+void runfunc(int num) {
+	program_t program_old = program;
 
-	std::vector<stsvars> _variables = thisScope->variables;
+	std::vector<stsvars> _variables = program.thisScope.variables;
 
-	thisScope->variables.insert(thisScope->variables.end(), 
-		thisScope->functions.at(num).args.begin(), thisScope->functions.at(num).args.end());
+	program_old.thisScope.variables.insert(program_old.thisScope.variables.end(), 
+		program_old.thisScope.functions.at(num).args.begin(), program_old.thisScope.functions.at(num).args.end());
 
-	functionsts.function = num;
-	functionsts.expressions = thisScope->functions.at(num).contents;
+	program.function = num;
+	program.expressions = program_old.thisScope.functions.at(num).contents;
 
 	int argbegin = _variables.size(); 
 
-	if (thisScope->functions.at(num).args.size() > 0) {
-		if (expressions[*y+1].tktype != ARROW)
-			error(5, thisScope->functions.at(num).name);
+	if (program_old.thisScope.functions.at(num).args.size() > 0) {
+		if (program_old.expressions[program_old.loc+1].tktype != ARROW)
+			error(5, program_old.thisScope.functions.at(num).name);
 		else {
-			*y += 2;
+			program_old.loc += 2;
 
 			int argon = 0;
 			
 			while (true) {
-				thisScope->variables[argbegin + argon] = getval(y);
-				thisScope->variables[argbegin + argon].name = thisScope->functions.at(num).args[argon].name;
+				program_t _prog = program;
+				program = program_old;
 
-				*y += 1;
-				if (expressions[*y].t == ENDEXPR) break;
-				else if (expressions[*y].tktype == COMMA) {
-					*y += 1;
+				program.thisScope.variables[argbegin + argon] = getval();
+				
+				program_old = program;
+				program = _prog;
+
+				program_old.thisScope.variables[argbegin + argon].name = program_old.thisScope.functions.at(num).args[argon].name;
+
+				program_old.loc += 1;
+				if (program_old.expressions[program_old.loc].t == ENDEXPR) break;
+				else if (program_old.expressions[program_old.loc].tktype == COMMA) {
+					program_old.loc++;
 					argon += 1;
 				}
 			}
 		}
 	}
 
-	functionsts.thisScope = thisScope;
-	functionsts.newScope(new int(0));
+	program.thisScope = program_old.thisScope;
+	program.loc = 0;
+	newScope();
 
-	thisScope->variables.erase(thisScope->variables.begin() + _variables.size(), thisScope->variables.end());
+	program_old.thisScope = program.thisScope;
+	program_old.thisScope.variables.erase(program_old.thisScope.variables.begin() + _variables.size(), program_old.thisScope.variables.end());
+
+	program = program_old;
 }

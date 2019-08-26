@@ -1,32 +1,33 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "sts_interpreter.h"
 
-void sts::newScope(int *y) {
-	std::vector<stsfunc> _functions = thisScope->functions;
-	std::vector<stsvars> _variables = thisScope->variables;
-	std::vector<type> _types = thisScope->types;
-	std::vector<stsObject> _objects = thisScope->objects;
+void newScope() {
+	std::vector<stsfunc> _functions = program.thisScope.functions;
+	std::vector<stsvars> _variables = program.thisScope.variables;
+	std::vector<type> _types = program.thisScope.types;
+	std::vector<stsObject> _objects = program.thisScope.objects;
 
-	while ((expressions[*y].tktype != CLOSEDCURL) && (*y < expressions.size())) {
+	while ((program.expressions[program.loc].tktype != CLOSEDCURL) && (program.loc < program.expressions.size())) {
 		
-		switch(expressions[*y].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
+		switch(program.expressions[program.loc].t) { // don't need to worry about TOKEN and ENDEXPR because they will be handled inside of functions
 			case BUILTIN:
-				if (expressions[*y].btn != STSSOCKET) {
-					runBuiltin(y);
+				if (program.expressions[program.loc].btn != STSSOCKET) {
+					runBuiltin();
 					break;
 				}
 			case UNKNOWN:
-				runUnknown(y);
+				runUnknown();
 				break;
 		}
 
-		*y += 1;
+		program.loc++;
 	}
 
-	thisScope->variables.erase(thisScope->variables.begin() + _variables.size(), thisScope->variables.end());
-	thisScope->objects.erase(thisScope->objects.begin() + _objects.size(), thisScope->objects.end());
+	program.thisScope.variables.erase(program.thisScope.variables.begin() + _variables.size(), program.thisScope.variables.end());
+	program.thisScope.objects.erase(program.thisScope.objects.begin() + _objects.size(), program.thisScope.objects.end());
 
-	_variables = thisScope->variables;
-	_objects = thisScope->objects;
+	_variables = program.thisScope.variables;
+	_objects = program.thisScope.objects;
 
-	thisScope = new scope(_functions, _variables, _types); // reset size back to original
+	program.thisScope = scope(_functions, _variables, _types); // reset size back to original
 }

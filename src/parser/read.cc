@@ -1,14 +1,18 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "../sts_files.h"
+#include "../interpreter/sts_interpreter.h"
+#include <fstream>
 
-void sts::stsread(char *argv[], int argc) {
+void stsread(char *argv[], int argc) {
 	std::ifstream file;
 	string contents;
 	
+	int sizeoff = 0;
 
-	file.open(filename.c_str());
+	file.open(program.filename.c_str());
 
 	if (file.fail()) 
-		error(0, filename);
+		error(0, program.filename);
 
 	char c = file.get();
 	

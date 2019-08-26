@@ -1,6 +1,8 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "../sts_files.h"
+#include "sts_parser.h"
 
-void sts::importModules(int *y) {
+void importModules() {
 	/*
 	* Importing a module works the same way as executing a normal program.
 	* (Why should it be any different?)
@@ -9,28 +11,33 @@ void sts::importModules(int *y) {
 	* the original program. This saves time as in this case the module only has to be opened
 	* once during a single run
 	*/
-	*y += 1;
+	program.loc++;
 
 	int endexprloc = 0;
 
-	while (expressions[endexprloc].t != ENDEXPR) endexprloc++;
+	while (program.expressions[endexprloc].t != ENDEXPR) endexprloc++;
 
-	while (*y < endexprloc) {
-		if (expressions[*y].tktype != COMMA) {
+	while (program.loc < endexprloc) {
+		if (program.expressions[program.loc].tktype != COMMA) {
 			string modname, _filename; // filename adds .sts to the end of the modname
-			modname = expressions[*y].contents;
+			modname = program.expressions[program.loc].contents;
 			_filename = modname + ".sts";
 
-			sts mod;
+			program_t program_old = program;
 
-			mod.filename = _filename;
-			mod.stsread({}, 0); // stsread() is run without argv
+			program.loc = 0;
+			program.expressions.clear();
 
-			expressions.insert(expressions.begin() + endexprloc + 1,
-				mod.expressions.begin(), mod.expressions.end());
+			program.filename = _filename;
+			stsread({}, 0); // stsread() is run without argv
+
+			program.expressions.insert(program_old.expressions.begin() + endexprloc + 1,
+				program.expressions.begin(), program.expressions.end());
+			
+			program = program_old;
 		}
 
-		*y += 1;
+		program.loc += 1;
 	}
 
 }

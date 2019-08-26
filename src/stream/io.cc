@@ -1,19 +1,18 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "sts_stream.h"
 
-string sts::print(int *y){ //handles both print and printl.
-	int ln = *y;
-	ln++;
-	stsvars v = getval(&ln);
+string print() { //handles both print and printl.
+	program.loc++;
+	stsvars v = getval();
 	string value = v.val;
-	*y = ln;
 
 	return value;
 }
 
-stsvars sts::in(int *line){
+stsvars in() {
 	stsvars input;
 
-	input.name = expressions[*line+1].contents;
+	input.name = program.expressions[program.loc+1].contents;
 
 	char valstring[256]; // allocate a 256 bit char array for value storage
 
@@ -24,7 +23,7 @@ stsvars sts::in(int *line){
 	
 	input.length = input.val.size();
 
-	*line += 2;
+	program.loc += 2;
 
 	return input;
 }

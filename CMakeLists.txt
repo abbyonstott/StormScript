@@ -9,21 +9,23 @@ endif (MINGW)
 add_executable(stormscript
 	src/stormscript.cc
 	src/operations.cc
+	src/errors.cc
+	src/interpreter/interpret.cc
+	src/interpreter/newscope.cc
+	src/interpreter/loops.cc
+	src/networking/stsSocket.cc
 	src/parser/parse.cc
 	src/parser/read.cc
 	src/parser/eval.cc
 	src/parser/parseerrors.cc
 	src/parser/modules.cc
-	src/networking/stsSocket.cc
-	src/interpreter/interpret.cc
-	src/interpreter/newscope.cc
-	src/interpreter/type.cc
-	src/interpreter/objectmember.cc
 	src/stream/io.cc
-	src/stream/loops.cc
 	src/stream/files.cc
+	src/type/type.cc
+	src/type/objectmember.cc
 	src/values/stsdec.cc
 	src/values/if.cc
+	src/values/find.cc
 	src/values/getvals.cc
 	src/values/runfunc.cc
 	src/values/compare.cc

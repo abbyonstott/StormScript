@@ -1,14 +1,15 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "sts_stream.h"
 
-stsvars sts::readfile(int *y) {
+stsvars readfile() {
 	stsvars v;
 	v.type = 's';
 
-	*y+= 1;
+	program.loc += 1;
 
 	std::ifstream file;
 	string contents;
-	string name = getval(y).val;
+	string name = getval().val;
 
 	file.open(name);
 
@@ -29,18 +30,18 @@ stsvars sts::readfile(int *y) {
 	return v;
 }
 
-void sts::writefile(int *y) {
-	*y += 1;
+void writefile() {
+	program.loc += 1;
 	std::ofstream file;
-	string name = getval(y).val;
+	string name = getval().val;
 
 	file.open(name);
 
-	*y += 1;
-	string contents = getval(y).val;
+	program.loc += 1;
+	string contents = getval().val;
 
 	file.write(contents.c_str(), contents.size());
 	file.close();
 
-	*y += 1;
+	program.loc += 1;
 }
