@@ -1,4 +1,5 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "sts_parser.h"
 
 bool evaluateToken(string tkn) { // tokens are different types of operators and symbols
 	if ((tkn == "is") || (tkn == "not") || (tkn == "less") || (tkn == "lesseq") || (tkn == "greater") || (tkn == "greatereq")) return 1; // comparison operators
@@ -21,6 +22,7 @@ bool evalLiteral(string ctn) {
 
 	return 0;
 }
+
 ExprType determinetype(string contents) {
 	if (evaluateToken(contents)) return TOKEN;
 	else if (evaluateBuiltin(contents)) return BUILTIN;
@@ -91,15 +93,15 @@ Builtin getBuiltincmd(string kwd) {
 	return NONE;
 }
 
-void sts::evaluateProgram() {
-	for (int i = 0; i < expressions.size(); i++) {
-		expressions[i].t = determinetype(expressions[i].contents);
+void evaluateProgram() {
+	for (int i = 0; i < program.expressions.size(); i++) {
+		program.expressions[i].t = determinetype(program.expressions[i].contents);
 
-		if (expressions[i].t == TOKEN)
-			expressions[i].tktype = gettktype(expressions[i].contents);
-		else if (expressions[i].t == BUILTIN)
-			expressions[i].btn = getBuiltincmd(expressions[i].contents);
-		else if (expressions[i].t == VALUE)
-			expressions[i].literalType = getValue(expressions[i].contents);
+		if (program.expressions[i].t == TOKEN)
+			program.expressions[i].tktype = gettktype(program.expressions[i].contents);
+		else if (program.expressions[i].t == BUILTIN)
+			program.expressions[i].btn = getBuiltincmd(program.expressions[i].contents);
+		else if (program.expressions[i].t == VALUE)
+			program.expressions[i].literalType = getValue(program.expressions[i].contents);
 	}
 }

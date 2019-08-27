@@ -11,5 +11,5 @@ if [ ! -e /usr/share/stormscript ]; then
 fi
 sudo mv stormscript /usr/bin/stormscript
 
-sudo cp ../src/core/errors.sts /usr/share/stormscript
+sudo cp ../src/errors.sts /usr/share/stormscript
 sudo chmod u+x /usr/share/stormscript/errors.sts

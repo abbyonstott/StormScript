@@ -6,7 +6,7 @@
         {
             "label": "errors",
             "type": "shell",
-            "command": "cp src/core/errors.sts /usr/share/stormscript",
+            "command": "cp src/errors.sts /usr/share/stormscript",
             "problemMatcher": []
         }
     ]

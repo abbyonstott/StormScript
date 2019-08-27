@@ -1,60 +1,71 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "../sts_files.h"
+#include "sts_interpreter.h"
 
-void sts::runBuiltin(int *y) {
+// specific headers
+#include "../parser/sts_parser.h"
+#include "../stream/sts_stream.h"
+#include "../values/sts_values.h"
+#include "../type/sts_type.h"
+#include "../networking/networking.h"
+
+void runBuiltin() {
 	bool l;
 
-	switch (expressions[*y].btn) {
+	switch (program.expressions[program.loc].btn) {
 		case PRINT: 
 		case PRINTL:
-			l = (expressions[*y].btn == PRINTL); // if printl
-			while (expressions[*y].t != ENDEXPR) {
-				cout << print(y);
+			l = (program.expressions[program.loc].btn == PRINTL); // if printl
+			while (program.expressions[program.loc].t != ENDEXPR) {
+				cout << print();
 
-				if (expressions[*y+1].tktype == COMMA) *y += 1; // we don't need to add 2 because print() automatically adds 1 to the line counter
+				if (program.expressions[program.loc+1].tktype == COMMA) program.loc += 1; // we don't need to add 2 because print() automatically adds 1 to the line counter
 			}
 
 			if (l) cout << '\n';
 			break;
 		case STSIN: 
-			thisScope->variables.push_back(in(y));
+			program.thisScope.variables.push_back(in());
 			break;
 		case IF:
-			ifs(y);
+			ifs();
 			break;
 		case FUNCTION:
-			declareFunc(y);
+			declareFunc();
 			break;
 		case RETURN:
-			if (function > -1) {
-				thisScope->functions.at(function).val = getval(new int(*y+1)).val;
-				thisScope->functions.at(function).type = getval(new int(*y+1)).type;
-				*y = expressions.size(); // return always exits scope
+			if (program.function > -1) {
+				program.loc++;
+				program.thisScope.functions.at(program.function).val = getval().val;
+				program.thisScope.functions.at(program.function).type = getval().type;
+				program.loc = program.expressions.size(); // return always exits scope
+				program.loc--;
 			} 
 			else error(7, "");
 			
 			break;
 		case WAIT:
-			wait(*y);
+			wait();
 			break;
 		case WRITE:
-			writefile(y);
+			writefile();
 			break;
 		case WHILE:
-			whileloop(this, thisScope, y);
+			whileloop();
 			break;
 		case FOR:
-			forloop(this, thisScope, y);
+			forloop();
 			break;
 		case SYSTEM:
-			sys(y);
+			sys();
 			break;
 		case TYPE:
-			declareType(y);
+			declareType();
 			break;
 		case BREAK:
-			if (looping) {
-				scopedown(y, expressions);
-				looping = false;
+			if (program.looping) {
+				scopedown();
+				program.looping = false;
 			}
 			else error(6, "");
 			break;
@@ -63,127 +74,57 @@ void sts::runBuiltin(int *y) {
 			* modules are automatically imported during the error check before runtime
 			* all we need to do here is to move on to the next expression
 			*/
-			while (expressions[*y].t != ENDEXPR) *y += 1;
+			while (program.expressions[program.loc].t != ENDEXPR) program.loc += 1;
 			break;
 		case EXIT:
 			exit(0);
 	}
 }
 
-void sts::runUnknown(int *y) {
+void runUnknown() {
 	int fnum;
 	bool shouldbreak;
 
-	switch (expressions[*y+1].t) {
+	switch (program.expressions[program.loc+1].t) {
 		case TOKEN:
 			shouldbreak = 0;
 
-			switch (expressions[*y+1].tktype) {
+			switch (program.expressions[program.loc+1].tktype) {
 				case COLON: // definition
-					define(y);
+					define();
 					shouldbreak = 1;
 					break;
 				case ARROW: break;
 				case PLUS:
-					if (expressions[*y+2].tktype == COLON) {
-						*y += 3;
+					if (program.expressions[program.loc+2].tktype == COLON) {
+						program.loc += 3;
 						int n = 0;
 
-						if (find(&thisScope->variables, expressions[*y-3].contents, &n)) {
-							switch (thisScope->variables.at(n).type) {
+						const int loc_old = program.loc;
+
+						if (find(program.thisScope.variables, program.expressions[program.loc-3].contents, &n)) {
+							switch (program.thisScope.variables.at(n).type) {
 								case 'i':
-									thisScope->variables.at(n).val = std::to_string(std::stoi(thisScope->variables.at(n).val) + std::stoi(getval(new int(*y)).val));
+									program.thisScope.variables.at(n).val = std::to_string(std::stoi(program.thisScope.variables.at(n).val) + std::stoi(getval().val));
 									break;
 								case 'l':
-									thisScope->variables.at(n).vals.push_back(getval(new int(*y)));
-									thisScope->variables.at(n).length = thisScope->variables.at(n).vals.size();
+									program.thisScope.variables.at(n).vals.push_back(getval());
+									program.thisScope.variables.at(n).length = program.thisScope.variables.at(n).vals.size();
 									break;
 								case 's':
-									thisScope->variables.at(n).val += getval(new int(*y)).val;
+									program.thisScope.variables.at(n).val += getval().val;
 									break;
-								case 'b': error(4, thisScope->variables.at(n).name);
+								case 'b': error(4, program.thisScope.variables.at(n).name);
 							}
 						}
-						else error(8, expressions[*y-3].contents);
-
+						else error(8, program.expressions[program.loc-3].contents);
+						
+						program.loc = loc_old;
 						shouldbreak = 1;
 					}
 					break;
 				case DOT:
-					int ObjNum, MemberNum;
-
-					// find object
-					find(thisScope->objects, expressions[*y].contents, &ObjNum);
-
-					if (expressions[*y+3].tktype == ARROW && thisScope->objects[ObjNum].Parentname == "socket") { // socket functions are handled by c++, not stormscript
-						if (expressions[*y+2].contents == "await") {
-							*y += 4;
-							if (expressions[*y].t != VALUE && expressions[*y].t != UNKNOWN) 
-								error(5, "await"); // generic "function requires args error"
-							
-							string msg = getval(y).val; // message to be sent to client
-
-							*y += 2;
-							bool output = toBool(getval(y).val); // determines whether to output connection or not
-
-							thisScope->objects[ObjNum] = awaitSocket(thisScope->objects[ObjNum], msg, output);
-						}
-						else if (expressions[*y+2].contents == "connect") {
-							*y += 4;
-							if (expressions[*y].t != VALUE && expressions[*y].t == UNKNOWN)
-								error(5, "connect");
-							
-							string msg = getval(y).val; // message to be sent to server
-
-							thisScope->objects[ObjNum] = connectSocket(thisScope->objects[ObjNum], msg);
-						}
-						shouldbreak = true;
-						break;
-					}
-					
-					*y += 2;
-
-					// find member or method
-
-					if (expressions[*y+1].tktype == COLON) {
-
-						find(&thisScope->objects[ObjNum].members, expressions[*y].contents, &MemberNum);
-
-						stsvars newval = getval(y);
-
-						if (thisScope->objects[ObjNum].members[MemberNum].type == newval.type) 
-							thisScope->objects[ObjNum].members[MemberNum].val = newval.val;
-						else error(2, expressions[*y].contents);
-					}
-					else {
-						find(thisScope->objects[ObjNum].methods, expressions[*y].contents, &MemberNum);
-
-						sts typests;
-
-						typests.expressions.push_back(expression());
-						typests.expressions[0] = expressions[*y];
-
-						*y += 1;
-
-						if (expressions[*y].tktype == ARROW) {
-							while (expressions[*y].t != ENDEXPR) {
-								typests.expressions.push_back(expression());
-								typests.expressions.back() = expressions[*y];
-
-								*y += 1;
-							}
-						}
-
-						typests.expressions.push_back(expression());
-						typests.expressions.back() = expressions[*y];
-						
-						typests.thisScope->functions.push_back(thisScope->objects[ObjNum].methods[MemberNum]);
-						typests.thisScope->variables.insert(typests.thisScope->variables.begin(), thisScope->objects[ObjNum].members.begin(), thisScope->objects[ObjNum].members.end());
-
-						typests.runfunc(new int(0), 0);
-
-						thisScope->objects[ObjNum].members = typests.thisScope->variables;
-					}
+					objectMember();
 
 					shouldbreak = true;
 
@@ -192,30 +133,30 @@ void sts::runUnknown(int *y) {
 
 			if (shouldbreak) break;
 		case ENDEXPR:
-			find(thisScope->functions, expressions[*y].contents, &fnum); // run isFunc to get function number
-			runfunc(y, fnum);
+			find(program.thisScope.functions, program.expressions[program.loc].contents, &fnum); // run isFunc to get function number
+			runfunc(fnum);
 			break;
 		case UNKNOWN:
-			declareObject(y);
+			declareObject();
 			break;
 	}
 }
 
-void sts::interp(int psize, char *argv[], int argc){
-	parse(prg);
+void interp(int psize, char *argv[], int argc) {
+	parse();
 	parseErrors();
 
-	thisScope->variables.resize(thisScope->variables.size()+1);
+	program.thisScope.variables.push_back(stsvars());
 	for (int x = 1; x<=argc-1; x++) {
-		thisScope->variables.back().type='l';
-		thisScope->variables.back().vals.resize(thisScope->variables.back().vals.size()+1);
-		thisScope->variables.back().vals.back().type = 's';
-		thisScope->variables.back().vals.back().val=argv[x];
-		thisScope->variables.back().name="arg";
-		thisScope->variables.back().length = argc-1;
+		program.thisScope.variables.back().type='l';
+		program.thisScope.variables.back().vals.resize(program.thisScope.variables.back().vals.size()+1);
+		program.thisScope.variables.back().vals.back().type = 's';
+		program.thisScope.variables.back().vals.back().val=argv[x];
+		program.thisScope.variables.back().name="arg";
+		program.thisScope.variables.back().length = argc-1;
 	}
-	thisScope->types.push_back(socketClass());
+	program.thisScope.types.push_back(socketClass());
 	
 	
-	newScope(new int(0));
+	newScope();
 }

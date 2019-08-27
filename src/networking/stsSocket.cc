@@ -1,49 +1,7 @@
-#include "../include/stormscript.h"
+#include "../stormscript.h"
+#include "networking.h"
 
-type sts::socketClass() {
-	type t;
-	stsvars family, address, port, success, sockval;
-
-	t.name = "socket";
-
-	// these are all defaults
-
-	family.name = "family";
-	family.type = 's';
-	family.val = "AF_INET";
-
-	address.name = "address";
-	address.type = 's';
-	address.val = "127.0.0.1";
-
-	port.name = "port";
-	port.type = 'i';
-	port.val = "9999";
-
-	success.name = "success";
-	success.type = 'b';
-	success.val = "false";
-
-	sockval.name = "sockval";
-	sockval.type = 'i';
-	sockval.val = "-1";
-
-	t.members.push_back(family);
-	t.members.push_back(address);
-	t.members.push_back(port);
-	t.members.push_back(success);
-	t.members.push_back(sockval);
-
-	return t;
-}
-
-
-
-
-
-
-
-stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, stsObject socketObject) {
+stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObject socketObject) {
 	/*
 	* Socket Object Guide:
 	* socketObject.members[0]: Family (AF_INET or AF_INET6)
@@ -92,7 +50,7 @@ stsObject sts::createSocket(string strfamily, string hostname, uint16_t port, st
 * It would make sense to combine the commands needed to connect to client/server
 * into only a socket.await or socket.connect method respectively
 */
-stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
+stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
 	int socketval = std::stoi(socketObject.members[4].val);
 	int bindval;
 
@@ -123,13 +81,7 @@ stsObject sts::awaitSocket(stsObject socketObject, string msg, bool output) {
 	return socketObject;
 }
 
-
-
-
-
-
-
-stsObject sts::connectSocket(stsObject socketObject, string msg) {
+stsObject connectSocket(stsObject socketObject, string msg) {
 	int socketval = std::stoi(socketObject.members[4].val);
 	int addrsize = sizeof(addr);
 
