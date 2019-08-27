@@ -42,4 +42,4 @@
 * `in` gave unknown command errors
 * socket clients wouldn't connect to servers on linux
 * changed `stsObject` constructor arg from value to const reference for memory savings
-* fixed comparisons using class members
+* reorganised directory structure (again)
