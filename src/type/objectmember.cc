@@ -62,31 +62,34 @@ void objectMember() {
 
 		program_t program_old = program;
 
+		/*
+		 * Class methods are run in there own mini
+		 * programs to isolate the class members
+		*/
+		program.loc = 0;
+		program.expressions.clear();
 		program.expressions.push_back(expression());
-		program.expressions[0] = program.expressions[program.loc];
+		program.expressions[0] = program_old.expressions[program_old.loc];
 
-		program.loc += 1;
+		program_old.loc += 1;
 
-		if (program.expressions[program.loc].tktype == ARROW) {
-			while (program.expressions[program.loc].t != ENDEXPR) {
-				program.expressions.push_back(expression());
-				program.expressions.back() = program.expressions[program.loc];
+		if (program_old.expressions[program_old.loc].tktype == ARROW) {
+			while (program_old.expressions[program_old.loc].t != ENDEXPR) {
+				program.expressions.push_back(program_old.expressions[program_old.loc]);
 
-				program.loc += 1;
+				program_old.loc += 1;
 			}
 		}
 
-		program.expressions.push_back(expression());
-		program.expressions.back() = program.expressions[program.loc];
+		program.expressions.push_back(program_old.expressions[program_old.loc]);
 		
 		program.thisScope.functions.push_back(program.thisScope.objects[ObjNum].methods[MemberNum]);
 		program.thisScope.variables.insert(program.thisScope.variables.begin(), program.thisScope.objects[ObjNum].members.begin(), program.thisScope.objects[ObjNum].members.end());
 
 		runfunc(0);
 
-		program.thisScope.objects[ObjNum].members = program.thisScope.variables;
+		program_old.thisScope.objects[ObjNum].members = program.thisScope.variables;
 
-		program_old.loc = program.loc;
 		program = program_old;
 	}
 }

@@ -58,7 +58,7 @@ void parseErrors() {
 			* run on the original program
 			*/
 			i--;
-			importModules();
+			importModules(&i);
 		}
 		else if (program.expressions[i].btn == STSSOCKET) {
 			if (program.expressions[++i].t != UNKNOWN) 

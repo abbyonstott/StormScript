@@ -20,7 +20,7 @@ stsObject awaitSocket(stsObject socketObject, string msg, bool output);
 stsObject connectSocket(stsObject socketObject, string msg);
 inline struct sockaddr_in addr;
 
-//functions that return "type" are treated as classes and should be put in header files
+//functions that return "type" are treated as classes and should be declared inline in header files
 inline type socketClass() {
 	type t;
 	stsvars family, address, port, success, sockval;

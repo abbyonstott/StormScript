@@ -20,12 +20,10 @@ void parse() {
 
 		while (z!=prg[y].size()){
 			if (prg[y][z]=='"'){
-				if (inquotes == false){
+				if (inquotes == false)
 					inquotes = true;
-				}
-				else{
+				else
 					inquotes = false;
-				}
 			}
 
 			// this is what checks for chars to remove from prs version
@@ -56,7 +54,7 @@ void parse() {
 			}
 			else {
 				if (program.expressions.size() == 0)
-					program.expressions.resize(program.expressions.size() + 1);
+					program.expressions.push_back(expression());
 				program.expressions.back().contents+=prg[y][z];
 			}
 			program.expressions.back().line = y;

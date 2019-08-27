@@ -26,6 +26,7 @@ void newScope() {
 	program.thisScope.variables.erase(program.thisScope.variables.begin() + _variables.size(), program.thisScope.variables.end());
 	program.thisScope.objects.erase(program.thisScope.objects.begin() + _objects.size(), program.thisScope.objects.end());
 
+	_functions = program.thisScope.functions;
 	_variables = program.thisScope.variables;
 	_objects = program.thisScope.objects;
 

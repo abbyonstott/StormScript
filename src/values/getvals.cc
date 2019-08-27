@@ -296,6 +296,9 @@ stsvars getval() {
 
 						v.val = ((_val) ? primary.val : secondary.val);
 						v.type = ((_val) ? primary.type : secondary.type);
+						
+						// exit ternary:
+						while (program.expressions[++program.loc].t != ENDEXPR);
 					}
 					break;
 			}

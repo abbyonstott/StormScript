@@ -6,6 +6,8 @@
 void stsread(char *argv[], int argc) {
 	std::ifstream file;
 	string contents;
+
+	prg = {};
 	
 	int sizeoff = 0;
 

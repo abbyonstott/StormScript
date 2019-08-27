@@ -14,13 +14,12 @@ void whileloop() {
 
 		if (!program.looping) break; // looping should only be false in the case of a break;
 
-		n = program.loc; // set n back to y to repeat
+		program.loc = n; // set n back to y to repeat
 	}
 
 	while (program.expressions[program.loc].tktype != OPENCURL) program.loc++;
-	program.loc += 1;
 
-	program_old.loc = program.loc;
+	program_old.loc = program.loc + 1;
 	program_old.thisScope = program.thisScope; // get new versions of variables
 	program = program_old;
 	scopedown();
@@ -32,6 +31,7 @@ void forloop() {
 	program_t program_old = program;
 
 	bool foreach = (program.expressions[program.loc+1].btn == STSIN);
+	int _loc; // placeholder for original location at start of loop
 	program.looping = true;
 
 	if (foreach) {
@@ -58,9 +58,12 @@ void forloop() {
 				error(2, root.name);
 		}
 
-
+		_loc = program.loc;
+		
 		for (int i = 0; i < rootsize; i++) {
 			stsvars placeholder;
+			
+			program.loc = _loc;
 
 			if (root.type == 'l')
 				placeholder = root.vals[i];
@@ -79,27 +82,26 @@ void forloop() {
 
 			if (!program.looping) break;
 		}
-
-		program.loc += 1;
-
 	}
 	else {
 		int r = std::stoi(getval().val);
 		program.loc += 1;
+
+		_loc = program.loc;
 		
 		if (r <= 0)
 			error(4, std::to_string(r));
 
 		for (int i = 0; i < r; i++) {
-			newScope();   
+			program.loc = _loc;
+
+			newScope();
+
 			if (!program.looping) break;
 		}
-
-		program.loc += 1;
 	}
 
-
-	program_old.loc = program.loc;
+	program_old.loc = _loc+1;
 	program_old.thisScope = program.thisScope;
 	program = program_old;
 

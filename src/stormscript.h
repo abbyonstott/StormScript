@@ -204,6 +204,6 @@ bool toBool(string s);
 void scopedown();
 
 // There might be a better place to put this
-void importModules();
+void importModules(int *i);
 
 #endif // STORMSCRIPT_H_
