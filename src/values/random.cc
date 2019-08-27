@@ -1,6 +1,6 @@
-#include "../stormscript.h"
 #include "sts_values.h"
 #include <random>
+#include <ctime>
 
 int genrandomintfromrange() {
 	long int ut = static_cast<long int> (time(NULL)); // cast unix epoch to long int
