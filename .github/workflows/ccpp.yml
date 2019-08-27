@@ -6,7 +6,7 @@ on:
     - master
 
 jobs:
-  build:
+  build_linux:
 
     runs-on: ubuntu-latest
     
@@ -16,3 +16,13 @@ jobs:
       run: cmake .
     - name: make
       run: make
+      
+  build_win:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Configure
+      run: cmake . -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
+    - name: make
+      run: mingw32-make
