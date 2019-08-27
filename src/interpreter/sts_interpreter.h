@@ -16,7 +16,7 @@ void whileloop();
 inline void wait() {
 	program.loc++;
 	#if PLATFORM == 1
-		Sleep(std::stoi(getval()).val) * 1000);
+		Sleep(std::stoi(getval().val)) * 1000);
 	#else
 		sleep(std::stoi(getval().val));
 	#endif
