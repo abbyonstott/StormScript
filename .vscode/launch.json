@@ -26,9 +26,7 @@
             "preLaunchTask": "errors",
             "program": "${command:cmake.launchTargetPath}",
             "args": [
-                "example.sts",
-                "3",
-                "thisisnotacommand"
+                "example.sts"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/example",
