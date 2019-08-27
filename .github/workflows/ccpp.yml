@@ -26,6 +26,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Configure
-      run: cmake .  -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
+      run: cmake .  -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
     - name: make
       run: mingw32-make
