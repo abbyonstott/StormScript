@@ -6,6 +6,8 @@ set (CMAKE_CXX_EXTENSIONS off)
 
 if (MINGW)
 	set (CMAKE_CXX_FLAGS "-static -static-libgcc -static-libstdc++")
+else()
+	set (CMAKE_CXX_COMPILER "g++")
 endif (MINGW)
 
 add_executable(stormscript
