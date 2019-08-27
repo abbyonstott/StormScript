@@ -15,11 +15,9 @@ void whileloop();
 // these are defined here because there is nowhere else to put them
 inline void wait() {
 	program.loc++;
-	#if PLATFORM == 1
-		Sleep(std::stoi(getval().val)) * 1000);
-	#else
-		sleep(std::stoi(getval().val));
-	#endif
+	
+	sleep(std::stoi(getval().val));
+	
 	program.loc--;
 }
 
