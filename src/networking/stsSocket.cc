@@ -50,7 +50,7 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 * It would make sense to combine the commands needed to connect to client/server
 * into only a socket.await or socket.connect method respectively
 */
-stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
+stsObject awaitSocket(stsObject socketObject, string msg, bool output) {	
 	int socketval = std::stoi(socketObject.members[4].val);
 	int bindval;
 

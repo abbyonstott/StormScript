@@ -6,6 +6,9 @@ CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
+*.ninja
+.ninja_deps
+.ninja_log
 build/stormscript
 
 *.code-workspace

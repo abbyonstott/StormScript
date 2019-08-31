@@ -15,10 +15,15 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Configure
-      run: cmake .
-    - name: make
-      run: make
+    - name: Build
+      run: |
+        cd build;
+        ./build.sh
+    - name: Test
+      run: |
+        cd scripts;
+        ./runtests.sh
+        
       
   build_win:
     runs-on: windows-latest
@@ -27,5 +32,5 @@ jobs:
     - uses: actions/checkout@v1
     - name: Configure
       run: cmake .  -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
-    - name: make
+    - name: Make
       run: mingw32-make

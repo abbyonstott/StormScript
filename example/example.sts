@@ -1,2 +1,12 @@
-in x;
-printl x;
+type human {
+	int age;
+	str name;
+}
+
+human h;
+h.age: 20;
+h.name: "Bob";
+
+if h.age is 20 {
+	printl h.name, " is ", h.age;
+}

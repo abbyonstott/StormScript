@@ -61,14 +61,17 @@ stsvars getval() {
 	*/
 
 	stsvars v;
+	bool dotCompare = false; // dot operations take up 2 extra expression slots
+
+	if (program.expressions[program.loc+1].tktype == DOT && program.expressions[program.loc+3].tktype != COMMA && program.expressions[program.loc+3].t != ENDEXPR
+		&& program.expressions.size() > program.loc+3) {
+		dotCompare = true;
+		program.loc += 2;
+	}
 
 	bool operation = ((program.expressions[program.loc+1].t == TOKEN) && 
-			(program.expressions[program.loc+1].tktype != COMMA) && (program.expressions[program.loc+1].tktype != COLON) && (program.expressions[program.loc+1].tktype != OPENCURL)  && (program.expressions[program.loc+1].tktype != CLOSEDBRACKET) && 
-			(program.expressions[program.loc+1].tktype != DOT || (
-				(program.expressions[program.loc+3].tktype == IS) || (program.expressions[program.loc+3].tktype == NOT) || // DOT and operation
-				(program.expressions[program.loc+3].tktype == LESS) || program.expressions[program.loc+3].tktype == LESSEQ || 
-				program.expressions[program.loc+3].tktype == GREATER || program.expressions[program.loc+3].tktype == GREATEREQ)
-			) && 
+		(program.expressions[program.loc+1].tktype != COMMA) && (program.expressions[program.loc+1].tktype != COLON) && (program.expressions[program.loc+1].tktype != OPENCURL)  && (program.expressions[program.loc+1].tktype != CLOSEDBRACKET) && 
+		(program.expressions[program.loc+1].tktype != DOT) &&
 		(program.expressions.size() > program.loc+1));
 
 	switch (operation) {
@@ -271,7 +274,10 @@ stsvars getval() {
 				case GREATEREQ:
 				case LESS:
 				case LESSEQ:
+					// subtract 2 for condition function to get values
+					if (dotCompare) program.loc -= 2;
 					v.val = ((condition()) ? "true" : "false");
+
 					if (program.expressions[program.loc].tktype == TERNARY1) {
 						/* 
 						For ternary, we can assume that it is structured like this:

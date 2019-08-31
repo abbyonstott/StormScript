@@ -16,20 +16,13 @@ bool condition() {
 	int opLocation;
 	int _loc = program.loc;
 
-	// The below if statement checks if the value contains a subscript or not by determining the location of the comparison operator
-	if ((program.expressions[program.loc+1].tktype == IS) || (program.expressions[program.loc+1].tktype == NOT) || (program.expressions[program.loc+1].tktype == GREATER) || (program.expressions[program.loc+1].tktype == GREATEREQ) || (program.expressions[program.loc+1].tktype == LESS) || (program.expressions[program.loc+1].tktype == LESSEQ)) {
-		comparisonType = program.expressions[program.loc+1].tktype; // set comparison type to condition
-		opLocation = program.loc+1;
-	}
-	else {
-		int i = program.loc;
-		
-		while ((program.expressions[i].tktype != IS) && (program.expressions[i].tktype != NOT) && (program.expressions[i].tktype != GREATER) && (program.expressions[i].tktype != GREATEREQ) && (program.expressions[i].tktype != LESS) && (program.expressions[i].tktype != LESSEQ))
-			i++;
+	int i = program.loc;
+	
+	while ((program.expressions[i].tktype != IS) && (program.expressions[i].tktype != NOT) && (program.expressions[i].tktype != GREATER) && (program.expressions[i].tktype != GREATEREQ) && (program.expressions[i].tktype != LESS) && (program.expressions[i].tktype != LESSEQ))
+		i++;
 
-		comparisonType = program.expressions[i].tktype;
-		opLocation = i;
-	}
+	comparisonType = program.expressions[i].tktype;
+	opLocation = i;
 
 	program_t program_old = program; // create more isolated expressions to get the value to compare
 	program.expressions = {};
