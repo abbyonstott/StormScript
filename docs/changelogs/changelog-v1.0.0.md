@@ -34,12 +34,4 @@
 * constructors now use the arrow operator (`=>`) to declare constructors
 * using tabs instead of spaces
 * moved contents out of src/core and into root of src directory
-
-# Release Candidate 2
-
-## What's Fixed
-
-* `in` gave unknown command errors
-* socket clients wouldn't connect to servers on linux
-* changed `stsObject` constructor arg from value to const reference for memory savings
-* reorganised directory structure (again)
+* fixed class member comparisons
