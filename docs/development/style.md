@@ -17,7 +17,8 @@ This should go without saying, but please comment on your code. I love reading c
 # C++ Style
 C++ has the strictest rules when it comes to styling as it makes up the majority of the project.
 
-**TABS ARE ALWAYS 4 SPACES**
+## Indention
+Use the `\t` character
 
 ## Includes
 **YOU MUST FOLLOW THIS**
@@ -38,8 +39,17 @@ if (expressions[*y].t == ENDEXPR) *y += 1;
 or
 ```cpp
 if (expressions[*y].t == ENDEXPR)
-    *y += 1;
+	*y += 1;
 ```
+
+Otherwise, curly braces go 1 space in front of scope defining statement.
+
+```cpp
+switch (expressions[*y].t) {
+        ...
+}
+```
+
 
 ## If statements and Switches
 

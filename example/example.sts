@@ -1,3 +1,4 @@
-socket s => "AF_INET", "127.0.0.1", 9090;
-
-s.connect => "Hello, World";	
+for 25 {
+	printl random;
+	printl randomrange 1 10;
+}
