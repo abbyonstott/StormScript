@@ -28,15 +28,21 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 	else if (strfamily == "AF_INET6") family = 23;
 	#endif
 
-	int state = 0;
-
 	addr.sin_family = family;
 	addr.sin_addr.s_addr = inet_addr(hostname.c_str());
 	addr.sin_port = htons(port);
 
-	socketObject.members[4].val = std::to_string(socket(family, SOCK_STREAM, 0)); // socket declarations are the same between both platforms
+	int s = socket(family, SOCK_STREAM, 0);
 
-	state = std::stoi(socketObject.members[4].val);
+	#if (!PLATFORM)
+	socketObject.members[4].val = std::to_string(socket(family, SOCK_STREAM, 0)); 
+	/* 
+	 * socket declarations are similar between platforms, but on Windows socket()
+	 * returns type SOCKET instead of an int
+	*/
+	#else
+	socketObject.members[4].val = std::to_string(((s == INVALID_SOCKET) ? -1 : 0));
+	#endif // !PLATFORM
 
 	if (std::stoi(socketObject.members[4].val) < 0)
 		socketObject.members[3].val = "false"; // some sort of error occured
@@ -50,7 +56,8 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 * It would make sense to combine the commands needed to connect to client/server
 * into only a socket.await or socket.connect method respectively
 */
-stsObject awaitSocket(stsObject socketObject, string msg, bool output) {	
+stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
+	cout << socketObject.members[4].val << '\n';
 	int socketval = std::stoi(socketObject.members[4].val);
 	int bindval;
 
