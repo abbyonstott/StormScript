@@ -4,10 +4,12 @@
 
 #include "../stormscript.h"
 
-#if (PLATFORM == 1)
+#if (PLATFORM)
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
+
+inline WSADATA data;
 #else
 #include <sys/socket.h>
 #include <netinet/in.h> 

@@ -6,7 +6,7 @@
 * This macro changes executed code based on platform
 * When platform is 1, it is on windows, otherwise run unix code
 */
-#define PLATFORM (defined(_WIN32) || defined(__MINGW32__))
+#define PLATFORM (defined(_WIN32) || defined(__MINGW32__)) // true if on windows
 
 #include <iostream>
 #include <string>
