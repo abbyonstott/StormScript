@@ -15,7 +15,7 @@ void parseErrors() {
 	bool glob = 1;
 
 	for (int i = 0; i < program.expressions.size(); i++) {
-		if ((program.expressions[i].line == prg.size() - 1  && i == program.expressions.size()-1) || program.expressions[i + 1].line != program.expressions[i].line) { // this checks if there is no semicolon at the end of line
+		if ((program.expressions[i].line == parserProgram.size() - 1  && i == program.expressions.size()-1) || program.expressions[i + 1].line != program.expressions[i].line) { // this checks if there is no semicolon at the end of line
 			if (program.expressions[i].t != ENDEXPR && program.expressions[i].tktype != CLOSEDCURL && program.expressions[i].tktype != OPENCURL) 
 				error(1, std::to_string(program.expressions[i].line + 1)); // add 1 to line because line gives index, which always starts at 0
 		}
