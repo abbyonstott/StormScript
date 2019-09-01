@@ -8,18 +8,18 @@ the interpreter parses the file and calls functions in other files
 void parse() {
 	int y = 0;
 	
-	while (y!=prg.size()){
+	while (y!=parserProgram.size()){
 		int z = 0;
 		bool inquotes = false;
 		if (program.expressions.size() > 0)
 			program.expressions.resize(program.expressions.size()+1);
 		
-		while (prg[y][0]==' ')
-			prg[y].erase(prg[y].begin());
+		while (parserProgram[y][0]==' ')
+			parserProgram[y].erase(parserProgram[y].begin());
 		
 
-		while (z!=prg[y].size()){
-			if (prg[y][z]=='"'){
+		while (z!=parserProgram[y].size()){
+			if (parserProgram[y][z]=='"'){
 				if (inquotes == false)
 					inquotes = true;
 				else
@@ -27,27 +27,27 @@ void parse() {
 			}
 
 			// this is what checks for chars to remove from prs version
-			if (((prg[y][z]==' ') || (prg[y][z]=='\n') || (prg[y][z]=='(') || (prg[y][z]==')')) && (inquotes==false)){
+			if (((parserProgram[y][z]==' ') || (parserProgram[y][z]=='\n') || (parserProgram[y][z]=='(') || (parserProgram[y][z]==')')) && (inquotes==false)){
 				if ((program.expressions.back().contents.size() != 0))
 					program.expressions.resize(program.expressions.size()+1);
 				z++;
 				program.expressions.back().line = y;
 				continue;
 			}
-			else if ((prg[y][z]=='#')) // line comment
+			else if ((parserProgram[y][z]=='#')) // line comment
 				break;
-			else if  (((prg[y][z]==';') || (prg[y][z]=='}') || (prg[y][z]=='{')) && (inquotes==false)) {
+			else if  (((parserProgram[y][z]==';') || (parserProgram[y][z]=='}') || (parserProgram[y][z]=='{')) && (inquotes==false)) {
 				program.expressions.resize(program.expressions.size() + 1);
-				program.expressions.back() = string(1,prg[y][z]);
+				program.expressions.back() = string(1,parserProgram[y][z]);
 				program.expressions.back().line = y;
 				break;
 			}
-			else if (((prg[y][z]=='+') || (prg[y][z]=='-') || (prg[y][z]=='*') || ((prg[y][z]=='/') && (program.expressions[program.expressions.size()-2].contents!="mod")) || (prg[y][z]=='[') || (prg[y][z]==',') || (prg[y][z]==']') || (prg[y][z] == ':') || (prg[y][z] == '.')) && (inquotes==false)) {
-				program.expressions.push_back( string(1,prg[y][z]) );
+			else if (((parserProgram[y][z]=='+') || (parserProgram[y][z]=='-') || (parserProgram[y][z]=='*') || ((parserProgram[y][z]=='/') && (program.expressions[program.expressions.size()-2].contents!="mod")) || (parserProgram[y][z]=='[') || (parserProgram[y][z]==',') || (parserProgram[y][z]==']') || (parserProgram[y][z] == ':') || (parserProgram[y][z] == '.')) && (inquotes==false)) {
+				program.expressions.push_back( string(1,parserProgram[y][z]) );
 				program.expressions.back().line = y;
 				program.expressions.resize(program.expressions.size()+1);
 			}
-			else if ((prg[y][z]=='\t')  && (inquotes==false)) {
+			else if ((parserProgram[y][z]=='\t')  && (inquotes==false)) {
 				z++;
 				program.expressions.back().line = y;
 				continue;
@@ -55,7 +55,7 @@ void parse() {
 			else {
 				if (program.expressions.size() == 0)
 					program.expressions.push_back(expression());
-				program.expressions.back().contents+=prg[y][z];
+				program.expressions.back().contents+=parserProgram[y][z];
 			}
 			program.expressions.back().line = y;
 			z++;

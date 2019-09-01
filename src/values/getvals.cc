@@ -71,7 +71,7 @@ stsvars getval() {
 
 	bool operation = ((program.expressions[program.loc+1].t == TOKEN) && 
 		(program.expressions[program.loc+1].tktype != COMMA) && (program.expressions[program.loc+1].tktype != COLON) && (program.expressions[program.loc+1].tktype != OPENCURL)  && (program.expressions[program.loc+1].tktype != CLOSEDBRACKET) && 
-		(program.expressions[program.loc+1].tktype != DOT) &&
+		(program.expressions[program.loc+1].tktype != DOT) && (program.expressions[program.loc].btn != RANDOMRANGE) &&
 		(program.expressions.size() > program.loc+1));
 
 	switch (operation) {

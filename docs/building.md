@@ -2,7 +2,7 @@
 
 Make a directory called build
 
-**You must have gcc/g++ installed (MinGW for Windows) and CMake**
+**You must have gcc-8/g++-8 installed (MinGW for Windows) and CMake**
 
 GDB is also highly recommended for debugging
 
@@ -14,7 +14,7 @@ Terminal:
 ## Windows
 
 Make sure you have MinGW and CMake installed (in PATH)
-run `cmake -G "MinGW Makefiles" -D CMAKE_C_COMPILER="gcc" -D CMAKE_CXX_COMPILER="g++"`
+run `cmake -G "MinGW Makefiles"`
 then run `mingw32-make`
 
 also make sure that you have src/core in PATH for errors to work

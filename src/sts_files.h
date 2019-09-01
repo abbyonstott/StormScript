@@ -5,6 +5,6 @@
 
 void stsread(char *argv[], int argc); // read stormscript programs
 
-inline std::vector<string> prg; //unparsed program
+inline std::vector<string> parserProgram; //unparsed program
 
 #endif // STS_FILES_H_
