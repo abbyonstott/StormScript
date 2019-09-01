@@ -20,10 +20,14 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 	// porting to winsock2 requires some changes
 	#if (PLATFORM == 0)
 	sa_family_t family;
+
 	if (strfamily == "AF_INET") family = AF_INET;
 	else if (strfamily == "AF_INET6") family = AF_INET6;
 	#else
+	WSAStartup(MAKEWORD(2, 2), &data); // this has to be called for winsock to work
+
 	int family;
+
 	if (strfamily == "AF_INET") family = 2;
 	else if (strfamily == "AF_INET6") family = 23;
 	#endif
@@ -33,16 +37,8 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 	addr.sin_port = htons(port);
 
 	int s = socket(family, SOCK_STREAM, 0);
-
-	#if (!PLATFORM)
+	
 	socketObject.members[4].val = std::to_string(socket(family, SOCK_STREAM, 0)); 
-	/* 
-	 * socket declarations are similar between platforms, but on Windows socket()
-	 * returns type SOCKET instead of an int
-	*/
-	#else
-	socketObject.members[4].val = std::to_string(((s == INVALID_SOCKET) ? -1 : 0));
-	#endif // !PLATFORM
 
 	if (std::stoi(socketObject.members[4].val) < 0)
 		socketObject.members[3].val = "false"; // some sort of error occured
@@ -57,7 +53,6 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 * into only a socket.await or socket.connect method respectively
 */
 stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
-	cout << socketObject.members[4].val << '\n';
 	int socketval = std::stoi(socketObject.members[4].val);
 	int bindval;
 
@@ -67,24 +62,33 @@ stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
 	bindval = bind(socketval, (struct sockaddr *)&addr, (socklen_t)sizeof(addr));
 	#else
 	int *addrsize = (int *)new unsigned long(sizeof(addr));
-	bindval = bind(socketval, (struct sockaddr *)&addr, sizeof(addr));
+	bindval = bind(socketval, (SOCKADDR *)&addr, sizeof(addr));
 	#endif
 
 	int listenval = listen(socketval, 3);
+	
 	int acc = accept(socketval,(struct sockaddr *)&addr, addrsize);
-
+	#if (!PLATFORM)
 	if (acc < 0 || listenval < 0 || bindval < 0)
 		socketObject.members[3].val = "false";
+	#else
+	if (acc == SOCKET_ERROR || listenval == SOCKET_ERROR || bindval == SOCKET_ERROR)
+		socketObject.members[3].val = "false";
+	#endif
 	else {
-		char buffer[1024] = {0};
-
-		int r = read(acc, buffer, 1024);
-		if (output == true)
-			cout << buffer << "\n";
-
 		send(acc, msg.c_str(), msg.size(), 0);
+
+		char buffer[1024] = {0};
+		int r = read(acc, buffer, 1024);
+		cout << std::strerror(errno) << '\n';
+
+		if (output)
+			cout << buffer << "\n";
 	}
 
+	#if (PLATFORM)
+	WSACleanup();
+	#endif
 	return socketObject;
 }
 
@@ -96,7 +100,7 @@ stsObject connectSocket(stsObject socketObject, string msg) {
 	sa_family_t family;
 
 	if (socketObject.members[0].val == "AF_INET") family = AF_INET;
-	else if (socketObject.members[0].val == "AF_INET6") family = AF_INET6;
+	else if (socketObject.members[0].val == "AF_INET6") family = AF_INET6 	;
 
 	int pres = inet_pton(family, socketObject.members[1].val.c_str(), &addr.sin_addr);
 
@@ -123,5 +127,8 @@ stsObject connectSocket(stsObject socketObject, string msg) {
 		cout << buffer << '\n';
 	}
 
+	#if (PLATFORM)
+	WSACleanup();
+	#endif
 	return socketObject;
 }
