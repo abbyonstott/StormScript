@@ -55,6 +55,8 @@ stsObject createSocket(string strfamily, string hostname, uint16_t port, stsObje
 stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
 	int socketval = std::stoi(socketObject.members[4].val);
 	int bindval;
+	int clientSock;
+	int r = 0;
 
 	#if (PLATFORM == 0)
 	int addrsizei = sizeof(addr); // integer form of addrsize
@@ -66,22 +68,22 @@ stsObject awaitSocket(stsObject socketObject, string msg, bool output) {
 	#endif
 
 	int listenval = listen(socketval, 3);
+	clientSock = accept(socketval, (struct sockaddr *)&addr, addrsize);
 	
-	int acc = accept(socketval,(struct sockaddr *)&addr, addrsize);
 	#if (!PLATFORM)
-	if (acc < 0 || listenval < 0 || bindval < 0)
+	if (listenval < 0 || bindval < 0)
 		socketObject.members[3].val = "false";
 	#else
-	if (acc == SOCKET_ERROR || listenval == SOCKET_ERROR || bindval == SOCKET_ERROR)
+	if (listenval == SOCKET_ERROR || bindval == SOCKET_ERROR)
 		socketObject.members[3].val = "false";
 	#endif
 	else {
-		send(acc, msg.c_str(), msg.size(), 0);
 
 		char buffer[1024] = {0};
-		int r = read(acc, buffer, 1024);
-		cout << std::strerror(errno) << '\n';
+		r = recv(clientSock, buffer, 1024, 0);
 
+		r = send(clientSock, msg.c_str(), msg.size(), 0);
+		
 		if (output)
 			cout << buffer << "\n";
 	}
@@ -123,7 +125,7 @@ stsObject connectSocket(stsObject socketObject, string msg) {
 		send(socketval, msg.c_str(), msg.size(), 0);
 
 		char buffer[1024] = {0};
-		int val = read(socketval, buffer, 1024);
+		int val = recv(socketval, buffer, 1024, 0);
 		cout << buffer << '\n';
 	}
 
