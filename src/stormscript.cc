@@ -1,6 +1,5 @@
 #include "stormscript.h"
 #include "sts_files.h"
-
 /*
    _____ _                        _____           _       _   
   / ____| |                      / ____|         (_)     | |  
@@ -12,17 +11,16 @@
                                                    |_|         
 */
 
-void printVersion() {
-	cout << "StormScript 1.1.0\n";
-}
-
 void showhelp() {
 	cout << "Usage: stormscript [file|options]\n";
 	cout << "StormScript is a powerful, open source programming language for many operating systems.\n\n";
 	cout <<  "  -h, --help: display help\n";
 	cout << "  --version: show version\n\n";
+	#if (!PLATFORM)
+	cout << "  update: Download and install the latest update\n";
+	#endif
 	cout << "  install: install a module\n\n";
-	printVersion();
+	cout << "StormScript " << VERSION << '\n';
 	cout << "git: https://github.com/stormprograms/StormScript\n";
 	cout << "For documentation, go to https://stormscript.dev/docs\n";
 }
@@ -30,9 +28,18 @@ void showhelp() {
 int main(int argc, char *argv[]) {
 	if (argc != 1) {
 		if (string(argv[1])=="--version")
-			printVersion();
+			cout << "StormScript " << VERSION << '\n';
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h"))
 			showhelp();
+		
+
+		#if (!PLATFORM) // this only works on linux for now
+		else if (string(argv[1])=="update") { 
+			execl("/usr/bin/python3", "python3", "/usr/share/stormscript/update.py", VERSION, (char *)0);
+		}
+		#endif
+
+
 		else if (string(argv[1])=="install") {
 			string cmd = "wget https://storage.googleapis.com/stormscript/";
 			if (argc > 2) {

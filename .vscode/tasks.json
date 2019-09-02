@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "errors",
+            "label": "Move Scripts",
             "type": "shell",
-            "command": "cp src/errors.sts /usr/share/stormscript",
+            "command": "cp src/errors.sts /usr/share/stormscript; cp src/scripts/update.py /usr/share/stormscript",
             "problemMatcher": []
         }
     ]
