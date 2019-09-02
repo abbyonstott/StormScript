@@ -43,7 +43,8 @@ if c == 'y':
 	os.system("mkdir /tmp/stormscript; mv {} /tmp/stormscript".format(latestfname))
 	os.system("cd /tmp/stormscript; tar -xf {0} {1};".format(latestfname, latestfname[:-7]))
 	os.system("cd /tmp/stormscript/{}; ./install.sh".format(latestfname[:-7]))
-	os.system("cd {}; rm -f /tmp/stormscript".format(cwd))
+	print(cwd)
+	os.system("cd {}; rm -rf /tmp/stormscript".format(cwd))
 else:
 	print("Canceling Update")
 

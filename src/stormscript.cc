@@ -16,7 +16,9 @@ void showhelp() {
 	cout << "StormScript is a powerful, open source programming language for many operating systems.\n\n";
 	cout <<  "  -h, --help: display help\n";
 	cout << "  --version: show version\n\n";
+	#if (!PLATFORM)
 	cout << "  update: Download and install the latest update\n";
+	#endif
 	cout << "  install: install a module\n\n";
 	cout << "StormScript " << VERSION << '\n';
 	cout << "git: https://github.com/stormprograms/StormScript\n";
@@ -29,11 +31,15 @@ int main(int argc, char *argv[]) {
 			cout << "StormScript " << VERSION << '\n';
 		else if ((string(argv[1])=="--help") || (string(argv[1])=="-h"))
 			showhelp();
+		
+
+		#if (!PLATFORM) // this only works on linux for now
 		else if (string(argv[1])=="update") { 
-			#if (!PLATFORM)
 			execl("/usr/bin/python3", "python3", "/usr/share/stormscript/update.py", VERSION, (char *)0);
-			#endif
 		}
+		#endif
+
+
 		else if (string(argv[1])=="install") {
 			string cmd = "wget https://storage.googleapis.com/stormscript/";
 			if (argc > 2) {

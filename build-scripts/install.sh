@@ -17,4 +17,3 @@ if [ ! "$1" = "buildonly" ]; then
 fi
 
 stormscript finished.sts
-exec bash
