@@ -23,13 +23,34 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "preLaunchTask": "errors",
+            "preLaunchTask": "Move Scripts",
             "program": "${command:cmake.launchTargetPath}",
             "args": [
                 "example.sts"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/example",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "No Commands",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "Move Scripts",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [
+                "update"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [

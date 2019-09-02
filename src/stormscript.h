@@ -8,6 +8,8 @@
 */
 #define PLATFORM (defined(_WIN32) || defined(__MINGW32__)) // true if on windows
 
+#define VERSION "v1.1.0"
+
 #include <iostream>
 #include <string>
 #include <cstring>
