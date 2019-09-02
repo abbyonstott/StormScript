@@ -47,7 +47,7 @@
             "preLaunchTask": "Move Scripts",
             "program": "${command:cmake.launchTargetPath}",
             "args": [
-                "update"
+                "--help"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
