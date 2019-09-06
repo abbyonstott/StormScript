@@ -50,11 +50,11 @@ void forloop() {
 		program.loc += 1;
 
 		switch (root.type) {
-			case 's':
-			case 'l': rootsize = root.length;
+			case STRING:
+			case LIST: rootsize = root.length;
 				break;
-			case 'i':
-			case 'b':
+			case INTEGER:
+			case STS_BOOL:
 				error(2, root.name);
 		}
 
@@ -65,12 +65,12 @@ void forloop() {
 			
 			program.loc = _loc;
 
-			if (root.type == 'l')
+			if (root.type == LIST)
 				placeholder = root.vals[i];
 			else {
 				placeholder.val = std::to_string(root.val[i]);
 				placeholder.length = 1;
-				placeholder.type = 's';
+				placeholder.type = STRING;
 			}
 			placeholder.name = name;
 

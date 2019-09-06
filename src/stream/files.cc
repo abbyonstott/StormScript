@@ -3,7 +3,7 @@
 
 stsvars readfile() {
 	stsvars v;
-	v.type = 's';
+	v.type = STRING;
 
 	program.loc += 1;
 

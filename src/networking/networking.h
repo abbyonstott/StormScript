@@ -32,23 +32,23 @@ inline type socketClass() {
 	// these are all defaults
 
 	family.name = "family";
-	family.type = 's';
+	family.type = STRING;
 	family.val = "AF_INET";
 
 	address.name = "address";
-	address.type = 's';
+	address.type = STRING;
 	address.val = "127.0.0.1";
 
 	port.name = "port";
-	port.type = 'i';
+	port.type = INTEGER;
 	port.val = "9999";
 
 	success.name = "success";
-	success.type = 'b';
+	success.type = STS_BOOL;
 	success.val = "false";
 
 	sockval.name = "sockval";
-	sockval.type = 'i';
+	sockval.type = INTEGER;
 	sockval.val = "-1";
 
 	t.members.push_back(family);
