@@ -82,13 +82,13 @@ stsvars getval() {
 				switch (program.expressions[program.loc].literalType) {
 					case STRING:
 						lit = striplit(program.expressions[program.loc].contents);
-						v.type = 's';
+						v.type = STRING;
 						v.length = lit.size();
 						replaceEscapes(&lit);
 						break;
 					case INTEGER:
 					case STS_BOOL:
-						v.type = ((program.expressions[program.loc].literalType == INTEGER) ? 'i' : 'b');
+						v.type = ((program.expressions[program.loc].literalType == INTEGER) ? INTEGER : STS_BOOL);
 						lit = program.expressions[program.loc].contents;
 						break;
 				}
@@ -103,11 +103,11 @@ stsvars getval() {
 						break;
 					case RANDOM:
 						v.val = ((randombool()) ? "true" : "false");
-						v.type = 'b';
+						v.type = STS_BOOL;
 						break;
 					case RANDOMRANGE:
 						v.val = std::to_string(genrandomintfromrange());
-						v.type = 'i';
+						v.type = INTEGER;
 				}
 			}
 			else if (program.expressions[program.loc].t == UNKNOWN) {
@@ -118,9 +118,9 @@ stsvars getval() {
 					else if (program.expressions[program.loc+2].btn == LENGTH) { // get length
 						program.loc+= 3;
 
-						v.type = 'i';
+						v.type = INTEGER;
 
-						if ((program.thisScope.variables.at(index).type == 's') || (program.thisScope.variables.at(index).type == 'l'))
+						if ((program.thisScope.variables.at(index).type == STRING) || (program.thisScope.variables.at(index).type == LIST))
 							v.val = std::to_string(program.thisScope.variables.at(index).length);
 
 						else error(2, program.thisScope.variables.at(index).name);
@@ -153,7 +153,7 @@ stsvars getval() {
 
 			if ((t == PLUS) || (t == MINUS) || (t == DIVISION) || (t == MULTIPLICATION)) { 
 				// all math operations will return an integer, so we can set that first
-				v.type = 'i';
+				v.type = INTEGER;
 
 				placeholders.resize(2);
 
@@ -224,7 +224,7 @@ stsvars getval() {
 						sbsvar = program.thisScope.variables[varn];
 
 						switch(sbsvar.type) {
-							case 's':
+							case STRING:
 								if ((index >= sbsvar.val.size()) || (index < 0)) {
 									string fullexpr = sbsvar.name + "[";
 
@@ -236,12 +236,12 @@ stsvars getval() {
 									error(4, fullexpr);
 								}
 
-								v.type = 's';
+								v.type = INTEGER;
 								v.val = sbsvar.val[index];
 
 								break;
 
-							case 'l':
+							case LIST:
 								if ((index >= sbsvar.vals.size()) || (index < 0)) { // out of range error
 									string fullexpr = sbsvar.name + "[";
 
@@ -257,8 +257,8 @@ stsvars getval() {
 
 								break;
 
-							case 'i': // subscripts don't work on int or bool, so give error
-							case 'b':
+							case INTEGER: // subscripts don't work on int or bool, so give error
+							case STS_BOOL:
 								error(2, sbsvar.name);
 								break;
 						}

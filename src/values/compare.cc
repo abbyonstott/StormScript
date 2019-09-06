@@ -52,24 +52,24 @@ bool condition() {
 			case IS: return (comp1.val == comp2.val);
 			case NOT: return (comp1.val != comp2.val);
 			case GREATER: 
-				if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) > std::stoi(comp2.val));
-				else if (comp1.type != 'i') error(2, program.expressions[_loc].contents); // give error with first expression
-				else if (comp2.type != 'i') error(2, program.expressions[opLocation+1].contents); // give error with second expression
+				if ((comp1.type == INTEGER) && (comp2.type == INTEGER)) return (std::stoi(comp1.val) > std::stoi(comp2.val));
+				else if (comp1.type != INTEGER) error(2, program.expressions[_loc].contents); // give error with first expression
+				else if (comp2.type != INTEGER) error(2, program.expressions[opLocation+1].contents); // give error with second expression
 				break;
 			case LESS:
-				if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) < std::stoi(comp2.val));
-				else if (comp1.type != 'i') error(2, program.expressions[_loc].contents); // give error with first expression
-				else if (comp2.type != 'i') error(2, program.expressions[opLocation+1].contents); // give error with second expression
+				if ((comp1.type == INTEGER) && (comp2.type == INTEGER)) return (std::stoi(comp1.val) < std::stoi(comp2.val));
+				else if (comp1.type != INTEGER) error(2, program.expressions[_loc].contents); // give error with first expression
+				else if (comp2.type != INTEGER) error(2, program.expressions[opLocation+1].contents); // give error with second expression
 				break;
 			case GREATEREQ: 
-				if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) >= std::stoi(comp2.val));
-				else if (comp1.type != 'i') error(2, program.expressions[_loc].contents); // give error with first expression
-				else if (comp2.type != 'i') error(2, program.expressions[opLocation+1].contents); // give error with second expression
+				if ((comp1.type == INTEGER) && (comp2.type == INTEGER)) return (std::stoi(comp1.val) >= std::stoi(comp2.val));
+				else if (comp1.type != INTEGER) error(2, program.expressions[_loc].contents); // give error with first expression
+				else if (comp2.type != INTEGER) error(2, program.expressions[opLocation+1].contents); // give error with second expression
 				break;
 			case LESSEQ:
-				if ((comp1.type == 'i') && (comp2.type == 'i')) return (std::stoi(comp1.val) <= std::stoi(comp2.val));
-				else if (comp1.type != 'i') error(2, program.expressions[_loc].contents); // give error with first expression
-				else if (comp2.type != 'i') error(2, program.expressions[opLocation+1].contents); // give error with second expression
+				if ((comp1.type == INTEGER) && (comp2.type == INTEGER)) return (std::stoi(comp1.val) <= std::stoi(comp2.val));
+				else if (comp1.type != INTEGER) error(2, program.expressions[_loc].contents); // give error with first expression
+				else if (comp2.type != INTEGER) error(2, program.expressions[opLocation+1].contents); // give error with second expression
 				break;
 		}
 	}

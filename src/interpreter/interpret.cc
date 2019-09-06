@@ -104,17 +104,17 @@ void runUnknown() {
 
 						if (find(program.thisScope.variables, program.expressions[program.loc-3].contents, &n)) {
 							switch (program.thisScope.variables.at(n).type) {
-								case 'i':
+								case INTEGER:
 									program.thisScope.variables.at(n).val = std::to_string(std::stoi(program.thisScope.variables.at(n).val) + std::stoi(getval().val));
 									break;
-								case 'l':
+								case LIST:
 									program.thisScope.variables.at(n).vals.push_back(getval());
 									program.thisScope.variables.at(n).length = program.thisScope.variables.at(n).vals.size();
 									break;
-								case 's':
+								case STRING:
 									program.thisScope.variables.at(n).val += getval().val;
 									break;
-								case 'b': error(4, program.thisScope.variables.at(n).name);
+								case STS_BOOL: error(4, program.thisScope.variables.at(n).name);
 							}
 						}
 						else error(8, program.expressions[program.loc-3].contents);
@@ -148,11 +148,11 @@ void interp(int psize, char *argv[], int argc) {
 
 	program.thisScope.variables.push_back(stsvars());
 	for (int x = 1; x<=argc-1; x++) {
-		program.thisScope.variables.back().type='l';
+		program.thisScope.variables.back().type = LIST;
 		program.thisScope.variables.back().vals.resize(program.thisScope.variables.back().vals.size()+1);
-		program.thisScope.variables.back().vals.back().type = 's';
-		program.thisScope.variables.back().vals.back().val=argv[x];
-		program.thisScope.variables.back().name="arg";
+		program.thisScope.variables.back().vals.back().type = STRING;
+		program.thisScope.variables.back().vals.back().val = argv[x];
+		program.thisScope.variables.back().name = "arg";
 		program.thisScope.variables.back().length = argc-1;
 	}
 	program.thisScope.types.push_back(socketClass());

@@ -23,10 +23,10 @@ void declareType() {
 			case TYPE_STRING:
 			case TYPE_LIST:
 			case TYPE_STS_BOOL:
-				if (program.expressions[program.loc].btn == TYPE_STS_BOOL) obj.type = 'b';
-				else if (program.expressions[program.loc].btn == TYPE_INTEGER) obj.type = 'i';
-				else if (program.expressions[program.loc].btn == TYPE_STRING) obj.type = 's';
-				else obj.type = 'l';
+				if (program.expressions[program.loc].btn == TYPE_STS_BOOL) obj.type = STS_BOOL;
+				else if (program.expressions[program.loc].btn == TYPE_INTEGER) obj.type = INTEGER;
+				else if (program.expressions[program.loc].btn == TYPE_STRING) obj.type = STRING;
+				else obj.type = LIST;
 				
 				obj.name = program.expressions[++(program.loc)].contents;
 				program.loc += 1;

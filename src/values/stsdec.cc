@@ -79,7 +79,7 @@ void define() { //variable declarations
 		if (program.expressions[program.loc].tktype != OPENBRACKET)
 			program.thisScope.variables.back() = getval();
 		else {
-			program.thisScope.variables.back().type = 'l';
+			program.thisScope.variables.back().type = LIST;
 			program.thisScope.variables.back().vals = listgen();
 		}
 
@@ -87,10 +87,10 @@ void define() { //variable declarations
 	}
 
 	switch (program.thisScope.variables.at(num).type) {
-		case 's':
+		case STRING:
 			program.thisScope.variables.at(num).length = program.thisScope.variables.at(num).val.size();
 			break;
-		case 'l':
+		case LIST:
 			program.thisScope.variables.at(num).length = program.thisScope.variables.at(num).vals.size();
 			break;
 	}

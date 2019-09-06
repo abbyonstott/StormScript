@@ -19,7 +19,7 @@ stsvars in() {
 	std::cin.getline(valstring, 256); // use std::cin.getline to get value
 	input.val = valstring;
 
-	input.type = ((isint(input.val)) ? 'i' : 's');
+	input.type = ((isint(input.val)) ? INTEGER : STRING);
 	
 	input.length = input.val.size();
 
