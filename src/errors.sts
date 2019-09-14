@@ -40,3 +40,6 @@ else if arg[1] is "12" {
 else if arg[1] is "13" {
     printl "Error: In statement expected variable name, got", arg[2], "instead";
 }
+else if arg[1] is "14" {
+    printl "Tried to access private member ", arg[2], " outside of type method";
+}

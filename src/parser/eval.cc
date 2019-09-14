@@ -1,42 +1,11 @@
 #include "../stormscript.h"
 #include "sts_parser.h"
 
-bool evaluateToken(string tkn) { // tokens are different types of operators and symbols
-	if ((tkn == "is") || (tkn == "not") || (tkn == "less") || (tkn == "lesseq") || (tkn == "greater") || (tkn == "greatereq")) return 1; // comparison operators
-	else if ((tkn == "?") || (tkn == ":") || (tkn == "=>") || (tkn == "{") || (tkn == "}") || (tkn == "[") || (tkn == "]")) return 1; // symbols
-	else if ((tkn == "+") || (tkn == "-") || (tkn == "/") || (tkn == "*") || (tkn == ",") || (tkn == ".")) return 1;
-	
-	return 0;
-}
-
-bool evaluateBuiltin(string kwd) {
-	if ((kwd == "int") || (kwd == "str") || (kwd == "bool") || (kwd == "init") ||(kwd == "list") || (kwd == "func") || (kwd == "type") || (kwd == "mod") || (kwd == "return")) return 1;
-	else if ((kwd == "print") || (kwd == "printl") || (kwd == "in") || (kwd == "write") || (kwd == "read") || (kwd == "sys") || (kwd == "wait")) return 1;
-	else if ((kwd == "if") || (kwd == "else") || (kwd == "exit") || (kwd =="for") || (kwd == "foreach") || (kwd == "while")) return 1;
-	else if ((kwd == "random") || (kwd == "randomrange") || (kwd == "length") || (kwd == "break") || (kwd == "socket")) return 1;
-	return 0;
-}
-
-bool evalLiteral(string ctn) {
-	if ((ctn.front() == '\"') || (isint(ctn)) || (ctn == "true") || (ctn == "false")) return 1;
-
-	return 0;
-}
-
-ExprType determinetype(string contents) {
-	if (evaluateToken(contents)) return TOKEN;
-	else if (evaluateBuiltin(contents)) return BUILTIN;
-	else if (evalLiteral(contents)) return VALUE;
-	else if (contents == ";") return ENDEXPR;
-
-	return UNKNOWN;
-}
-
 Value getValue(string ctn) {
 	if (ctn.front() == '\"') return STRING;
 	else if (isint(ctn)) return INTEGER;
 	else if ((ctn == "true") || (ctn == "false")) return STS_BOOL;
-	return LIST;
+	return NOVAL;
 }
 
 tokenType gettktype(string tkn) {
@@ -90,18 +59,33 @@ Builtin getBuiltincmd(string kwd) {
 	else if (kwd == "length") return LENGTH;
 	else if (kwd == "break") return BREAK;
 	else if (kwd == "socket") return STSSOCKET;
+	else if (kwd == "private") return TYPE_PRIVATE;
 	return NONE;
 }
 
 void evaluateProgram() {
 	for (int i = 0; i < program.expressions.size(); i++) {
-		program.expressions[i].t = determinetype(program.expressions[i].contents);
+		string contents = program.expressions[i].contents;
+		Builtin btn = getBuiltincmd(contents);
+		tokenType tktype = gettktype(contents);
+		Value val = getValue(contents);
 
-		if (program.expressions[i].t == TOKEN)
-			program.expressions[i].tktype = gettktype(program.expressions[i].contents);
-		else if (program.expressions[i].t == BUILTIN)
-			program.expressions[i].btn = getBuiltincmd(program.expressions[i].contents);
-		else if (program.expressions[i].t == VALUE)
-			program.expressions[i].literalType = getValue(program.expressions[i].contents);
+		if (btn != NONE) {
+			program.expressions[i].t = BUILTIN;
+			program.expressions[i].btn = btn;
+		}
+		else if (gettktype(contents) != NOTOKEN) {
+			program.expressions[i].t = TOKEN;
+			program.expressions[i].tktype = tktype;
+		}
+		else if (val != NOVAL) {
+			program.expressions[i].t = VALUE;
+			program.expressions[i].literalType = val;
+		}
+		else if (contents == ";")
+			program.expressions[i].t = ENDEXPR;
+		else
+			program.expressions[i].t = UNKNOWN;
+
 	}
 }

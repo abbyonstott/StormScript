@@ -53,7 +53,7 @@ void replaceEscapes(string *lit) { // escapes
 
 stsvars getval() {
 	/*
-	* THIS FILE IS VERY IMPORTANT!!!!!
+	* THIS FILE IS VERY IMPORTANT
 	* When Modifying this function be sure that:
 	*	a. The code works in every circumstance where a value would be needed (act as though any value is grabbed with one expression; add to program.loc until it reaches the end of the expression)
 	*	b. The code uses returns a value with a type. Under no circumstance should the variable "v" have an empty type.
@@ -130,6 +130,10 @@ stsvars getval() {
 						program.loc += 2;
 
 						find(program.thisScope.objects[index].members, program.expressions[program.loc].contents, &MemberLoc);
+
+						if (program.thisScope.objects[index].members[MemberLoc].privateMember)
+							error(14, program.thisScope.objects[index].members[MemberLoc].name);
+
 						v = program.thisScope.objects[index].members[MemberLoc]; // return member
 						
 						program.loc++;

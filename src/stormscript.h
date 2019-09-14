@@ -114,6 +114,7 @@ enum Builtin { // these are built in commands
 	TYPE_STRING,
 	TYPE_STS_BOOL,
 	TYPE_LIST,
+	TYPE_PRIVATE,
 	CONSTRUCTOR_SCOPE,
 	MODULE,
 	RETURN,
@@ -129,14 +130,15 @@ enum Builtin { // these are built in commands
 	RANDOMRANGE,
 	LENGTH,
 	BREAK,
-	STSSOCKET
+	STSSOCKET,
 };
 
 enum Value { // these are types
 	INTEGER,
 	STRING,
 	STS_BOOL,
-	LIST
+	LIST,
+	NOVAL
 };
 
 class expression {
@@ -147,10 +149,10 @@ public:
 		contents = c;
 	}
 
-	ExprType t; // give type of expression
+	ExprType t = UNKNOWN; // give type of expression
 	tokenType tktype = NOTOKEN;
 	Builtin btn = NONE;
-	Value literalType;
+	Value literalType = NOVAL;
 	int line;
 };
 
@@ -163,6 +165,8 @@ public:
 
 	int length;
 	string name;
+
+	bool privateMember = 0; // only used for type members
 
 	void assignlist();
 };

@@ -49,6 +49,9 @@ void objectMember() {
 
 		find(program.thisScope.objects[ObjNum].members, program.expressions[program.loc].contents, &MemberNum);
 
+		if (program.thisScope.objects[ObjNum].members[MemberNum].privateMember)
+			error(14, program.thisScope.objects[ObjNum].members[MemberNum].name);
+
 		program.loc += 2;
 
 		stsvars newval = getval();
