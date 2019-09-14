@@ -62,12 +62,12 @@ void define() { //variable declarations
 
 	if (find(program.thisScope.variables, name, &num)) {
 		/*
-		* If already defined this changes the value of 
+		* If already defined, this changes the value of 
 		* the variable
 		*/
 		program.loc += 2;
 		if (program.thisScope.variables.at(num).type != 'l')
-			program.thisScope.variables.at(num) = getval();
+			program.thisScope.variables.at(num).val = getval().val;
 		else 
 			program.thisScope.variables.at(num).vals = listgen();
 		program.thisScope.variables.at(num).name = name;

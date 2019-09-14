@@ -15,23 +15,26 @@ void declareType() {
 	program.loc += 2;
 
 	while (program.expressions[program.loc].tktype != CLOSEDCURL) {
-		stsvars obj;
+		stsvars member;
 		stsfunc c;
 
 		switch (program.expressions[program.loc].btn) {
+			case TYPE_PRIVATE:
+				member.privateMember = 1;
+				program.loc++;
 			case TYPE_INTEGER:
 			case TYPE_STRING:
 			case TYPE_LIST:
 			case TYPE_STS_BOOL:
-				if (program.expressions[program.loc].btn == TYPE_STS_BOOL) obj.type = STS_BOOL;
-				else if (program.expressions[program.loc].btn == TYPE_INTEGER) obj.type = INTEGER;
-				else if (program.expressions[program.loc].btn == TYPE_STRING) obj.type = STRING;
-				else obj.type = LIST;
+				if (program.expressions[program.loc].btn == TYPE_STS_BOOL) member.type = STS_BOOL;
+				else if (program.expressions[program.loc].btn == TYPE_INTEGER) member.type = INTEGER;
+				else if (program.expressions[program.loc].btn == TYPE_STRING) member.type = STRING;
+				else member.type = LIST;
 				
-				obj.name = program.expressions[++(program.loc)].contents;
-				program.loc += 1;
+				member.name = program.expressions[++(program.loc)].contents;
+				program.loc++;
 
-				t.members.push_back(obj);
+				t.members.push_back(member);
 				break;
 			case CONSTRUCTOR_SCOPE:
 			case FUNCTION:
