@@ -6,7 +6,7 @@
         {
             "label": "Move Scripts",
             "type": "shell",
-            "command": "cp src/errors.sts /usr/share/stormscript; cp src/scripts/update.py /usr/share/stormscript",
+            "command": "sudo cp src/errors.sts /usr/share/stormscript; sudo cp src/scripts/update.py /usr/share/stormscript",
             "problemMatcher": []
         }
     ]
