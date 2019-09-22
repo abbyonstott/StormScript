@@ -4,12 +4,17 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        { 
-            "name": "(gdb) Attach",
+        {
+            "name": "(gdb) Launch",
             "type": "cppdbg",
-            "request": "attach",
-            "program": "${workspaceFolder}/build/stormscript",
-            "processId": "${command:pickProcess}",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [
+                "example.sts"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/example",
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -19,18 +24,12 @@
                 }
             ]
         },
-        {
-            "name": "(gdb) Launch",
+        { 
+            "name": "(gdb) Attach",
             "type": "cppdbg",
-            "request": "launch",
-            "preLaunchTask": "Move Scripts",
-            "program": "${command:cmake.launchTargetPath}",
-            "args": [
-                "example.sts"
-            ],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/example",
-            "externalConsole": false,
+            "request": "attach",
+            "program": "${workspaceFolder}/build/stormscript",
+            "processId": "${command:pickProcess}",
             "MIMode": "gdb",
             "setupCommands": [
                 {

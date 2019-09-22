@@ -1,19 +1,20 @@
 #!/bin/bash
 cmake CMakeLists.txt -DCMAKE_CXX_COMPILER:STRING="g++"
 make -j $(nproc)
-sudo cp stormscript /usr/bin
-sudo cp src/errors.sts /usr/share/stormscript
 
 
 # build only arg does not install
-if [ ! "$1" = "buildonly" ]; then
+if [ ! "$1" = "--prefix" ]; then
+    echo "Expected prefix argument."
+    exit 1;
+else 
     if [ ! -e "/usr/share/stormscript" ]; then
-        sudo mkdir /usr/share/stormscript
+        mkdir $2/share/stormscript
     fi
 
-    sudo cp stormscript /usr/bin
-    sudo cp src/errors.sts /usr/share/stormscript
-    sudo cp src/scripts/update.py /usr/share/stormscript
+    cp stormscript $2/bin
+    sudo cp src/errors.sts $2/share/stormscript
+    sudo cp src/scripts/update.py $2/share/stormscript
 fi
 
-stormscript finished.sts
+$2/stormscript finished.sts

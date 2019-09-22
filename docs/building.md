@@ -9,7 +9,12 @@ GDB is also highly recommended for debugging
 ## Linux
 
 Terminal:
-`sh build.sh`
+```sh
+cd build
+./build.sh --prefix /DIRECTORY
+```
+
+Set prefix to /usr to add to PATH
 
 ## Windows
 
