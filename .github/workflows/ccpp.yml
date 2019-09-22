@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: |
         cd build;
-        ./build.sh --prefix /usr
+        sudo ./build.sh --prefix /usr
     - name: Test
       run: |
         cd scripts;

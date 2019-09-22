@@ -13,8 +13,8 @@ else
     fi
 
     cp stormscript $2/bin
-    sudo cp src/errors.sts $2/share/stormscript
-    sudo cp src/scripts/update.py $2/share/stormscript
+    cp src/errors.sts $2/share/stormscript
+    cp src/scripts/update.py $2/share/stormscript
 fi
 
 $2/stormscript finished.sts
